@@ -1,0 +1,68 @@
+{
+    "class":"Module",
+    "name":"UserAdministration",
+    "title":"User Administration",
+    "models":[
+        {
+            "class":"Module.Model",
+            "name":"user",
+            "fields":[
+                {
+                    "class":"Module.Model.Field",
+                    "name":"username",
+                    "type":"string",
+                    "default":"",
+                    "required":true
+                },
+                {
+                    "class":"Module.Model.Field",
+                    "name":"lastname",
+                    "type":"string",
+                    "default":"",
+                    "required":false
+                },
+                {
+                    "class":"Module.Model.Field",
+                    "name":"firstname",
+                    "type":"string",
+                    "default":"",
+                    "required":false
+                }
+            ],
+            "associations":[
+                {
+                    "class":"Module.Model.HasOne",
+                    "name":"phone",
+                    "model":"phone"
+                }
+            ]
+        }
+            <model name="user">
+                <!--
+                types:
+                    integer, float, string, boolean, date, datetime, timestamp, base64
+                -->
+                <field name="username"  type="string" default="" required="true" />
+                <field name="lastname"  type="string" default="" />
+                <field name="firstname" type="string" default="" />
+                <field name="status"    type="string" default="INACTIVE" enum="ACTIVE|INACTIVE" />
+                <hasOne name="phone"    model="phone" />
+                <hasMany name="logins"  model="login" />
+                <belongsToMany name="roles"   model="role" />
+            </model>
+            <model name="role">
+                <field name="name"      type="string" default="" />
+                <field name="status"    type="string" default="INACTIVE" enum="ACTIVE|INACTIVE" />
+                <belongsToMany name="users" model="user" />
+            </model>
+            <model name="login">
+                <field name="datetime"  type="timestamp" default="now()" />
+                <belongsTo name="user"  model="user" />
+            </model>
+            <model name="phone">
+                <field name="name"      type="string" default="Home phone" />  <!--name-->
+                <field name="number"    type="string" />   <!--number-->
+                <belongsTo name="user"  model="user" />   <!--user_id-->
+            </model>
+    ]
+}
