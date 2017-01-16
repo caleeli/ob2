@@ -57,7 +57,7 @@
                                 Pendiente: DASHBOARD
                             </carouselitem>
                             <carouselitem>
-                                Pendiente: Cartera
+                                (Espere Cargando...)
                             </carouselitem>
                             <carouselitem>
                                 <abm :model="user"></abm>
