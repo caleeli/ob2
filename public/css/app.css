@@ -2689,8 +2689,8 @@ table {
 }
 
 caption {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
   color: #777777;
   text-align: left;
 }
@@ -2711,7 +2711,7 @@ th {
 .table > tbody > tr > td,
 .table > tfoot > tr > th,
 .table > tfoot > tr > td {
-  padding: 8px;
+  padding: 2px;
   line-height: 1.6;
   vertical-align: top;
   border-top: 1px solid #ddd;
@@ -7696,7 +7696,7 @@ button.close {
 }
 
 body {
-  padding-top: 5em;
+  padding-top: 6em;
 }
 
 a.dt-button {
@@ -7817,6 +7817,54 @@ a.dt-button {
   text-align: center;
   line-height: 3em;
   color: red;
+}
+
+.table tr {
+  cursor: pointer;
+}
+
+.label-tag {
+  cursor: pointer;
+}
+
+.label-tag:nth-child(5n+0) {
+  background-color: #777777;
+}
+
+.label-tag:nth-child(5n+0)[href]:hover, .label-tag:nth-child(5n+0)[href]:focus {
+  background-color: #5e5e5e;
+}
+
+.label-tag:nth-child(5n+1) {
+  background-color: #3097D1;
+}
+
+.label-tag:nth-child(5n+1)[href]:hover, .label-tag:nth-child(5n+1)[href]:focus {
+  background-color: #2579a9;
+}
+
+.label-tag:nth-child(5n+2) {
+  background-color: #2ab27b;
+}
+
+.label-tag:nth-child(5n+2)[href]:hover, .label-tag:nth-child(5n+2)[href]:focus {
+  background-color: #20895e;
+}
+
+.label-tag:nth-child(5n+3) {
+  background-color: #8eb4cb;
+}
+
+.label-tag:nth-child(5n+3)[href]:hover, .label-tag:nth-child(5n+3)[href]:focus {
+  background-color: #6b9dbb;
+}
+
+.label-tag:nth-child(5n+4) {
+  background-color: #cbb956;
+}
+
+.label-tag:nth-child(5n+4)[href]:hover, .label-tag:nth-child(5n+4)[href]:focus {
+  background-color: #b6a338;
 }
 
 /*# sourceMappingURL=app.css.map */

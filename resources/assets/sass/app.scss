@@ -14,7 +14,7 @@
 .dataTables_wrapper {
 }
 body{
-    padding-top: 5em;
+    padding-top: 6em;
 }
 
 a.dt-button {
@@ -59,4 +59,32 @@ $rotate-template-count: 16 !default
     text-align: center;
     line-height: 3em;
     color: red;
+}
+
+.table tr {
+    cursor: pointer;
+}
+
+//tags control
+.label-tag {
+    cursor: pointer;
+}
+.label-tag:nth-child(5n+0) {
+  @include label-variant($label-default-bg);
+}
+
+.label-tag:nth-child(5n+1) {
+  @include label-variant($label-primary-bg);
+}
+
+.label-tag:nth-child(5n+2) {
+  @include label-variant($label-success-bg);
+}
+
+.label-tag:nth-child(5n+3) {
+  @include label-variant($label-info-bg);
+}
+
+.label-tag:nth-child(5n+4) {
+  @include label-variant($label-warning-bg);
 }

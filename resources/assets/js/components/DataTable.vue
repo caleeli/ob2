@@ -9,13 +9,20 @@
         props:[
             "model",
         ],
+        methods: {
+            refresh: function() {
+                this.table.ajax.url(this.model.$url() + '?' + this.model.$list());
+                this.table.ajax.reload();
+            },
+        },
         mounted() {
             var self = this;
             var table = $(this.$el).find("table").DataTable({
                 language: {
                     url: "js/Spanish.json"
                 },
-                dom: 'Bfrtilp',
+                //dom: 'Bfrtilp',
+                dom: 'Bfrtp',
                 responsive: true,
                 buttons: [
                     {
@@ -26,7 +33,7 @@
                         }
 
                     },
-                    {
+                    /*{
                         extend: 'copyHtml5',
                         text: '<i class="fa fa-copy"></i> Copiar',
                         exportOptions: {
@@ -43,17 +50,14 @@
                         text: '<i class="fa fa-file-text"></i> PDF',
                         exportOptions: {
                         }
-                    }
+                    }*/
                 ],
                 "processing": true,
-                "ajax": "/api/UserAdministration/users?fields=username,firstname,lastname",
+                "ajax": self.model.$url() + '?' + self.model.$list(),
                 rowId: 'id',
-                columns: [
-                    { "data": "attributes.username", "title": "Username" },
-                    { "data": "attributes.firstname", "title": "Nombre" },
-                    { "data": "attributes.lastname", "title": "Apellido" },
-                ]
+                "columns": self.model.$columns(),
             });
+            this.table = table;
             $(this.$el).find('tbody').on( 'click', 'tr', function () {
                 var id = table.row( this ).id();
                 self.$emit('selectrow', id);

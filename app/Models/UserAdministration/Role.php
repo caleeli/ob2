@@ -11,17 +11,20 @@ class Role extends Model
     protected $fillable = array(
       0 => 'name',
       1 => 'status',
+      2 => 'dashboard',
     );
     protected $attributes = array(
       'name' => '',
-      'status' => 'INACTIVE',
+      'status' => 'ACTIVE',
+      'dashboard' => 'dashboard1',
     );
     protected $casts = array(
       'name' => 'string',
       'status' => 'string',
+      'dashboard' => 'string',
     );
     public function users()
     {
-        return $this->belongsToMany('App\Models\UserAdministration\User');
+        return $this->hasMany('App\Models\UserAdministration\User');
     }
 }

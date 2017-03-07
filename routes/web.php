@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/login/{template?}', function ($template='') {
+    return view('login', ['template'=>$template]);
+});
+
 Route::get('/{template?}', function ($template='') {
     return view('welcome', ['template'=>$template]);
 });

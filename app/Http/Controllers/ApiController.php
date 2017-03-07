@@ -10,6 +10,7 @@ use App\Exceptions\InvalidApiCall;
 use App\Exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 use ReflectionMethod;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ApiController extends Controller
 {
@@ -40,29 +41,40 @@ class ApiController extends Controller
             return $result;
         };
         $result = $this->resolve($route, $method);
-        if ($result instanceof Model) {
-            /* @var $a Model */
-            $result->select(["username"]);
-            $collection = [
-                'type'       => $type,
-                'id'         => $result->id,
-                'attributes' => $this->sparseFields($request, $result->toArray())
-            ];
-        } else {
-            $collection = [];
-            foreach ($result as $row) {
-                $collection[] = [
-                    'type'       => $type,
-                    'id'         => $row->id,
-                    'attributes' => $this->sparseFields($request,
-                                                        $row->toArray())
-                ];
-            }
-        }
+        $collection = $this->packResponse($result, $type, $request);
         $response = [
             'data' => $collection
         ];
         return response()->json($response);
+    }
+
+    protected function packResponse($result, $type, $request, $sparseFields = true)
+    {
+        if ($result instanceof Model) {
+            /* @var $a Model */
+            //$result->select(["username"]);
+            $collection = [
+                'type'          => $type,
+                'id'            => $result->id,
+                'attributes'    => $sparseFields ? $this->sparseFields($request,
+                                                       $result->toArray()) : $result->toArray(),
+                'relationships' => $this->sparseRelationships($request, $result),
+            ];
+        } elseif ($result === null) {
+            $collection = null;
+        } else {
+            $collection = [];
+            foreach ($result as $row) {
+                $collection[] = [
+                    'type'          => $type,
+                    'id'            => $row->id,
+                    'attributes'    => $sparseFields ? $this->sparseFields($request,
+                                                           $row->toArray()) : $row->toArray(),
+                    'relationships' => $this->sparseRelationships($request, $row),
+                ];
+            }
+        }
+        return $collection;
     }
 
     public function store(Request $request, ...$route)
@@ -94,6 +106,9 @@ class ApiController extends Controller
             ];
         } elseif ($call) {
             $method = function($model) use($call) {
+                if($model instanceof HasMany) {
+                    $model = $model->getRelated();
+                }
                 $method = $call['method'];
                 $reflection = new ReflectionMethod($model, $method);
                 $args = [];
@@ -101,6 +116,9 @@ class ApiController extends Controller
                     $args[] = isset($call['arguments'][$param->getName()]) ?
                         $call['arguments'][$param->getName()] :
                         $param->getDefaultValue();
+                }
+                if (is_string($model)) {
+                    $model = new $model();
                 }
                 return $model->$method(...$args);
             };
@@ -170,7 +188,7 @@ class ApiController extends Controller
     {
         while ($route) {
             if ($model === null) {
-                $model = "\App\Models\\".ucfirst(array_shift($route))."\\".ucfirst(str_singular(array_shift($route)));
+                $model = "\App\Models\\".ucfirst(array_shift($route))."\\".ucfirst(camel_case(str_singular(array_shift($route))));
             } elseif ($model instanceof Model) {
                 $relationship = array_shift($route);
                 $model = $model->$relationship();
@@ -180,14 +198,14 @@ class ApiController extends Controller
                 }
             } elseif (is_string($model)) {
                 $id = array_shift($route);
-                if($id==='create') {
+                if ($id === 'create') {
                     $model = new $model();
                 } else {
                     $model = $model::whereId($id)->first();
                 }
             } else {
                 $id = array_shift($route);
-                if($id==='create') {
+                if ($id === 'create') {
                     $model = $model->getRelated()->newInstance();
                 } else {
                     $model = $model->whereId($id)->first();
@@ -224,12 +242,41 @@ class ApiController extends Controller
 
     /**
      *
+     * @param Request $request
+     * @param array $row
+     * @return array
+     */
+    protected function sparseRelationships(Request $request, $row)
+    {
+        $relationships = [];
+        if (empty($request['fields'])) {
+            return [];
+        }
+        $fields = explode(",", $request['fields']);
+        foreach ($fields as $field) {
+            $methodName = $field;
+            if (method_exists($row, $methodName)) {
+                $model = $row->$methodName();
+                $type = $this->getType($model->getModel());
+                if ($model instanceof BelongsTo ||
+                    $model instanceof HasOne) {
+                    $model = $model->first();
+                }
+                $response = $this->packResponse($model, $type, $request, false);
+                $relationships[$field] = $response;
+            }
+        }
+        return $relationships;
+    }
+
+    /**
+     *
      * &filter[]=where,username,=,david
      * @param Builder $select
      * @param Request $request
      * @return Builder
      */
-    protected function addFilter(Builder $select, Request $request)
+    protected function addFilter($select, Request $request)
     {
         if (empty($request['filter'])) {
             return $select;
@@ -237,6 +284,12 @@ class ApiController extends Controller
         foreach ($request['filter'] as $filter) {
             $params = explode(",", $filter);
             $method = array_shift($params);
+            if ($method === 'where' && count($params) === 2) {
+                $params[1] = json_decode($params[1]);
+            }
+            if ($method === 'where' && count($params) === 3) {
+                $params[2] = json_decode($params[2]);
+            }
             $select = call_user_func_array([$select, $method], $params);
         }
         return $select;

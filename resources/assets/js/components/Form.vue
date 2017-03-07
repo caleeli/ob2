@@ -2,9 +2,17 @@
     <form>
         <div class="form-group" v-for="field in fields">
             <label>{{field.label}}</label>
-            <input type="text" class="form-control" :placeholder="field.label" v-model="values[field.value]">
+            <input  v-if="field.type==='text'" type="text" class="form-control" :placeholder="field.label" v-model="values[field.value]">
+            <input  v-if="field.type==='password'" type="password" class="form-control" :placeholder="field.label" v-model="values[field.value]">
+            <input  v-if="field.type==='email'" type="email" class="form-control" :placeholder="field.label" v-model="values[field.value]">
+            <select v-if="field.type==='select'" class="form-control" :placeholder="field.label" v-model="values[field.value]">
+                <option v-for="option in domains[field.name]" v-bind:value="option.id">{{option.attributes[field.textField]}}</option>
+                <option v-bind:value="values[field.value]" hidden="">{{values[field.value]}}</option>
+            </select>
+            <tags v-if="field.type==='tags'" :placeholder="field.label" :model="values" :property="field.value" :domain="domains[field.name]" :field="field">
+            </tags>
         </div>
-        <button type="button" v-on:click="reset" class="btn btn-default">Reestablecer</button>
+        <!-- button type="button" v-on:click="reset" class="btn btn-default">Reestablecer</button -->
         <button type="button" v-on:click="cancel" class="btn btn-warning">Cancelar</button>
         <button type="button" v-on:click="save" class="btn btn-success">Guardar</button>
     </form>
@@ -14,18 +22,27 @@
     export default {
         props:[
             "model",
+            "childrenurl",
         ],
         data() {
-            window.model = this.model;
+            var self = this;
+            var fields = this.model.$fields();
+            var domains = {};
+            fields.forEach(function(f){
+                domains[f.name] = self.model.$domain(f, function(domain) {
+                });
+            });
             return {
-                fields: this.model.$fields(),
+                fields: fields,
                 values: this.model,
+                domains: domains,
             };
         },
         computed: {
         },
         methods: {
             reset: function() {
+            window.aaa=this.model;
                 this.model.$reset();
                 this.$emit('reset');
             },
@@ -33,8 +50,10 @@
                 this.$emit('cancel');
             },
             save: function() {
-                this.model.$save();
-                this.$emit('save');
+                var self = this;
+                this.model.$save(this.childrenurl, function(){
+                    self.$emit('save');
+                });
             },
         },
         mounted() {
@@ -48,7 +67,16 @@
                         fields.push(ff[a]);
                     }
                 }
+                fields.forEach(function(f){
+                    vm.domains[f.name].refresh(function() {
+                    });
+                });
                 vm.$forceUpdate();
+                vm.$children.forEach(function(ch){
+                    if(typeof ch.refresh==='function'){
+                        ch.refresh();
+                    }
+                });
             });
         }
     }

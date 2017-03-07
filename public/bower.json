@@ -17,6 +17,7 @@
     "datatables.net-responsive-bs": "^2.1.1",
     "bootstrap": "^3.3.7",
     "bootswatch": "^3.3.7",
-    "jstree": "^3.3.3"
+    "jstree": "^3.3.3",
+    "chart.js": "chartjs#^2.4.0"
   }
 }

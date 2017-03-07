@@ -39,6 +39,7 @@ class NanoBuildCommand extends Command
      */
     public function handle()
     {
+        $menues = [];
         $v8 = new V8Js("PHP");
         $v8->createFolders = function($folders) {
             foreach ($folders as $folder) {
@@ -58,6 +59,9 @@ class NanoBuildCommand extends Command
         };
         $v8->snake_case = function($value) {
             return snake_case($value);
+        };
+        $v8->registerMenu = function($menuDef, $module) use(&$menues) {
+            $menues[$module] = $menuDef;
         };
         $v8->createClass = function($options) {
             $filename = $options->filename;
@@ -79,13 +83,16 @@ class NanoBuildCommand extends Command
                 '}',
             ]);
             file_put_contents($filename, $code);
-            exec('vendor/bin/php-cs-fixer fix '.$filename .' > /dev/null 2>&1 & echo $!');
+            exec('vendor/bin/php-cs-fixer fix '.$filename.' > /dev/null 2>&1 & echo $!');
         };
         $v8->createMigration = function($name) {
             try {
+                if (isset(glob(base_path().'/database/migrations/*'.snake_case($name).'.php')[0])) {
+                    return glob(base_path().'/database/migrations/*'.snake_case($name).'.php')[0];
+                }
                 Artisan::call('make:migration', ['name' => snake_case($name)]);
             } catch (\Exception $e) {
-
+                dump($e->getMessage());
             }
             return glob(base_path().'/database/migrations/*'.snake_case($name).'.php')[0];
         };
@@ -101,6 +108,43 @@ class NanoBuildCommand extends Command
         foreach (glob(base_path().'/nano/modules/*.js') as $filename) {
             $v8->executeString(file_get_contents($filename), $filename);
         }
+        $modulesJs = "";
+        foreach (glob(base_path().'/nano/modules/*.php') as $id => $filename) {
+            $code = file_get_contents($filename);
+            $tokens = token_get_all($code);
+            $phpCode = null;
+            $xmlCode = '';
+            foreach ($tokens as $t) {
+                if (is_array($t)) {
+                    if (T_INLINE_HTML === $t[0]) {
+                        $xmlCode.=$t[1];
+                    } elseif (T_OPEN_TAG === $t[0]) {
+                        $phpCode = '';
+                    } elseif (T_CLOSE_TAG === $t[0]) {
+                        $xmlCode.=json_encode($phpCode);
+                    } else {
+                        $phpCode.=$t[1];
+                    }
+                } else {
+                    $phpCode.=$t;
+                }
+            }
+            $dom = new \DOMDocument;
+            $dom->loadXML($xmlCode);
+            foreach ($dom->getElementsByTagName('template') as $template) {
+                $v8->template = str_replace('vue:', ':',
+                                            $dom->saveHTML($template));
+            }
+            foreach ($dom->getElementsByTagName('script') as $script) {
+                $v8->executeString($script->nodeValue, $filename);
+            }
+            $name = basename($filename, '.php');
+            $menues[$name]->id = $id;
+            $modulesJs.="Vue.component('".strtolower($name)."', require('./modules/".$name.".vue'));\n";
+            $modulesJs.="registerMenu(".json_encode($menues[$name]).");\n";
+        }
+        file_put_contents(resource_path().'/assets/js/modules.js', $modulesJs);
+        passthru("gulp");
     }
 
     protected function parseProperties($properties)

@@ -1,6 +1,8 @@
 <template>
     <div>
-        <slot></slot>
+        <div>
+            <slot></slot>
+        </div>
     </div>
 </template>
 
@@ -10,15 +12,33 @@
             "model",
         ],
         carousel:{},
+        data() {
+            return {
+                "currentGroup": this.root,
+                "path": [],
+            };
+        },
         methods: {
-            slider: function(viewId){
+            slider: function(viewId, path){
+                this.path.lenght=0;
+                //path.split("/").forEach(function(item){
+                //    this.path.push({name:'',id:null});
+                //});
+                /*if(path) {
+                    path.forEach(function(item){
+                        this.path.push(item);
+                    });
+                }*/
                 this.carousel.slider(viewId);
+            },
+            goto: function(item) {
+                item.goto(this);
             }
         },
         mounted: function() {
             var self = this;
             var events = [];
-            this.carousel = $(this.$el);
+            this.carousel = $(this.$el).children("div");
             this.carousel.slider();
             this.$children.forEach(function(e,i){
                 var evn;
@@ -32,7 +52,6 @@
             this.$children.forEach(function(e){
                 events.forEach(function(v){
                     self.$on(v, function(){
-                        console.log("emit: "+v, e);
                         e.$emit(v);
                     });
                 });

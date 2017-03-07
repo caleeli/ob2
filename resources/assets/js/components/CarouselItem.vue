@@ -15,13 +15,18 @@
         viewId:0,
         methods: {
             active: function(){
-                console.log(this.viewId);
                 this.carousel.slider(this.viewId);
             },
             setViewId: function(carousel, id) {
                 this.carousel = carousel;
                 this.viewId = id;
-            }
+            },
+            focus: function() {
+                if(!$(this.$el).is(":visible")) {
+                    var index = this.$parent.$children.indexOf(this);
+                    this.$parent.$parent.goto(index);
+                }
+            },
         },
         mounted: function() {
             var evn;
@@ -29,15 +34,12 @@
             for(evn in this.map) {
                 this.$children.forEach(function(e){
                     e.$on(evn, function(){
-                        console.log("evento: "+evn);
                         self.$emit(self.map[evn]);
                         self.$parent.$emit(self.map[evn]);
                     });
                 });
             }
-            console.log("registro: "+this.activate,self);
             self.$on(this.activate, function(){
-                console.log("catch " + self.activate);
                 self.active();
             });
         }

@@ -10,39 +10,56 @@ class User extends Model
     protected $table = 'usradm_users';
     protected $fillable = array(
       0 => 'username',
-      1 => 'lastname',
-      2 => 'firstname',
+      1 => 'password',
+      2 => 'nombres',
+      3 => 'paterno',
+      4 => 'materno',
+      5 => 'email',
+      6 => 'unidad',
+      7 => 'role_id',
     );
     protected $attributes = array(
-      'username' => 'admin',
-      'lastname' => '',
-      'firstname' => '',
+      'username' => '',
+      'password' => '',
+      'nombres' => '',
+      'paterno' => '',
+      'materno' => '',
+      'email' => '',
+      'unidad' => '',
     );
     protected $casts = array(
       'username' => 'string',
-      'lastname' => 'string',
-      'firstname' => 'string',
+      'password' => 'string',
+      'nombres' => 'string',
+      'paterno' => 'string',
+      'materno' => 'string',
+      'email' => 'string',
+      'unidad' => 'string',
     );
-    public function phone()
-    {
-        return $this->hasOne('App\Models\UserAdministration\Phone');
-    }
-
-
     public function logins()
     {
         return $this->hasMany('App\Models\UserAdministration\Login');
     }
 
 
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany('App\Models\UserAdministration\Role');
+        return $this->belongsTo('App\Models\UserAdministration\Role');
     }
 
 
     public function sayHello($name)
     {
         return 'Hola '.$name.'!!!';
+    }
+
+    public function registrar($data)
+    {
+        $data['role_id'] = 1;
+        $user = new \App\Models\UserAdministration\User($data);
+        $user->save();
+        \Mail::to($data->email)
+                                ->send(new \App\Mail\RegistroUsuario($user));
+        return $data;
     }
 }

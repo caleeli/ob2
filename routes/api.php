@@ -17,6 +17,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
+Route::get('/pivot/{table}/{aggregator}/{measure}/{rows}/{cols}',
+           array('as' => 'api', 'uses' => 'PivotController@index'));
 
 Route::get('/{module}/{model1}/{id1?}/{model2?}/{id2?}/{model3?}/{id3?}/{model4?}/{id4?}/{model5?}/{id5?}',
            array('as' => 'api', 'uses' => 'ApiController@index'))/*->middleware('auth:api')*/;

@@ -13,7 +13,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\NanoBuildCommand::class
+        Commands\NanoBuildCommand::class,
+        Commands\NanoInstallCommand::class,
+        Commands\DBDumpCommand::class,
+        Commands\DBImportCommand::class,
     ];
 
     /**
