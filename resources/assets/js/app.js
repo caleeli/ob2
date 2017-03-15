@@ -39,8 +39,7 @@ window.registerMenu = function (menu) {
     menu.options = [];
     menu.options.menu = menu;
     var option = menues.findPath((menu.path?menu.path+"/"+menu.name:menu.name).split("/")).menu;
-    console.log(menu, option);
-    if(menu.id) {
+    if(typeof menu.id!=='undefined') {
         option.id = menu.id;
     }
     option.name = menu.name;
