@@ -38,7 +38,7 @@
                 };
                 try {
                 $.ajax({
-                    url: '/api/pivot/'+model.table+'/'+model.aggregator+'/'+model.measure+'/'+model.rows+'/'+model.cols,
+                    url: '/api/pivot/valores/'+model.aggregator+'/defecto_valor_cargado/'+(model.rows?model.rows:'null')+'/'+(model.cols?model.cols:'null')+'/'+model.variables,
                     dataType: 'json',
                     success:function(data) {
                         lineChartData.labels = data.x;
@@ -59,15 +59,14 @@
                             });
                         }
                         self.chart = Chart.Bar(ctx, {
-                            type: 'verticalBar',
+                            type: 'horizontalBar',
                             data: lineChartData,
                             options: {
                                 responsive: true,
                                 hoverMode: 'index',
                                 stacked: false,
                                 title:{
-                                    display: true,
-                                    text:'Reporte 4'
+                                    display: false,
                                 },
                                 scales: {
                                     xAxes: [{

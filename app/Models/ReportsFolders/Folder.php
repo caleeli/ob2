@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Folder extends Model
 {
     use SoftDeletes;
-    protected $table = 'repfol_folders';
+    protected $table = 'be_folders';
     protected $fillable = array(
       0 => 'name',
       1 => 'type',

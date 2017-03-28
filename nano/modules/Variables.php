@@ -20,7 +20,7 @@
         "prefix": "repfol",
         "title": "Administración de variables",
         "icon": "fa fa-square-o",
-        "menu": "main/Configuración",
+        "menu": "main/Reportes",
         "models": [
         ],
         "views": {

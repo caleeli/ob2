@@ -88,3 +88,7 @@ $rotate-template-count: 16 !default
 .label-tag:nth-child(5n+4) {
   @include label-variant($label-warning-bg);
 }
+
+.table-locked {
+    opacity: 0.7;
+}

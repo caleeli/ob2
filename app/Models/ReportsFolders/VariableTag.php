@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class VariableTag extends Model
 {
     use SoftDeletes;
-    protected $table = 'repfol_variable_tags';
+    protected $table = 'be_variable_tags';
     protected $fillable = array(
       0 => 'name',
     );

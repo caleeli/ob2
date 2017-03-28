@@ -5,11 +5,11 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRepfolFormulasTable extends Migration
+class CreateBeFormulasTable extends Migration
 {
     public function up()
     {
-        Schema::create('repfol_formulas', function (Blueprint $table) {
+        Schema::create('be_formulas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('formula')->nullable();
             $table->integer('origin_id')->unsigned()->nullable();
@@ -22,6 +22,6 @@ class CreateRepfolFormulasTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('repfol_formulas');
+        Schema::dropIfExists('be_formulas');
     }
 }

@@ -93,7 +93,7 @@ Module.Model = function (base) {
             extends: 'Model',
             traits: ['SoftDeletes'],
             properties: {
-                'protected $table': module.prefix + '_' + PHP.str_plural(base.name),
+                'protected $table': Module.Model.getTableName(module, base),
                 'protected $fillable': array2array(base.fields, 'item.name').concat(array2array(base.associations, 'item.getFillableName()')),
                 'protected $attributes': array2object(base.fields, 'item.name', 'item.default'),
                 'protected $casts': array2object(base.fields, 'item.name', 'item.type'),
@@ -115,7 +115,7 @@ Module.Model = function (base) {
             methods: {
                 'up': "    public function up()\n" +
                   "    {\n" +
-                  "        Schema::create('" + Module.Model.getTableName(module, base.name) + "', function (Blueprint $table) {\n" +
+                  "        Schema::create('" + Module.Model.getTableName(module, base) + "', function (Blueprint $table) {\n" +
                   "            $table->increments('id');\n" +
                   array2array(base.fields, 'item.migration()').join("\n") + "\n" +
                   array2array(base.associations, 'item.migration()').join("") +
@@ -125,7 +125,7 @@ Module.Model = function (base) {
                   "    }\n",
                 'down': "    public function down()\n" +
                   "    {\n" +
-                  "        Schema::dropIfExists('" + Module.Model.getTableName(module, base.name) + "');\n" +
+                  "        Schema::dropIfExists('" + Module.Model.getTableName(module, base) + "');\n" +
                   "    }\n"
             },
         });
@@ -182,8 +182,8 @@ Module.Model.addIndex = function (table, type, columns) {
       "                $table->" + type + "(" + JSON.stringify(columns) + ");\n" +
       "            });\n";
 }
-Module.Model.getTableName = function (module, name) {
-    return module.prefix + '_' + PHP.str_plural(PHP.snake_case(name));
+Module.Model.getTableName = function (module, model) {
+    return !model.table ? module.prefix + '_' + PHP.str_plural(PHP.snake_case(model.name)) : model.table;
 }
 Module.Model.Field = function (base) {
     Element(base, this);
@@ -216,8 +216,11 @@ Module.Model.HasOne = function (base) {
     this.migration = function () {
         var mig = "";
         if (typeof base.columns !== 'undefined') {
-            mig += Module.Model.addIndex(Module.Model.getTableName(module, base.model), "index", base.references);
-            mig += "            $table->foreign(" + JSON.stringify(base.columns) + ")->references(" + JSON.stringify(base.references) + ")->on('" + Module.Model.getTableName(module, base.model) + "')->onDelete('cascade');\n";
+            var fmodel = array_find(module.models, function (item) {
+                return item.name == base.model;
+            });
+            mig += Module.Model.addIndex(Module.Model.getTableName(module, fmodel), "index", base.references);
+            mig += "            $table->foreign(" + JSON.stringify(base.columns) + ")->references(" + JSON.stringify(base.references) + ")->on('" + Module.Model.getTableName(module, fmodel) + "')->onDelete('cascade');\n";
         }
         return mig;
     }
@@ -260,17 +263,15 @@ Module.Model.BelongsTo = function (base) {
           "    }\n";
     }
     this.migration = function () {
-        var dd = array_find(module.models, function (item) {
-            return item.name == base.model;
-        });
         var foreign = PHP.snake_case(base.name);
         return "            $table->integer('" + foreign + "_id')->unsigned()->nullable();\n";
     }
     this.foreign = function () {
-        var foreign = PHP.snake_case(array_find(module.models, function (item) {
-            return item.name == base.model
-        }).name);
-        return "            $table->foreign('" + foreign + "_id')->references('id')->on('" + Module.Model.getTableName(dd.name) + "')->onDelete('cascade');\n";
+        var fmodel = array_find(module.models, function (item) {
+            return item.name == base.model;
+        });
+        var foreign = PHP.snake_case(fmodel.name);
+        return "            $table->foreign('" + foreign + "_id')->references('id')->on('" + Module.Model.getTableName(module, fmodel) + "')->onDelete('cascade');\n";
     }
     this.getFillableName = function () {
         return base.name + '_id';

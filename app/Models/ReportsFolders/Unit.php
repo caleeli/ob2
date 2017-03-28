@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Unit extends Model
 {
     use SoftDeletes;
-    protected $table = 'repfol_units';
+    protected $table = 'be_units';
     protected $fillable = array(
       0 => 'name',
       1 => 'family_id',

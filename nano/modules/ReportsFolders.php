@@ -30,7 +30,7 @@
 <script>
     var module = new Module({
         "name": "ReportsFolders",
-        "prefix": "repfol",
+        "prefix": "be",
         "title": "Reportes y Folders",
         "icon": "fa fa-folder",
         "menu": "main/Reportes",
@@ -44,15 +44,13 @@
                         "label": "Nombre",
                     }),
                     new Module.Model.Field({
-                        "name": "table",
+                        "name": "variables",
                         "type": "string",
                         "list": false,
-                        "label": "Tabla",
-                        "source": function(){
-                            return module.table.$selectFrom("tablas", {"conn":null})
-                        },
+                        "label": "Variables",
+                        "source": new Module.View.ModelInstance("ReportsFolders.Variable"),
                         "textField": "name",
-                        "ui": "select",
+                        "ui": "tags",
                     }),
                     new Module.Model.Field({
                         "name": "aggregator",
@@ -62,23 +60,28 @@
                         "label": "Agregación",
                         "enum": ["sum", "max", "min", "avg"],
                     }),
-                    new Module.Model.Field({
+                    /*new Module.Model.Field({
                         "name": "measure",
                         "type": "string",
                         "label": "Medida",
                         "list": false,
                         "default": "valor",
-                    }),
+                        "source": function(){
+                            return module.table.$selectFrom(
+                                "columnas",
+                                {"tabla":module.report.table}
+                            );
+                        },
+                        "textField": "name",
+                        "ui": "select",
+                    }),*/
                     new Module.Model.Field({
                         "name": "rows",
                         "type": "string",
                         "list": false,
                         "label": "Filas",
                         "source": function(){
-                            return module.table.$selectFrom(
-                                "columnas",
-                                {"tabla":module.report.table}
-                            );
+                            return module.dimension;
                         },
                         "textField": "name",
                         "ui": "tags",
@@ -88,6 +91,11 @@
                         "type": "string",
                         "list": false,
                         "label": "Columnas",
+                        "source": function(){
+                            return module.dimension;
+                        },
+                        "textField": "name",
+                        "ui": "tags",
                     }),
                 ],
                 "associations": [
@@ -105,7 +113,7 @@
                         function dashboard1($t=0)
                         {
                             $res = ['x'=>[],'series'=>['reportes'=>[]]];
-                            $rep = \DB::select("select (select repfol_folders.name from repfol_folders where repfol_folders.id=repfol_reports.folder_id) name, count(*) count from repfol_reports group by folder_id");
+                            $rep = \DB::select("select (select be_folders.name from be_folders where be_folders.id=be_reports.folder_id) name, count(*) count from be_reports group by folder_id");
                             foreach ($rep as $row) {
                                 $res['x'][] = $row->name;
                                 $res['series']['reportes'][] = $row->count;
@@ -116,17 +124,15 @@
                     "tablas(conn)": <?php
                     function tablas($conn=null) {
                         $collection = [];
-                        $tables = \DB::select("show tables");
+                        $tables = \DB::connection("datos")->getDoctrineSchemaManager()->listTableNames();
                         $type = 'tables';
-                        foreach ($tables as $table) {
-                            foreach($table as $name) {
-                                $collection[] = [
-                                    'type'          => $type,
-                                    'id'            => $name,
-                                    'attributes'    => ['name'=>$name],
-                                    'relationships' => [],
-                                ];
-                            }
+                        foreach ($tables as $name) {
+                            $collection[] = [
+                                'type'          => $type,
+                                'id'            => $name,
+                                'attributes'    => ['name'=>$name],
+                                'relationships' => [],
+                            ];
                         }
                         return ['data'=>$collection];
                     }
@@ -134,7 +140,7 @@
                     "columnas(tabla)": <?php
                     function columnas($tabla='ejemplo') {
                         $collection = [];
-                        $columns = \Schema::getColumnListing($tabla);
+                        $columns = \DB::connection("datos")->getSchemaBuilder()->getColumnListing($tabla);
                         $type = 'columns';
                         foreach ($columns as $name) {
                             $collection[] = [
@@ -216,16 +222,23 @@
                 "fields": [
                     new Module.Model.Field({
                         "name": "name",
-                        "type": "string"
+                        "label": "Nombre",
+                        "type": "string",
                     }),
                     new Module.Model.Field({
                         "name": "tags",
+                        "label": "Tipos",
                         "type": "string",
                         "ui": "tags",
                         "source": function(){
                             return module.variableTags.$selectFrom("tagsList", {});
                         },
                         "textField": "name",
+                    }),
+                    new Module.Model.Field({
+                        "name": "description",
+                        "label": "Descripción",
+                        "type": "string",
                     }),
                 ],
                 "associations": [
@@ -251,7 +264,8 @@
                 "fields": [
                     new Module.Model.Field({
                         "name": "name",
-                        "type": "string"
+                        "label": "Nombre",
+                        "type": "string",
                     }),
                     new Module.Model.Field({
                         "name": "main_unit",
@@ -267,6 +281,12 @@
                 "fields": [
                     new Module.Model.Field({
                         "name": "name",
+                        "label": "Nombre",
+                        "type": "string"
+                    }),
+                    new Module.Model.Field({
+                        "name": "column",
+                        "label": "Columna de la tabla",
                         "type": "string"
                     }),
                 ],
@@ -336,8 +356,11 @@
         "data": {
             report: new Module.View.ModelInstance("ReportsFolders.Report", "ReportsFolders/folders/{module.folder.id}/reports"),
             folder: new Module.View.ModelInstance("ReportsFolders.Folder"),
+            //conexion: new Module.View.ModelInstance("Connections.Connection"),
+            //table: new Module.View.ModelInstance("Connections.Co", "ReportsFolders/connections/{module.conexion.id}/tables"),
             table: new Module.View.ModelInstance("ReportsFolders.Report"),
             variableTags: new Module.View.ModelInstance("ReportsFolders.VariableTag"),
+            dimension: new Module.View.ModelInstance("ReportsFolders.Dimension"),
         }
     });
 </script>

@@ -121,7 +121,7 @@ class NanoBuildCommand extends Command
                     } elseif (T_OPEN_TAG === $t[0]) {
                         $phpCode = '';
                     } elseif (T_CLOSE_TAG === $t[0]) {
-                        $xmlCode.=json_encode($phpCode);
+                        $xmlCode.=htmlentities(json_encode($phpCode), ENT_NOQUOTES, 'utf-8');
                     } else {
                         $phpCode.=$t[1];
                     }

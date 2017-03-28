@@ -58,6 +58,9 @@ VueComponent.generate = function (module, views, data, template) {
                 for (var m in model.methods) {
                     var method = m.split('(')[0];
                     var params = m.split('(')[1].split(')')[0].split(',');
+                    if(method.substr(0,1)==='-') {
+                        continue;
+                    }
                     if(params[0]==='') {
                         params.pop();
                     }

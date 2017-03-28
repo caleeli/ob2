@@ -59,6 +59,11 @@
             });
             this.table = table;
             $(this.$el).find('tbody').on( 'click', 'tr', function () {
+                if($(self.$el).hasClass('table-locked')) {
+                    return;
+                }
+                $(self.$el).addClass('table-locked');
+                setTimeout((function($el){return function(){$el.removeClass('table-locked');}})($(self.$el)), 1000);
                 var id = table.row( this ).id();
                 self.$emit('selectrow', id);
             } );

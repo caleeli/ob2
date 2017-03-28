@@ -17,4 +17,4 @@ registerMenu({"path":"main\/Configuraci\u00f3n","name":"UserAdministration","tex
 Vue.component('variabletags', require('./modules/VariableTags.vue'));
 registerMenu({"path":"main\/Configuraci\u00f3n","name":"VariableTags","text":"Clases de variables","icon":"fa fa-object-group","id":8});
 Vue.component('variables', require('./modules/Variables.vue'));
-registerMenu({"path":"main\/Configuraci\u00f3n","name":"Variables","text":"Administraci\u00f3n de variables","icon":"fa fa-square-o","id":9});
+registerMenu({"path":"main\/Reportes","name":"Variables","text":"Administraci\u00f3n de variables","icon":"fa fa-square-o","id":9});

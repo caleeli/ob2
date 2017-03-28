@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Domain extends Model
 {
     use SoftDeletes;
-    protected $table = 'repfol_domains';
+    protected $table = 'be_domains';
     protected $fillable = array(
       0 => 'name',
       1 => 'synonyms',

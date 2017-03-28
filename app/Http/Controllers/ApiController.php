@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ApiController extends Controller
 {
-    const PER_PAGE = 15;
+    const PER_PAGE = 50;
 
     /**
      * /api/users?page=2&filter[]=where,username,=,david&fields=username,firstname

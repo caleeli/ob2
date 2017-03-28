@@ -28,14 +28,11 @@
     this.$name = "Report";
     this.$pluralName = "Reports";
     this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name"},{"name":"table","label":"Tabla","type":"select","enum":[],"source":function (){
-                            return module.table.$selectFrom("tablas", {"conn":null})
-                        },"textField":"name","value":"table"},{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator"},{"name":"measure","label":"Medida","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"measure"},{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
-                            return module.table.$selectFrom(
-                                "columnas",
-                                {"tabla":module.report.table}
-                            );
-                        },"textField":"name","value":"rows"},{"name":"cols","label":"Columnas","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cols"}];
+        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name"},{"name":"variables","label":"Variables","type":"tags","enum":[],"source":new ReportsFolders.Variable(),"textField":"name","value":"variables"},{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator"},{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
+                            return module.dimension;
+                        },"textField":"name","value":"rows"},{"name":"cols","label":"Columnas","type":"tags","enum":[],"source":function (){
+                            return module.dimension;
+                        },"textField":"name","value":"cols"}];
     };
     this.$columns = function () {
         return [{"title":"Nombre","data":"attributes.name"}];
@@ -104,17 +101,17 @@ ReportsFolders.Variable = function (url, id) {
     this.$defaultUrl = "/api/ReportsFolders/variables";
     Model.call(this, url, id, "ReportsFolders.Variable");
     this.$list = function () {
-        return "fields=name,tags";
+        return "fields=name,tags,description";
     };
     this.$name = "Variable";
     this.$pluralName = "Variables";
     this.$fields = function () {
-        return [{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name"},{"name":"tags","label":"tags","type":"tags","enum":[],"source":function (){
+        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name"},{"name":"tags","label":"Tipos","type":"tags","enum":[],"source":function (){
                             return module.variableTags.$selectFrom("tagsList", {});
-                        },"textField":"name","value":"tags"}];
+                        },"textField":"name","value":"tags"},{"name":"description","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"description"}];
     };
     this.$columns = function () {
-        return [{"title":"name","data":"attributes.name"},{"title":"tags","data":"attributes.tags"}];
+        return [{"title":"Nombre","data":"attributes.name"},{"title":"Tipos","data":"attributes.tags"},{"title":"Descripción","data":"attributes.description"}];
     };
     this.$methods = {
     };
@@ -159,10 +156,10 @@ ReportsFolders.Family = function (url, id) {
     this.$name = "Family";
     this.$pluralName = "Families";
     this.$fields = function () {
-        return [{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name"},{"name":"main_unit","label":"Unidad principal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"main_unit"}];
+        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name"},{"name":"main_unit","label":"Unidad principal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"main_unit"}];
     };
     this.$columns = function () {
-        return [{"title":"name","data":"attributes.name"},{"title":"Unidad principal","data":"attributes.main_unit"}];
+        return [{"title":"Nombre","data":"attributes.name"},{"title":"Unidad principal","data":"attributes.main_unit"}];
     };
     this.$methods = {
     };
@@ -178,15 +175,15 @@ ReportsFolders.Dimension = function (url, id) {
     this.$defaultUrl = "/api/ReportsFolders/dimensions";
     Model.call(this, url, id, "ReportsFolders.Dimension");
     this.$list = function () {
-        return "fields=name";
+        return "fields=name,column";
     };
     this.$name = "Dimension";
     this.$pluralName = "Dimensions";
     this.$fields = function () {
-        return [{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name"}];
+        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name"},{"name":"column","label":"Columna de la tabla","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"column"}];
     };
     this.$columns = function () {
-        return [{"title":"name","data":"attributes.name"}];
+        return [{"title":"Nombre","data":"attributes.name"},{"title":"Columna de la tabla","data":"attributes.column"}];
     };
     this.$methods = {
     };
@@ -262,6 +259,7 @@ ReportsFolders.Formula.prototype.constructor = Model;
 folder: new ReportsFolders.Folder(),
 table: new ReportsFolders.Report(),
 variableTags: new ReportsFolders.VariableTag(),
+dimension: new ReportsFolders.Dimension(),
             }
         },
         mounted: function() {

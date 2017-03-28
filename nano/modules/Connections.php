@@ -80,7 +80,50 @@
                     }),
                 ],
                 "associations": [
-                ]
+                ],
+                "methods": {
+                    "-boot()": <?php
+                        public static function boot()
+                        {
+                            static::saved(function($connection1){
+                                $connections = static::all();
+                                $conns =  [];
+                                foreach ($connections as $connection) {
+                                    $conn = [
+                                        'driver' => $connection->driver,
+                                        'host' => $connection->host,
+                                        'database' => $connection->database,
+                                        'username' => $connection->username,
+                                        'password' => $connection->password,
+                                    ];
+                                    if (!empty($connection->port)) {
+                                        $conn['port'] = $connection->port;
+                                    }
+                                    if (!empty($connection->charset)) {
+                                        $conn['charset'] = $connection->charset;
+                                    }
+                                    if (!empty($connection->collation)) {
+                                        $conn['collation'] = $connection->collation;
+                                    }
+                                    $conns[$connection->name]= $conn;
+                                }
+                                file_put_contents(
+                                    config_path() . '/connections.php',
+                                    "<?php\nreturn ".var_export($conns, true).";\n"
+                                );
+                            });
+                        }
+                    ?>,
+                    "-tables()": <?php
+                        function tables()
+                        {
+                            $tables = \DB::connection($this->name)
+                                ->getDoctrineSchemaManager()
+                                ->listTableNames();
+                            return $tables;
+                        }
+                    ?>,
+                }
             }),
         ],
         "views": {

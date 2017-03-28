@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Formula extends Model
 {
     use SoftDeletes;
-    protected $table = 'repfol_formulas';
+    protected $table = 'be_formulas';
     protected $fillable = array(
       0 => 'formula',
       1 => 'origin_id',

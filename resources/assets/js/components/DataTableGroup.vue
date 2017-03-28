@@ -68,6 +68,17 @@
                         }
 
                     },
+                    {
+                        text: '<i class="fa fa-arrow-up"></i>',
+                        action: function (e, dt, node, config) {
+                            if(self.path.length>1) {
+                                self.path.pop();
+                                self.open(self.path[self.path.length-1].item);
+                                self.path[self.path.length-1].goto();
+                            }
+                        }
+
+                    },
                     /*{
                         extend: 'copyHtml5',
                         text: '<i class="fa fa-copy"></i> Copiar',
@@ -94,6 +105,11 @@
             });
             self.table = table;
             $(this.$el).find('tbody').on( 'click', 'tr', function () {
+                if($(self.$el).hasClass('table-locked')) {
+                    return;
+                }
+                $(self.$el).addClass('table-locked');
+                setTimeout((function($el){return function(){$el.removeClass('table-locked');}})($(self.$el)), 1000);
                 var id = table.row( this ).id();
                 var data = table.row( this ).data();
                 if(!data) {

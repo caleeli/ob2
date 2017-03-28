@@ -7867,4 +7867,8 @@ a.dt-button {
   background-color: #b6a338;
 }
 
+.table-locked {
+  opacity: 0.7;
+}
+
 /*# sourceMappingURL=app.css.map */
