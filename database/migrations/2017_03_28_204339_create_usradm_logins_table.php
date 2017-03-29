@@ -14,10 +14,6 @@ class CreateUsradmLoginsTable extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('token');
-            Schema::table('usradm_users', function (Blueprint $table) {
-                $table->index(["username","password"]);
-            });
-            $table->foreign(["username","password"])->references(["username","password"])->on('usradm_users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

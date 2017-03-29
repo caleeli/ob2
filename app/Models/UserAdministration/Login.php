@@ -23,12 +23,6 @@ class Login extends Model
       'password' => 'string',
       'token' => 'string',
     );
-    public function user()
-    {
-        return $this->hasOne('App\Models\UserAdministration\User', ["username","password"], ["username","password"]);
-    }
-
-
     public function validate($username, $password)
     {
         $user = User::where('username', '=', $username)

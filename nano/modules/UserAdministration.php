@@ -328,12 +328,12 @@
                     }),
                 ],
                 "associations": [
-                    new Module.Model.HasOne({
+                    /*new Module.Model.HasOne({
                         "name": "user",
                         "model": "user",
                         "columns": ["username", "password"],
                         "references": ["username", "password"],
-                    }),
+                    }),*/
                 ],
                 "methods": {
                     "validate(username, password)": "public function validate($username, $password) {\n\

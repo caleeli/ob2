@@ -48,7 +48,7 @@
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fa fa-file-text"></i> PDF',
-                        exportOptions: {
+                        exportOptions: {http://githook.callizaya.com/deploy/githook
                         }
                     }*/
                 ],
