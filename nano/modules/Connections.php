@@ -62,6 +62,7 @@
                         "type": "string",
                         "default": "",
                         "required": false,
+                        "ui": "password",
                         "list": false,
                     }),
                     new Module.Model.Field({

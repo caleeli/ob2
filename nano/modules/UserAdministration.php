@@ -56,7 +56,6 @@
                         "type": "string",
                         "label": "Nombres",
                         "default": "",
-                        "ui": "password",
                         "required": true
                     }),
                     new Module.Model.Field({
