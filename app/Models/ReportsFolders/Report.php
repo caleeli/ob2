@@ -45,7 +45,7 @@ class Report extends Model
     public function dashboard1($t=0)
     {
         $res = ['x'=>[],'series'=>['reportes'=>[]]];
-        $rep = \DB::select("select (select be_folders.name from be_folders where be_folders.id=be_reports.folder_id) name, count(*) count from be_reports group by folder_id");
+        $rep = \DB::select("select (select be_folders.name from be_folders where be_folders.id=be_reports.folder_id) as name, count(*) as count from be_reports group by folder_id");
         foreach ($rep as $row) {
             $res['x'][] = $row->name;
             $res['series']['reportes'][] = $row->count;
