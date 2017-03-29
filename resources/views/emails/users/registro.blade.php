@@ -13,6 +13,6 @@
 </h3>
 
 <p>Para realizar cambios en tu cuenta en cualquier momento, inicia sesión en el portal del sistema
-    <a href="http://baseestadistica.entreparentesys.com">baseestadistica.entreparentesys.com</a>.
+    <a href="{{env('APP_URL', 'http://localhost')}}/login">{{env('APP_URL', 'http://localhost')}}/login</a>.
     Desde aqu&iacute; podr&aacute;s actualizar la información, preferencias de contacto y mucho más.</p>
 
