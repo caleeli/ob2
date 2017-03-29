@@ -21,7 +21,11 @@
         }
     }
 </style>
-        <div id="app">
+<div id="now_loading">
+    Cargando ...<br />
+    <img src="/images/ajax-loader.gif">
+</div>
+        <div id="app" style="visibility:hidden;">
             <h1>{{env('APP_NAME', 'Application Name')}}</h1>
             <carousel>
                 <carouselitem class="active">

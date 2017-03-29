@@ -85,6 +85,10 @@ $(document).ready(function () {
         mounted: function () {
             var self = this;
             this.carousel = this.$children[0];
+            $(function () {
+                $("#now_loading").hide();
+                self.$el.style.visibility = "visible";
+            });
         }
     });
 
