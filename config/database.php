@@ -1,5 +1,9 @@
 <?php
-$additionalConnections = require 'connections.php';
+if(file_exists(__DIR__.'/connections.php')) {
+    $additionalConnections = require __DIR__.'/connections.php';
+} else {
+    $additionalConnections = [];
+}
 $connections = array_merge($additionalConnections, [
 
         'sqlite' => [
