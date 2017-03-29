@@ -263,7 +263,7 @@
                             $data['role_id'] = 1;
                             $user = new \App\Models\UserAdministration\User($data);
                             $user->save();
-                            \Mail::to($data->email)
+                            \Mail::to($data['email'])
                                 ->send(new \App\Mail\RegistroUsuario($user));
                             return $data;
                         }
