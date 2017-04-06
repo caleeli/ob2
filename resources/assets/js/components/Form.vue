@@ -11,6 +11,7 @@
             </select>
             <tags v-if="field.type==='tags'" :placeholder="field.label" :model="values" :property="field.value" :domain="domains[field.name]" :field="field">
             </tags>
+            <filters v-if="field.type==='filter'" :placeholder="field.label" :model="values" :property="field.value" :domain="domains[field.name]" :field="field" />
         </div>
         <!-- button type="button" v-on:click="reset" class="btn btn-default">Reestablecer</button -->
         <button type="button" v-on:click="cancel" class="btn btn-warning">Cancelar</button>

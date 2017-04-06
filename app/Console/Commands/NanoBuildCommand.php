@@ -130,7 +130,12 @@ class NanoBuildCommand extends Command
                 }
             }
             $dom = new \DOMDocument;
-            $dom->loadXML($xmlCode);
+            try {
+                $dom->loadXML($xmlCode);
+            }catch (\Exception $e) {
+                echo "Error in $filename: \n$xmlCode";
+                throw $e;
+            }
             foreach ($dom->getElementsByTagName('template') as $template) {
                 $v8->template = str_replace('vue:', ':',
                                             $dom->saveHTML($template));

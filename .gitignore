@@ -5,6 +5,7 @@
 /.idea
 Homestead.json
 Homestead.yaml
+dump.php
 .env
 .DS_Store
 .php_cs.cache

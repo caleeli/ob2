@@ -11,6 +11,7 @@ use App\Exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 use ReflectionMethod;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ApiController extends Controller
 {
@@ -31,6 +32,9 @@ class ApiController extends Controller
                 $result = $result->paginate($perPage)->getCollection();
             } elseif ($model instanceof Model) {
                 $result = $model;
+            } elseif ($model instanceof BelongsTo ||
+                $model instanceof HasOne) {
+                $model = $model->first();
             } elseif ($model === null) {
                 throw new NotFoundException();
             } else {
@@ -192,10 +196,6 @@ class ApiController extends Controller
             } elseif ($model instanceof Model) {
                 $relationship = array_shift($route);
                 $model = $model->$relationship();
-                if ($model instanceof BelongsTo ||
-                    $model instanceof HasOne) {
-                    $model = $model->first();
-                }
             } elseif (is_string($model)) {
                 $id = array_shift($route);
                 if ($id === 'create') {
@@ -249,10 +249,10 @@ class ApiController extends Controller
     protected function sparseRelationships(Request $request, $row)
     {
         $relationships = [];
-        if (empty($request['fields'])) {
+        if (empty($request['fields']) && empty($request['include'])) {
             return [];
         }
-        $fields = explode(",", $request['fields']);
+        $fields = explode(",", $request['fields'].','.$request['include']);
         foreach ($fields as $field) {
             $methodName = $field;
             if (method_exists($row, $methodName)) {
@@ -261,6 +261,9 @@ class ApiController extends Controller
                 if ($model instanceof BelongsTo ||
                     $model instanceof HasOne) {
                     $model = $model->first();
+                } elseif ($model  instanceof BelongsToMany ||
+                    $model instanceof HasMany) {
+                    $model = $model->get();
                 }
                 $response = $this->packResponse($model, $type, $request, false);
                 $relationships[$field] = $response;

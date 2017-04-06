@@ -28,7 +28,23 @@ export default function(uri0, id, type) {
                     originalData = data.data;
                     Object.assign(self, originalData.attributes);
                     id = originalData.id;
-                    this.id = originalData.id;
+                    self.id = originalData.id;
+                    if(typeof originalData.relationships==="object") {
+                        for(var a in originalData.relationships) {
+                            self[a] = originalData.relationships[a];
+                            if(typeof self[a].forEach==='function') {
+                                self[a].get = function(id){
+                                    var res;
+                                    self[a].forEach(function(item) {
+                                        if (item.id===id) {
+                                            res = item;
+                                        }
+                                    });
+                                    return res;
+                                }
+                            }
+                        }
+                    }
                     callback(self);
                     if(typeof loadCallback==='function'){
                         loadCallback(self);
@@ -76,20 +92,17 @@ export default function(uri0, id, type) {
         });
     };
     this.$call = function (methodName, params, childrenAssociation, methodCallback) {
-        var method;
         var url;
         if(typeof childrenAssociation==='undefined') {
             childrenAssociation = '';
         }
         if (!id) {
-            method = 'POST';
             url = this.$url() + childrenAssociation;
         } else {
-            method = 'PUT';
             url = this.$url() + '/' + childrenAssociation + id;
         }
         $.ajax({
-            method: method,
+            method: 'POST',
             url: url,
             dataType: 'json',
             data: JSON.stringify({
@@ -169,6 +182,15 @@ export default function(uri0, id, type) {
                 });
             }
         }
+        domain.get = function(id){
+            var res;
+            this.forEach(function(item) {
+                if (item.id===id) {
+                    res = item;
+                }
+            });
+            return res;
+        };
         domain.refresh();
         return domain;
     };

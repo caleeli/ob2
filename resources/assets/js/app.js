@@ -79,6 +79,7 @@ Vue.component('carouselitem', require('./components/CarouselItem.vue'));
 Vue.component('chart', require('./components/Chart.vue'));
 Vue.component('chart2', require('./components/Chart2.vue'));
 Vue.component('tags', require('./components/Tags.vue'));
+Vue.component('filters', require('./components/Filter.vue'));
 
 $(document).ready(function () {
     var app;

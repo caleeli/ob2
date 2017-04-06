@@ -14,7 +14,8 @@ class Report extends Model
       2 => 'aggregator',
       3 => 'rows',
       4 => 'cols',
-      5 => 'folder_id',
+      5 => 'filter',
+      6 => 'folder_id',
     );
     protected $attributes = array(
       'name' => null,
@@ -22,6 +23,7 @@ class Report extends Model
       'aggregator' => null,
       'rows' => null,
       'cols' => null,
+      'filter' => null,
     );
     protected $casts = array(
       'name' => 'string',
@@ -29,6 +31,7 @@ class Report extends Model
       'aggregator' => 'string',
       'rows' => 'string',
       'cols' => 'string',
+      'filter' => 'string',
     );
     public function folder()
     {
@@ -81,6 +84,32 @@ class Report extends Model
                                 'type'          => $type,
                                 'id'            => $name,
                                 'attributes'    => ['name'=>$name],
+                                'relationships' => [],
+                            ];
+        }
+        return ['data'=>$collection];
+    }
+                    
+
+    public function dimensiones($variables='')
+    {
+        $collection = [];
+        $variableRows = \App\Models\ReportsFolders\Variable::whereIn(
+                            'id',
+                            explode('', $variables)
+                        );
+        $dims = [];
+        foreach ($variableRows as $var) {
+            foreach ($var->dimensions() as $dim) {
+                $dims[$dim->id] = $dim;
+            }
+        }
+        $type = 'ReportsFolders.Dimension';
+        foreach ($dims as $dim) {
+            $collection[] = [
+                                'type'          => $type,
+                                'id'            => $dim->id,
+                                'attributes'    => ['name'=>$dim->name],
                                 'relationships' => [],
                             ];
         }

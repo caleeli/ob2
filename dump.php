@@ -12,28 +12,12 @@ try{DB::table('conn_connections')->insert(array (
      'password' => 'secret',
      'charset' => 'utf-8',
      'collation' => '',
-     'created_at' => '2017-03-07 13:31:46',
-     'updated_at' => '2017-03-27 22:46:23',
-     'deleted_at' => NULL,
-  )),
-  1 => 
-  (array(
-     'id' => 2,
-     'name' => 'finanzas',
-     'driver' => 'mysql',
-     'host' => '127.0.0.1',
-     'port' => '',
-     'database' => 'finanzas',
-     'username' => 'dsss',
-     'password' => 'dddd',
-     'charset' => '',
-     'collation' => '',
-     'created_at' => '2017-03-11 01:41:56',
-     'updated_at' => '2017-03-27 22:16:10',
+     'created_at' => '2017-04-05 17:55:19',
+     'updated_at' => '2017-04-05 17:55:19',
      'deleted_at' => NULL,
   )),
 ));}catch(\Exception $e){echo $e->getMessage(),"\n";}
-try{DB::table('repfol_dimensions')->insert(array (
+try{DB::table('be_dimensions')->insert(array (
   0 => 
   (array(
      'id' => 1,
@@ -413,146 +397,66 @@ try{DB::table('repfol_dimensions')->insert(array (
      'deleted_at' => NULL,
   )),
 ));}catch(\Exception $e){echo $e->getMessage(),"\n";}
-try{DB::table('repfol_domains')->insert(array (
+try{DB::table('be_domains')->insert(array (
   0 => 
   (array(
      'id' => 1,
-     'name' => 'Tarija',
+     'name' => 'La Paz',
      'synonyms' => NULL,
-     'dimension_id' => 1,
-     'created_at' => '2017-03-07 18:45:50',
-     'updated_at' => '2017-03-07 18:45:50',
+     'dimension_id' => 26,
+     'created_at' => '2017-04-05 20:27:02',
+     'updated_at' => '2017-04-05 20:27:02',
      'deleted_at' => NULL,
   )),
   1 => 
   (array(
      'id' => 2,
-     'name' => 'Chuquisaca',
+     'name' => 'Cochabamba',
      'synonyms' => NULL,
-     'dimension_id' => 1,
-     'created_at' => '2017-03-07 18:45:56',
-     'updated_at' => '2017-03-07 18:45:56',
+     'dimension_id' => 26,
+     'created_at' => '2017-04-05 20:27:13',
+     'updated_at' => '2017-04-05 20:27:13',
      'deleted_at' => NULL,
   )),
   2 => 
   (array(
      'id' => 3,
-     'name' => 'Pando',
-     'synonyms' => NULL,
-     'dimension_id' => 1,
-     'created_at' => '2017-03-07 18:46:04',
-     'updated_at' => '2017-03-07 18:46:04',
-     'deleted_at' => NULL,
-  )),
-  3 => 
-  (array(
-     'id' => 4,
-     'name' => 'La Paz',
-     'synonyms' => NULL,
-     'dimension_id' => 1,
-     'created_at' => '2017-03-07 18:46:13',
-     'updated_at' => '2017-03-07 18:46:13',
-     'deleted_at' => NULL,
-  )),
-  4 => 
-  (array(
-     'id' => 5,
-     'name' => 'Cochabamba',
-     'synonyms' => NULL,
-     'dimension_id' => 1,
-     'created_at' => '2017-03-07 18:46:20',
-     'updated_at' => '2017-03-07 18:46:20',
-     'deleted_at' => NULL,
-  )),
-  5 => 
-  (array(
-     'id' => 6,
-     'name' => 'Potosi',
-     'synonyms' => NULL,
-     'dimension_id' => 1,
-     'created_at' => '2017-03-07 18:46:28',
-     'updated_at' => '2017-03-07 18:46:28',
-     'deleted_at' => NULL,
-  )),
-  6 => 
-  (array(
-     'id' => 7,
      'name' => 'Santa Cruz',
      'synonyms' => NULL,
-     'dimension_id' => 1,
-     'created_at' => '2017-03-07 18:46:37',
-     'updated_at' => '2017-03-07 18:46:37',
-     'deleted_at' => NULL,
-  )),
-  7 => 
-  (array(
-     'id' => 8,
-     'name' => 'Oruro',
-     'synonyms' => NULL,
-     'dimension_id' => 1,
-     'created_at' => '2017-03-07 18:46:43',
-     'updated_at' => '2017-03-07 18:46:43',
-     'deleted_at' => NULL,
-  )),
-  8 => 
-  (array(
-     'id' => 9,
-     'name' => 'Beni',
-     'synonyms' => NULL,
-     'dimension_id' => 1,
-     'created_at' => '2017-03-07 18:46:52',
-     'updated_at' => '2017-03-07 18:46:52',
+     'dimension_id' => 26,
+     'created_at' => '2017-04-05 20:27:19',
+     'updated_at' => '2017-04-05 20:27:19',
      'deleted_at' => NULL,
   )),
 ));}catch(\Exception $e){echo $e->getMessage(),"\n";}
-try{DB::table('repfol_folders')->insert(array (
+try{DB::table('be_folders')->insert(array (
   0 => 
   (array(
      'id' => 1,
      'name' => 'Mis Reportes',
      'type' => 'FOLDER',
      'folder_id' => NULL,
-     'created_at' => '2017-03-08 03:34:19',
-     'updated_at' => '2017-03-08 03:34:19',
-     'deleted_at' => NULL,
-  )),
-  1 => 
-  (array(
-     'id' => 2,
-     'name' => 'Pendientes',
-     'type' => 'FOLDER',
-     'folder_id' => NULL,
-     'created_at' => '2017-03-09 19:31:17',
-     'updated_at' => '2017-03-09 19:31:17',
-     'deleted_at' => NULL,
-  )),
-  2 => 
-  (array(
-     'id' => 3,
-     'name' => 'Observados',
-     'type' => 'FOLDER',
-     'folder_id' => NULL,
-     'created_at' => '2017-03-09 19:31:23',
-     'updated_at' => '2017-03-09 19:31:23',
+     'created_at' => '2017-04-05 17:53:28',
+     'updated_at' => '2017-04-05 17:53:28',
      'deleted_at' => NULL,
   )),
 ));}catch(\Exception $e){echo $e->getMessage(),"\n";}
-try{DB::table('repfol_reports')->insert(array (
+try{DB::table('be_reports')->insert(array (
   0 => 
   (array(
      'id' => 1,
-     'name' => 'el reporte',
-     'variables' => '1,2',
+     'name' => 'Mi Reporte',
+     'variables' => '1',
      'aggregator' => 'sum',
-     'rows' => '',
-     'cols' => '26',
+     'rows' => '1',
+     'cols' => NULL,
      'folder_id' => 1,
-     'created_at' => '2017-03-28 16:41:59',
-     'updated_at' => '2017-03-28 20:26:51',
+     'created_at' => '2017-04-05 17:55:43',
+     'updated_at' => '2017-04-05 17:55:43',
      'deleted_at' => NULL,
   )),
 ));}catch(\Exception $e){echo $e->getMessage(),"\n";}
-try{DB::table('repfol_variables')->insert(array (
+try{DB::table('be_variables')->insert(array (
   0 => 
   (array(
      'id' => 1,
@@ -655,6 +559,16 @@ try{DB::table('repfol_variables')->insert(array (
   )),
   10 => 
   (array(
+     'id' => 11,
+     'name' => 'cantidad de dosis única de vitamina "A", aplicada a mujeres en post parto',
+     'tags' => NULL,
+     'description' => NULL,
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'deleted_at' => NULL,
+  )),
+  11 => 
+  (array(
      'id' => 12,
      'name' => 'Número aplicaciones de dosis única de vacuna antisarampionosa a niños y niñas de 1 año',
      'tags' => NULL,
@@ -663,7 +577,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  11 => 
+  12 => 
   (array(
      'id' => 13,
      'name' => 'coberturas de control prenatal',
@@ -673,7 +587,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  12 => 
+  13 => 
   (array(
      'id' => 14,
      'name' => 'Consulta externa de la población de 5 años y más',
@@ -683,7 +597,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  13 => 
+  14 => 
   (array(
      'id' => 15,
      'name' => 'Consulta externa en la población menor de 5 años',
@@ -693,7 +607,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  14 => 
+  15 => 
   (array(
      'id' => 16,
      'name' => 'Control de crecimiento a niños menores de cinco años nuevos y repetidos',
@@ -703,7 +617,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  15 => 
+  16 => 
   (array(
      'id' => 17,
      'name' => 'Estudios citológicos vaginales (PAP) de mujeres en edad fértil',
@@ -713,7 +627,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  16 => 
+  17 => 
   (array(
      'id' => 18,
      'name' => 'Número de camas',
@@ -723,7 +637,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  17 => 
+  18 => 
   (array(
      'id' => 19,
      'name' => 'Dosis de vacunas aplicadas a menores de 1 año',
@@ -733,7 +647,27 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  18 => 
+  19 => 
+  (array(
+     'id' => 20,
+     'name' => 'Dosis de vitamina "A", aplicada a niños y niñas de 1 a 4 años',
+     'tags' => NULL,
+     'description' => NULL,
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'deleted_at' => NULL,
+  )),
+  20 => 
+  (array(
+     'id' => 21,
+     'name' => 'Vitamina "A" aplicada a menores de 5 años',
+     'tags' => NULL,
+     'description' => NULL,
+     'created_at' => NULL,
+     'updated_at' => NULL,
+     'deleted_at' => NULL,
+  )),
+  21 => 
   (array(
      'id' => 22,
      'name' => 'Presupuesto Aprobado',
@@ -743,7 +677,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  19 => 
+  22 => 
   (array(
      'id' => 23,
      'name' => 'Credito Vigente',
@@ -753,7 +687,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  20 => 
+  23 => 
   (array(
      'id' => 24,
      'name' => 'Presupuesto Comprometido',
@@ -763,7 +697,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  21 => 
+  24 => 
   (array(
      'id' => 25,
      'name' => 'Presupuesto Devengado',
@@ -773,7 +707,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  22 => 
+  25 => 
   (array(
      'id' => 26,
      'name' => 'Presupuesto Pagado',
@@ -783,7 +717,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  23 => 
+  26 => 
   (array(
      'id' => 27,
      'name' => 'Saldo por Devengar',
@@ -793,7 +727,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  24 => 
+  27 => 
   (array(
      'id' => 28,
      'name' => 'Deuda Flotante',
@@ -803,7 +737,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  25 => 
+  28 => 
   (array(
      'id' => 29,
      'name' => 'Proyecciones de población, según departamento y municipio',
@@ -813,7 +747,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  26 => 
+  29 => 
   (array(
      'id' => 30,
      'name' => 'Procedencia del Agua que utilizan en la vivienda',
@@ -823,7 +757,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  27 => 
+  30 => 
   (array(
      'id' => 31,
      'name' => 'Tipo de desagüe del servicio sanitario',
@@ -833,7 +767,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  28 => 
+  31 => 
   (array(
      'id' => 32,
      'name' => 'Procedencia de Energía Eléctrica',
@@ -843,7 +777,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  29 => 
+  32 => 
   (array(
      'id' => 33,
      'name' => 'Total Ingreso',
@@ -853,7 +787,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  30 => 
+  33 => 
   (array(
      'id' => 34,
      'name' => 'Impuesto Especial a los Hidrocarburos y sus Derivados (IEHD)',
@@ -863,7 +797,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  31 => 
+  34 => 
   (array(
      'id' => 35,
      'name' => 'Impuesto Directo a los Hidrocarburos (IDH)',
@@ -873,7 +807,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  32 => 
+  35 => 
   (array(
      'id' => 36,
      'name' => 'Fondo de Compensación Departamental',
@@ -883,7 +817,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  33 => 
+  36 => 
   (array(
      'id' => 37,
      'name' => 'Regalías Mineras',
@@ -893,7 +827,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  34 => 
+  37 => 
   (array(
      'id' => 38,
      'name' => 'Regalías Hidrocarburiferas',
@@ -903,7 +837,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  35 => 
+  38 => 
   (array(
      'id' => 39,
      'name' => 'Regalías Forestales',
@@ -913,7 +847,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  36 => 
+  39 => 
   (array(
      'id' => 40,
      'name' => 'Ingresos Tributarios',
@@ -923,7 +857,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  37 => 
+  40 => 
   (array(
      'id' => 41,
      'name' => 'Transferencias por coparticipación tributaria',
@@ -933,7 +867,7 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  38 => 
+  41 => 
   (array(
      'id' => 42,
      'name' => 'Prevalencia de desnutrición crónica',
@@ -943,34 +877,6 @@ try{DB::table('repfol_variables')->insert(array (
      'updated_at' => NULL,
      'deleted_at' => NULL,
   )),
-  39 => 
-  (array(
-     'id' => 43,
-     'name' => 'test',
-     'tags' => NULL,
-     'description' => NULL,
-     'created_at' => NULL,
-     'updated_at' => NULL,
-     'deleted_at' => NULL,
-  )),
-));}catch(\Exception $e){echo $e->getMessage(),"\n";}
-try{DB::table('repfol_variable_tags')->insert(array (
-  0 => 
-  (array(
-     'id' => 1,
-     'name' => 'comercio',
-     'created_at' => '2017-03-05 12:21:40',
-     'updated_at' => '2017-03-05 12:21:40',
-     'deleted_at' => NULL,
-  )),
-  1 => 
-  (array(
-     'id' => 2,
-     'name' => 'construcción',
-     'created_at' => '2017-03-05 12:21:56',
-     'updated_at' => '2017-03-05 12:21:56',
-     'deleted_at' => NULL,
-  )),
 ));}catch(\Exception $e){echo $e->getMessage(),"\n";}
 try{DB::table('usradm_logins')->insert(array (
   0 => 
@@ -978,9 +884,19 @@ try{DB::table('usradm_logins')->insert(array (
      'id' => 1,
      'username' => 'admin',
      'password' => 'admin',
-     'token' => '58be9ec98b6ac',
-     'created_at' => '2017-03-07 11:51:37',
-     'updated_at' => '2017-03-07 11:51:37',
+     'token' => '58e50ad56c972',
+     'created_at' => '2017-04-05 15:18:45',
+     'updated_at' => '2017-04-05 15:18:45',
+     'deleted_at' => NULL,
+  )),
+  1 => 
+  (array(
+     'id' => 2,
+     'username' => 'davidcallizaya@gmail.com',
+     'password' => 'diccionario',
+     'token' => '58e52906b31f4',
+     'created_at' => '2017-04-05 17:27:34',
+     'updated_at' => '2017-04-05 17:27:34',
      'deleted_at' => NULL,
   )),
 ));}catch(\Exception $e){echo $e->getMessage(),"\n";}
@@ -988,21 +904,21 @@ try{DB::table('usradm_roles')->insert(array (
   0 => 
   (array(
      'id' => 1,
-     'name' => 'Administradores',
+     'name' => 'Administrador',
      'status' => 'ACTIVE',
      'dashboard' => 'dashboard1',
-     'created_at' => '2017-03-07 11:47:19',
-     'updated_at' => '2017-03-07 11:47:19',
+     'created_at' => '2017-04-05 15:17:32',
+     'updated_at' => '2017-04-05 15:17:32',
      'deleted_at' => NULL,
   )),
   1 => 
   (array(
      'id' => 2,
-     'name' => 'Básicos',
+     'name' => 'Básico',
      'status' => 'ACTIVE',
      'dashboard' => 'dashboard1',
-     'created_at' => '2017-03-07 11:47:52',
-     'updated_at' => '2017-03-07 11:47:52',
+     'created_at' => '2017-04-05 15:17:44',
+     'updated_at' => '2017-04-05 15:17:44',
      'deleted_at' => NULL,
   )),
 ));}catch(\Exception $e){echo $e->getMessage(),"\n";}
@@ -1012,14 +928,29 @@ try{DB::table('usradm_users')->insert(array (
      'id' => 1,
      'username' => 'admin',
      'password' => 'admin',
-     'nombres' => 'Administrador',
+     'nombres' => 'admin',
      'paterno' => '',
      'materno' => '',
-     'email' => 'davidcallizaya@gmail.com',
+     'email' => '',
      'unidad' => '',
      'role_id' => 1,
-     'created_at' => '2017-03-07 11:48:51',
-     'updated_at' => '2017-03-07 11:48:51',
+     'created_at' => '2017-04-05 15:18:34',
+     'updated_at' => '2017-04-05 15:18:34',
+     'deleted_at' => NULL,
+  )),
+  1 => 
+  (array(
+     'id' => 2,
+     'username' => 'davidcallizaya@gmail.com',
+     'password' => 'diccionario',
+     'nombres' => 'David',
+     'paterno' => 'Callizaya',
+     'materno' => 'davidcallizaya@gmail.com',
+     'email' => '',
+     'unidad' => '',
+     'role_id' => 1,
+     'created_at' => '2017-04-05 17:27:24',
+     'updated_at' => '2017-04-05 17:27:24',
      'deleted_at' => NULL,
   )),
 ));}catch(\Exception $e){echo $e->getMessage(),"\n";}

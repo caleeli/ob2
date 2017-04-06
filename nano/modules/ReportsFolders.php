@@ -81,7 +81,7 @@
                         "list": false,
                         "label": "Filas",
                         "source": function(){
-                            return module.dimension;
+                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables});
                         },
                         "textField": "name",
                         "ui": "tags",
@@ -96,6 +96,15 @@
                         },
                         "textField": "name",
                         "ui": "tags",
+                    }),
+                    new Module.Model.Field({
+                        "name": "filter",
+                        "type": "string",
+                        "list": false,
+                        "label": "Filtro",
+                        "source": new Module.View.ModelInstance("ReportsFolders.Dimension", "ReportsFolders/dimensions?fields=id,name,domains"),
+                        "textField": "name",
+                        "ui": "filter",
                     }),
                 ],
                 "associations": [
@@ -152,7 +161,32 @@
                         }
                         return ['data'=>$collection];
                     }
-                    ?>
+                    ?>,
+                    "dimensiones(variables)": <?php
+                    function dimensiones($variables='') {
+                        $collection = [];
+                        $variableRows = \App\Models\ReportsFolders\Variable::whereIn(
+                            'id',
+                            explode('', $variables)
+                        );
+                        $dims = [];
+                        foreach($variableRows as $var) {
+                            foreach($var->dimensions() as $dim) {
+                                $dims[$dim->id] = $dim;
+                            }
+                        }
+                        $type = 'ReportsFolders.Dimension';
+                        foreach ($dims as $dim) {
+                            $collection[] = [
+                                'type'          => $type,
+                                'id'            => $dim->id,
+                                'attributes'    => ['name'=>$dim->name],
+                                'relationships' => [],
+                            ];
+                        }
+                        return ['data'=>$collection];
+                    }
+                    ?>,
                 }
             }),
             new Module.Model({
@@ -242,6 +276,10 @@
                     }),
                 ],
                 "associations": [
+                    new Module.Model.BelongsToMany({
+                        "name": "dimensions",
+                        "model": "dimension"
+                    }),
                 ],
             }),
             new Module.Model({
@@ -294,6 +332,10 @@
                     new Module.Model.HasMany({
                         "name": "domains",
                         "model": "domain"
+                    }),
+                    new Module.Model.BelongsToMany({
+                        "name": "variables",
+                        "model": "variable"
                     }),
                 ]
             }),
