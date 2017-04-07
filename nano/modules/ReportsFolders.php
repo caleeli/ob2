@@ -3,7 +3,7 @@
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-            <div>
+            <div v-show.visible="!($root.getPaths().length > 2 &amp;&amp; $root.getPaths()[$root.getPaths().length-1].name.substr(0,1)=='*')">
                 <h2 id="nav-tabs">Carpetas</h2>
                 <abmgroup
                     id="ReportsFolders.Folders"
@@ -26,7 +26,15 @@
                 </abm>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length > 1">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length > 2">
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <a href="#" class="btn btn-default"><i class="fa fa-bar-chart"></i></a>
+                    <a href="#" class="btn btn-default">2</a>
+                    <a href="#" class="btn btn-default">3</a>
+                    <a href="#" class="btn btn-default">4</a>
+                </div>
+            </div>
             <chart refreshWith="ReportsFolders.Reports" vue:model="report"/>
         </div>
     </div>

@@ -29,7 +29,7 @@
         methods: {
             goto: function(viewId) {
                 if(viewId===1) {
-                    this.path[1]=new PathItem({name: this.model[this.nameField], item: 1}, this);
+                    this.path[1]=new PathItem({name: '* '+(this.model[this.nameField]?this.model[this.nameField]:''), item: 1}, this);
                 } else {
                     this.path[1]=[];
                 }

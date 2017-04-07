@@ -16,7 +16,7 @@
     this.$defaultUrl = "/api/Connections/connections";
     Model.call(this, url, id, "Connections.Connection");
     this.$list = function () {
-        return "fields=name,driver,host,port,database";
+        return "fields=name,host,database";
     };
     this.$name = "Connection";
     this.$pluralName = "Connections";
@@ -24,7 +24,7 @@
         return [{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"driver","label":"driver","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"driver","isAssociation":false},{"name":"host","label":"host","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"host","isAssociation":false},{"name":"port","label":"port","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"port","isAssociation":false},{"name":"database","label":"database","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"database","isAssociation":false},{"name":"username","label":"username","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},{"name":"password","label":"password","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},{"name":"charset","label":"charset","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"charset","isAssociation":false},{"name":"collation","label":"collation","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"collation","isAssociation":false}];
     };
     this.$columns = function () {
-        return [{"title":"name","data":"attributes.name"},{"title":"driver","data":"attributes.driver"},{"title":"host","data":"attributes.host"},{"title":"port","data":"attributes.port"},{"title":"database","data":"attributes.database"}];
+        return [{"title":"name","data":"attributes.name"},{"title":"host","data":"attributes.host"},{"title":"database","data":"attributes.database"}];
     };
     this.$methods = {
     };
@@ -50,6 +50,7 @@ Connections.Connection.prototype.constructor = Model;
         mounted: function() {
             var self = this;
             this.path = this.$children[0].path;
+            if (this.$children[1] && this.$children[1].path) this.path.push(this.$children[1].path);
         }
     }
 </script>

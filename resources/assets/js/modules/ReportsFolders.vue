@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-            <div>
+            <div v-show.visible="!($root.getPaths().length &gt; 2 &amp;&amp; $root.getPaths()[$root.getPaths().length-1].name.substr(0,1)=='*')">
                 <h2 id="nav-tabs">Carpetas</h2>
                 <abmgroup id="ReportsFolders.Folders" :model="folder" groupField="folder_id" :root="null" typeField="type" nameField="name" leafType="LEAF" childrenAssociation="children">
                 </abmgroup>
@@ -12,7 +12,16 @@
                 </abm>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length &gt; 1">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length &gt; 2">
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-bar-chart"></i></a>
+                    <a href="javascript:void(0)" class="btn btn-default"><i class="fa fa-area-chart"></i></a>
+                    <a href="javascript:void(0)" class="btn btn-default"><i class="fa fa-line-chart"></i></a>
+                    <a href="javascript:void(0)" class="btn btn-default"><i class="fa fa-pie-chart"></i></a>
+                    <a href="javascript:void(0)" class="btn btn-default"><i class="fa fa-table"></i></a>
+                </div>
+            </div>
             <chart refreshWith="ReportsFolders.Reports" :model="report"></chart>
         </div>
     </div>
@@ -271,7 +280,8 @@ dimension: new ReportsFolders.Dimension(),
         },
         mounted: function() {
             var self = this;
-            this.path = [this.$children[0].path];
+            this.path = this.$children[0].path;
+            if (this.$children[1] && this.$children[1].path) this.path.push(this.$children[1].path);
         }
     }
 </script>

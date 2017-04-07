@@ -31,6 +31,7 @@
         mounted: function() {
             var self = this;
             this.path = this.$children[0].path;
+            if (this.$children[1] && this.$children[1].path) this.path.push(this.$children[1].path);
         }
     }
 </script>

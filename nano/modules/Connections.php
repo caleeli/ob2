@@ -30,6 +30,7 @@
                         "name": "driver",
                         "type": "string",
                         "default": "",
+                        "list": false,
                         "required": false,
                     }),
                     new Module.Model.Field({
@@ -42,6 +43,7 @@
                         "name": "port",
                         "type": "string",
                         "default": "",
+                        "list": false,
                         "required": false,
                     }),
                     new Module.Model.Field({

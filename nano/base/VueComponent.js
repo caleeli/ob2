@@ -109,6 +109,7 @@ VueComponent.generate = function (module, views, data, template) {
         '\n        mounted: function() {' +
         '\n            var self = this;' +
         '\n            this.path = this.$children[0].path;' +
+        '\n            if (this.$children[1] && this.$children[1].path) this.path.push(this.$children[1].path);' +
         '\n        }' +
         '\n    }' +
         '\n</script>';
