@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length > 2">
-            <chart refreshWith="ReportsFolders.Reports" vue:model="report"/>
+            <chart refreshWith="ReportsFolders.Reports,form@ReportsFolders.Reports" vue:model="report"/>
         </div>
     </div>
 </template>

@@ -78,9 +78,8 @@
                             }
                         });
                     });
-                } else {
-                    return [];
                 }
+                this.$emit('change');
             },
             refresh: function() {
                 var self = this;

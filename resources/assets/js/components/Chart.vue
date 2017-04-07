@@ -256,7 +256,7 @@
             self.refresh();
             this.$root.$on('changed', function(element){
                 if(typeof element.id!=='undefined') {
-                    if(element.id===self.refreshWith) {
+                    if(self.refreshWith.split(',').indexOf(element.id)>-1) {
                         self.refresh();
                     }
                 }

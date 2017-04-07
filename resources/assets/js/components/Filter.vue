@@ -45,6 +45,7 @@
                     }
                 });
                 this.model[this.property] = JSON.stringify(res);
+                this.$emit('change');
             },
             refresh: function() {
                 var res = [];

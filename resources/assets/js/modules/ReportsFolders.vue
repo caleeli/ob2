@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length &gt; 2">
-            <chart refreshWith="ReportsFolders.Reports" :model="report"></chart>
+            <chart refreshWith="ReportsFolders.Reports,form@ReportsFolders.Reports" :model="report"></chart>
         </div>
     </div>
 </template>

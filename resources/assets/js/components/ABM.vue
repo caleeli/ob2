@@ -5,7 +5,7 @@
         </carouselitem>
 
         <carouselitem>
-            <dv-form :model="model" v-on:cancel="cancelEdit" v-on:save="saveRow"></dv-form>
+            <dv-form :id="'form@'+id" :model="model" v-on:cancel="cancelEdit" v-on:save="saveRow"></dv-form>
             <slot :parentId="parentId"></slot>
         </carouselitem>
     </carousel>
