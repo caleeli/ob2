@@ -23,7 +23,7 @@
         carousel:{},
         data: function(){
             return {
-                path: [[new PathItem({name: this.model.$pluralName, item: 0}, this)],[]],
+                path: [[/*new PathItem({name: this.model.$pluralName, item: 0}, this)*/],[]],
             };
         },
         methods: {

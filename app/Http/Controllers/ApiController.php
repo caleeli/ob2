@@ -23,7 +23,7 @@ class ApiController extends Controller
     public function index(Request $request, ...$route)
     {
         $type = '';
-        $method = function($model) use(&$type, $request) {
+        $method = function ($model) use (&$type, $request) {
             $perPage = empty($request['per_page']) ?
                 static::PER_PAGE : $request['per_page'];
             if (is_string($model)) {
@@ -33,7 +33,8 @@ class ApiController extends Controller
             } elseif ($model instanceof Model) {
                 $result = $model;
             } elseif ($model instanceof BelongsTo ||
-                $model instanceof HasOne) {
+                $model instanceof HasOne
+            ) {
                 $model = $model->first();
             } elseif ($model === null) {
                 throw new NotFoundException();
@@ -58,10 +59,10 @@ class ApiController extends Controller
             /* @var $a Model */
             //$result->select(["username"]);
             $collection = [
-                'type'          => $type,
-                'id'            => $result->id,
-                'attributes'    => $sparseFields ? $this->sparseFields($request,
-                                                       $result->toArray()) : $result->toArray(),
+                'type' => $type,
+                'id' => $result->id,
+                'attributes' => $sparseFields ? $this->sparseFields($request,
+                    $result->toArray()) : $result->toArray(),
                 'relationships' => $this->sparseRelationships($request, $result),
             ];
         } elseif ($result === null) {
@@ -70,10 +71,10 @@ class ApiController extends Controller
             $collection = [];
             foreach ($result as $row) {
                 $collection[] = [
-                    'type'          => $type,
-                    'id'            => $row->id,
-                    'attributes'    => $sparseFields ? $this->sparseFields($request,
-                                                           $row->toArray()) : $row->toArray(),
+                    'type' => $type,
+                    'id' => $row->id,
+                    'attributes' => $sparseFields ? $this->sparseFields($request,
+                        $row->toArray()) : $row->toArray(),
                     'relationships' => $this->sparseRelationships($request, $row),
                 ];
             }
@@ -86,7 +87,7 @@ class ApiController extends Controller
         $data = $request->json("data");
         $call = $request->json("call");
         if ($data) {
-            $method = function($model, $data) {
+            $method = function ($model, $data) {
                 if (is_string($model) && isset($data['id'])) {
                     $result = $model::attach($data['id']);
                 } elseif (is_string($model) && isset($data['attributes'])) {
@@ -103,17 +104,25 @@ class ApiController extends Controller
                     $result = $model;
                 } elseif ($model instanceof HasMany) {
                     /* @var HasMany $model */
-                    $ids = [];
-                    foreach($data as $rel) {
-                        $ids[]= $rel['id'];
+                    if (isset($data["attributes"])) {
+                        $model->save($model->getRelated()->create($data["attributes"]));
+                    } else {
+                        $models = [];
+                        foreach ($data as $rel) {
+                            if (empty($rel['id'])) {
+                                $models[] = $model->getRelated()->create($rel);
+                            } else {
+                                $models[] = $model->getRelated()->findOrFail($rel['id']);
+                            }
+                        }
+                        $model->saveMany($models);
                     }
-                    $model->saveMany($model->getRelated()->findOrFail($ids));
                     $result = $model;
                 } elseif ($model instanceof BelongsToMany) {
                     /* @var BelongsToMany $model */
                     $ids = [];
-                    foreach($data as $rel) {
-                        $ids[]= $rel['id'];
+                    foreach ($data as $rel) {
+                        $ids[] = $rel['id'];
                     }
                     $model->sync($ids);
                     $result = $model;
@@ -125,13 +134,13 @@ class ApiController extends Controller
             $result = $this->resolve($route, $method, $data);
             $response = [
                 'data' => [
-                    'type'       => $this->getType($result),
+                    'type' => $this->getType($result),
                     'attributes' => $result
                 ]
             ];
         } elseif ($call) {
-            $method = function($model) use($call) {
-                if($model instanceof HasMany) {
+            $method = function ($model) use ($call) {
+                if ($model instanceof HasMany) {
                     $model = $model->getRelated();
                 }
                 $method = $call['method'];
@@ -149,7 +158,7 @@ class ApiController extends Controller
             };
             $result = $this->resolve($route, $method);
             $response = [
-                "success"  => true,
+                "success" => true,
                 "response" => $result,
             ];
         }
@@ -159,7 +168,7 @@ class ApiController extends Controller
     public function update(Request $request, ...$route)
     {
         $data = $request->json("data");
-        $method = function($model, $data) {
+        $method = function ($model, $data) {
             if (is_string($model) && isset($data['id'])) {
                 throw new InvalidApiCall();
             } elseif (is_string($model) && isset($data['attributes'])) {
@@ -178,16 +187,16 @@ class ApiController extends Controller
             } elseif ($model instanceof HasMany) {
                 /* @var HasMany $model */
                 $ids = [];
-                foreach($data as $rel) {
-                    $ids[]= $rel['id'];
+                foreach ($data as $rel) {
+                    $ids[] = $rel['id'];
                 }
                 $model->saveMany($model->getRelated()->findOrFail($ids));
                 $result = $model;
             } elseif ($model instanceof BelongsToMany) {
                 /* @var BelongsToMany $model */
                 $ids = [];
-                foreach($data as $rel) {
-                    $ids[]= $rel['id'];
+                foreach ($data as $rel) {
+                    $ids[] = $rel['id'];
                 }
                 $model->sync($ids);
                 $result = $model;
@@ -201,7 +210,7 @@ class ApiController extends Controller
         $result = $this->resolve($route, $method, $data);
         $response = [
             'data' => [
-                'type'       => $this->getType($result),
+                'type' => $this->getType($result),
                 'attributes' => $result
             ]
         ];
@@ -210,7 +219,7 @@ class ApiController extends Controller
 
     public function delete(...$route)
     {
-        $method = function($model) {
+        $method = function ($model) {
             if (is_string($model)) {
                 throw new InvalidApiCall();
             } elseif ($model instanceof Model) {
@@ -228,8 +237,8 @@ class ApiController extends Controller
     protected function getType($model)
     {
         $class = is_string($model) ? $model : get_class($model instanceof Model ? $model
-                        : $model->getRelated());
-        if (substr($class, 0, 1) != '\\') $class = '\\'.$class;
+            : $model->getRelated());
+        if (substr($class, 0, 1) != '\\') $class = '\\' . $class;
         return str_replace('\\', '.', substr($class, 12));
     }
 
@@ -237,7 +246,7 @@ class ApiController extends Controller
     {
         while ($route) {
             if ($model === null) {
-                $model = "\App\Models\\".ucfirst(array_shift($route))."\\".ucfirst(camel_case(str_singular(array_shift($route))));
+                $model = "\App\Models\\" . ucfirst(array_shift($route)) . "\\" . ucfirst(camel_case(str_singular(array_shift($route))));
             } elseif ($model instanceof Model) {
                 $relationship = array_shift($route);
                 $model = $model->$relationship();
@@ -297,17 +306,19 @@ class ApiController extends Controller
         if (empty($request['fields']) && empty($request['include'])) {
             return [];
         }
-        $fields = explode(",", $request['fields'].','.$request['include']);
+        $fields = explode(",", $request['fields'] . ',' . $request['include']);
         foreach ($fields as $field) {
             $methodName = $field;
             if (method_exists($row, $methodName)) {
                 $model = $row->$methodName();
                 $type = $this->getType($model->getModel());
                 if ($model instanceof BelongsTo ||
-                    $model instanceof HasOne) {
+                    $model instanceof HasOne
+                ) {
                     $model = $model->first();
-                } elseif ($model  instanceof BelongsToMany ||
-                    $model instanceof HasMany) {
+                } elseif ($model instanceof BelongsToMany ||
+                    $model instanceof HasMany
+                ) {
                     $model = $model->get();
                 }
                 $response = $this->packResponse($model, $type, $request, false);

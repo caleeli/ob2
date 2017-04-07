@@ -3,27 +3,31 @@
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-            <h2 id="nav-tabs">Carpetas</h2>
-            <abmgroup
-                id="ReportsFolders.Folders"
-                vue:model="folder"
-                groupField="folder_id"
-                vue:root="null"
-                typeField="type"
-                nameField="name"
-                leafType="LEAF"
-                childrenAssociation="children" >
-            </abmgroup>
+            <div>
+                <h2 id="nav-tabs">Carpetas</h2>
+                <abmgroup
+                    id="ReportsFolders.Folders"
+                    vue:model="folder"
+                    groupField="folder_id"
+                    vue:root="null"
+                    typeField="type"
+                    nameField="name"
+                    leafType="LEAF"
+                    childrenAssociation="children" >
+                </abmgroup>
+            </div>
+            <div v-show.visible="$root.getPaths().length > 1">
+                <h2 id="nav-tabs">Reportes</h2>
+                <abm
+                        id="ReportsFolders.Reports"
+                        vue:model="report"
+                        refreshWith="ReportsFolders.Folders"
+                        nameField="name">
+                </abm>
+            </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length > 1">
-            <h2 id="nav-tabs">Reportes</h2>
-            <abm
-                id="ReportsFolders.Reports"
-                vue:model="report"
-                refreshWith="ReportsFolders.Folders"
-                nameField="name">
-                <chart refreshWith="ReportsFolders.Reports" vue:model="report"/>
-            </abm>
+            <chart refreshWith="ReportsFolders.Reports" vue:model="report"/>
         </div>
     </div>
 </template>

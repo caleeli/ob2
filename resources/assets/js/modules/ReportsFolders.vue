@@ -1,15 +1,19 @@
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-            <h2 id="nav-tabs">Carpetas</h2>
-            <abmgroup id="ReportsFolders.Folders" :model="folder" groupField="folder_id" :root="null" typeField="type" nameField="name" leafType="LEAF" childrenAssociation="children">
-            </abmgroup>
+            <div>
+                <h2 id="nav-tabs">Carpetas</h2>
+                <abmgroup id="ReportsFolders.Folders" :model="folder" groupField="folder_id" :root="null" typeField="type" nameField="name" leafType="LEAF" childrenAssociation="children">
+                </abmgroup>
+            </div>
+            <div v-show.visible="$root.getPaths().length &gt; 1">
+                <h2 id="nav-tabs">Reportes</h2>
+                <abm id="ReportsFolders.Reports" :model="report" refreshWith="ReportsFolders.Folders" nameField="name">
+                </abm>
+            </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length &gt; 1">
-            <h2 id="nav-tabs">Reportes</h2>
-            <abm id="ReportsFolders.Reports" :model="report" refreshWith="ReportsFolders.Folders" nameField="name">
-                <chart refreshWith="ReportsFolders.Reports" :model="report"></chart>
-            </abm>
+            <chart refreshWith="ReportsFolders.Reports" :model="report"></chart>
         </div>
     </div>
 </template>
@@ -267,7 +271,7 @@ dimension: new ReportsFolders.Dimension(),
         },
         mounted: function() {
             var self = this;
-            this.path = this.$children[0].path;
+            this.path = [this.$children[0].path];
         }
     }
 </script>

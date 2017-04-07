@@ -74,7 +74,7 @@ export default function(uri0, id, type) {
             url = this.$url() + childrenAssociation;
         } else {
             method = 'PUT';
-            url = this.$url() + '/' + childrenAssociation + id;
+            url = this.$url() + childrenAssociation + '/' + id;
         }
         this.$fields().forEach(function(field) {
             if (field.isAssociation) {
