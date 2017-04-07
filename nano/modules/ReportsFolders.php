@@ -52,7 +52,7 @@
                         "type": "string",
                         "list": false,
                         "label": "Variables",
-                        "source": new Module.View.ModelInstance("ReportsFolders.Variable"),
+                        "source": new Module.View.ModelInstance("ReportsFolders.Variable", "ReportsFolders/variables?sort=name"),
                         "textField": "name",
                         "ui": "tags",
                     }),
@@ -85,7 +85,7 @@
                         "list": false,
                         "label": "Filas",
                         "source": function(){
-                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables});
+                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:false});
                         },
                         "textField": "name",
                         "ui": "tags",
@@ -96,7 +96,7 @@
                         "list": false,
                         "label": "Columnas",
                         "source": function(){
-                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables});
+                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:false});
                         },
                         "textField": "name",
                         "ui": "tags",
@@ -106,7 +106,9 @@
                         "type": "string",
                         "list": false,
                         "label": "Filtro",
-                        "source": new Module.View.ModelInstance("ReportsFolders.Dimension", "ReportsFolders/dimensions?fields=id,name,domains"),
+                        "source": function(){
+                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:true});
+                        },
                         "textField": "name",
                         "ui": "filter",
                     }),
@@ -166,26 +168,47 @@
                         return ['data'=>$collection];
                     }
                     ?>,
-                    "dimensiones(variables)": <?php
-                    function dimensiones($variables='') {
+                    "dimensiones(variables,domains)": <?php
+                    function dimensiones($variables='',$domains=false) {
                         $collection = [];
                         $variableRows = \App\Models\ReportsFolders\Variable::whereIn(
                             'id',
                             explode(',', $variables)
                         )->get();
                         $dims = [];
+                        $first = true;
                         foreach($variableRows as $var) {
+                            $dims1 = [];
                             foreach($var->dimensions()->get() as $dim) {
-                                $dims[$dim->id] = $dim;
+                                if($first || isset($dims[$dim->id])) {
+                                    $dims1[$dim->id] = $dim;
+                                }
                             }
+                            $dims = $dims1;
+                            $first = false;
                         }
+                        uasort($dims, function($a, $b) {
+                            return strcasecmp($a->name, $b->name);
+                        });
                         $type = 'ReportsFolders.Dimension';
                         foreach ($dims as $dim) {
+                            $relationships = [];
+                            if ($domains) {
+                                $relationships["domains"]=[];
+                                foreach($dim->domains()->get() as $dom) {
+                                    $relationships["domains"][]=[
+                                        'type'          => "ReportsFolders.Domain",
+                                        'id'            => $dom->name,
+                                        'attributes'    => ['name'=>$dom->name],
+                                        'relationships' => [],
+                                    ];
+                                }
+                            }
                             $collection[] = [
                                 'type'          => $type,
                                 'id'            => $dim->id,
                                 'attributes'    => ['name'=>$dim->name],
-                                'relationships' => [],
+                                'relationships' => $relationships,
                             ];
                         }
                         return ['data'=>$collection];

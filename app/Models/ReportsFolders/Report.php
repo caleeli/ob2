@@ -91,7 +91,7 @@ class Report extends Model
     }
                     
 
-    public function dimensiones($variables='')
+    public function dimensiones($variables='', $domains=false)
     {
         $collection = [];
         $variableRows = \App\Models\ReportsFolders\Variable::whereIn(
@@ -99,18 +99,39 @@ class Report extends Model
                             explode(',', $variables)
                         )->get();
         $dims = [];
+        $first = true;
         foreach ($variableRows as $var) {
+            $dims1 = [];
             foreach ($var->dimensions()->get() as $dim) {
-                $dims[$dim->id] = $dim;
+                if ($first || isset($dims[$dim->id])) {
+                    $dims1[$dim->id] = $dim;
+                }
             }
+            $dims = $dims1;
+            $first = false;
         }
+        uasort($dims, function ($a, $b) {
+            return strcasecmp($a->name, $b->name);
+        });
         $type = 'ReportsFolders.Dimension';
         foreach ($dims as $dim) {
+            $relationships = [];
+            if ($domains) {
+                $relationships["domains"]=[];
+                foreach ($dim->domains()->get() as $dom) {
+                    $relationships["domains"][]=[
+                                        'type'          => "ReportsFolders.Domain",
+                                        'id'            => $dom->name,
+                                        'attributes'    => ['name'=>$dom->name],
+                                        'relationships' => [],
+                                    ];
+                }
+            }
             $collection[] = [
                                 'type'          => $type,
                                 'id'            => $dim->id,
                                 'attributes'    => ['name'=>$dim->name],
-                                'relationships' => [],
+                                'relationships' => $relationships,
                             ];
         }
         return ['data'=>$collection];

@@ -32,13 +32,27 @@ class PivotController extends Controller
         $dim = Dimension::all();
         $rows = $this->convertToColumns(trim($rows), $dim);
         $cols = $this->convertToColumns(trim($cols), $dim);
-        $groups = $cols.($cols && $rows ? "," : "").$rows;
+        $groups = $cols . ($cols && $rows ? "," : "") . $rows;
         $where = "id_variable in ($variables)";
+        $sqlParams = array();
+        if (!empty($request['filter'])) {
+            $filterJ = json_decode($request['filter']);
+            if (is_array($filterJ)) {
+                foreach ($filterJ as $f) {
+                    $dimension = Dimension::find($f[0]);
+                    if ($dimension) {
+                        $f0 = $dimension->column;
+                        $where .= ' and (' . $f0 . $f[1] . '?)';
+                        $sqlParams[] = $f[2];
+                    }
+                }
+            }
+        }
         $sql = "SELECT $groups, id_variable, $aggregator($measure) as agg_value_1 from $table where $where group by $groups, id_variable order by $groups, id_variable";
         $results = \DB::connection("datos")->select(
             DB::raw(
                 $sql
-            ), array()
+            ), $sqlParams
         );
         $x = [];
         $series = [];
@@ -71,10 +85,10 @@ class PivotController extends Controller
                 $series[$yLabel][$name][$xValue] = $yValue;
             }
         }
-        foreach($series as $rowId => $serie0) {
-            foreach($serie0 as $name => $serie) {
+        foreach ($series as $rowId => $serie0) {
+            foreach ($serie0 as $name => $serie) {
                 $vals = [];
-                foreach($x as $xValue) {
+                foreach ($x as $xValue) {
                     $vals[] = isset($serie[$xValue]) ? $serie[$xValue] : 0;
                 }
                 $series[$rowId][$name] = $vals;

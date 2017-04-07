@@ -29,6 +29,7 @@ class ApiController extends Controller
             if (is_string($model)) {
                 $result = $model::select();
                 $result = $this->addFilter($result, $request);
+                $result = $this->addSorting($result, $request);
                 $result = $result->paginate($perPage)->getCollection();
             } elseif ($model instanceof Model) {
                 $result = $model;
@@ -40,6 +41,7 @@ class ApiController extends Controller
                 throw new NotFoundException();
             } else {
                 $model = $this->addFilter($model, $request);
+                $model = $this->addSorting($model, $request);
                 $result = $model->paginate($perPage)->getCollection();
             }
             $type = $this->getType($model);
@@ -350,6 +352,34 @@ class ApiController extends Controller
                 $params[2] = json_decode($params[2]);
             }
             $select = call_user_func_array([$select, $method], $params);
+        }
+        return $select;
+    }
+
+    /**
+     *
+     * &sort=name,-date
+     * @param Builder $select
+     * @param Request $request
+     * @return Builder
+     */
+    protected function addSorting($select, Request $request)
+    {
+        if (empty($request['sort'])) {
+            return $select;
+        }
+        foreach (explode(',', $request['sort']) as $sSort) {
+            if (substr($sSort,0,1)==='-') {
+                $sort = substr($sSort, 1);
+                $dir = 'desc';
+            } elseif (substr($sSort,0,1)==='+') {
+                $sort = substr($sSort, 1);
+                $dir = 'asc';
+            } else {
+                $sort = $sSort;
+                $dir = 'asc';
+            }
+            $select->orderBy($sort, $dir);
         }
         return $select;
     }

@@ -32,11 +32,13 @@
     this.$name = "Report";
     this.$pluralName = "Reports";
     this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"variables","label":"Variables","type":"tags","enum":[],"source":new ReportsFolders.Variable(),"textField":"name","value":"variables","isAssociation":false},{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator","isAssociation":false},{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
-                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables});
+        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"variables","label":"Variables","type":"tags","enum":[],"source":new ReportsFolders.Variable(function(){try{var url="/api/ReportsFolders/variables?sort=name";return url.indexOf("¡@!")===-1?url:this.$defaultUrl;}catch(err){return this.$defaultUrl;}}),"textField":"name","value":"variables","isAssociation":false},{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator","isAssociation":false},{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
+                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:false});
                         },"textField":"name","value":"rows","isAssociation":false},{"name":"cols","label":"Columnas","type":"tags","enum":[],"source":function (){
-                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables});
-                        },"textField":"name","value":"cols","isAssociation":false},{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":new ReportsFolders.Dimension(function(){try{var url="/api/ReportsFolders/dimensions?fields=id,name,domains";return url.indexOf("¡@!")===-1?url:this.$defaultUrl;}catch(err){return this.$defaultUrl;}}),"textField":"name","value":"filter","isAssociation":false}];
+                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:false});
+                        },"textField":"name","value":"cols","isAssociation":false},{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":function (){
+                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:true});
+                        },"textField":"name","value":"filter","isAssociation":false}];
     };
     this.$columns = function () {
         return [{"title":"Nombre","data":"attributes.name"}];
@@ -45,7 +47,7 @@
 dashboard1:function(t,methodCallback,childrenAssociation){self.$call("dashboard1",{"t":t}, childrenAssociation, methodCallback)},
         tablas:function(conn,methodCallback,childrenAssociation){self.$call("tablas",{"conn":conn}, childrenAssociation, methodCallback)},
         columnas:function(tabla,methodCallback,childrenAssociation){self.$call("columnas",{"tabla":tabla}, childrenAssociation, methodCallback)},
-        dimensiones:function(variables,methodCallback,childrenAssociation){self.$call("dimensiones",{"variables":variables}, childrenAssociation, methodCallback)}    };
+        dimensiones:function(variables,domains,methodCallback,childrenAssociation){self.$call("dimensiones",{"variables":variables,"domains":domains}, childrenAssociation, methodCallback)}    };
     if(id) {
         this.$load(id);
     }
