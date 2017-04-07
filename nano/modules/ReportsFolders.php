@@ -96,7 +96,7 @@
                         "list": false,
                         "label": "Columnas",
                         "source": function(){
-                            return module.dimension;
+                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables});
                         },
                         "textField": "name",
                         "ui": "tags",

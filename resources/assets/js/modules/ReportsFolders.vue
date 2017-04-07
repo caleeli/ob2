@@ -35,7 +35,7 @@
         return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"variables","label":"Variables","type":"tags","enum":[],"source":new ReportsFolders.Variable(),"textField":"name","value":"variables","isAssociation":false},{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator","isAssociation":false},{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:module.report.variables});
                         },"textField":"name","value":"rows","isAssociation":false},{"name":"cols","label":"Columnas","type":"tags","enum":[],"source":function (){
-                            return module.dimension;
+                            return module.report.$selectFrom('dimensiones', {variables:module.report.variables});
                         },"textField":"name","value":"cols","isAssociation":false},{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":new ReportsFolders.Dimension(function(){try{var url="/api/ReportsFolders/dimensions?fields=id,name,domains";return url.indexOf("¡@!")===-1?url:this.$defaultUrl;}catch(err){return this.$defaultUrl;}}),"textField":"name","value":"filter","isAssociation":false}];
     };
     this.$columns = function () {

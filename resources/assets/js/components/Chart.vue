@@ -56,9 +56,7 @@
                 $("#template-tuner").attr("href", "bower_components/bootswatch/"+this.templates[i]+"/bootstrap.min.css");
             },
             drawChart: function() {
-                $(this.$el).find(".canvasOwner").html("<canvas></canvas>");
                 var self = this;
-                var ctx = $(this.$el).find("canvas")[0];
                 var pieColors = [
                     '#3366CC',
                     '#DC3912',
@@ -81,140 +79,158 @@
                     '#5574A6',
                     '#3B3EAC',
                 ];
-                var lineChartData = {
-                    //labels: [],
-                    datasets: []
-                };
-                var data = this.data;
-                lineChartData.labels = data.x;
-                lineChartData.datasets = [];
-                var colors = [];
-                for(var color in window.chartColors) {
-                    colors.push(color);
+                var data = self.data;
+                $(self.$el).find(".canvasOwner").html("");
+                for(var rowId in data.series) {
+                    addChart(rowId);
                 }
-                var axis=["y-axis-2","y-axis-1"];
-                for(var a in data.series) {
-                    lineChartData.datasets.push({
-                        label: a,
-                        borderColor: colors.pop(),
-                        backgroundColor: colors.pop(),
-                        fill: false,
-                        data: data.series[a],
-                        //yAxisID: axis[1],
-                    });
-                }
-                var chartType = 'bar';
-                var options = {
-                    responsive: true,
-                    hoverMode: 'index',
-                    stacked: false,
-                    title:{
-                        display: false,
-                    },
-                    scales: {
-                        xAxes: [{
-                            position: 'bottom'
-                        }],
-                        yAxes: [{
-                            type: "linear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                            display: true,
-                            position: "left",
-                            id: "y-axis-1",
-                        }],
+                function addChart(rowId) {
+                    var $canvas = $("<canvas></canvas>");
+                    $(self.$el).find(".canvasOwner").append($canvas);
+                    var ctx = $canvas[0];
+                    var lineChartData = {
+                        //labels: [],
+                        datasets: []
+                    };
+                    lineChartData.labels = data.x;
+                    lineChartData.datasets = [];
+                    var colors = [];
+                    for(var color in window.chartColors) {
+                        colors.push(color);
                     }
-                };
-                switch (self.chartType) {
-                    case 'bar':
-                    case 'line':
-                        chartType = self.chartType;
-                        break;
-                    case 'bar2':
-                        chartType = 'bar';
-                        options.scales.xAxes.forEach(function(axe) {
-                            axe.stacked = true;
-                        })
-                        options.scales.yAxes.forEach(function(axe) {
-                            axe.stacked = true;
-                        })
-                        break;
-                    case 'horizontalBar':
-                        chartType = self.chartType;
-                        options.scales = {
+                    var axis=["y-axis-2","y-axis-1"];
+                    for(var a in data.series[rowId]) {
+                        lineChartData.datasets.push({
+                            label: a,
+                            borderColor: colors.pop(),
+                            backgroundColor: colors.pop(),
+                            fill: false,
+                            data: data.series[rowId][a],
+                            //yAxisID: axis[1],
+                        });
+                    }
+                    var chartType = 'bar';
+                    var options = {
+                        responsive: true,
+                        hoverMode: 'index',
+                        stacked: false,
+                        title:{
+                            display: true,
+                            text: rowId,
+                        },
+                        scales: {
                             xAxes: [{
-                                type: "linear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                                display: true,
-                                position: "bottom",
-                                id: "y-axis-1",
+                                position: 'bottom'
                             }],
                             yAxes: [{
-                                position: 'left'
+                                type: "linear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                                display: true,
+                                position: "left",
+                                id: "y-axis-1",
                             }],
                         }
-                        break;
-                    case 'area':
-                        chartType = 'line';
-                        lineChartData.datasets.forEach(function(ds) {
-                            ds.fill = true;
-                        });
-                        options.scales.xAxes.forEach(function(axe) {
-                            axe.stacked = true;
-                        })
-                        options.scales.yAxes.forEach(function(axe) {
-                            axe.stacked = true;
-                        })
-                        break;
-                    case 'pie':
-                        chartType = self.chartType;
-                        options = {
-                            legend: {
-                                display: false
-                            },
-                            cutoutPercentage: 50
-                        };
-                        lineChartData.datasets.forEach(function(ds) {
-                            ds.backgroundColor = [];
-                            ds.data.forEach(function(data, i) {
-                                ds.backgroundColor.push(
-                                    pieColors[i % pieColors.length]
-                                );
-                            });
-                        });
-                        break;
-                    case 'polarArea':
-                        chartType = self.chartType;
-                        options = {
-                            legend: {
-                                display: false
-                            },
-                            scale: {
-                                reverse: true,
-                                    ticks: {
-                                    beginAtZero: true
-                                }
+                    };
+                    switch (self.chartType) {
+                        case 'bar':
+                        case 'line':
+                            chartType = self.chartType;
+                            break;
+                        case 'bar2':
+                            chartType = 'bar';
+                            options.scales.xAxes.forEach(function(axe) {
+                                axe.stacked = true;
+                            })
+                            options.scales.yAxes.forEach(function(axe) {
+                                axe.stacked = true;
+                            })
+                            break;
+                        case 'horizontalBar':
+                            chartType = self.chartType;
+                            options.scales = {
+                                xAxes: [{
+                                    type: "linear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                                    display: true,
+                                    position: "bottom",
+                                    id: "y-axis-1",
+                                }],
+                                yAxes: [{
+                                    position: 'left'
+                                }],
                             }
-                        };
-                        lineChartData.datasets.forEach(function(ds) {
-                            ds.backgroundColor = [];
-                            ds.data.forEach(function(data, i) {
-                                ds.backgroundColor.push(
-                                    pieColors[i % pieColors.length]
-                                );
+                            break;
+                        case 'area':
+                            chartType = 'line';
+                            lineChartData.datasets.forEach(function(ds) {
+                                ds.fill = true;
                             });
+                            options.scales.xAxes.forEach(function(axe) {
+                                axe.stacked = true;
+                            })
+                            options.scales.yAxes.forEach(function(axe) {
+                                axe.stacked = true;
+                            })
+                            break;
+                        case 'pie':
+                            chartType = self.chartType;
+                            options = {
+                                title:{
+                                    display: true,
+                                    text: rowId,
+                                },
+                                legend: {
+                                    display: false
+                                },
+                                cutoutPercentage: 50
+                            };
+                            lineChartData.datasets.forEach(function(ds) {
+                                ds.backgroundColor = [];
+                                ds.data.forEach(function(data, i) {
+                                    ds.backgroundColor.push(
+                                        pieColors[i % pieColors.length]
+                                    );
+                                });
+                            });
+                            break;
+                        case 'polarArea':
+                            chartType = self.chartType;
+                            options = {
+                                title:{
+                                    display: true,
+                                    text: rowId,
+                                },
+                                legend: {
+                                    display: false
+                                },
+                                scale: {
+                                    reverse: true,
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            };
+                            lineChartData.datasets.forEach(function(ds) {
+                                ds.backgroundColor = [];
+                                ds.data.forEach(function(data, i) {
+                                    ds.backgroundColor.push(
+                                        pieColors[i % pieColors.length]
+                                    );
+                                });
+                            });
+                            break;
+                        case 'table':
+                            break;
+                        default:
+                            chartType = self.chartType;
+                    }
+                    try {
+                        self.chart = new Chart(ctx, {
+                            type: chartType,
+                            data: lineChartData,
+                            options: options
                         });
-                        break;
-                    case 'table':
-                        break;
-                    default:
-                        chartType = self.chartType;
-                }
-                try {
-                    self.chart = new Chart(ctx, {
-                        type: chartType,
-                        data: lineChartData,
-                        options: options
-                    });
-                } catch(e) {
+                    } catch(e) {
 
+                    }
                 }
             },
             refresh:function(){

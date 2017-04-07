@@ -43,8 +43,16 @@ class PivotController extends Controller
         $x = [];
         $series = [];
         foreach ($results as $i => $data) {
+            $yi = [];
+            foreach (explode(",", $rows) as $row) {
+                if (!$row) {
+                    continue;
+                }
+                $yi[] = $data->$row;
+            }
+            $yLabel = implode('-', $yi);
             $xi = [];
-            foreach (explode(",", $groups) as $col) {
+            foreach (explode(",", $cols) as $col) {
                 if (!$col) {
                     continue;
                 }
@@ -60,15 +68,17 @@ class PivotController extends Controller
                     continue;
                 }
                 $yValue = isset($data->AGG_VALUE_1) ? $data->AGG_VALUE_1 : $data->agg_value_1;
-                $series[$name][$xValue] = $yValue;
+                $series[$yLabel][$name][$xValue] = $yValue;
             }
         }
-        foreach($series as $name => $serie) {
-            $vals = [];
-            foreach($x as $xValue) {
-                $vals[] = isset($serie[$xValue]) ? $serie[$xValue] : 0;
+        foreach($series as $rowId => $serie0) {
+            foreach($serie0 as $name => $serie) {
+                $vals = [];
+                foreach($x as $xValue) {
+                    $vals[] = isset($serie[$xValue]) ? $serie[$xValue] : 0;
+                }
+                $series[$rowId][$name] = $vals;
             }
-            $series[$name] = $vals;
         }
         return response()->json(['sql' => $sql, 'x' => array_values($x), 'series' => $series]);
     }

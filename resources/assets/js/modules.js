@@ -13,7 +13,7 @@ registerMenu({"path":"main\/Reportes","name":"ReportsFolders","text":"Reportes",
 Vue.component('units', require('./modules/Units.vue'));
 registerMenu({"path":"main\/Configuraci\u00f3n","name":"Units","text":"Administraci\u00f3n de unidades de medida","icon":"fa fa-tachometer","id":6});
 Vue.component('useradministration', require('./modules/UserAdministration.vue'));
-registerMenu({"path":"main\/Configuraci\u00f3n","name":"UserAdministration","text":"User Administration","icon":"fa fa-users","id":7});
+registerMenu({"path":"main\/Configuraci\u00f3n","name":"UserAdministration","text":"Usuarios","icon":"fa fa-users","id":7});
 Vue.component('variabletags', require('./modules/VariableTags.vue'));
 registerMenu({"path":"main\/Configuraci\u00f3n","name":"VariableTags","text":"Clasificaci\u00f3n de Variables","icon":"fa fa-object-group","id":8});
 Vue.component('variables', require('./modules/Variables.vue'));
