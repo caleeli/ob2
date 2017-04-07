@@ -7,6 +7,7 @@
                 <a href="javascript:void(0)" v-on:click="setType('area')" :class="classType('area')"><i class="fa fa-area-chart"></i></a>
                 <a href="javascript:void(0)" v-on:click="setType('line')" :class="classType('line')"><i class="fa fa-line-chart"></i></a>
                 <a href="javascript:void(0)" v-on:click="setType('pie')" :class="classType('pie')"><i class="fa fa-pie-chart"></i></a>
+                <a href="javascript:void(0)" v-on:click="setType('polarArea')" :class="classType('polarArea')"><i class="glyphicon glyphicon-cd"></i></a>
                 <a href="javascript:void(0)" v-on:click="setType('table')" :class="classType('table')"><i class="fa fa-table"></i></a>
             </div>
         </div>
@@ -57,6 +58,28 @@
                 $(this.$el).find(".canvasOwner").html("<canvas></canvas>");
                 var self = this;
                 var ctx = $(this.$el).find("canvas")[0];
+                var pieColors = [
+                    '#3366CC',
+                    '#DC3912',
+                    '#FF9900',
+                    '#109618',
+                    '#990099',
+                    '#3B3EAC',
+                    '#0099C6',
+                    '#DD4477',
+                    '#66AA00',
+                    '#B82E2E',
+                    '#316395',
+                    '#994499',
+                    '#22AA99',
+                    '#AAAA11',
+                    '#6633CC',
+                    '#E67300',
+                    '#8B0707',
+                    '#329262',
+                    '#5574A6',
+                    '#3B3EAC',
+                ];
                 var lineChartData = {
                     //labels: [],
                     datasets: []
@@ -129,28 +152,18 @@
                         options.cutoutPercentage = 50;
                         lineChartData.datasets.forEach(function(ds) {
                             ds.backgroundColor = [];
-                            var pieColors = [
-                                '#3366CC',
-                                '#DC3912',
-                                '#FF9900',
-                                '#109618',
-                                '#990099',
-                                '#3B3EAC',
-                                '#0099C6',
-                                '#DD4477',
-                                '#66AA00',
-                                '#B82E2E',
-                                '#316395',
-                                '#994499',
-                                '#22AA99',
-                                '#AAAA11',
-                                '#6633CC',
-                                '#E67300',
-                                '#8B0707',
-                                '#329262',
-                                '#5574A6',
-                                '#3B3EAC',
-                            ];
+                            ds.data.forEach(function(data, i) {
+                                ds.backgroundColor.push(
+                                    pieColors[i % pieColors.length]
+                                );
+                            });
+                        });
+                        break;
+                    case 'polarArea':
+                        chartType = self.chartType;
+                        options.cutoutPercentage = 50;
+                        lineChartData.datasets.forEach(function(ds) {
+                            ds.backgroundColor = [];
                             ds.data.forEach(function(data, i) {
                                 ds.backgroundColor.push(
                                     pieColors[i % pieColors.length]
