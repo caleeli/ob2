@@ -149,7 +149,12 @@
                         break;
                     case 'pie':
                         chartType = self.chartType;
-                        options.cutoutPercentage = 50;
+                        options = {
+                            legend: {
+                                display: false
+                            },
+                            cutoutPercentage: 50
+                        };
                         lineChartData.datasets.forEach(function(ds) {
                             ds.backgroundColor = [];
                             ds.data.forEach(function(data, i) {
@@ -161,7 +166,17 @@
                         break;
                     case 'polarArea':
                         chartType = self.chartType;
-                        options.cutoutPercentage = 50;
+                        options = {
+                            legend: {
+                                display: false
+                            },
+                            scale: {
+                                reverse: true,
+                                    ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        };
                         lineChartData.datasets.forEach(function(ds) {
                             ds.backgroundColor = [];
                             ds.data.forEach(function(data, i) {
@@ -176,11 +191,15 @@
                     default:
                         chartType = self.chartType;
                 }
-                self.chart = new Chart(ctx, {
-                    type: chartType,
-                    data: lineChartData,
-                    options: options
-                });
+                try {
+                    self.chart = new Chart(ctx, {
+                        type: chartType,
+                        data: lineChartData,
+                        options: options
+                    });
+                } catch(e) {
+
+                }
             },
             refresh:function(){
                 var self = this;
