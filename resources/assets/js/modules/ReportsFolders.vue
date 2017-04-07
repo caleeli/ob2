@@ -16,10 +16,6 @@
             <div class="btn-toolbar">
                 <div class="btn-group">
                     <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-bar-chart"></i></a>
-                    <a href="javascript:void(0)" class="btn btn-default"><i class="fa fa-area-chart"></i></a>
-                    <a href="javascript:void(0)" class="btn btn-default"><i class="fa fa-line-chart"></i></a>
-                    <a href="javascript:void(0)" class="btn btn-default"><i class="fa fa-pie-chart"></i></a>
-                    <a href="javascript:void(0)" class="btn btn-default"><i class="fa fa-table"></i></a>
                 </div>
             </div>
             <chart refreshWith="ReportsFolders.Reports" :model="report"></chart>
