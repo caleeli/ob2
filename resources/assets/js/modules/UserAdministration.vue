@@ -29,7 +29,7 @@
     this.$name = "User";
     this.$pluralName = "Users";
     this.$fields = function () {
-        return [{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username"},{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password"},{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres"},{"name":"paterno","label":"Paterno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"paterno"},{"name":"materno","label":"Materno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"materno"},{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email"},{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad"}];
+        return [{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},{"name":"paterno","label":"Paterno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"paterno","isAssociation":false},{"name":"materno","label":"Materno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"materno","isAssociation":false},{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad","isAssociation":false}];
     };
     this.$columns = function () {
         return [{"title":"Usuario","data":"attributes.username"},{"title":"Nombres","data":"attributes.nombres"},{"title":"Paterno","data":"attributes.paterno"}];
@@ -54,7 +54,7 @@ UserAdministration.Role = function (url, id) {
     this.$name = "Role";
     this.$pluralName = "Roles";
     this.$fields = function () {
-        return [{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name"},{"name":"status","label":"status","type":"select","enum":["ACTIVE","INACTIVE"],"source":undefined,"textField":undefined,"value":"status"},{"name":"dashboard","label":"dashboard","type":"select","enum":["dashboard1","dashboard2"],"source":undefined,"textField":undefined,"value":"dashboard"}];
+        return [{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"status","label":"status","type":"select","enum":["ACTIVE","INACTIVE"],"source":undefined,"textField":undefined,"value":"status","isAssociation":false},{"name":"dashboard","label":"dashboard","type":"select","enum":["dashboard1","dashboard2"],"source":undefined,"textField":undefined,"value":"dashboard","isAssociation":false}];
     };
     this.$columns = function () {
         return [{"title":"name","data":"attributes.name"},{"title":"status","data":"attributes.status"},{"title":"dashboard","data":"attributes.dashboard"}];
@@ -78,7 +78,7 @@ UserAdministration.Login = function (url, id) {
     this.$name = "Login";
     this.$pluralName = "Logins";
     this.$fields = function () {
-        return [{"name":"username","label":"username","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username"},{"name":"password","label":"password","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"password"},{"name":"token","label":"token","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"token"}];
+        return [{"name":"username","label":"username","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},{"name":"password","label":"password","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},{"name":"token","label":"token","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"token","isAssociation":false}];
     };
     this.$columns = function () {
         return [{"title":"username","data":"attributes.username"},{"title":"password","data":"attributes.password"},{"title":"token","data":"attributes.token"}];

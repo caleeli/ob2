@@ -24,4 +24,10 @@ class Dimension extends Model
     {
         return $this->hasMany('App\Models\ReportsFolders\Domain');
     }
+
+
+    public function variables()
+    {
+        return $this->belongsToMany('App\Models\ReportsFolders\Variable');
+    }
 }

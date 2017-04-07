@@ -64,8 +64,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <carousel>
-                            @foreach (glob(base_path().'/nano/modules/*.php') as $filename)
-                            <carouselitem>
+                            <?php $dirList = glob(base_path().'/nano/modules/*.php'); sort($dirList); ?>
+                            @foreach ($dirList as $filename)
+                            <carouselitem id="{{'module-'.basename($filename, '.php')}}">
                                 <{!! strtolower(basename($filename, '.php')) !!} />
                             </carouselitem>
                             @endforeach

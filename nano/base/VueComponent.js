@@ -18,6 +18,7 @@ VueComponent.generate = function (module, views, data, template) {
                         source: field.source,
                         textField: field.textField,
                         value: field.name,
+                        isAssociation: false,
                     });
                 }
                 if (typeof field.list === 'undefined' || field.list) {
@@ -37,7 +38,10 @@ VueComponent.generate = function (module, views, data, template) {
                         enum: typeof field.enum === 'undefined' ? [] : field.enum,
                         source: field.source,
                         textField: field.textField,
-                        value: field.name + '_id',
+                        value: field.name,
+                        isAssociation: true,
+                        isMultiple: field instanceof Module.Model.HasMany ||
+                            field instanceof Module.Model.BelongsToMany,
                     });
                 }
                 if (typeof field.list !== 'undefined' && field.list) {

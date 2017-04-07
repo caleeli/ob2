@@ -109,7 +109,9 @@ class NanoBuildCommand extends Command
             $v8->executeString(file_get_contents($filename), $filename);
         }
         $modulesJs = "";
-        foreach (glob(base_path().'/nano/modules/*.php') as $id => $filename) {
+        $dirList = glob(base_path().'/nano/modules/*.php');
+        sort($dirList);
+        foreach ($dirList as $id => $filename) {
             $code = file_get_contents($filename);
             $tokens = token_get_all($code);
             $phpCode = null;
@@ -121,7 +123,8 @@ class NanoBuildCommand extends Command
                     } elseif (T_OPEN_TAG === $t[0]) {
                         $phpCode = '';
                     } elseif (T_CLOSE_TAG === $t[0]) {
-                        $xmlCode.=htmlentities(json_encode($phpCode), ENT_NOQUOTES, 'utf-8');
+                        $lines = substr_count($phpCode, "\n") + 1;
+                        $xmlCode.=htmlentities(json_encode($phpCode), ENT_NOQUOTES, 'utf-8').str_repeat("\n", $lines);
                     } else {
                         $phpCode.=$t[1];
                     }
@@ -141,10 +144,11 @@ class NanoBuildCommand extends Command
                                             $dom->saveHTML($template));
             }
             foreach ($dom->getElementsByTagName('script') as $script) {
-                $v8->executeString($script->nodeValue, $filename);
+                $v8->executeString(str_repeat("\n", $script->getLineNo()-1) . $script->nodeValue, $filename);
             }
             $name = basename($filename, '.php');
             $menues[$name]->id = $id;
+            dump($filename);
             $modulesJs.="Vue.component('".strtolower($name)."', require('./modules/".$name.".vue'));\n";
             $modulesJs.="registerMenu(".json_encode($menues[$name]).");\n";
         }

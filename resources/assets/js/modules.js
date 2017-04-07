@@ -15,6 +15,6 @@ registerMenu({"path":"main\/Configuraci\u00f3n","name":"Units","text":"Administr
 Vue.component('useradministration', require('./modules/UserAdministration.vue'));
 registerMenu({"path":"main\/Configuraci\u00f3n","name":"UserAdministration","text":"User Administration","icon":"fa fa-users","id":7});
 Vue.component('variabletags', require('./modules/VariableTags.vue'));
-registerMenu({"path":"main\/Configuraci\u00f3n","name":"VariableTags","text":"Clases de variables","icon":"fa fa-object-group","id":8});
+registerMenu({"path":"main\/Configuraci\u00f3n","name":"VariableTags","text":"Clasificaci\u00f3n de Variables","icon":"fa fa-object-group","id":8});
 Vue.component('variables', require('./modules/Variables.vue'));
 registerMenu({"path":"main\/Reportes","name":"Variables","text":"Administraci\u00f3n de variables","icon":"fa fa-square-o","id":9});

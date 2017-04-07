@@ -43,8 +43,13 @@
                         this.children('.active').slideDown();
                     } else {
                         this.children('.active').slideUp();
-                        $(this.children()[viewId]).slideDown();
-                        $(this.children()[viewId]).addClass('active');
+                        /*if(isNaN(viewId)) {
+                            $('#'+viewId).slideDown();
+                            $('#'+viewId).addClass('active');
+                        } else {*/
+                            $(this.children()[viewId]).slideDown();
+                            $(this.children()[viewId]).addClass('active');
+                        //}
                     }
                 };
             }( jQuery ));

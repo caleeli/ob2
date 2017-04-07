@@ -93,9 +93,30 @@ class ApiController extends Controller
                     $result = $model::create($data['attributes']);
                 } elseif ($model instanceof Model) {
                     throw new InvalidApiCall();
-                } elseif (isset($data['id'])) {
-                    $related = $model->getRelated()->findOrFail($data['id']);
-                    $result = $model->save($related);
+                } elseif ($model instanceof BelongsTo) {
+                    /* @var BelongsTo $model */
+                    $model->associate($model->getRelated()->findOrFail($data['id']));
+                    $result = $model;
+                } elseif ($model instanceof HasOne) {
+                    /* @var HasOne $model */
+                    $model->save($model->getRelated()->findOrFail($data['id']));
+                    $result = $model;
+                } elseif ($model instanceof HasMany) {
+                    /* @var HasMany $model */
+                    $ids = [];
+                    foreach($data as $rel) {
+                        $ids[]= $rel['id'];
+                    }
+                    $model->saveMany($model->getRelated()->findOrFail($ids));
+                    $result = $model;
+                } elseif ($model instanceof BelongsToMany) {
+                    /* @var BelongsToMany $model */
+                    $ids = [];
+                    foreach($data as $rel) {
+                        $ids[]= $rel['id'];
+                    }
+                    $model->sync($ids);
+                    $result = $model;
                 } else {
                     $result = $model->create($data['attributes']);
                 }
@@ -145,6 +166,30 @@ class ApiController extends Controller
                 throw new InvalidApiCall();
             } elseif ($model instanceof Model) {
                 $model->update($data['attributes']);
+                $result = $model;
+            } elseif ($model instanceof BelongsTo) {
+                /* @var BelongsTo $model */
+                $model->associate($model->getRelated()->findOrFail($data['id']));
+                $result = $model;
+            } elseif ($model instanceof HasOne) {
+                /* @var HasOne $model */
+                $model->save($model->getRelated()->findOrFail($data['id']));
+                $result = $model;
+            } elseif ($model instanceof HasMany) {
+                /* @var HasMany $model */
+                $ids = [];
+                foreach($data as $rel) {
+                    $ids[]= $rel['id'];
+                }
+                $model->saveMany($model->getRelated()->findOrFail($ids));
+                $result = $model;
+            } elseif ($model instanceof BelongsToMany) {
+                /* @var BelongsToMany $model */
+                $ids = [];
+                foreach($data as $rel) {
+                    $ids[]= $rel['id'];
+                }
+                $model->sync($ids);
                 $result = $model;
             } elseif ($model === null) {
                 throw new NotFoundException();

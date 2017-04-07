@@ -23,4 +23,8 @@ class Variable extends Model
       'tags' => 'string',
       'description' => 'string',
     );
+    public function dimensions()
+    {
+        return $this->belongsToMany('App\Models\ReportsFolders\Dimension');
+    }
 }

@@ -46,12 +46,41 @@
             }
         },
         methods: {
-            getValues: function(){
+            getValues: function() {
                 var value = this.model[this.property];
-                var values = value && typeof value.split==='function' ?
-                    value.split(this.separator) :
-                    [];
-                return values;
+                if (!value) {
+                    return [];
+                } else if (typeof value.split==='function') {
+                    return value.split(this.separator);
+                } else if (typeof value.forEach==='function') {
+                    var values = [];
+                    value.forEach(function(row) {
+                        values.push(row.id);
+                    });
+                    return values;
+                } else {
+                    return [];
+                }
+            },
+            setValues: function(values){
+                var self = this;
+                var value = this.model[this.property];
+                if (!value) {
+                    this.model[this.property] = values.join(this.separator);
+                } else if (typeof value.split==='function') {
+                    this.model[this.property] = values.join(this.separator);
+                } else if (typeof value.forEach==='function') {
+                    this.model[this.property].length = 0;
+                    values.forEach(function(value) {
+                        self.domain.forEach(function(option) {
+                            if (option.id==value) {
+                                self.model[self.property].push(option);
+                            }
+                        });
+                    });
+                } else {
+                    return [];
+                }
             },
             refresh: function() {
                 var self = this;
@@ -72,7 +101,7 @@
                 var values = this.getValues();
                 if(values.indexOf(newValue)===-1) {
                     values.push(newValue);
-                    this.model[this.property] = values.join(this.separator);
+                    this.setValues(values);
                 }
                 this.refresh();
             },
@@ -80,7 +109,7 @@
                 var values = this.getValues();
                 if(values.indexOf(oldValue)!==-1) {
                     values.splice(values.indexOf(oldValue), 1);
-                    this.model[this.property] = values.join(this.separator);
+                    this.setValues(values);
                 }
                 this.refresh();
             },

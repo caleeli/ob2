@@ -20,9 +20,15 @@ export default function(uri0, id, type) {
             if (typeof id1 === 'undefined') {
                 id1 = id;
             }
+            var include = [];
+            self.$fields().forEach(function(field) {
+                if (field.isAssociation) {
+                    include.push(field.name);
+                }
+            });
             $.ajax({
                 method: "GET",
-                url: this.$url() + '/' + (!id1 ? 'create' : id1),
+                url: this.$url() + '/' + (!id1 ? 'create' : id1)+ (include.length>0 ? '?include='+include.join(',') : ''),
                 dataType: 'json',
                 success: function (data) {
                     originalData = data.data;
@@ -58,6 +64,8 @@ export default function(uri0, id, type) {
     this.$save = function (childrenAssociation, saveCallback) {
         var method;
         var url;
+        var attributes = {}, relationships = {};
+        var self = this;
         if(typeof childrenAssociation==='undefined') {
             childrenAssociation = '';
         }
@@ -68,6 +76,13 @@ export default function(uri0, id, type) {
             method = 'PUT';
             url = this.$url() + '/' + childrenAssociation + id;
         }
+        this.$fields().forEach(function(field) {
+            if (field.isAssociation) {
+                relationships[field.name] = {data:self[field.name]};
+            } else {
+                attributes[field.name] = self[field.name];
+            }
+        });
         $.ajax({
             method: method,
             url: url,
@@ -75,7 +90,8 @@ export default function(uri0, id, type) {
             data: JSON.stringify({
                 data: {
                     type: type,
-                    attributes: self
+                    attributes: attributes,
+                    relationships: relationships,
                 }
             }),
             success: function (data) {

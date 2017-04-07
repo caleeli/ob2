@@ -1,5 +1,5 @@
 <template>
-    <div class="class">
+    <div class="class" :id="id">
         <slot></slot>
     </div>
 </template>
@@ -9,7 +9,8 @@
         props:[
             "class",
             "activate",
-            "map"
+            "map",
+            "id",
         ],
         carousel:{},
         viewId:0,

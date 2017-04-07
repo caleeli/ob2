@@ -96,11 +96,11 @@ class Report extends Model
         $collection = [];
         $variableRows = \App\Models\ReportsFolders\Variable::whereIn(
                             'id',
-                            explode('', $variables)
-                        );
+                            explode(',', $variables)
+                        )->get();
         $dims = [];
         foreach ($variableRows as $var) {
-            foreach ($var->dimensions() as $dim) {
+            foreach ($var->dimensions()->get() as $dim) {
                 $dims[$dim->id] = $dim;
             }
         }

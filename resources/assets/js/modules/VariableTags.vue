@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h2 id="nav-tabs">Variables</h2>
+            <h2 id="nav-tabs">Clasificación de Variables</h2>
             <abm id="VariableTags.Tags" :model="variableTag" nameField="name">
                 <span></span>
             </abm>
