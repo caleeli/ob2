@@ -28,7 +28,7 @@
     var module = new Module({
         "name": "UserAdministration",
         "prefix": "usradm",
-        "title": "User Administration",
+        "title": "Usuarios",
         "icon": "fa fa-users",
         "menu": "main/Configuración",
         "models": [

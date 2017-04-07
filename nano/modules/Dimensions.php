@@ -27,7 +27,7 @@
     var module = new Module({
         "name": "Dimensions",
         "prefix": "repfol",
-        "title": "Administración de dimensiones",
+        "title": "Dimensiones",
         "icon": "fa fa-cube",
         "menu": "main/Reportes",
         "models": [

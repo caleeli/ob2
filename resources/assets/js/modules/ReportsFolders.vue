@@ -13,11 +13,6 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length &gt; 2">
-            <div class="btn-toolbar">
-                <div class="btn-group">
-                    <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-bar-chart"></i></a>
-                </div>
-            </div>
             <chart refreshWith="ReportsFolders.Reports" :model="report"></chart>
         </div>
     </div>

@@ -18,7 +18,7 @@
     var module = new Module({
         "name": "Variables",
         "prefix": "repfol",
-        "title": "Administración de variables",
+        "title": "Variables",
         "icon": "fa fa-square-o",
         "menu": "main/Reportes",
         "models": [

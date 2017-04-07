@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<root xmlns:vue='http://openbank.com/vue'>
+<root xmlns:vue='http://nano2.com/vue'>
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
@@ -27,14 +27,6 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length > 2">
-            <div class="btn-toolbar">
-                <div class="btn-group">
-                    <a href="#" class="btn btn-default"><i class="fa fa-bar-chart"></i></a>
-                    <a href="#" class="btn btn-default">2</a>
-                    <a href="#" class="btn btn-default">3</a>
-                    <a href="#" class="btn btn-default">4</a>
-                </div>
-            </div>
             <chart refreshWith="ReportsFolders.Reports" vue:model="report"/>
         </div>
     </div>
@@ -43,7 +35,7 @@
     var module = new Module({
         "name": "ReportsFolders",
         "prefix": "be",
-        "title": "Reportes y Folders",
+        "title": "Reportes",
         "icon": "fa fa-folder",
         "menu": "main/Reportes",
         "models": [
