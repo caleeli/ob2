@@ -3,6 +3,7 @@
         <div class="btn-toolbar">
             <div class="btn-group">
                 <a href="javascript:void(0)" v-on:click="setType('bar')" :class="classType('bar')"><i class="fa fa-bar-chart"></i></a>
+                <a href="javascript:void(0)" v-on:click="setType('bar2')" :class="classType('bar2')"><i class="fa fa-bar-chart"></i></a>
                 <a href="javascript:void(0)" v-on:click="setType('horizontalBar')" :class="classType('horizontalBar')"><i class="fa fa-bars"></i></a>
                 <a href="javascript:void(0)" v-on:click="setType('area')" :class="classType('area')"><i class="fa fa-area-chart"></i></a>
                 <a href="javascript:void(0)" v-on:click="setType('line')" :class="classType('line')"><i class="fa fa-line-chart"></i></a>
@@ -21,7 +22,7 @@
     export default {
         data:function() {
             return {
-                "chartType": "bar",
+                "chartType": "line",
             };
         },
         props:[
@@ -127,6 +128,15 @@
                     case 'line':
                         chartType = self.chartType;
                         break;
+                    case 'bar2':
+                        chartType = 'bar';
+                        options.scales.xAxes.forEach(function(axe) {
+                            axe.stacked = true;
+                        })
+                        options.scales.yAxes.forEach(function(axe) {
+                            axe.stacked = true;
+                        })
+                        break;
                     case 'horizontalBar':
                         chartType = self.chartType;
                         options.scales = {
@@ -146,6 +156,12 @@
                         lineChartData.datasets.forEach(function(ds) {
                             ds.fill = true;
                         });
+                        options.scales.xAxes.forEach(function(axe) {
+                            axe.stacked = true;
+                        })
+                        options.scales.yAxes.forEach(function(axe) {
+                            axe.stacked = true;
+                        })
                         break;
                     case 'pie':
                         chartType = self.chartType;
