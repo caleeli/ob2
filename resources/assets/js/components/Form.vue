@@ -14,7 +14,7 @@
             <filters v-if="field.type==='filter'" :placeholder="field.label" :model="values" :property="field.value" :domain="domains[field.name]" :field="field"  v-on:change="change"/>
         </div>
         <!-- button type="button" v-on:click="reset" class="btn btn-default">Reestablecer</button -->
-        <button type="button" v-on:click="cancel" class="btn btn-warning">Cancelar11</button>
+        <button type="button" v-on:click="cancel" class="btn btn-warning">Cancelar</button>
         <button type="button" v-on:click="save" class="btn btn-success">Guardar</button>
     </form>
 </template>
