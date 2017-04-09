@@ -359,7 +359,7 @@ Module.View.ModelInstance = function (base, url, id) {
     this.getCode = function () {
         var urlFn = !url ? '' : 'function(){try{var url="/api/' + url.replace(/\{([^}]+)\}/, function (ma0, ma1) {
             return '"+(' + ma1 + '?' + ma1 + ':"¡@!")+"'
-        }) + '";return url.indexOf("¡@!")===-1?url:this.$defaultUrl;}catch(err){return this.$defaultUrl;}}';
+        }) + '";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}';
         return 'new ' + base + '(' + urlFn + (id ? ',' + id : '') + ')';
     }
     this.callMethod = function (methodName, params, childrenAssociation) {

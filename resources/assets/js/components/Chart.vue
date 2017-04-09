@@ -236,10 +236,10 @@
             refresh:function(){
                 var self = this;
                 var model = self.model;
-                $(this.$el).find(".canvasOwner").html("<img src='/images/ajax-loader2.gif'>");
+                $(this.$el).find(".canvasOwner").html("<img src='images/ajax-loader2.gif'>");
                 try {
                     $.ajax({
-                        url: '/api/pivot/valores/'+model.aggregator+'/defecto_valor_cargado/'+(model.rows?model.rows:'null')+'/'+(model.cols?model.cols:'null')+'/'+model.variables+'?filter='+model.filter,
+                        url: API_SERVER+'/api/pivot/valores/'+model.aggregator+'/defecto_valor_cargado/'+(model.rows?model.rows:'null')+'/'+(model.cols?model.cols:'null')+'/'+model.variables+'?filter='+model.filter,
                         dataType: 'json',
                         success:function(data) {
                             self.data = data;

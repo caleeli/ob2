@@ -2,7 +2,7 @@
 @section('content')
 <div id="now_loading">
     Cargando ...<br />
-    <img src="/images/ajax-loader.gif">
+    <img src="images/ajax-loader.gif">
 </div>
         <div  id="app" style="visibility:hidden;">
             <nav class="navbar navbar-default navbar-fixed-top">

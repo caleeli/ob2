@@ -101,7 +101,7 @@ UserAdministration.Login.prototype.constructor = Model;
             module = this;
             return {
                 path: [],
-                user: new UserAdministration.User(function(){try{var url="/api/UserAdministration/roles/"+(module.role.id?module.role.id:"¡@!")+"/users";return url.indexOf("¡@!")===-1?url:this.$defaultUrl;}catch(err){return this.$defaultUrl;}}),
+                user: new UserAdministration.User(function(){try{var url="/api/UserAdministration/roles/"+(module.role.id?module.role.id:"¡@!")+"/users";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
 role: new UserAdministration.Role(),
             }
         },

@@ -21,7 +21,7 @@
             module = this;
             return {
                 path: [],
-                user: new UserAdministration.User(function(){try{var url="/api/UserAdministration/users";return url.indexOf("¡@!")===-1?url:this.$defaultUrl;}catch(err){return this.$defaultUrl;}},localStorage.user_id),
+                user: new UserAdministration.User(function(){try{var url="/api/UserAdministration/users";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}},localStorage.user_id),
             }
         },
         mounted: function() {

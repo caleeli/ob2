@@ -12,10 +12,26 @@ use Illuminate\Http\Request;
   | is assigned the "api" middleware group. Enjoy building your API!
   |
  */
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Credentials: true');
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Route::get('/lang/datatable', function () {
+    $minutes = 60;
+    $content = file_get_contents(public_path('/js/Spanish.json'));
+    $response = new \Illuminate\Http\Response($content, 200, array(
+        'Cache-Control' => 'max-age='.($minutes*60).', public',
+        'Content-Length' => strlen($content),
+    ));
+
+    $response->setLastModified(new \DateTime('now'));
+    $response->setExpires(\Carbon\Carbon::now()->addMinutes($minutes));
+
+    return $response;
+});
 
 Route::get('/pivot/{table}/{aggregator}/{measure}/{rows}/{cols}/{variables}',
            array('as' => 'api', 'uses' => 'PivotController@index'));

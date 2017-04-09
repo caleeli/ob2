@@ -30,7 +30,7 @@
             return {
                 path: [],
                 dimension: new ReportsFolders.Dimension(),
-domain: new ReportsFolders.Domain(function(){try{var url="/api/ReportsFolders/dimensions/"+(module.dimension.id?module.dimension.id:"¡@!")+"/domains";return url.indexOf("¡@!")===-1?url:this.$defaultUrl;}catch(err){return this.$defaultUrl;}}),
+domain: new ReportsFolders.Domain(function(){try{var url="/api/ReportsFolders/dimensions/"+(module.dimension.id?module.dimension.id:"¡@!")+"/domains";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
             }
         },
         mounted: function() {

@@ -32,7 +32,7 @@
     this.$name = "Report";
     this.$pluralName = "Reports";
     this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"variables","label":"Variables","type":"tags","enum":[],"source":new ReportsFolders.Variable(function(){try{var url="/api/ReportsFolders/variables?sort=name";return url.indexOf("¡@!")===-1?url:this.$defaultUrl;}catch(err){return this.$defaultUrl;}}),"textField":"name","value":"variables","isAssociation":false},{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator","isAssociation":false},{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
+        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"variables","label":"Variables","type":"tags","enum":[],"source":new ReportsFolders.Variable(function(){try{var url="/api/ReportsFolders/variables?sort=name";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),"textField":"name","value":"variables","isAssociation":false},{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator","isAssociation":false},{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:false});
                         },"textField":"name","value":"rows","isAssociation":false},{"name":"cols","label":"Columnas","type":"tags","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:false});
@@ -264,7 +264,7 @@ ReportsFolders.Formula.prototype.constructor = Model;
             module = this;
             return {
                 path: [],
-                report: new ReportsFolders.Report(function(){try{var url="/api/ReportsFolders/folders/"+(module.folder.id?module.folder.id:"¡@!")+"/reports";return url.indexOf("¡@!")===-1?url:this.$defaultUrl;}catch(err){return this.$defaultUrl;}}),
+                report: new ReportsFolders.Report(function(){try{var url="/api/ReportsFolders/folders/"+(module.folder.id?module.folder.id:"¡@!")+"/reports";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
 folder: new ReportsFolders.Folder(),
 table: new ReportsFolders.Report(),
 variableTags: new ReportsFolders.VariableTag(),

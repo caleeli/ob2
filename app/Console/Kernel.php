@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\NanoInstallCommand::class,
         Commands\DBDumpCommand::class,
         Commands\DBImportCommand::class,
+        Commands\CordovaPrepare::class,
     ];
 
     /**

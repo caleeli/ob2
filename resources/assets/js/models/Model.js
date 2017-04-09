@@ -6,7 +6,7 @@ export default function(uri0, id, type) {
     var uri;
     if(typeof uri0!=='function') {
         uri = function() {
-            return uri0 ? uri0 : this.$defaultUrl;
+            return API_SERVER + (uri0 ? uri0 : this.$defaultUrl);
         }
     } else {
         uri = uri0;
@@ -38,7 +38,7 @@ export default function(uri0, id, type) {
                     if(typeof originalData.relationships==="object") {
                         for(var a in originalData.relationships) {
                             self[a] = originalData.relationships[a];
-                            if(typeof self[a].forEach==='function') {
+                            if(self[a] && typeof self[a].forEach==='function') {
                                 self[a].get = function(id){
                                     var res;
                                     self[a].forEach(function(item) {

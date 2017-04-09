@@ -59,7 +59,6 @@
             },
             change: function() {
                 var self = this;
-                console.log('changed', self);
                 self.$root.$emit('changed', self);
             },
         },

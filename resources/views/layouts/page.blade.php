@@ -36,6 +36,7 @@
         <script src="bower_components/chart.js/dist/Chart.bundle.js"></script>
         <script src="bower_components/chart.js/samples/utils.js"></script>
         <script type="text/javascript" charset="utf8">
+            var API_SERVER = '';
             (function ( $ ) {
                 $.fn.slider = function(viewId) {
                     if ( typeof viewId === 'undefined') {

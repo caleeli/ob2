@@ -48,7 +48,7 @@
             var self = this;
             var table = $(this.$el).find("table").DataTable({
                 language: {
-                    url: "js/Spanish.json"
+                    url: API_SERVER+"/api/lang/datatable"
                 },
                 //dom: 'Bfrtilp',
                 dom: 'Bfrtp',
