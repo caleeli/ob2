@@ -94,6 +94,9 @@ class Report extends Model
     public function dimensiones($variables='', $domains=false)
     {
         $collection = [];
+        if (empty($variables)) {
+            return ['data'=>$collection];
+        }
         $variableRows = \App\Models\ReportsFolders\Variable::whereIn(
                             'id',
                             explode(',', $variables)
