@@ -1,5 +1,5 @@
 <template>
-    <form>id:{{id}}
+    <form>
         <div class="form-group" v-for="field in fields">
             <label>{{field.label}}</label>
             <input  v-if="field.type==='text'" type="text" class="form-control" :placeholder="field.label" v-model="values[field.value]" v-on:change="change">
