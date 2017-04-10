@@ -71,8 +71,8 @@
                               <div class="panel-heading">Registro</div>
                               <div class="panel-body">
                                   <fieldset>
-                                    <div class="form-group">
-                                      <label class="col-lg-2 control-label">Usuario</label>
+                                    <div id="username" class="form-group">
+                                      <label class="col-lg-2 control-label">Usuario <span class="label label-danger if-has-error">debe introducir un nombre de usuario</span></label>
                                       <div class="col-lg-10">
                                         <input type="text" class="form-control" placeholder="usuario" v-model="user.username">
                                       </div>
@@ -83,6 +83,12 @@
                                             <input type="password" class="form-control" placeholder="contraseña" v-model="user.password">
                                       </div>
                                     </div>
+                                      <div id="password2" class="form-group">
+                                          <label class="col-lg-2 control-label">Confirmar contraseña <span class="label label-danger if-has-error">la contraseña no coincide</span></label>
+                                          <div class="col-lg-10">
+                                              <input type="password" class="form-control" placeholder="confirmar contraseña" v-model="password2">
+                                          </div>
+                                      </div>
                                     <div class="form-group">
                                       <label class="col-lg-2 control-label">Nombres</label>
                                       <div class="col-lg-10">

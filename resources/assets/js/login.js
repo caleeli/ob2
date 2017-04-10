@@ -72,6 +72,16 @@ $(document).ready(function () {
                 this.goto(0);
             },
             submitReg:function(){
+                if (!this.user.username) {
+                    $("#username").addClass("has-error").find("input").focus();
+                    return ;
+                }
+                $("#username").removeClass("has-error");
+                if (this.password2!==this.user.password) {
+                    $("#password2").addClass("has-error").find("input").focus();
+                    return ;
+                }
+                $("#password2").removeClass("has-error");
                 app.user.$methods.registrar(app.user.$getData());
                 this.goto(0);
             },
@@ -81,6 +91,7 @@ $(document).ready(function () {
             path: [],
             user: new UserAdministration.User("api/UserAdministration/roles/1/users"),
             login: new UserAdministration.Login(),
+            password2: "",
         },
         mounted: function () {
             var self = this;

@@ -1,7 +1,7 @@
 Vue.component('connections', require('./modules/Connections.vue'));
 registerMenu({"path":"main\/Configuraci\u00f3n","name":"Connections","text":"Connections","icon":"fa fa-database","id":0});
 Vue.component('dashboard', require('./modules/Dashboard.vue'));
-registerMenu({"path":"main","name":"Dashboard","text":"Dashboard","icon":"glyphicon glyphicon-home","id":1});
+registerMenu({"path":"main","name":"Dashboard","text":"","icon":"glyphicon glyphicon-home","id":1});
 Vue.component('dimensions', require('./modules/Dimensions.vue'));
 registerMenu({"path":"main\/Reportes","name":"Dimensions","text":"Dimensiones","icon":"fa fa-cube","id":2});
 Vue.component('formulas', require('./modules/Formulas.vue'));
