@@ -13,7 +13,7 @@
         <link rel="stylesheet" type="text/css" href="bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/jstree/dist/themes/default/style.min.css">
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ elixir('css/app.css') }}?t=<?=filemtime(public_path().'/css/app.css')?>">">
+        <link rel="stylesheet" href="{{ elixir('css/app.css') }}?t=<?=filemtime(public_path().'/css/app.css')?>">
         <link id="template-tuner" rel="stylesheet" type="text/css" href="bower_components/bootswatch/darkly/bootstrap.min.css">
     </head>
     <body>
