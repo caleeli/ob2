@@ -92,3 +92,102 @@ $rotate-template-count: 16 !default
 .table-locked {
     opacity: 0.7;
 }
+
+.ntScroll {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+$portraitWidth: (1080/1080);
+$portraitHeight: (1600/1080);
+$portraitWidth2: (1600/1600);
+$portraitHeight2: (1080/1600);
+$imagePerLine: 2.5;
+
+@media (min-width:320px) and (orientation: portrait) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+    .ntImage {
+        width: ($portraitWidth*320px/$imagePerLine);
+        height: ($portraitHeight*320px/$imagePerLine);
+    }
+}
+@media (min-width:480px) and (orientation: portrait) { /* smartphones, Android phones, landscape iPhone */
+    .ntImage {
+        width: ($portraitWidth*480px/$imagePerLine);
+        height: ($portraitHeight*480px/$imagePerLine);
+    }
+}
+@media (min-width:600px) and (orientation: portrait) { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+    .ntImage {
+        width: ($portraitWidth*600px/$imagePerLine);
+        height: ($portraitHeight*600px/$imagePerLine);
+    }
+}
+@media (min-width:801px) and (orientation: portrait) { /* tablet, landscape iPad, lo-res laptops ands desktops */
+    .ntImage {
+        width: ($portraitWidth*801px/$imagePerLine);
+        height: ($portraitHeight*801px/$imagePerLine);
+    }
+}
+@media (min-width:1025px) and (orientation: portrait) { /* big landscape tablets, laptops, and desktops */
+    .ntImage {
+        width: ($portraitWidth*1025px/$imagePerLine);
+        height: ($portraitHeight*1025px/$imagePerLine);
+    }
+}
+@media (min-width:1281px) and (orientation: portrait) { /* hi-res laptops and desktops */
+    .ntImage {
+        width: ($portraitWidth*1281px/$imagePerLine);
+        height: ($portraitHeight*1281px/$imagePerLine);
+    }
+}
+/****/
+@media (min-width:480px) and (orientation: landscape) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+    .ntImage {
+        width: ($portraitWidth2*480px/$imagePerLine);
+        height: ($portraitHeight2*480px/$imagePerLine);
+    }
+}
+@media (min-width:600px) and (orientation: landscape) { /* smartphones, Android phones, landscape iPhone */
+    .ntImage {
+        width: ($portraitWidth2*600px/$imagePerLine);
+        height: ($portraitHeight2*600px/$imagePerLine);
+    }
+}
+@media (min-width:800px) and (orientation: landscape) { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+    .ntImage {
+        width: ($portraitWidth2*800px/$imagePerLine);
+        height: ($portraitHeight2*800px/$imagePerLine);
+    }
+}
+@media (min-width:1025px) and (orientation: landscape) { /* big landscape tablets, laptops, and desktops */
+    .ntImage {
+        width: ($portraitWidth2*1025px/$imagePerLine);
+        height: ($portraitHeight2*1025px/$imagePerLine);
+    }
+}
+@media (min-width:1281px) and (orientation: landscape) { /* hi-res laptops and desktops */
+    .ntImage {
+        width: ($portraitWidth2*1281px/$imagePerLine);
+        height: ($portraitHeight2*1281px/$imagePerLine);
+    }
+}
+@media (min-width:1900px) and (orientation: landscape) { /* hi-res laptops and desktops */
+    .ntImage {
+        width: ($portraitWidth2*1900px/$imagePerLine);
+        height: ($portraitHeight2*1900px/$imagePerLine);
+    }
+}
+
+.ntImage {
+    background-image: url(../images/variables/hand.jpg);
+    background-size: auto 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: rgba(0,0,80,0.3);
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    display: inline-flex;
+    white-space: normal;
+    text-align: center;
+    margin-right: 0.5em;
+}

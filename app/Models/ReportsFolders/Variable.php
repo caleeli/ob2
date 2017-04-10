@@ -10,21 +10,24 @@ class Variable extends Model
     protected $table = 'be_variables';
     protected $fillable = array(
       0 => 'name',
-      1 => 'tags',
-      2 => 'description',
+      1 => 'description',
     );
     protected $attributes = array(
       'name' => null,
-      'tags' => null,
       'description' => null,
     );
     protected $casts = array(
       'name' => 'string',
-      'tags' => 'string',
       'description' => 'string',
     );
     public function dimensions()
     {
         return $this->belongsToMany('App\Models\ReportsFolders\Dimension');
+    }
+
+
+    public function variableTags()
+    {
+        return $this->belongsToMany('App\Models\ReportsFolders\VariableTag');
     }
 }

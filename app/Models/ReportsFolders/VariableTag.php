@@ -17,6 +17,12 @@ class VariableTag extends Model
     protected $casts = array(
       'name' => 'string',
     );
+    public function variables()
+    {
+        return $this->belongsToMany('App\Models\ReportsFolders\Variable');
+    }
+
+
     public function tagsList()
     {
         $collection = [];

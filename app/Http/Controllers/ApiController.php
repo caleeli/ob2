@@ -272,8 +272,9 @@ class ApiController extends Controller
             $res = $method($model, $data);
             if (isset($data['relationships'])) {
                 foreach ($data['relationships'] as $rel => $json) {
-                    $route[] = $rel;
-                    $this->resolve($route, $method, $json['data'], $res);
+                    $route1 = $route;
+                    $route1[] = $rel;
+                    $this->resolve($route1, $method, $json['data'], $res);
                 }
             }
             return $res;

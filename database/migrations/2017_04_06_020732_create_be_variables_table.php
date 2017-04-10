@@ -12,7 +12,6 @@ class CreateBeVariablesTable extends Migration
         Schema::create('be_variables', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->string('tags')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

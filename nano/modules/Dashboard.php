@@ -2,13 +2,52 @@
 <root xmlns:vue='http://openbank.com/vue'>
 <template>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <h2>Reportes</h2>
-            <chart2 type='bar' vue:model='report' method='dashboard1' />
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <h2>Indices</h2>
-            <chart2 type='pie' vue:model='report' method='dashboard1' />
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4>Salud</h4>
+            <div class="ntScroll">
+                <div class="ntImage">
+                    <label>Blade el empalador</label>
+                </div>
+                <div class="ntImage">
+                    <label>Revenge of the Sith</label>
+                </div>
+                <div class="ntImage">
+                    <label>DISEÑO de sonrisa</label>
+                </div>
+                <div class="ntImage">
+                    <label>Guf guf</label>
+                </div>
+            </div>
+            <h4>Educación</h4>
+            <div class="ntScroll">
+                <div class="ntImage">
+                    <label>Blade el empalador</label>
+                </div>
+                <div class="ntImage">
+                    <label>Revenge of the Sith</label>
+                </div>
+                <div class="ntImage">
+                    <label>DISEÑO de sonrisa</label>
+                </div>
+                <div class="ntImage">
+                    <label>Guf guf</label>
+                </div>
+            </div>
+            <h4>Hidrocarburos</h4>
+            <div class="ntScroll">
+                <div class="ntImage">
+                    <label>Blade el empalador</label>
+                </div>
+                <div class="ntImage">
+                    <label>Revenge of the Sith</label>
+                </div>
+                <div class="ntImage">
+                    <label>DISEÑO de sonrisa</label>
+                </div>
+                <div class="ntImage">
+                    <label>Guf guf</label>
+                </div>
+            </div>
         </div>
     </div>
 </template>

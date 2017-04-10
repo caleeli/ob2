@@ -7871,4 +7871,121 @@ a.dt-button {
   opacity: 0.7;
 }
 
+.ntScroll {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+@media (min-width: 320px) and (orientation: portrait) {
+  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .ntImage {
+    width: 128px;
+    height: 189.62962963px;
+  }
+}
+
+@media (min-width: 480px) and (orientation: portrait) {
+  /* smartphones, Android phones, landscape iPhone */
+  .ntImage {
+    width: 192px;
+    height: 284.444444444px;
+  }
+}
+
+@media (min-width: 600px) and (orientation: portrait) {
+  /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+  .ntImage {
+    width: 240px;
+    height: 355.555555556px;
+  }
+}
+
+@media (min-width: 801px) and (orientation: portrait) {
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+  .ntImage {
+    width: 320.4px;
+    height: 474.666666667px;
+  }
+}
+
+@media (min-width: 1025px) and (orientation: portrait) {
+  /* big landscape tablets, laptops, and desktops */
+  .ntImage {
+    width: 410px;
+    height: 607.407407407px;
+  }
+}
+
+@media (min-width: 1281px) and (orientation: portrait) {
+  /* hi-res laptops and desktops */
+  .ntImage {
+    width: 512.4px;
+    height: 759.111111111px;
+  }
+}
+
+/****/
+@media (min-width: 480px) and (orientation: landscape) {
+  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .ntImage {
+    width: 192px;
+    height: 129.6px;
+  }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  /* smartphones, Android phones, landscape iPhone */
+  .ntImage {
+    width: 240px;
+    height: 162px;
+  }
+}
+
+@media (min-width: 800px) and (orientation: landscape) {
+  /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+  .ntImage {
+    width: 320px;
+    height: 216px;
+  }
+}
+
+@media (min-width: 1025px) and (orientation: landscape) {
+  /* big landscape tablets, laptops, and desktops */
+  .ntImage {
+    width: 410px;
+    height: 276.75px;
+  }
+}
+
+@media (min-width: 1281px) and (orientation: landscape) {
+  /* hi-res laptops and desktops */
+  .ntImage {
+    width: 512.4px;
+    height: 345.87px;
+  }
+}
+
+@media (min-width: 1900px) and (orientation: landscape) {
+  /* hi-res laptops and desktops */
+  .ntImage {
+    width: 760px;
+    height: 513px;
+  }
+}
+
+.ntImage {
+  background-image: url(../images/variables/hand.jpg);
+  background-size: auto 100%;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 80, 0.3);
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  display: -webkit-inline-box;
+  display: inline-flex;
+  white-space: normal;
+  text-align: center;
+  margin-right: 0.5em;
+}
+
 /*# sourceMappingURL=app.css.map */

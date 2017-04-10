@@ -261,6 +261,10 @@
                     }),
                 ],
                 "associations": [
+                    new Module.Model.BelongsToMany({
+                        "name": "variables",
+                        "model": "variable",
+                    }),
                 ],
                 methods:{
                     "tagsList()": <?php
@@ -290,18 +294,9 @@
                         "type": "string",
                     }),
                     new Module.Model.Field({
-                        "name": "tags",
-                        "label": "Tipos",
-                        "type": "string",
-                        "ui": "tags",
-                        "source": function(){
-                            return module.variableTags.$selectFrom("tagsList", {});
-                        },
-                        "textField": "name",
-                    }),
-                    new Module.Model.Field({
                         "name": "description",
                         "label": "Descripción",
+                        "list": false,
                         "type": "string",
                     }),
                 ],
@@ -313,6 +308,16 @@
                         "ui": "tags",
                         "source": function(){
                             return module.dimension;
+                        },
+                        "textField": "name",
+                    }),
+                    new Module.Model.BelongsToMany({
+                        "name": "variableTags",
+                        "model": "variable_tag",
+                        "form": true,
+                        "ui": "tags",
+                        "source": function(){
+                            return module.variableTags;
                         },
                         "textField": "name",
                     }),

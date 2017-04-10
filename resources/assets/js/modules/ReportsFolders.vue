@@ -108,19 +108,19 @@ ReportsFolders.Variable = function (url, id) {
     this.$defaultUrl = "/api/ReportsFolders/variables";
     Model.call(this, url, id, "ReportsFolders.Variable");
     this.$list = function () {
-        return "fields=name,tags,description";
+        return "fields=name";
     };
     this.$name = "Variable";
     this.$pluralName = "Variables";
     this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"tags","label":"Tipos","type":"tags","enum":[],"source":function (){
-                            return module.variableTags.$selectFrom("tagsList", {});
-                        },"textField":"name","value":"tags","isAssociation":false},{"name":"description","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"description","isAssociation":false},{"name":"dimensions","label":"dimensions","type":"tags","enum":[],"source":function (){
+        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"description","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"description","isAssociation":false},{"name":"dimensions","label":"dimensions","type":"tags","enum":[],"source":function (){
                             return module.dimension;
-                        },"textField":"name","value":"dimensions","isAssociation":true,"isMultiple":true}];
+                        },"textField":"name","value":"dimensions","isAssociation":true,"isMultiple":true},{"name":"variableTags","label":"variableTags","type":"tags","enum":[],"source":function (){
+                            return module.variableTags;
+                        },"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}];
     };
     this.$columns = function () {
-        return [{"title":"Nombre","data":"attributes.name"},{"title":"Tipos","data":"attributes.tags"},{"title":"Descripción","data":"attributes.description"}];
+        return [{"title":"Nombre","data":"attributes.name"}];
     };
     this.$methods = {
     };
