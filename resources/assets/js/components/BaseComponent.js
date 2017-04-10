@@ -16,7 +16,7 @@ default Vue.extend({
         self.refresh();
         this.$root.$on('changed', function(element){
             if(typeof element.id!=='undefined') {
-                if(self.refreshWith.split(',').indexOf(element.id)>-1) {
+                if(self.refreshWith && self.refreshWith.split(',').indexOf(element.id)>-1) {
                     self.refresh();
                 }
             }
