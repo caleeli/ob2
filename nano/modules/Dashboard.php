@@ -42,6 +42,7 @@
                             });
                             macro.module.report.$.filter.domain.refresh(function() {
                                 macro.module.report.filter = item.attributes.filter;
+                                macro.content(2).refresh();
                             });
                         }
                     );
