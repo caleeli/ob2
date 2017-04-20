@@ -21,11 +21,14 @@
                     variablesInput = macro.content(1).$children[0].$children[1].$children[0].$children[0];
                     macro.when(
                         function(){
-                            return variablesInput.domain.length>0;
+                            if (variablesInput.domain.length>0) {
+                                macro.module.report.variables=[item];
+                                variablesInput.refresh();
+                                return macro.module.report.variables!=null;
+                            }
+                            return false;
                         },
-                        function(){
-                            macro.module.report.variables=[item];
-                            variablesInput.refresh();
+                        function() {
                             macro.module.report.aggregator=item.attributes.aggregator;
                             macro.module.report.$.rows.domain.refresh(function() {
                                 macro.module.report.rows = item.attributes.rows;
