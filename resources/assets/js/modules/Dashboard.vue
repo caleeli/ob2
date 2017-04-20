@@ -31,13 +31,19 @@
                         function() {
                             console.log("enter",macro.module.report.variables);
                             macro.module.report.aggregator=item.attributes.aggregator;
+                            console.log("beforere41",macro.module.report.variables);
                             macro.module.report.$.rows.domain.refresh(function() {
+                                console.log("before43",macro.module.report.variables);
                                 macro.module.report.rows = item.attributes.rows;
+                                console.log("before45",macro.module.report.variables);
                             });
                             macro.module.report.$.cols.domain.refresh(function() {
+                                console.log("before48",macro.module.report.variables);
                                 macro.module.report.cols = item.attributes.cols;
+                                console.log("before50",macro.module.report.variables);
                             });
                             macro.module.report.$.filter.domain.refresh(function() {
+                                console.log("before53",macro.module.report.variables);
                                 macro.module.report.filter = item.attributes.filter;
                                 console.log("beforerefresh",macro.module.report.variables);
                                 macro.content(2).refresh();
