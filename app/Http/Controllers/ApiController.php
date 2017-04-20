@@ -52,7 +52,13 @@ class ApiController extends Controller
         $response = [
             'data' => $collection
         ];
-        return response()->json($response);
+        $minutes = 0.1;
+        $response = response()->json($response, 200, [
+            'Cache-Control' => 'max-age='.($minutes*60).', public',
+        ]);
+        $response->setLastModified(new \DateTime('now'));
+        $response->setExpires(\Carbon\Carbon::now()->addMinutes($minutes));
+        return $response;
     }
 
     protected function packResponse($result, $type, $request, $sparseFields = true)

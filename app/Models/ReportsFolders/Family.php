@@ -20,4 +20,8 @@ class Family extends Model
       'name' => 'string',
       'main_unit' => 'string',
     );
+    public function dimensions()
+    {
+        return $this->hasMany('App\Models\ReportsFolders\Dimension');
+    }
 }

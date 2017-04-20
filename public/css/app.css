@@ -7806,6 +7806,15 @@ a.dt-button {
   transform: rotate(169deg);
 }
 
+#now_loading {
+  text-align: center;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  text-shadow: black 2px 2px 8px;
+}
+
 .plus-button {
   position: absolute;
   float: right;

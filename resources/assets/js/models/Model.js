@@ -4,6 +4,7 @@ export default function(uri0, id, type) {
     var refreshListCallback = function () {};
     var originalData = {};
     var uri;
+    //var owner = arguments.callee.caller.owner;
     if(typeof uri0!=='function') {
         uri = function() {
             return API_SERVER + (uri0 ? uri0 : this.$defaultUrl);
@@ -167,9 +168,13 @@ export default function(uri0, id, type) {
             console.log(err);
         }
     };
+    this.$ = {};
     this.$domain = function(field, callback) {
-        var domain = [];
-        domain.refresh = function() {
+        if (typeof this.$[field.name].domain==='undefined') {
+            this.$[field.name].domain = [];
+        }
+        var domain = this.$[field.name].domain;
+        domain.refresh = function(callback2) {
             domain.length = 0;
             if(typeof field.enum==='object' && typeof field.enum.forEach==='function') {
                 field.enum.forEach(function(item){
@@ -195,6 +200,9 @@ export default function(uri0, id, type) {
                     if(typeof callback==='function') {
                         callback(domain);
                     }
+                    if(typeof callback2==='function') {
+                        callback2(domain);
+                    }
                 });
             }
         }
@@ -209,6 +217,14 @@ export default function(uri0, id, type) {
         };
         domain.refresh();
         return domain;
+    };
+    this.object2array = function (object, ev) {
+        var a = [];
+        for (var key in object) {
+            var item = object[key];
+            a.push(eval(ev))
+        }
+        return a;
     };
     this.setCallback = function (cb) {
         callback = cb;

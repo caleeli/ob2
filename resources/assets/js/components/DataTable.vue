@@ -14,6 +14,13 @@
                 this.table.ajax.url(this.model.$url() + '?' + this.model.$list());
                 this.table.ajax.reload();
             },
+            clickButton:function (index) {
+                $(this.table.buttons()[index].node).click();
+            },
+            selectRow: function (id) {
+                var self = this;
+                self.$emit('selectrow', id);
+            },
         },
         mounted() {
             var self = this;
@@ -65,7 +72,7 @@
                 $(self.$el).addClass('table-locked');
                 setTimeout((function($el){return function(){$el.removeClass('table-locked');}})($(self.$el)), 1000);
                 var id = table.row( this ).id();
-                self.$emit('selectrow', id);
+                self.selectRow(id);
             } );
             this.model.setRefreshListCallback(function(){
                 table.ajax.reload();

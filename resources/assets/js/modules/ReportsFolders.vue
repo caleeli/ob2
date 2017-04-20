@@ -31,14 +31,15 @@
     };
     this.$name = "Report";
     this.$pluralName = "Reports";
-    this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"variables","label":"Variables","type":"tags","enum":[],"source":new ReportsFolders.Variable(function(){try{var url="/api/ReportsFolders/variables?sort=name";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),"textField":"name","value":"variables","isAssociation":false},{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator","isAssociation":false},{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
+    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"variables":{"name":"variables","label":"Variables","type":"tags","enum":[],"source":new ReportsFolders.Variable(function(){try{var url="/api/ReportsFolders/variables?sort=name";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),"textField":"name","value":"variables","isAssociation":false},"aggregator":{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator","isAssociation":false},"rows":{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:false});
-                        },"textField":"name","value":"rows","isAssociation":false},{"name":"cols","label":"Columnas","type":"tags","enum":[],"source":function (){
+                        },"textField":"name","value":"rows","isAssociation":false},"cols":{"name":"cols","label":"Columnas","type":"tags","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:false});
-                        },"textField":"name","value":"cols","isAssociation":false},{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":function (){
+                        },"textField":"name","value":"cols","isAssociation":false},"filter":{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:true});
-                        },"textField":"name","value":"filter","isAssociation":false}];
+                        },"textField":"name","value":"filter","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Nombre","data":"attributes.name"}];
@@ -64,8 +65,9 @@ ReportsFolders.Folder = function (url, id) {
     };
     this.$name = "Folder";
     this.$pluralName = "Folders";
+    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"type":{"name":"type","label":"Tipo","type":"text","enum":["FOLDER","LEAF"],"source":undefined,"textField":undefined,"value":"type","isAssociation":false}};
     this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"type","label":"Tipo","type":"text","enum":["FOLDER","LEAF"],"source":undefined,"textField":undefined,"value":"type","isAssociation":false}];
+        return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Nombre","data":"attributes.name"}];
@@ -88,8 +90,9 @@ ReportsFolders.VariableTag = function (url, id) {
     };
     this.$name = "VariableTag";
     this.$pluralName = "VariableTags";
+    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false}};
     this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false}];
+        return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Nombre","data":"attributes.name"}];
@@ -112,12 +115,19 @@ ReportsFolders.Variable = function (url, id) {
     };
     this.$name = "Variable";
     this.$pluralName = "Variables";
-    this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"description","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"description","isAssociation":false},{"name":"dimensions","label":"dimensions","type":"tags","enum":[],"source":function (){
+    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"description":{"name":"description","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"description","isAssociation":false},"aggregator":{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator","isAssociation":false},"rows":{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
+                            return module.report.$selectFrom('dimensiones', {variables:self.id,domains:false});
+                        },"textField":"name","value":"rows","isAssociation":false},"cols":{"name":"cols","label":"Columnas","type":"tags","enum":[],"source":function (){
+                            return module.report.$selectFrom('dimensiones', {variables:self.id,domains:false});
+                        },"textField":"name","value":"cols","isAssociation":false},"filter":{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":function (){
+                            return module.report.$selectFrom('dimensiones', {variables:self.id,domains:true});
+                        },"textField":"name","value":"filter","isAssociation":false},"dimensions":{"name":"dimensions","label":"dimensions","type":"tags","enum":[],"source":function (){
                             return module.dimension;
-                        },"textField":"name","value":"dimensions","isAssociation":true,"isMultiple":true},{"name":"variableTags","label":"variableTags","type":"tags","enum":[],"source":function (){
+                        },"textField":"name","value":"dimensions","isAssociation":true,"isMultiple":true},"variableTags":{"name":"variableTags","label":"variableTags","type":"tags","enum":[],"source":function (){
                             return module.variableTags;
-                        },"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}];
+                        },"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Nombre","data":"attributes.name"}];
@@ -140,8 +150,9 @@ ReportsFolders.Unit = function (url, id) {
     };
     this.$name = "Unit";
     this.$pluralName = "Units";
+    this.$ = {"name":{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false}};
     this.$fields = function () {
-        return [{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false}];
+        return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"name","data":"attributes.name"}];
@@ -164,8 +175,9 @@ ReportsFolders.Family = function (url, id) {
     };
     this.$name = "Family";
     this.$pluralName = "Families";
+    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"main_unit":{"name":"main_unit","label":"Unidad principal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"main_unit","isAssociation":false}};
     this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"main_unit","label":"Unidad principal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"main_unit","isAssociation":false}];
+        return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Nombre","data":"attributes.name"},{"title":"Unidad principal","data":"attributes.main_unit"}];
@@ -188,8 +200,9 @@ ReportsFolders.Dimension = function (url, id) {
     };
     this.$name = "Dimension";
     this.$pluralName = "Dimensions";
+    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"column":{"name":"column","label":"Columna de la tabla","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"column","isAssociation":false}};
     this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"column","label":"Columna de la tabla","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"column","isAssociation":false}];
+        return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Nombre","data":"attributes.name"},{"title":"Columna de la tabla","data":"attributes.column"}];
@@ -212,8 +225,9 @@ ReportsFolders.Domain = function (url, id) {
     };
     this.$name = "Domain";
     this.$pluralName = "Domains";
+    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"synonyms":{"name":"synonyms","label":"Sinónimos (separados por comas)","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"synonyms","isAssociation":false}};
     this.$fields = function () {
-        return [{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},{"name":"synonyms","label":"Sinónimos (separados por comas)","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"synonyms","isAssociation":false}];
+        return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Nombre","data":"attributes.name"},{"title":"Sinónimos (separados por comas)","data":"attributes.synonyms"}];
@@ -236,8 +250,9 @@ ReportsFolders.Formula = function (url, id) {
     };
     this.$name = "Formula";
     this.$pluralName = "Formulas";
+    this.$ = {"formula":{"name":"formula","label":"Fórmula y = f(x)","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"formula","isAssociation":false},"origin":{"name":"origin","label":"Unidad origen (x)","type":"select","enum":[],"source":new ReportsFolders.Unit(),"textField":"name","value":"origin","isAssociation":true,"isMultiple":false},"target":{"name":"target","label":"Unidad destino (y)","type":"select","enum":[],"source":new ReportsFolders.Unit(),"textField":"name","value":"target","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
-        return [{"name":"formula","label":"Fórmula y = f(x)","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"formula","isAssociation":false},{"name":"origin","label":"Unidad origen (x)","type":"select","enum":[],"source":new ReportsFolders.Unit(),"textField":"name","value":"origin","isAssociation":true,"isMultiple":false},{"name":"target","label":"Unidad destino (y)","type":"select","enum":[],"source":new ReportsFolders.Unit(),"textField":"name","value":"target","isAssociation":true,"isMultiple":false}];
+        return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Fórmula y = f(x)","data":"attributes.formula"},{"title":"Unidad origen (x)","data":"relationships.origin.attributes.name","render":function (data, type, full, meta) {
@@ -269,6 +284,7 @@ folder: new ReportsFolders.Folder(),
 table: new ReportsFolders.Report(),
 variableTags: new ReportsFolders.VariableTag(),
 dimension: new ReportsFolders.Dimension(),
+domain: new ReportsFolders.Domain(),
             }
         },
         mounted: function() {

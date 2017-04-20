@@ -74,7 +74,11 @@ VueComponent.generate = function (module, views, data, template) {
                     });
                     params.push('methodCallback');
                     params.push('childrenAssociation');
-                    methods.push(method + ":function(" + params.join(',') + "){self.$call(" + JSON.stringify(method) + ",{" + paramsCall.join(',') + "}, childrenAssociation, methodCallback)}");
+                    if (typeof model.methods[m]==='function') {
+                        methods.push(method + ": " + model.methods[m].toString());
+                    } else {
+                        methods.push(method + ":function(" + params.join(',') + "){self.$call(" + JSON.stringify(method) + ",{" + paramsCall.join(',') + "}, childrenAssociation, methodCallback)}");
+                    }
                 }
             }
             var modelConfig = {
@@ -98,6 +102,7 @@ VueComponent.generate = function (module, views, data, template) {
         '\n        props:[' +
         '\n        ],' +
         '\n        methods: {' +
+        (module.methods?'\n' + object2array(module.methods, '"            "+JSON.stringify(key)+":"+item.toString()+","').join("\n"):'')+
         '\n        },' +
         '\n        data: function () {' +
         '\n            module = this;' +

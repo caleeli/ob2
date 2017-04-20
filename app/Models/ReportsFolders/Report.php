@@ -97,9 +97,17 @@ class Report extends Model
         if (empty($variables)) {
             return ['data'=>$collection];
         }
+        if (!is_array($variables)) {
+            $ids = explode(',', "$variables");
+        } else {
+            $ids = [];
+            foreach ($variables as $v) {
+                $ids[] = $v['id'];
+            }
+        }
         $variableRows = \App\Models\ReportsFolders\Variable::whereIn(
                             'id',
-                            explode(',', $variables)
+                            $ids
                         )->get();
         $dims = [];
         $first = true;

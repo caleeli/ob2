@@ -43,6 +43,31 @@
                 this.open(id);
                 this.$parent.focus();
             },
+            getRow: function (id) {
+                var self = this;
+                var l = self.table.rows()[0].length;
+                for(var i=0; i<l; i++) {
+                    var d = self.table.row(i).data();
+                    if (d.id===id) {
+                        return d;
+                    }
+                }
+            },
+            selectRow: function (id, data) {
+                var self = this;
+                if (!data) {
+                    data = self.getRow(id);
+                }
+                if (data) {
+                    self.open(id);
+                    self.path.push(new PathItem({name: data.attributes[self.nameField], item: id}, self));
+                } else {
+                    throw "Row id="+id+" not found.";
+                }
+            },
+            clickButton:function (index) {
+                $(this.table.buttons()[index].node).click();
+            },
         },
         mounted() {
             var self = this;
@@ -126,8 +151,7 @@
                     }, self));
                     self.$emit('selectrow', id);
                 } else {*/
-                    self.open(id);
-                    self.path.push(new PathItem({name: data.attributes[self.nameField], item: id}, self));
+                    self.selectRow(id, data);
                 //}
             } );
             this.model.setRefreshListCallback(function(){

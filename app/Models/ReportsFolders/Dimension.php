@@ -11,6 +11,7 @@ class Dimension extends Model
     protected $fillable = array(
       0 => 'name',
       1 => 'column',
+      2 => 'family_id',
     );
     protected $attributes = array(
       'name' => null,
@@ -20,6 +21,12 @@ class Dimension extends Model
       'name' => 'string',
       'column' => 'string',
     );
+    public function family()
+    {
+        return $this->belongsTo('App\Models\ReportsFolders\Family');
+    }
+
+
     public function domains()
     {
         return $this->hasMany('App\Models\ReportsFolders\Domain');

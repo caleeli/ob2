@@ -16,6 +16,7 @@
             return {
                 "currentGroup": this.root,
                 "path": [],
+                "viewId":0,
             };
         },
         methods: {
@@ -29,6 +30,7 @@
                         this.path.push(item);
                     });
                 }*/
+                this.viewId = viewId;
                 this.carousel.slider(viewId);
             },
             goto: function(item) {

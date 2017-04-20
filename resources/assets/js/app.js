@@ -143,11 +143,67 @@ $(document).ready(function () {
                 e.stopPropagation();
                 e.preventDefault();
             });
-            $(function () {
-                $("#now_loading").hide();
-                self.$el.style.visibility = "visible";
-            });
+            setTimeout(function() {
+                $.ajax({
+                    method: 'HEAD',
+                    url: API_SERVER + '/api/ping',
+                    success: function () {
+                        $("#now_loading").hide();
+                        self.$el.style.visibility = "visible";
+                    }
+                });
+            }, 0);
         },
     });
+
+    window.macro = {
+        findMenu:function (name, menues) {
+            var response = false;
+            menues.forEach(function(menu) {
+                if (menu.name===name) {
+                    response = menu;
+                    return true;
+                }
+                if (typeof menu.options==="object" &&
+                    typeof menu.options.forEach==="function"
+                ) {
+                    var res = self.findMenu(name, menu.options);
+                    if (res) {
+                        response = res;
+                        return true;
+                    }
+                }
+            });
+            return response;
+        },
+        menu: function (path) {
+            var menu = menues.findPath(('main/'+path).split('/'));
+            if (menu) {
+                app.goto(menu.menu.id);
+            } else {
+                throw "Menu '"+name+"' not found.";
+            }
+        },
+        app: app,
+        abm: function (i) {
+            return this.content(i).$children[0].$children[0].$children[0];
+        },
+        get module () {
+            return window.app.$children[0].$children[app.$children[0].viewId].$children[0];
+        },
+        content: function (i) {
+            return app.$children[0].$children[app.$children[0].viewId].$children[0].$children[i];
+        },
+        when: function(condition, action) {
+            var self = this;
+            setTimeout(function() {
+                if (condition()) {
+                    action();
+                } else {
+                    self.when(condition, action);
+                }
+            }, 200);
+        }
+    };
 
 });

@@ -1,7 +1,7 @@
 @extends('layouts.page')
 @section('content')
 <div id="now_loading">
-    Cargando ...<br />
+    <br>
     <img src="images/ajax-loader.gif">
 </div>
         <div  id="app" style="visibility:hidden;">

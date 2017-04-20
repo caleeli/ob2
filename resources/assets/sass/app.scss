@@ -48,6 +48,14 @@ $rotate-template-count: 16 !default
     }
 }
 
+#now_loading {
+    text-align: center;
+}
+.navbar-brand {
+    font-weight: bold;
+    text-shadow: black 2px 2px 8px;
+}
+
 .plus-button {
     position: absolute;
     float:right;

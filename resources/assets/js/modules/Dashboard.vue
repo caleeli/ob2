@@ -1,5 +1,5 @@
 <template>
-    <imageviewer :model="variableTags" children="variables"></imageviewer>
+    <imageviewer :model="variableTags" children="variables" v-on:clickImage="clickImage"></imageviewer>
 </template>
 <script>
     var module;
@@ -11,6 +11,35 @@
         props:[
         ],
         methods: {
+            "clickImage":function (item) {
+                var variablesInput;
+                macro.menu('Reportes/ReportsFolders');
+                macro.abm(0).path[0].goto();
+                macro.when(function(){return macro.abm(0).getRow(1)}, function() {
+                    macro.abm(0).selectRow(1);
+                    macro.abm(1).clickButton(0);
+                    variablesInput = macro.content(1).$children[0].$children[1].$children[0].$children[0];
+                    macro.when(
+                        function(){
+                            return variablesInput.domain.length>0;
+                        },
+                        function(){
+                            macro.module.report.variables=[item];
+                            variablesInput.refresh();
+                            macro.module.report.aggregator=item.attributes.aggregator;
+                            macro.module.report.$.rows.domain.refresh(function() {
+                                macro.module.report.rows = item.attributes.rows;
+                            });
+                            macro.module.report.$.cols.domain.refresh(function() {
+                                macro.module.report.cols = item.attributes.cols;
+                            });
+                            macro.module.report.$.filter.domain.refresh(function() {
+                                macro.module.report.filter = item.attributes.filter;
+                            });
+                        }
+                    );
+                });
+            },
         },
         data: function () {
             module = this;

@@ -4,7 +4,7 @@
             <div v-for="row in list">
                 <h4>{{row.attributes.name}}</h4>
                 <div class="ntScroll">
-                    <div v-for="item in row.relationships[children]" class="ntImage" :style="'background-image: url('+urlImage(item)+')'">
+                    <div v-for="item in row.relationships[children]" class="ntImage" :style="'background-image: url('+urlImage(item)+')'" v-on:click="clickImage(item)">
                         <label>{{item.attributes.name}}</label>
                     </div>
                 </div>
@@ -33,13 +33,16 @@ import BaseComponent from './BaseComponent.js';
             urlImage: function (item) {
                 return API_SERVER+'/images/variables/'+item.id+'.jpg';
             },
-            refresh:function(){
+            refresh: function (){
                 var self = this;
                 self.model.$select(function (data) {
                     data.data.forEach(function(row) {
                         self.list.push(row);
                     });
                 });
+            },
+            clickImage: function (item) {
+                this.$emit('clickImage', item);
             },
         }
     });

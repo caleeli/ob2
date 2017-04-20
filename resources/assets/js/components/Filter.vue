@@ -10,10 +10,11 @@
             </div>
         </td><td style="width: 50%;">
             <div class="form-group">
-                <select class="form-control" :placeholder="field.label" v-model="filter.value2" v-on:change="onChange">
+                <select v-if="(domain.get(filter.value) || {relationships:{domains:[]}}).relationships.domains.length>0" class="form-control" :placeholder="field.label" v-model="filter.value2" v-on:change="onChange">
                     <option v-for="option in (domain.get(filter.value) || {relationships:{domains:[]}}).relationships.domains" v-bind:value="option.id">{{option.attributes[field.textField]}}</option>
                     <option v-bind:value="filter.value2" hidden="">{{filter.value2}}</option>
                 </select>
+                <input v-if="(domain.get(filter.value) || {relationships:{domains:[]}}).relationships.domains.length==0" class="form-control" :placeholder="field.label" v-model="filter.value2" v-on:change="onChange">
             </div>
         </td></tr>
     </table>

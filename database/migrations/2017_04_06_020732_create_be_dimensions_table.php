@@ -13,6 +13,7 @@ class CreateBeDimensionsTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('column')->nullable();
+            $table->integer('family_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

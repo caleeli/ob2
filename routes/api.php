@@ -32,6 +32,8 @@ Route::get('/lang/datatable', function () {
 
     return $response;
 });
+Route::get('/ping',
+    array('as' => 'api', 'uses' => 'PingController@index'));
 
 Route::get('/pivot/{table}/{aggregator}/{measure}/{rows}/{cols}/{variables}',
            array('as' => 'api', 'uses' => 'PivotController@index'));

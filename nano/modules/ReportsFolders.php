@@ -64,21 +64,6 @@
                         "label": "Agregación",
                         "enum": ["sum", "max", "min", "avg"],
                     }),
-                    /*new Module.Model.Field({
-                        "name": "measure",
-                        "type": "string",
-                        "label": "Medida",
-                        "list": false,
-                        "default": "valor",
-                        "source": function(){
-                            return module.table.$selectFrom(
-                                "columnas",
-                                {"tabla":module.report.table}
-                            );
-                        },
-                        "textField": "name",
-                        "ui": "select",
-                    }),*/
                     new Module.Model.Field({
                         "name": "rows",
                         "type": "string",
@@ -174,9 +159,17 @@
                         if(empty($variables)) {
                             return ['data'=>$collection];
                         }
+                        if(!is_array($variables)) {
+                            $ids = explode(',', "$variables");
+                        } else {
+                            $ids = [];
+                            foreach ($variables as $v) {
+                                $ids[] = $v['id'];
+                            }
+                        }
                         $variableRows = \App\Models\ReportsFolders\Variable::whereIn(
                             'id',
-                            explode(',', $variables)
+                            $ids
                         )->get();
                         $dims = [];
                         $first = true;
@@ -299,6 +292,47 @@
                         "list": false,
                         "type": "string",
                     }),
+                    new Module.Model.Field({
+                        "name": "aggregator",
+                        "type": "string",
+                        "list": false,
+                        "ui": "select",
+                        "label": "Agregación",
+                        "enum": ["sum", "max", "min", "avg"],
+                    }),
+                    new Module.Model.Field({
+                        "name": "rows",
+                        "type": "string",
+                        "list": false,
+                        "label": "Filas",
+                        "source": function(){
+                            return module.report.$selectFrom('dimensiones', {variables:self.id,domains:false});
+                        },
+                        "textField": "name",
+                        "ui": "tags",
+                    }),
+                    new Module.Model.Field({
+                        "name": "cols",
+                        "type": "string",
+                        "list": false,
+                        "label": "Columnas",
+                        "source": function(){
+                            return module.report.$selectFrom('dimensiones', {variables:self.id,domains:false});
+                        },
+                        "textField": "name",
+                        "ui": "tags",
+                    }),
+                    new Module.Model.Field({
+                        "name": "filter",
+                        "type": "string",
+                        "list": false,
+                        "label": "Filtro",
+                        "source": function(){
+                            return module.report.$selectFrom('dimensiones', {variables:self.id,domains:true});
+                        },
+                        "textField": "name",
+                        "ui": "filter",
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsToMany({
@@ -353,6 +387,10 @@
                     }),
                 ],
                 "associations": [
+                    new Module.Model.HasMany({
+                        "name": "dimensions",
+                        "model": "dimension",
+                    }),
                 ]
             }),
             new Module.Model({
@@ -370,9 +408,18 @@
                     }),
                 ],
                 "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "family",
+                        "model": "family",
+                        "ui": "select",
+                        "source": function(){
+                            return module.family;
+                        },
+                        "textField": "name",
+                    }),
                     new Module.Model.HasMany({
                         "name": "domains",
-                        "model": "domain"
+                        "model": "domain",
                     }),
                     new Module.Model.BelongsToMany({
                         "name": "variables",
@@ -444,6 +491,7 @@
             table: new Module.View.ModelInstance("ReportsFolders.Report"),
             variableTags: new Module.View.ModelInstance("ReportsFolders.VariableTag"),
             dimension: new Module.View.ModelInstance("ReportsFolders.Dimension"),
+            domain: new Module.View.ModelInstance("ReportsFolders.Domain"),
         }
     });
 </script>

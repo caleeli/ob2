@@ -233,13 +233,26 @@
                     }
                 }
             },
-            refresh:function(){
+            toList: function (input) {
+                if (!input) {
+                    return 'null';
+                } else if (typeof input==='string') {
+                    return input;
+                } else {
+                    var list = [];
+                    input.forEach(function (item) {
+                        list.push(item.id);
+                    });
+                    return list.join(",");
+                }
+            },
+            refresh: function (){
                 var self = this;
                 var model = self.model;
                 $(this.$el).find(".canvasOwner").html("<img src='images/ajax-loader2.gif'>");
                 try {
                     $.ajax({
-                        url: API_SERVER+'/api/pivot/valores/'+model.aggregator+'/defecto_valor_cargado/'+(model.rows?model.rows:'null')+'/'+(model.cols?model.cols:'null')+'/'+model.variables+'?filter='+model.filter,
+                        url: API_SERVER+'/api/pivot/valores_produccion/'+model.aggregator+'/defecto_valor_cargado/'+self.toList(model.rows)+'/'+self.toList(model.cols)+'/'+self.toList(model.variables)+'?filter='+model.filter,
                         dataType: 'json',
                         success:function(data) {
                             self.data = data;
