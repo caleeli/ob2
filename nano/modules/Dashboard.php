@@ -36,6 +36,7 @@
                             return false;
                         },
                         function() {
+                            console.log("enter",macro.module.report.variables);
                             macro.module.report.aggregator=item.attributes.aggregator;
                             macro.module.report.$.rows.domain.refresh(function() {
                                 macro.module.report.rows = item.attributes.rows;
@@ -45,7 +46,9 @@
                             });
                             macro.module.report.$.filter.domain.refresh(function() {
                                 macro.module.report.filter = item.attributes.filter;
+                                console.log("beforerefresh",macro.module.report.variables);
                                 macro.content(2).refresh();
+                                console.log("afterrefresh", macro.module.report.variables);
                             });
                         }
                     );
