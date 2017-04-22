@@ -88,11 +88,7 @@ Artisan::command('be:analiza', function () {
                 ]
             );
             if ($vals[0]->$c || count($vals) > 1) {
-                echo "    $c:";
-                foreach ($vals as $v) {
-                    echo " ", $v->$c, ",";
-                }
-                echo "\n";
+                echo "    $c: ",count($vals),"\n";
             }
         }
         //break;
