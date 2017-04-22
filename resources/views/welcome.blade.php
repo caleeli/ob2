@@ -1,6 +1,7 @@
 @extends('layouts.page')
 @section('content')
 <div id="now_loading">
+    <h1>{{env('APP_NAME', 'Application Name')}}</h1>
     <br>
     <img src="images/ajax-loader.gif?1">
 </div>
