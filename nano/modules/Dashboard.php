@@ -19,7 +19,7 @@
         },
         "methods": {
             "clickImage": function (item) {
-                var variablesInput, filterInput;
+                var variablesInput, form;
                 macro.menu('Reportes/ReportsFolders');
                 macro.abm(0).path[0].goto();
                 macro.when(function(){return macro.abm(0).getRow(1)}, function() {
@@ -27,7 +27,7 @@
                     macro.content(1).model.$load(0, function() {
                         macro.content(1).goto(1);
                         variablesInput = macro.content(1).$children[0].$children[1].$children[0].$children[0];
-                        filterInput = macro.content(1).$children[0].$children[1].$children[0].$children[3];
+                        form = macro.content(1).$children[0].$children[1].$children[0];
                         macro.when(
                             function(){
                                 if (variablesInput.domain.length>0) {
@@ -40,19 +40,19 @@
                             function() {
                                 macro.module.report.name=item.attributes.name;
                                 macro.module.report.aggregator=item.attributes.aggregator;
+                                macro.module.report.rows = item.attributes.rows;
+                                macro.module.report.cols = item.attributes.cols;
+                                macro.module.report.filter = item.attributes.filter;
                                 macro.module.report.$.rows.domain.refresh(function() {
-                                    macro.module.report.rows = item.attributes.rows;
+                                    form.$children[1].refresh();
                                 });
                                 macro.module.report.$.cols.domain.refresh(function() {
-                                    macro.module.report.cols = item.attributes.cols;
+                                    form.$children[2].refresh();
                                 });
-                                setTimeout(function() {
-                                    macro.module.report.$.filter.domain.refresh(function() {
-                                        macro.module.report.filter = item.attributes.filter;
-                                        filterInput.refresh();
-                                            macro.content(2).refresh();
-                                    });
-                                }, 100);
+                                macro.module.report.$.filter.domain.refresh(function() {
+                                    form.$children[3].refresh();
+                                });
+                                macro.content(2).refresh();
                             }
                         );
                     });
