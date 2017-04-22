@@ -79,10 +79,16 @@
                     '#5574A6',
                     '#3B3EAC',
                 ];
+                var MAX_ROWS=10;
                 var data = self.data;
                 $(self.$el).find(".canvasOwner").html("");
+                var maxNumCharts = MAX_ROWS;
                 for(var rowId in data.series) {
                     addChart(rowId);
+                    maxNumCharts--;
+                    if(maxNumCharts<=0) {
+                        break;
+                    }
                 }
                 function addChart(rowId) {
                     var $canvas = $("<canvas></canvas>");
