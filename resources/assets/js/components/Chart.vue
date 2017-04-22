@@ -255,7 +255,7 @@
             refresh: function (){
                 var self = this;
                 var model = self.model;
-                $(this.$el).find(".canvasOwner").html("<img src='images/ajax-loader2.gif?1'>");
+                $(this.$el).find(".canvasOwner").html('<i class="ajax-loader"></i>');
                 try {
                     $.ajax({
                         url: API_SERVER+'/api/pivot/valores_produccion/'+model.aggregator+'/defecto_valor_cargado/'+self.toList(model.rows)+'/'+self.toList(model.cols)+'/'+self.toList(model.variables)+'?filter='+model.filter,

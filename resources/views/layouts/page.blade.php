@@ -18,6 +18,7 @@
             !function(){
                 var skin = localStorage.skin ? localStorage.skin : 'flatly';
                 document.writeln('<link id="template-tuner" rel="stylesheet" type="text/css" href="bower_components/bootswatch/'+skin+'/bootstrap.min.css">');
+                document.writeln('<link id="template-tuner-extra" rel="stylesheet" type="text/css" href="bower_components/bootswatch/'+skin+'/extra.min.css">');
             }()
         </script>
     </head>
