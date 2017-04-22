@@ -208,3 +208,13 @@ $imagePerLine: 2.5;
     text-align: center;
     margin-right: 0.5em;
 }
+
+.ivRefresh {
+    position: fixed;
+    right: 1em;
+    border: 1px solid rgba(0,0,0,0.5);
+    padding: 5px 8px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 4px;
+    z-index: 1;
+}

@@ -1,5 +1,6 @@
 <template>
     <div class="row">
+        <i class="fa fa-refresh ivRefresh" v-on:click="refresh"></i>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div v-for="row in list">
                 <h4>{{row.attributes.name}}</h4>
@@ -35,6 +36,7 @@ import BaseComponent from './BaseComponent.js';
             },
             refresh: function (){
                 var self = this;
+                self.list.length = 0;
                 self.model.$select(function (data) {
                     data.data.forEach(function(row) {
                         self.list.push(row);

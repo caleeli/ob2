@@ -26,12 +26,12 @@
     <img src="/images/ajax-loader.gif?1">
 </div>
         <div id="app" style="visibility:hidden;">
-            <h1>{{env('APP_NAME', 'Application Name')}}</h1>
+            <h1><center><img src="images/logo64.png" style="height: 48px; display: inline;"> {{env('APP_NAME', 'Application Name')}}</center></h1>
             <carousel>
                 <carouselitem class="active">
                     <div class="row">
                         <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-2 col-lg-offset-3 col-xs-10 col-sm-10 col-md-8 col-lg-6">
-                            <div class="panel panel-success">
+                            <div class="panel panel-primary">
                               <div class="panel-heading">Ingresa tu cuenta</div>
                               <div class="panel-body">
                                   <fieldset>
@@ -67,7 +67,7 @@
                 <carouselitem>
                     <div class="row">
                         <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-2 col-lg-offset-3 col-xs-10 col-sm-10 col-md-8 col-lg-6">
-                            <div class="panel panel-default">
+                            <div class="panel panel-primary">
                               <div class="panel-heading">Registro</div>
                               <div class="panel-body">
                                   <fieldset>
