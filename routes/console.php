@@ -54,3 +54,47 @@ Artisan::command('loadImages', function () {
         $name++;
     }
 })->describe('Display an inspiring quote');
+
+Artisan::command('be:analiza', function () {
+    $conn = DB::connection('datos');
+    $variables = $conn->select(
+        DB::raw('
+            select distinct id_variable, nombre_variable_estadistica
+            from valores_produccion
+            left join variables_estadisticas on (valores_produccion.id_variable=variables_estadisticas.id_variable_estadistica)
+        '),
+        []
+    );
+    foreach ($variables as $var) {
+        echo "(", $var->id_variable, ") ", $var->nombre_variable_estadistica, "\n";
+        $cols = $conn->select(
+            DB::raw('
+            select *
+            from valores_produccion
+            limit 1')
+        )[0];
+        unset($cols->id_valor);
+        unset($cols->id_variable);
+        unset($cols->valor_cargado);
+        unset($cols->defecto_valor_cargado);
+        foreach ($cols as $c => $v) {
+            $vals = $conn->select(
+                DB::raw('
+                select distinct ' . $c . '
+                from valores_produccion
+                where id_variable=?'),
+                [
+                    $var->id_variable
+                ]
+            );
+            if ($vals[0]->$c || count($vals) > 1) {
+                echo "    $c:";
+                foreach ($vals as $v) {
+                    echo " ", $v->$c, ",";
+                }
+                echo "\n";
+            }
+        }
+        //break;
+    }
+})->describe('Analiza las variables');
