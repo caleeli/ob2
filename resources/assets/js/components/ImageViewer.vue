@@ -32,7 +32,9 @@ import BaseComponent from './BaseComponent.js';
         },
         methods: {
             urlImage: function (item) {
-                return API_SERVER+'/images/variables/'+item.id+'.jpg';
+                return item.attributes.image ? (item.attributes.image.substr(0,4)=='http' ?
+                    item.attributes.image :
+                    API_SERVER+'/images/variables/'+item.attributes.image) : 'images/variables/33.jpg';
             },
             refresh: function (){
                 var self = this;

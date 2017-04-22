@@ -293,6 +293,12 @@
                         "type": "string",
                     }),
                     new Module.Model.Field({
+                        "name": "image",
+                        "label": "Imagen",
+                        "list": false,
+                        "type": "string",
+                    }),
+                    new Module.Model.Field({
                         "name": "aggregator",
                         "type": "string",
                         "list": false,

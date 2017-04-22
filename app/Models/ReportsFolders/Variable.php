@@ -11,14 +11,16 @@ class Variable extends Model
     protected $fillable = array(
       0 => 'name',
       1 => 'description',
-      2 => 'aggregator',
-      3 => 'rows',
-      4 => 'cols',
-      5 => 'filter',
+      2 => 'image',
+      3 => 'aggregator',
+      4 => 'rows',
+      5 => 'cols',
+      6 => 'filter',
     );
     protected $attributes = array(
       'name' => null,
       'description' => null,
+      'image' => null,
       'aggregator' => null,
       'rows' => null,
       'cols' => null,
@@ -27,6 +29,7 @@ class Variable extends Model
     protected $casts = array(
       'name' => 'string',
       'description' => 'string',
+      'image' => 'string',
       'aggregator' => 'string',
       'rows' => 'string',
       'cols' => 'string',

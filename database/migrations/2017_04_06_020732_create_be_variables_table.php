@@ -13,6 +13,7 @@ class CreateBeVariablesTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('description')->nullable();
+            $table->string('image')->nullable();
             $table->string('aggregator')->nullable();
             $table->string('rows')->nullable();
             $table->string('cols')->nullable();
