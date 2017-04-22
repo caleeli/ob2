@@ -19,7 +19,7 @@
         },
         "methods": {
             "clickImage": function (item) {
-                var variablesInput;
+                var variablesInput, filterInput;
                 macro.menu('Reportes/ReportsFolders');
                 macro.abm(0).path[0].goto();
                 macro.when(function(){return macro.abm(0).getRow(1)}, function() {
@@ -27,6 +27,7 @@
                     macro.content(1).model.$load(0, function() {
                         macro.content(1).goto(1);
                         variablesInput = macro.content(1).$children[0].$children[1].$children[0].$children[0];
+                        filterInput = macro.content(1).$children[0].$children[1].$children[0].$children[3];
                         macro.when(
                             function(){
                                 if (variablesInput.domain.length>0) {
@@ -45,12 +46,13 @@
                                 macro.module.report.$.cols.domain.refresh(function() {
                                     macro.module.report.cols = item.attributes.cols;
                                 });
-                                macro.module.report.$.filter.domain.refresh(function() {
-                                    macro.module.report.filter = item.attributes.filter;
-                                    setTimeout(function() {
-                                        macro.content(2).refresh();
-                                    }, 100);
-                                });
+                                setTimeout(function() {
+                                    macro.module.report.$.filter.domain.refresh(function() {
+                                        macro.module.report.filter = item.attributes.filter;
+                                        filterInput.refresh();
+                                            macro.content(2).refresh();
+                                    });
+                                }, 100);
                             }
                         );
                     });
