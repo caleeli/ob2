@@ -14,7 +14,12 @@
         <link rel="stylesheet" type="text/css" href="bower_components/jstree/dist/themes/default/style.min.css">
         <!-- Styles -->
         <link rel="stylesheet" href="{{ elixir('css/app.css') }}?t=<?=filemtime(public_path().'/css/app.css')?>">
-        <link id="template-tuner" rel="stylesheet" type="text/css" href="bower_components/bootswatch/darkly/bootstrap.min.css">
+        <script>
+            !function(){
+                var skin = localStorage.skin ? localStorage.skin : 'flatly';
+                document.writeln('<link id="template-tuner" rel="stylesheet" type="text/css" href="bower_components/bootswatch/'+skin+'/bootstrap.min.css">');
+            }()
+        </script>
     </head>
     <body>
 @yield('content')

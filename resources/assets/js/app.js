@@ -127,6 +127,7 @@ $(document).ready(function () {
                     $('.navbar-toggle').click();
                 }
                 $("#template-tuner").attr("href", "bower_components/bootswatch/" + template + "/bootstrap.min.css");
+                localStorage.skin = template;
             },
         },
         data: {
