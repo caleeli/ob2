@@ -16,6 +16,7 @@ use App\Models\ReportsFolders\Variable;
 
 class PivotController extends Controller
 {
+    const SEPARATOR = "\x1b";
 
     /**
      * /api/users?page=2&filter[]=where,username,=,david&fields=username,firstname
@@ -68,7 +69,7 @@ class PivotController extends Controller
                 }
                 $yi[] = $data->$row;
             }
-            $yLabel = implode('-', $yi);
+            $yLabel = implode(static::SEPARATOR, $yi);
             $xi = [];
             foreach (explode(",", $cols) as $col) {
                 if (!$col) {
@@ -76,7 +77,7 @@ class PivotController extends Controller
                 }
                 $xi[] = $data->$col;
             }
-            $xValue = implode('-', $xi);
+            $xValue = implode(static::SEPARATOR, $xi);
             $x[$xValue] = $xValue;
             foreach (explode(",", $variables) as $var) {
                 if ($var == $data->id_variable) {

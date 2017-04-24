@@ -15,6 +15,8 @@
         <div class="canvasOwner">
             <canvas></canvas>
         </div>
+        <div class="dataTable">
+        </div>
     </div>
 </template>
 
@@ -268,6 +270,36 @@
                 } catch(e) {
                     
                 } 
+            },
+            refreshTable: function () {
+                /*$(this.$el).find('.dataTable')
+                    .html('<table class="display" width="100%"></table>');*/
+                var data=[];
+                for(var serie in self.data.series) {
+                    for(var a in data.series[serie]) {
+                        data.push([]);
+                        lineChartData.datasets.push({
+                            label: a,
+                            borderColor: colors.pop(),
+                            backgroundColor: colors.pop(),
+                            fill: false,
+                            data: data.series[rowId][a],
+                            //yAxisID: axis[1],
+                        });
+                    }
+                }
+                $(this.$el).find('table').DataTable( {
+                    data: data,
+                    destroy: true,
+                    columns: [
+                        { title: "Name" },
+                        { title: "Position" },
+                        { title: "Office" },
+                        { title: "Extn." },
+                        { title: "Start date" },
+                        { title: "Salary" }
+                    ]
+                } );
             },
         },
         mounted() {

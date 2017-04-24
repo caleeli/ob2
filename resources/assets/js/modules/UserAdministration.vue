@@ -95,6 +95,31 @@ validate:function(username, password,methodCallback,childrenAssociation){self.$c
 UserAdministration.Login.prototype = Object.create(Model.prototype);
 UserAdministration.Login.prototype.constructor = Model;
 
+UserAdministration.Recover = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/recovers";
+    Model.call(this, url, id, "UserAdministration.Recover");
+    this.$list = function () {
+        return "fields=account,key";
+    };
+    this.$name = "Recover";
+    this.$pluralName = "Recovers";
+    this.$ = {"account":{"name":"account","label":"account","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"account","isAssociation":false},"key":{"name":"key","label":"key","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"key","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"account","data":"attributes.account"},{"title":"key","data":"attributes.key"}];
+    };
+    this.$methods = {
+sendEmail:function(account,methodCallback,childrenAssociation){self.$call("sendEmail",{"account":account}, childrenAssociation, methodCallback)}    };
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Recover.prototype = Object.create(Model.prototype);
+UserAdministration.Recover.prototype.constructor = Model;
+
     export default {
         props:[
         ],

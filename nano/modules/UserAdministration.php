@@ -351,6 +351,58 @@
                 }"
                 }
             }),
+            new Module.Model({
+                "name": "recover",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "account",
+                        "type": "string",
+                        "default": "",
+                        "required": true
+                    }),
+                    new Module.Model.Field({
+                        "name": "key",
+                        "type": "string",
+                        "default": "",
+                        "required": true
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "user",
+                        "model": "user"
+                    }),
+                ],
+                "methods": {
+                    "sendEmail(account)": <?php
+                        function sendEmail($account) {
+                            $usersByUsername = User::where('username', '=', $account)->get();
+                            $usersByEmail = User::where('email', '=', $account)->get();
+                            foreach($usersByUsername as $user) {
+                                $recover = Recover::create([
+                                    'account'=> $account,
+                                    'key'=> uniqid('', true),
+                                ]);
+                                $recover->user()->associate($user);
+                                \Mail::to($user->email)
+                                    ->send(new \App\Mail\RecoverPassword($user, $recover));
+                            }
+                            foreach($usersByEmail as $user) {
+                                if($user->username===$user->email) {
+                                    continue;
+                                }
+                                $recover = Recover::create([
+                                    'account'=> $account,
+                                    'key'=> uniqid('', true),
+                                ]);
+                                $recover->user()->associate($user);
+                                \Mail::to($user->email)
+                                    ->send(new \App\Mail\RecoverPassword($user, $recover));
+                            }
+                        }
+                    ?>
+                }
+            }),
         ],
         "views": {
         },

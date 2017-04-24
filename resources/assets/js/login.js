@@ -85,12 +85,21 @@ $(document).ready(function () {
                 app.user.$methods.registrar(app.user.$getData());
                 this.goto(0);
             },
+            resetRecover: function() {
+                app.recover.$reset();
+                this.goto(0);
+            },
+            submitRecover: function() {
+                app.recover.$methods.sendEmail(app.recover.account);
+                this.goto(0);
+            },
         },
         data: {
             pathChanged: 0,
             path: [],
             user: new UserAdministration.User("api/UserAdministration/roles/1/users"),
             login: new UserAdministration.Login(),
+            recover: new UserAdministration.Recover(),
             password2: "",
         },
         mounted: function () {

@@ -3,7 +3,7 @@
 </h1>
 
 <h2>
-    ¡Bienvenido a tu cuenta en {{env('APP_NAME', 'Application Name')}}!
+    Bienvenido a tu cuenta en {{env('APP_NAME', 'Application Name')}}.
 </h2>
 
 <p>Esta cuenta te da acceso, desde paginas web al sistema {{env('APP_NAME', 'Application Name')}}.</p>

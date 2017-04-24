@@ -122,6 +122,7 @@ export default function(uri0, id, type) {
             method: 'POST',
             url: url,
             dataType: 'json',
+            contentType: "application/json;charset=utf-8",
             data: JSON.stringify({
                 call: {
                     "method": methodName,
@@ -136,7 +137,10 @@ export default function(uri0, id, type) {
                 } else {
                     throw new Exception(response.error);
                 }
-            }
+            },
+            failure: function (response) {
+
+            },
         });
     };
     this.$selectFrom = function (methodName, params, childrenAssociation) {
