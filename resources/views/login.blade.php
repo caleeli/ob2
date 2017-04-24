@@ -197,5 +197,5 @@
             </carouselitem>
         </carousel>
     </div>
-    <script src="{{ elixir('js/login.js') }}"></script>
+    <script src="{{ elixir('js/login.js') }}?t=<?=filemtime(public_path().'/js/login.js')?>">"></script>
 @stop
