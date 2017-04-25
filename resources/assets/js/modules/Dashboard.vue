@@ -24,7 +24,7 @@
                         macro.when(
                             function(){
                                 if (variablesInput.domain.length>0) {
-                                    macro.module.report.variables=[item];
+                                    macro.module.report.variables=""+item.id;
                                     variablesInput.refresh();
                                     return macro.module.report.variables!=null;
                                 }
