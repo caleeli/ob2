@@ -8038,23 +8038,34 @@ a.dt-button {
   opacity: 0.5;
 }
 
-/*==========  Mobile First Method  ==========*/
-/* Custom, iPhone Retina */
-/* Extra Small Devices, Phones */
-/* Small Devices, Tablets */
-/* Medium Devices, Desktops */
-/* Large Devices, Wide Screens */
-/*==========  Non-Mobile First Method  ==========*/
-/* Large Devices, Wide Screens */
-/* Medium Devices, Desktops */
-/* Small Devices, Tablets */
-@media only screen and (max-width: 768px) {
+@media (max-width: 575px) {
+  .collapse-xs {
+    display: none;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
   .collapse-sm {
     display: none;
   }
 }
 
-/* Extra Small Devices, Phones */
-/* Custom, iPhone Retina */
+@media (min-width: 768px) and (max-width: 991px) {
+  .collapse-md {
+    display: none;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .collapse-lg {
+    display: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  .collapse-xl {
+    display: none;
+  }
+}
 
 /*# sourceMappingURL=app.css.map */
