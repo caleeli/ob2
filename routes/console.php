@@ -82,7 +82,7 @@ Artisan::command('be:analiza',
         echo "(", $var->id_variable, ") ", $var->nombre_variable_estadistica, "\n";
         //create load variable
         $variable = Variable::firstOrNew([
-            'id' => $var->id_variable,
+                'id' => $var->id_variable,
         ]);
         if (!$variable->exists) {
             $variable->id = $var->id_variable;
@@ -90,7 +90,7 @@ Artisan::command('be:analiza',
             $variable->description = $var->desc_variable_estadistica;
             $variable->image = searchSaveImage($var->desc_variable_estadistica);
             $variable->save();
-        } else {
+        } elseif (empty($variable->image)) {
             $variable->image = searchSaveImage($var->desc_variable_estadistica);
             $variable->save();
         }
@@ -118,45 +118,45 @@ Artisan::command('be:analiza',
             if ($vals[0]->$c || count($vals) > 1) {
                 echo "    $c: ", count($vals), "\n";
                 $dim = $conn->select(
-                    DB::raw('
+                        DB::raw('
                         SELECT * FROM variables_estadisticas_dimensiones
                         where id_variable_estadistica=? and atributo_tabla_origen=?
                     '),
-                    [
+                                [
                         $var->id_variable,
                         $c,
-                    ]
-                )[0];
-                if (!isset($dimensions[$var->id_variable.';'. $c])) {
-                    $dimensions[$var->id_variable.';'. $c] = Dimension::firstOrNew([
-                        "name" => $dim->nombre_dimension,
-                        "column" => $c,
+                        ]
+                    )[0];
+                if (!isset($dimensions[$var->id_variable.';'.$c])) {
+                    $dimensions[$var->id_variable.';'.$c] = Dimension::firstOrNew([
+                            "name"   => $dim->nombre_dimension,
+                            "column" => $c,
                     ]);
-                    if (!$dimensions[$var->id_variable.';'. $c]->exists) {
-                        $dimensions[$var->id_variable.';'. $c]->save();
+                    if (!$dimensions[$var->id_variable.';'.$c]->exists) {
+                        $dimensions[$var->id_variable.';'.$c]->save();
                     }
                 }
                 if (!isset($families[$var->tipo_variable_estadistica])) {
                     $families[$var->tipo_variable_estadistica] = Family::firstOrNew([
-                        "name" => $var->tipo_variable_estadistica,
+                            "name" => $var->tipo_variable_estadistica,
                     ]);
                     if (!$families[$var->tipo_variable_estadistica]->exists) {
                         $families[$var->tipo_variable_estadistica]->save();
                     }
                 }
-                $dimension = $dimensions[$var->id_variable.';'. $c];
+                $dimension = $dimensions[$var->id_variable.';'.$c];
                 $family = $families[$var->tipo_variable_estadistica];
                 if (!$variable->dimensions->contains($dimension->id)) {
                     $variable->dimensions()->attach($dimension);
                 }
                 $dimension->family()->associate($family);
-                foreach($vals as $val) {
-                    if(is_numeric($val->$c)) {
+                foreach ($vals as $val) {
+                    if (is_numeric($val->$c)) {
                         continue;
                     }
                     if (!isset($domains[$dimension->id][$val->$c])) {
                         $domains[$dimension->id][$val->$c] = Domain::firstOrNew([
-                            "name" => $val->$c,
+                                "name" => $val->$c,
                         ]);
                         if (!$domains[$dimension->id][$val->$c]->exists) {
                             $domains[$dimension->id][$val->$c]->save();
