@@ -185,7 +185,11 @@ function searchSaveImage($description, $quality = 82)
                                                                                  'http')
             === 0) {
             dump($img->getAttribute('href'));
-            $source = imagecreatefromstring(file_get_contents($img->getAttribute('href')));
+            try {
+                $source = imagecreatefromstring(file_get_contents($img->getAttribute('href')));
+            } catch (\Exception $expection) {
+                continue;
+            }
             $src_w = imagesx($source);
             $src_h = imagesy($source);
             if ($src_w < 514 || $src_h < 514) {
