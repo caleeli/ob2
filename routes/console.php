@@ -90,6 +90,9 @@ Artisan::command('be:analiza',
             $variable->description = $var->desc_variable_estadistica;
             $variable->image = searchSaveImage($var->desc_variable_estadistica);
             $variable->save();
+        } else {
+            $variable->image = searchSaveImage($var->desc_variable_estadistica);
+            $variable->save();
         }
         //select columns
         $cols = $conn->select(
