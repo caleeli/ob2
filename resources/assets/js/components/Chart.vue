@@ -74,7 +74,7 @@
                     this.drawChart();
                 }
                 if(chart.element==='pv-data-table') {
-                    
+
                 }
             },
             classType: function(type) {
@@ -151,12 +151,12 @@
                     var $canvas = $("<canvas></canvas>");
                     $(self.$el).find(".canvasOwner").append($canvas);
                     var ctx = $canvas[0];
-                    var lineChartData = {
+                    var chartData = {
                         //labels: [],
                         datasets: []
                     };
-                    lineChartData.labels = data.x;
-                    lineChartData.datasets = [];
+                    chartData.labels = data.x;
+                    chartData.datasets = [];
                     var colors = [];
                     for(var color in window.chartColors) {
                         colors.push(color);
@@ -169,7 +169,7 @@
                         });
                         self.ys.push(data.series[rowId][a]);
                         self.ys_label.push(yl);
-                        lineChartData.datasets.push({
+                        chartData.datasets.push({
                             label: a,
                             borderColor: colors.pop(),
                             backgroundColor: colors.pop(),
@@ -229,7 +229,7 @@
                             break;
                         case 'area':
                             chartType = 'line';
-                            lineChartData.datasets.forEach(function(ds) {
+                            chartData.datasets.forEach(function(ds) {
                                 ds.fill = true;
                             });
                             options.scales.xAxes.forEach(function(axe) {
@@ -247,11 +247,11 @@
                                     text: rowId,
                                 },
                                 legend: {
-                                    display: false
+                                    display: true
                                 },
                                 cutoutPercentage: 50
                             };
-                            lineChartData.datasets.forEach(function(ds) {
+                            chartData.datasets.forEach(function(ds) {
                                 ds.backgroundColor = [];
                                 ds.data.forEach(function(data, i) {
                                     ds.backgroundColor.push(
@@ -277,7 +277,7 @@
                                     }
                                 }
                             };
-                            lineChartData.datasets.forEach(function(ds) {
+                            chartData.datasets.forEach(function(ds) {
                                 ds.backgroundColor = [];
                                 ds.data.forEach(function(data, i) {
                                     ds.backgroundColor.push(
@@ -294,7 +294,7 @@
                     try {
                         self.chart = new Chart(ctx, {
                             type: chartType,
-                            data: lineChartData,
+                            data: chartData,
                             options: options
                         });
                     } catch(e) {
@@ -332,34 +332,6 @@
                     
                 } 
             },
-            /*refreshTable: function () {
-                var data=[];
-                for(var serie in self.data.series) {
-                    for(var a in data.series[serie]) {
-                        data.push([]);
-                        lineChartData.datasets.push({
-                            label: a,
-                            borderColor: colors.pop(),
-                            backgroundColor: colors.pop(),
-                            fill: false,
-                            data: data.series[rowId][a],
-                            //yAxisID: axis[1],
-                        });
-                    }
-                }
-                $(this.$el).find('table').DataTable( {
-                    data: data,
-                    destroy: true,
-                    columns: [
-                        { title: "Name" },
-                        { title: "Position" },
-                        { title: "Office" },
-                        { title: "Extn." },
-                        { title: "Start date" },
-                        { title: "Salary" }
-                    ]
-                } );
-            },*/
         },
         mounted() {
             var self = this;
