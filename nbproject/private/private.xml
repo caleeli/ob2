@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/app/Http/Controllers/ApiController.php</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/resources/assets/js/components/ImageViewer.vue</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/nano/modules/ReportsFolders.php</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/app/Providers/EventServiceProvider.php</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/nano/modules/Formulas.php</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/app/Events/ReportsFolders/ReportSaved.php</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/nano/modules/Dashboard.php</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/app/Http/Controllers/Api/BaseOperation.php</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/app/Models/ReportsFolders/Report.php</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/app/Http/Controllers/Api/StoreOperation.php</file>
+        </group>
     </open-files>
 </project-private>

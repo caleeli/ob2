@@ -2,7 +2,7 @@
 <root xmlns:vue='http://nano2.com/vue'>
 <template>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 collapse-xs collapse-sm collapse-md" data-toggle="collapse-xs collapse-sm collapse-md">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 collapse-xs collapse-sm collapse-md" data-toggle="collapse-xs collapse-sm collapse-md">
             <div v-show.visible="!($root.getPaths().length > 2 &amp;&amp; $root.getPaths()[$root.getPaths().length-1].name.substr(0,1)=='*')">
                 <h2 id="nav-tabs">Carpetas</h2>
                 <abmgroup
@@ -23,10 +23,11 @@
                         vue:model="report"
                         refreshWith="ReportsFolders.Folders"
                         nameField="name">
+                    <span></span>
                 </abm>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length > 2">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" v-show.visible="$root.getPaths().length > 2">
             <chart refreshWith="ReportsFolders.Reports,form@ReportsFolders.Reports" vue:model="report"/>
         </div>
     </div>
@@ -103,10 +104,20 @@
                         "name": "folder",
                         "model": "folder"
                     }),
+                    new Module.Model.BelongsToMany({
+                        "name": "variableTags",
+                        "model": "variable_tag",
+                        "form": true,
+                        "ui": "tags",
+                        "source": function(){
+                            return module.variableTags;
+                        },
+                        "textField": "name",
+                    }),
                     new Module.Model.HasMany({
                         "name": "variables",
                         "model": "variable"
-                    })
+                    }),
                 ],
                 "methods": {
                     "dashboard1(t)": <?php
@@ -214,6 +225,8 @@
             }),
             new Module.Model({
                 "name": "folder",
+                "title": "Carpeta",
+                "pluralTitle": "Carpetas",
                 "fields": [
                     new Module.Model.Field({
                         "name": "name",
@@ -257,6 +270,10 @@
                     new Module.Model.BelongsToMany({
                         "name": "variables",
                         "model": "variable",
+                    }),
+                    new Module.Model.BelongsToMany({
+                        "name": "reports",
+                        "model": "report",
                     }),
                 ],
                 methods:{

@@ -28,6 +28,8 @@
     };
     this.$name = "User";
     this.$pluralName = "Users";
+    this.$title = "user";
+    this.$pluralTitle = "users";
     this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"paterno":{"name":"paterno","label":"Paterno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"paterno","isAssociation":false},"materno":{"name":"materno","label":"Materno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"materno","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"unidad":{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
@@ -54,6 +56,8 @@ UserAdministration.Role = function (url, id) {
     };
     this.$name = "Role";
     this.$pluralName = "Roles";
+    this.$title = "role";
+    this.$pluralTitle = "roles";
     this.$ = {"name":{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"status":{"name":"status","label":"status","type":"select","enum":["ACTIVE","INACTIVE"],"source":undefined,"textField":undefined,"value":"status","isAssociation":false},"dashboard":{"name":"dashboard","label":"dashboard","type":"select","enum":["dashboard1","dashboard2"],"source":undefined,"textField":undefined,"value":"dashboard","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
@@ -79,6 +83,8 @@ UserAdministration.Login = function (url, id) {
     };
     this.$name = "Login";
     this.$pluralName = "Logins";
+    this.$title = "login";
+    this.$pluralTitle = "logins";
     this.$ = {"username":{"name":"username","label":"username","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"password","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"token":{"name":"token","label":"token","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"token","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
@@ -104,6 +110,8 @@ UserAdministration.Recover = function (url, id) {
     };
     this.$name = "Recover";
     this.$pluralName = "Recovers";
+    this.$title = "recover";
+    this.$pluralTitle = "recovers";
     this.$ = {"account":{"name":"account","label":"account","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"account","isAssociation":false},"key":{"name":"key","label":"key","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"key","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");

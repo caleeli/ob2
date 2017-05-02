@@ -39,6 +39,12 @@ class Report extends Model
     }
 
 
+    public function variableTags()
+    {
+        return $this->belongsToMany('App\Models\ReportsFolders\VariableTag');
+    }
+
+
     public function variables()
     {
         return $this->hasMany('App\Models\ReportsFolders\Variable');

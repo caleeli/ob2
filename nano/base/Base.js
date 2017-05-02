@@ -336,6 +336,8 @@ Module.View.Model = function (base) {
           + '    };\n'
           + '    this.$name = ' + JSON.stringify(name.split('.').pop()) + ';\n'
           + '    this.$pluralName = ' + JSON.stringify(PHP.str_plural(name.split('.').pop())) + ';\n'
+          + '    this.$title = ' + JSON.stringify(base.title) + ';\n'
+          + '    this.$pluralTitle = ' + JSON.stringify(base.pluralTitle) + ';\n'
           + '    this.$ = ' + Module.stringify(array2object(this.fields, 'item.name', 'item')) + ';\n'
           + '    this.$fields = function () {\n'
           + '        return this.object2array(this.$, "item");\n'

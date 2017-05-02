@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root xmlns:vue='http://nano2.com/vue' xmlns:v-on='http://nano2.com/vue-events'>
 <template>
-    <imageviewer vue:model="variableTags" children="variables" v-on:clickImage="clickImage"/>
+    <imageviewer vue:model="variableTags" children="variables,reports" v-on:clickImage="clickImage"/>
 </template>
 <script>
     var module = new Module({

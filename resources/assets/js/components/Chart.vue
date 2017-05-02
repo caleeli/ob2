@@ -38,6 +38,48 @@
                 "ys_label":[],
                 "rows":[],
                 "cols":[],
+            chartTypes: {
+                "bar": {
+                    type:"bar",
+                    element: "canvasOwner",
+                    icon: "fa fa-bar-chart",
+                },
+                "bar2": {
+                    type: "bar2",
+                    element: "canvasOwner",
+                    icon: "fa fa-bar-chart",
+                },
+                "horizontalBar": {
+                    type: "horizontalBar",
+                    element: "canvasOwner",
+                    icon: "fa fa-bars",
+                },
+                "area": {
+                    type: "area",
+                    element: "canvasOwner",
+                    icon: "fa fa-area-chart",
+                },
+                "line": {
+                    type: "line",
+                    element: "canvasOwner",
+                    icon: "fa fa-line-chart",
+                },
+                "pie": {
+                    type: "pie",
+                    element: "canvasOwner",
+                    icon: "fa fa-pie-chart",
+                },
+                "polarArea": {
+                    type: "polarArea",
+                    element: "canvasOwner",
+                    icon: "glyphicon glyphicon-cd",
+                },
+                "table": {
+                    type: "table",
+                    element: "pv-data-table",
+                    icon: "fa fa-table",
+                },
+            }
             };
         },
         props:[
@@ -126,11 +168,11 @@
                 self.ys_label.length=0;
                 self.rows.length=0;
                 self.cols.length=0;
-                self.model.cols.split(",").forEach(function(name) {
+                (self.model.cols?self.model.cols:"").split(",").forEach(function(name) {
                     if(name) self.cols.push(name);
                 });
                 self.rows.push('variable');
-                self.model.rows.split(",").forEach(function(name) {
+                (self.model.rows?self.model.rows:"").split(",").forEach(function(name) {
                     if(name) self.rows.push(name);
                 });
                 data.x.forEach(function(names){
@@ -318,7 +360,7 @@
             refresh: function (){
                 var self = this;
                 var model = self.model;
-                $(this.$el).find(".canvasOwner").html('<i class="ajax-loader"></i>');
+                $(this.$el).find(".canvasOwner").html('<br><i class="ajax-loader"></i>');
                 try {
                     $.ajax({
                         url: API_SERVER+'/api/pivot/valores_produccion/'+model.aggregator+'/defecto_valor_cargado/'+self.toList(model.rows)+'/'+self.toList(model.cols)+'/'+self.toList(model.variables)+'?filter='+model.filter,
@@ -335,48 +377,6 @@
         },
         mounted() {
             var self = this;
-            self.chartTypes = {
-                "bar": {
-                    type:"bar",
-                    element: "canvasOwner",
-                    icon: "fa fa-bar-chart",
-                },
-                "bar2": {
-                    type: "bar2",
-                    element: "canvasOwner",
-                    icon: "fa fa-bar-chart",
-                },
-                "horizontalBar": {
-                    type: "horizontalBar",
-                    element: "canvasOwner",
-                    icon: "fa fa-bars",
-                },
-                "area": {
-                    type: "area",
-                    element: "canvasOwner",
-                    icon: "fa fa-area-chart",
-                },
-                "line": {
-                    type: "line",
-                    element: "canvasOwner",
-                    icon: "fa fa-line-chart",
-                },
-                "pie": {
-                    type: "pie",
-                    element: "canvasOwner",
-                    icon: "fa fa-pie-chart",
-                },
-                "polarArea": {
-                    type: "polarArea",
-                    element: "canvasOwner",
-                    icon: "glyphicon glyphicon-cd",
-                },
-                "table": {
-                    type: "table",
-                    element: "pv-data-table",
-                    icon: "fa fa-table",
-                },
-            };
             self.refresh();
             this.$root.$on('changed', function(element){
                 if(typeof element.id!=='undefined') {
