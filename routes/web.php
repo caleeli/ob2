@@ -11,8 +11,12 @@
 |
 */
 
-Route::get('/login/{template?}', function ($template='') {
-    return view('login', ['template'=>$template]);
+Route::get('/login', function () {
+    return view('login', ['template'=>'flatly']);
+});
+
+Route::get('/', function () {
+    return view('login', ['template'=>'flatly']);
 });
 
 Route::get('/admin', function () {
