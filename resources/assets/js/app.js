@@ -1,72 +1,3 @@
-
-/* global Vue */
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * include Vue and Vue Resource. This gives a great starting point for
- * building robust, powerful web applications using Vue and Laravel.
- */
-require('./bootstrap');
-var menues = [];
-menues.findPath = function (path, base) {
-    var p = path.shift();
-    if (typeof base === 'undefined') {
-        base = this;
-    }
-    for (var i = 0, l = base.length; i < l; i++) {
-        if (base[i].name === p && path.length === 0) {
-            return base[i].options;
-        } else if (base[i].name === p) {
-            return this.findPath(path, base[i].options);
-        }
-    }
-    var menu = {
-        name: p,
-        text: p,
-        icon: "fa fa-tags",
-        options: [],
-    };
-    menu.options.menu = menu;
-    base.push(menu);
-    if (path.length === 0) {
-        return base[base.length - 1].options;
-    } else {
-        return this.findPath(path, base[base.length - 1].options);
-    }
-    return base;
-}
-window.registerMenu = function (menu) {
-    menu.options = [];
-    menu.options.menu = menu;
-    var option = menues.findPath((menu.path?menu.path+"/"+menu.name:menu.name).split("/")).menu;
-    if(typeof menu.id!=='undefined') {
-        option.id = menu.id;
-    }
-    option.name = menu.name;
-    option.icon = menu.icon;
-    option.text = menu.text;
-}
-window.registerMenu({
-    name: "main",
-    path: "",
-    text: "main",
-});
-window.registerMenu({
-    name: "Dashboard",
-    path: "main",
-    text: "Dashboard",
-});
-window.registerMenu({
-    name: "Reportes",
-    path: "main",
-    text: "Reportes",
-});
-window.registerMenu({
-    name: "Configuración",
-    path: "main",
-    text: "Configuración",
-});
-require('./modules');
 Vue.component('datatable', require('./components/DataTable.vue'));
 Vue.component('datatablegroup', require('./components/DataTableGroup.vue'));
 Vue.component('dv-form', require('./components/Form.vue'));
@@ -178,12 +109,15 @@ $(document).ready(function () {
             });
             return response;
         },
-        menu: function (path) {
+        menu: function (path, dontException) {
             var menu = menues.findPath(('main/'+path).split('/'));
-            if (menu) {
+            if (typeof menu.menu.id !== 'undefined') {
                 app.goto(menu.menu.id);
+                return menu.menu;
+            } else if(dontException){
+                return false;
             } else {
-                throw "Menu '"+name+"' not found.";
+                throw "Menu '" + name + "' not found.";
             }
         },
         app: app,

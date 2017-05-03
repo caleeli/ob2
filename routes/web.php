@@ -15,7 +15,11 @@ Route::get('/login/{template?}', function ($template='') {
     return view('login', ['template'=>$template]);
 });
 
-Route::get('/{template?}', function ($template='') {
-    return view('welcome', ['template'=>$template]);
+Route::get('/admin', function () {
+    return view('welcome', ['template'=>'darkly']);
+});
+
+Route::get('/basic', function () {
+    return view('basic', ['template'=>'flatly']);
 });
 

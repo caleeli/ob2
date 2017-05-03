@@ -12,14 +12,14 @@
                 <span></span>
             </abm>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length > 1">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length >= 1">
             <h2 id="nav-tabs">Usuarios</h2>
             <abm
                 id="UserAdministration.Users"
                 vue:model="user"
                 refreshWith="UserAdministration.Roles"
                 nameField="name">
-                <span>esto se agrega al formulario del ABM</span>
+                <span></span>
             </abm>
         </div>
     </div>
@@ -255,12 +255,9 @@
                     }),
                 ],
                 "methods": {
-                    "sayHello(name)": "public function sayHello($name) {\
-                    return 'Hola '.$name.'!!!';\n\
-                }",
                     "registrar(data)": <?php
                         function registrar($data) {
-                            $data['role_id'] = 1;
+                            $data['role_id'] = 2;
                             $user = new \App\Models\UserAdministration\User($data);
                             $user->save();
                             \Mail::to($data['email'])
@@ -272,6 +269,8 @@
             }),
             new Module.Model({
                 "name": "role",
+                "title": "Rol",
+                "pluralTitle": "Roles",
                 "fields": [
                     new Module.Model.Field({
                         "name": "name",
@@ -335,20 +334,21 @@
                     }),*/
                 ],
                 "methods": {
-                    "validate(username, password)": "public function validate($username, $password) {\n\
-                    $user = User::where('username', '=', $username)\n\
-                        ->where('password', '=', $password)\n\
-                        ->first();\n\
-                    $token = uniqid();\n\
-                    if(!empty($user)){\n\
-                        $login = new Login();\n\
-                        $login->username = $username;\n\
-                        $login->password = $password;\n\
-                        $login->token = $token;\n\
-                        $login->save();\n\
-                    }\n\
-                    return !empty($user)?['token'=>$token,'user_id'=>$user->id]:false;\n\
-                }"
+                    "validate(username, password)": <?php
+                    public function validate($username, $password) {
+                    $user = User::where('username', '=', $username)
+                        ->where('password', '=', $password)
+                        ->first();
+                    $token = uniqid();
+                    if(!empty($user)){
+                        $login = new Login();
+                        $login->username = $username;
+                        $login->password = $password;
+                        $login->token = $token;
+                        $login->save();
+                    }
+                    return !empty($user)?['token'=>$token,'user_id'=>$user->id,'redirect'=>$user->role_id==1?'admin':'basic']:false;
+                } ?>
                 }
             }),
             new Module.Model({

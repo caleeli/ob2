@@ -48,14 +48,9 @@ class User extends Model
     }
 
 
-    public function sayHello($name)
-    {
-        return 'Hola '.$name.'!!!';
-    }
-
     public function registrar($data)
     {
-        $data['role_id'] = 1;
+        $data['role_id'] = 2;
         $user = new \App\Models\UserAdministration\User($data);
         $user->save();
         \Mail::to($data['email'])

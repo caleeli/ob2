@@ -13,7 +13,7 @@
         methods: {
             "clickImage":function (item) {
                 var variablesInput, form;
-                macro.menu('Reportes/ReportsFolders');
+                macro.menu('Reportes/ReportsFolders', true) || macro.menu('ReportsFolders', true);
                 macro.abm(0).path[0].goto();
                 macro.when(function(){return macro.abm(0).getRow(1)}, function() {
                     macro.abm(0).selectRow(1);

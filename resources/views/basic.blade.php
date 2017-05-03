@@ -33,21 +33,9 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="glyphicon glyphicon-equalizer"></i> Tema/Colores <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#" v-on:click="changeTemplate('cerulean')"><i class="glyphicon glyphicon-equalizer"></i> cerulean</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('cosmo')"><i class="glyphicon glyphicon-equalizer"></i> cosmo</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('cyborg')"><i class="glyphicon glyphicon-equalizer"></i> cyborg</a></li>
                                     <li><a href="#" v-on:click="changeTemplate('darkly')"><i class="glyphicon glyphicon-equalizer"></i> darkly</a></li>
                                     <li><a href="#" v-on:click="changeTemplate('flatly')"><i class="glyphicon glyphicon-equalizer"></i> flatly</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('journal')"><i class="glyphicon glyphicon-equalizer"></i> journal</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('lumen')"><i class="glyphicon glyphicon-equalizer"></i> lumen</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('paper')"><i class="glyphicon glyphicon-equalizer"></i> paper</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('readable')"><i class="glyphicon glyphicon-equalizer"></i> readable</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('sandstone')"><i class="glyphicon glyphicon-equalizer"></i> sandstone</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('simplex')"><i class="glyphicon glyphicon-equalizer"></i> simplex</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('slate')"><i class="glyphicon glyphicon-equalizer"></i> slate</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('spacelab')"><i class="glyphicon glyphicon-equalizer"></i> spacelab</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('superhero')"><i class="glyphicon glyphicon-equalizer"></i> superhero</a></li>
                                     <li><a href="#" v-on:click="changeTemplate('united')"><i class="glyphicon glyphicon-equalizer"></i> united</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('yeti')"><i class="glyphicon glyphicon-equalizer"></i> yeti</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -68,10 +56,15 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <carousel>
-                            <?php $dirList = glob(base_path().'/nano/modules/*.php'); sort($dirList); ?>
+                            <?php $enabled = [
+                                "Dashboard",
+                                "ReportsFolders",
+                                "Profile",
+                                //"UserAdministration",
+                            ]; $dirList = glob(base_path().'/nano/modules/*.php'); sort($dirList); ?>
                             @foreach ($dirList as $filename)
                             <carouselitem id="{{'module-'.basename($filename, '.php')}}">
-                                <{!! strtolower(basename($filename, '.php')) !!} />
+                                @if(array_search(basename($filename, '.php'),$enabled)!==false) <{!! strtolower(basename($filename, '.php')) !!} /> @endif
                             </carouselitem>
                             @endforeach
                         </carousel>
@@ -79,5 +72,5 @@
                 </div>
             </div>
         </div>
-<script src="{{ elixir('js/admin.js') }}?t=<?=filemtime(public_path().'/js/admin.js')?>"></script>
+<script src="{{ elixir('js/basic.js') }}?t=<?=filemtime(public_path().'/js/basic.js')?>"></script>
 @stop

@@ -6,10 +6,10 @@
                 <span></span>
             </abm>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length &gt; 1">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length &gt;= 1">
             <h2 id="nav-tabs">Usuarios</h2>
             <abm id="UserAdministration.Users" :model="user" refreshWith="UserAdministration.Roles" nameField="name">
-                <span>esto se agrega al formulario del ABM</span>
+                <span></span>
             </abm>
         </div>
     </div>
@@ -38,8 +38,7 @@
         return [{"title":"Usuario","data":"attributes.username"},{"title":"Nombres","data":"attributes.nombres"},{"title":"Paterno","data":"attributes.paterno"}];
     };
     this.$methods = {
-sayHello:function(name,methodCallback,childrenAssociation){self.$call("sayHello",{"name":name}, childrenAssociation, methodCallback)},
-        registrar:function(data,methodCallback,childrenAssociation){self.$call("registrar",{"data":data}, childrenAssociation, methodCallback)}    };
+registrar:function(data,methodCallback,childrenAssociation){self.$call("registrar",{"data":data}, childrenAssociation, methodCallback)}    };
     if(id) {
         this.$load(id);
     }
@@ -56,8 +55,8 @@ UserAdministration.Role = function (url, id) {
     };
     this.$name = "Role";
     this.$pluralName = "Roles";
-    this.$title = "role";
-    this.$pluralTitle = "roles";
+    this.$title = "Rol";
+    this.$pluralTitle = "Roles";
     this.$ = {"name":{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"status":{"name":"status","label":"status","type":"select","enum":["ACTIVE","INACTIVE"],"source":undefined,"textField":undefined,"value":"status","isAssociation":false},"dashboard":{"name":"dashboard","label":"dashboard","type":"select","enum":["dashboard1","dashboard2"],"source":undefined,"textField":undefined,"value":"dashboard","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");

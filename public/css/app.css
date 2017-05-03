@@ -8005,21 +8005,15 @@ a.dt-button {
   margin-right: 0.5em;
 }
 
-.ivTools {
+.ivRefresh {
   position: fixed;
   right: 1em;
-  z-index: 1;
-}
-.ivRefresh {
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 5px 8px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
+  z-index: 1;
   cursor: pointer;
-}
-.ivSearch {
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
 }
 
 .filter-group {

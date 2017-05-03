@@ -63,7 +63,7 @@ $(document).ready(function () {
                     if(response) {
                         localStorage.token = response.token;
                         localStorage.user_id = response.user_id;
-                        window.location.href = '/';
+                        window.location.href = response.redirect;
                     }
                 });
             },
