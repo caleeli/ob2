@@ -45,7 +45,7 @@ Vue.http.interceptors.push((request, next) => {
 // });
 
 window.menues = [];
-menues.findPath = function (path, base) {
+menues.findPath = function (path, base, create) {
     var p = path.shift();
     if (typeof base === 'undefined') {
         base = this;
@@ -54,8 +54,11 @@ menues.findPath = function (path, base) {
         if (base[i].name === p && path.length === 0) {
             return base[i].options;
         } else if (base[i].name === p) {
-            return this.findPath(path, base[i].options);
+            return this.findPath(path, base[i].options, create);
         }
+    }
+    if (!create) {
+        return null;
     }
     var menu = {
         name: p,
@@ -68,14 +71,14 @@ menues.findPath = function (path, base) {
     if (path.length === 0) {
         return base[base.length - 1].options;
     } else {
-        return this.findPath(path, base[base.length - 1].options);
+        return this.findPath(path, base[base.length - 1].options, create);
     }
     return base;
 }
 window.registerMenu = function (menu) {
     menu.options = [];
     menu.options.menu = menu;
-    var option = menues.findPath((menu.path?menu.path+"/"+menu.name:menu.name).split("/")).menu;
+    var option = menues.findPath((menu.path?menu.path+"/"+menu.name:menu.name).split("/"), menues, true).menu;
     if(typeof menu.id!=='undefined') {
         option.id = menu.id;
     }

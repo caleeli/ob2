@@ -111,7 +111,7 @@ $(document).ready(function () {
         },
         menu: function (path, dontException) {
             var menu = menues.findPath(('main/'+path).split('/'));
-            if (typeof menu.menu.id !== 'undefined') {
+            if (menu && menu.menu.id !== 'undefined') {
                 app.goto(menu.menu.id);
                 return menu.menu;
             } else if(dontException){
