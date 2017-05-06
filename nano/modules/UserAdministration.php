@@ -253,6 +253,16 @@
                         "name": "role",
                         "model": "role"
                     }),
+                    new Module.Model.BelongsToMany({
+                        "name": "variableTags",
+                        "module": "ReportsFolders",
+                        "model": "variable_tag",
+                        "label": "Clases visibles",
+                        "form": true,
+                        "ui": "tags",
+                        "source": new Module.View.ModelInstance("ReportsFolders.VariableTag"),
+                        "textField": "name",
+                    }),
                 ],
                 "methods": {
                     "registrar(data)": <?php
@@ -409,6 +419,7 @@
         "data": {
             user: new Module.View.ModelInstance("UserAdministration.User", "UserAdministration/roles/{module.role.id}/users"),
             role: new Module.View.ModelInstance("UserAdministration.Role"),
+            variableTags: new Module.View.ModelInstance("ReportsFolders.VariableTag"),
         }
     });
 </script>

@@ -48,6 +48,12 @@ class User extends Model
     }
 
 
+    public function variableTags()
+    {
+        return $this->belongsToMany('App\Models\ReportsFolders\VariableTag');
+    }
+
+
     public function registrar($data)
     {
         $data['role_id'] = 2;

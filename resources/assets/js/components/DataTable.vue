@@ -48,14 +48,14 @@
                     },
                     {
                         extend: 'excelHtml5',
-                        text: '<i class="fa fa-table"></i> Excel',
+                        text: '<i class="fa fa-file-excel-o"></i> Excel',
                         exportOptions: {
                         }
                     },
                     {
                         extend: 'pdfHtml5',
-                        text: '<i class="fa fa-file-text"></i> PDF',
-                        exportOptions: {http://githook.callizaya.com/deploy/githook
+                        text: '<i class="fa fa-file-pdf-o"></i> PDF',
+                        exportOptions: {
                         }
                     }*/
                 ],

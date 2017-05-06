@@ -40,7 +40,7 @@
                             return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:false});
                         },"textField":"name","value":"cols","isAssociation":false},"filter":{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:true});
-                        },"textField":"name","value":"filter","isAssociation":false},"variableTags":{"name":"variableTags","label":"variableTags","type":"tags","enum":[],"source":function (){
+                        },"textField":"name","value":"filter","isAssociation":false},"variableTags":{"name":"variableTags","label":"Tags","type":"Clasificación","enum":[],"source":function (){
                             return module.variableTags;
                         },"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {
@@ -134,7 +134,7 @@ ReportsFolders.Variable = function (url, id) {
                             return module.report.$selectFrom('dimensiones', {variables:self.id,domains:true});
                         },"textField":"name","value":"filter","isAssociation":false},"dimensions":{"name":"dimensions","label":"dimensions","type":"tags","enum":[],"source":function (){
                             return module.dimension;
-                        },"textField":"name","value":"dimensions","isAssociation":true,"isMultiple":true},"variableTags":{"name":"variableTags","label":"variableTags","type":"tags","enum":[],"source":function (){
+                        },"textField":"name","value":"dimensions","isAssociation":true,"isMultiple":true},"variableTags":{"name":"variableTags","label":"Tags","type":"tags","enum":[],"source":function (){
                             return module.variableTags;
                         },"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {

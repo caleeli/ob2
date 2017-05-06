@@ -30,7 +30,7 @@
     this.$pluralName = "Users";
     this.$title = "user";
     this.$pluralTitle = "users";
-    this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"paterno":{"name":"paterno","label":"Paterno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"paterno","isAssociation":false},"materno":{"name":"materno","label":"Materno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"materno","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"unidad":{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad","isAssociation":false}};
+    this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"paterno":{"name":"paterno","label":"Paterno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"paterno","isAssociation":false},"materno":{"name":"materno","label":"Materno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"materno","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"unidad":{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad","isAssociation":false},"variableTags":{"name":"variableTags","label":"Clases visibles","type":"tags","enum":[],"source":new ReportsFolders.VariableTag(),"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -138,6 +138,7 @@ UserAdministration.Recover.prototype.constructor = Model;
                 path: [],
                 user: new UserAdministration.User(function(){try{var url="/api/UserAdministration/roles/"+(module.role.id?module.role.id:"¡@!")+"/users";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
 role: new UserAdministration.Role(),
+variableTags: new ReportsFolders.VariableTag(),
             }
         },
         mounted: function() {
