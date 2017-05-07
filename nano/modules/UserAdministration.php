@@ -257,7 +257,7 @@
                         "name": "variableTags",
                         "module": "ReportsFolders",
                         "model": "variable_tag",
-                        "label": "Clases visibles",
+                        "label": "Áreas de interes",
                         "form": true,
                         "ui": "tags",
                         "source": new Module.View.ModelInstance("ReportsFolders.VariableTag"),

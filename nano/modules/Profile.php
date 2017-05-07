@@ -9,6 +9,9 @@
     </div>
 </template>
 <script>
+    /*
+     * perdir contraseña anterior para cambiar por una nueva.
+     */
     var module = new Module({
         "name": "Profile",
         "prefix": "prof",
