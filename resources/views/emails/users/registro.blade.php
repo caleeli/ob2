@@ -1,18 +1,18 @@
-<h1>
-    {{env('APP_NAME', 'Application Name')}}
-</h1>
-
-<h2>
-    Bienvenido a tu cuenta en {{env('APP_NAME', 'Application Name')}}.
-</h2>
-
-<p>Esta cuenta te da acceso, desde paginas web al sistema {{env('APP_NAME', 'Application Name')}}.</p>
-
 <h3>
-    Acceso a tu cuenta
+    Bienvenido(a) a:
 </h3>
 
-<p>Para realizar cambios en tu cuenta en cualquier momento, inicia sesión en el portal del sistema
-    <a href="{{env('APP_URL', 'http://localhost')}}/login">{{env('APP_URL', 'http://localhost')}}/login</a>.
-    Desde aqu&iacute; podr&aacute;s actualizar la información, preferencias de contacto y mucho más.</p>
+<h1><img src="http://be.entreparentesys.com:8081/images/logo.jpg" style="height: 64px;"> {{env('APP_NAME', 'Application Name')}}</h1>
+
+<h3>
+    Para confirmar tu registro:
+</h3>
+
+    <a href="{{env('APP_URL', 'http://localhost')}}/confirmar">{{env('APP_URL', 'http://localhost')}}/confirmar</a>.
+
+<h3>
+    Para acceder al sistema:
+</h3>
+
+    <a href="{{env('APP_URL', 'http://localhost')}}/login">{{env('APP_URL', 'http://localhost')}}/login</a>
 
