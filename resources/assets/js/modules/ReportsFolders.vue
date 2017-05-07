@@ -40,7 +40,7 @@
                             return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:false});
                         },"textField":"name","value":"cols","isAssociation":false},"filter":{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:module.report.variables,domains:true});
-                        },"textField":"name","value":"filter","isAssociation":false},"variableTags":{"name":"variableTags","label":"Tags","type":"Clasificación","enum":[],"source":function (){
+                        },"textField":"name","value":"filter","isAssociation":false},"variableTags":{"name":"variableTags","label":"Clasificación","type":"tags","enum":[],"source":function (){
                             return module.variableTags;
                         },"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {

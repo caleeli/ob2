@@ -4,6 +4,9 @@
     <imageviewer vue:model="variableTags" children="variables,reports" v-on:clickImage="clickImage"/>
 </template>
 <script>
+    /**
+     * Agregar vista de listado para poder ver mas informacion de manera mas facil y rapida.
+     */
     var module = new Module({
         "name": "Dashboard",
         "prefix": "dash",

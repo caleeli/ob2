@@ -33,6 +33,9 @@
 
                     
 <script>
+    /**
+     * para los aros, cambiar los valores mostrados a %
+     */
     export default {
         data:function() {
             return {

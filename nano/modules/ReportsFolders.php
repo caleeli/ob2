@@ -107,9 +107,9 @@
                     new Module.Model.BelongsToMany({
                         "name": "variableTags",
                         "model": "variable_tag",
-                        "label": "Tags",
+                        "label": "Clasificación",
                         "form": true,
-                        "ui": "Clasificación",
+                        "ui": "tags",
                         "source": function(){
                             return module.variableTags;
                         },
