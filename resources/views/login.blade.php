@@ -178,6 +178,7 @@
                                             <input type="text" class="form-control"
                                                    placeholder="usuario o correo electrónico" v-model="recover.account">
                                         </div>
+                                        <!-- Si el correo no esta registrado notificar al usuario, para que no se quede esperando en vano. -->
                                     </div>
                                     <div class="form-group">
                                         <div class="col-lg-10 col-lg-offset-2">

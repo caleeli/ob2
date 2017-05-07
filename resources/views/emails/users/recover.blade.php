@@ -1,23 +1,16 @@
 <h1>
-    {{env('APP_NAME', 'Application Name')}}
+    <img src="http://be.entreparentesys.com:8081/images/logo.jpg" style="height: 64px;"> {{env('APP_NAME', 'Application Name')}}
 </h1>
 
 <h2>
     Recuperación de contraseña
 </h2>
 
-<p>Tienes registrada una cuenta cuyo nombre de usuario es:</p>
-<ul>
-    <li>{{$user->username}}</li>
-</ul>
+<p><b>{{$user->username}}</b>, recientemente ha pedido restablecer su contraseña.</p>
 
-<h3>
-    Restalecer contraseña
-</h3>
-
-<p>Para restablecer tu contraseña, haz click en el siguiente enlace:
+<p>Para cambiar la contraseña, haga clic en el siguiente enlace:</p>
     <a href="{{env('APP_URL', 'http://localhost')}}/recover/{{$recover->key}}">
         {{env('APP_URL', 'http://localhost')}}/recover/{{$recover->key}}
-    </a>.
-</p>
+    </a>
 
+<h3>Si no ha solicitado este cambio ignore este mensaje</h3>
