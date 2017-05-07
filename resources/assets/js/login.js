@@ -19,7 +19,7 @@ Vue.component('carousel', require('./components/Carousel.vue'));
 Vue.component('carouselitem', require('./components/CarouselItem.vue'));
 //Vue.component('chart', require('./components/Chart.vue'));
 
-//Vue.component('reportsfolders', require('./modules/ReportsFolders.vue'));
+Vue.component('reportsfolders', require('./modules/ReportsFolders.vue'));
 Vue.component('useradministration', require('./modules/UserAdministration.vue'));
 
 

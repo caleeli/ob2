@@ -384,7 +384,7 @@
                         language: {
                             url: API_SERVER+"/api/lang/datatable"
                         },
-                        "dom": 'Bft',
+                        "dom": 'Bt',
                         buttons: [
                             {
                                 extend: 'excelHtml5',
