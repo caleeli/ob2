@@ -28,9 +28,9 @@
         <i class="ajax-loader"></i>
     </div>
     <div id="app" style="visibility:hidden;">
-        <h1>
+        <h1 style="font-size: 19px;">
             <center><img src="images/logo.jpg"
-                         style="height: 48px; display: inline;"> {{env('APP_NAME', 'Application Name')}}</center>
+                         style="height: 64px; display: inline; margin-top: -25px;"> {{env('APP_NAME', 'Application Name')}}</center>
         </h1>
         <carousel>
             <carouselitem class="active">
@@ -93,14 +93,14 @@
                                         <label class="col-lg-2 control-label">Usuario</label>
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" placeholder="usuario"
-                                                   v-model="user.username">
+                                                   v-model="user.username" title="El usuario debe contener al menos 5 caracteres">
                                             <span class="label label-danger if-has-error">debe introducir un nombre de usuario</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Email</label>
                                         <div class="col-lg-10">
-                                            <input type="text" class="form-control" placeholder="usuario"
+                                            <input type="email" class="form-control" placeholder="email"
                                                    v-model="user.email">
                                         </div>
                                     </div>
@@ -120,33 +120,33 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">Nombres</label>
+                                        <label class="col-lg-2 control-label">Nombre(s)</label>
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" placeholder="usuario"
                                                    v-model="user.nombres">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">Paterno</label>
+                                        <label class="col-lg-2 control-label">Apellido(s)</label>
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" placeholder="usuario"
                                                    v-model="user.paterno">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- div class="form-group">
                                         <label class="col-lg-2 control-label">Materno</label>
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" placeholder="usuario"
                                                    v-model="user.materno">
                                         </div>
-                                    </div>
-                                    <div class="form-group">
+                                    </div -->
+                                    <!-- div class="form-group">
                                         <label class="col-lg-2 control-label">Unidad</label>
                                         <div class="col-lg-10">
                                             <input type="text" class="form-control" placeholder="Entidad / Unidad"
                                                    v-model="user.unidad">
                                         </div>
-                                    </div>
+                                    </div -->
                                     <div class="form-group">
                                         <div class="col-lg-10 col-lg-offset-2">
                                             <button type="reset" class="btn btn-default" v-on:click="resetReg">

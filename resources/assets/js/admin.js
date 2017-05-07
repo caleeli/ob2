@@ -17,6 +17,11 @@ window.registerMenu({
     text: "Reportes",
 });
 window.registerMenu({
+    name: "Captura",
+    path: "main",
+    text: "Captura",
+});
+window.registerMenu({
     name: "Configuración",
     path: "main",
     text: "Configuración",

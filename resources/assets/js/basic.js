@@ -15,6 +15,8 @@ Vue.component('dashboard', require('./modules/Dashboard.vue'));
 registerMenu({"path":"main","name":"Dashboard","text":"Inicio","icon":"glyphicon glyphicon-home","id":1});
 Vue.component('reportsfolders', require('./modules/ReportsFolders.vue'));
 registerMenu({"path":"main","name":"ReportsFolders","text":"Reportes","icon":"fa fa-folder","id":5});
+Vue.component('captura', require('./modules/Captura.vue'));
+registerMenu({"path":"main","name":"Captura","text":"Captura de datos","icon":"fa fa-cloud-upload","id":0});
 Vue.component('profile', require('./modules/Profile.vue'));
 registerMenu({"path":"main","name":"Profile","text":"Perfil","icon":"glyphicon glyphicon-user","id":4});
 Vue.component('useradministration', require('./modules/UserAdministration.vue'));
