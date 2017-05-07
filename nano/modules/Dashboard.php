@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root xmlns:vue='http://nano2.com/vue' xmlns:v-on='http://nano2.com/vue-events'>
 <template>
-    <imageviewer vue:model="variableTags" children="variables" v-on:clickImage="clickImage"/>
+    <imageviewer vue:model="variableTags" children="variables,reports" v-on:clickImage="clickImage"/>
 </template>
 <script>
     var module = new Module({
@@ -20,7 +20,7 @@
         "methods": {
             "clickImage": function (item) {
                 var variablesInput, form;
-                macro.menu('Reportes/ReportsFolders');
+                macro.menu('Reportes/ReportsFolders', true) || macro.menu('ReportsFolders', true);
                 macro.abm(0).path[0].goto();
                 macro.when(function(){return macro.abm(0).getRow(1)}, function() {
                     macro.abm(0).selectRow(1);

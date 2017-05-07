@@ -1,5 +1,5 @@
 <template>
-    <div class="form-control" style="height: auto; position:relative; min-height: 45px; overflow-y: auto; ">
+    <div class="form-control form-control-tags">
         <div style="position:absolute;left:0px;top:0px;min-width:100%;height:100%; padding: 11px; ">
             <select :placeholder="placeholder" style="position:absolute;left:0px;top:0px;width:100%;height:100%;opacity:0;"
                     v-on:change="select">

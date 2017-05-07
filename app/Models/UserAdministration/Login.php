@@ -36,6 +36,6 @@ class Login extends Model
             $login->token = $token;
             $login->save();
         }
-        return !empty($user)?['token'=>$token,'user_id'=>$user->id]:false;
+        return !empty($user)?['token'=>$token,'user_id'=>$user->id,'redirect'=>$user->role_id==1?'admin':'basic']:false;
     }
 }

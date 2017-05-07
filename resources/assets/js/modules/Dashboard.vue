@@ -1,5 +1,5 @@
 <template>
-    <imageviewer :model="variableTags" children="variables" v-on:clickImage="clickImage"></imageviewer>
+    <imageviewer :model="variableTags" children="variables,reports" v-on:clickImage="clickImage"></imageviewer>
 </template>
 <script>
     var module;
@@ -13,7 +13,7 @@
         methods: {
             "clickImage":function (item) {
                 var variablesInput, form;
-                macro.menu('Reportes/ReportsFolders');
+                macro.menu('Reportes/ReportsFolders', true) || macro.menu('ReportsFolders', true);
                 macro.abm(0).path[0].goto();
                 macro.when(function(){return macro.abm(0).getRow(1)}, function() {
                     macro.abm(0).selectRow(1);
@@ -56,7 +56,7 @@
             module = this;
             return {
                 path: [],
-                variableTags: new ReportsFolders.VariableTag(function(){try{var url="/api/ReportsFolders/VariableTag?include=variables";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
+                variableTags: new ReportsFolders.VariableTag(function(){try{var url="/api/ReportsFolders/VariableTag?include=variables,reports";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
             }
         },
         mounted: function() {

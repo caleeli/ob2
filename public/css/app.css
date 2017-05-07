@@ -8005,15 +8005,24 @@ a.dt-button {
   margin-right: 0.5em;
 }
 
-.ivRefresh {
+.ivTools {
   position: fixed;
   right: 1em;
+  z-index: 1;
+}
+
+.ivRefresh {
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 5px 8px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-  z-index: 1;
   cursor: pointer;
+}
+
+.ivSearch {
+  border: 1px solid #eeeeee;
+  padding: 1px 4px;
+  border-radius: 4px;
 }
 
 .filter-group {
@@ -8038,6 +8047,14 @@ a.dt-button {
   opacity: 0.5;
 }
 
+.form-control-tags {
+  height: auto !important;
+  position: relative;
+  min-height: 45px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 @media (max-width: 575px) {
   .collapse-xs {
     display: none;
@@ -8060,11 +8077,19 @@ a.dt-button {
   .collapse-lg {
     display: none;
   }
+  .form-control-tags {
+    height: 54px !important;
+    overflow-x: scroll;
+  }
 }
 
 @media (min-width: 1200px) {
   .collapse-xl {
     display: none;
+  }
+  .form-control-tags {
+    height: 54px !important;
+    overflow-x: scroll;
   }
 }
 

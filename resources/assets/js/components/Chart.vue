@@ -5,11 +5,14 @@
                 <a v-for="chart in chartTypes" href="javascript:void(0)" v-on:click="setType(chart)" :class="classType(chart.type)"><i :class="chart.icon"></i></a>
             </div>
         </div>
+        <div class="div-ajax-loader">
+            <br><i class="ajax-loader"></i>
+        </div>
         <div class="canvasOwner">
             <canvas></canvas>
         </div>
         <div class="pv-data-table collapse">
-            <table>
+            <table class="pv-data-table-table table table-striped table-bordered">
                 <thead>
                 <tr v-for="(col,colI) in cols">
                     <th v-for="row in rows"></th>
@@ -24,9 +27,11 @@
                 </tbody>
             </table>
         </div>
+        <div class="pv-pivot collapse"></div>
     </div>
 </template>
 
+                    
 <script>
     export default {
         data:function() {
@@ -38,6 +43,53 @@
                 "ys_label":[],
                 "rows":[],
                 "cols":[],
+            chartTypes: {
+                "bar": {
+                    type:"bar",
+                    element: "canvasOwner",
+                    icon: "fa fa-bar-chart",
+                },
+                "bar2": {
+                    type: "bar2",
+                    element: "canvasOwner",
+                    icon: "fa fa-bar-chart",
+                },
+                "horizontalBar": {
+                    type: "horizontalBar",
+                    element: "canvasOwner",
+                    icon: "fa fa-bars",
+                },
+                "area": {
+                    type: "area",
+                    element: "canvasOwner",
+                    icon: "fa fa-area-chart",
+                },
+                "line": {
+                    type: "line",
+                    element: "canvasOwner",
+                    icon: "fa fa-line-chart",
+                },
+                "pie": {
+                    type: "pie",
+                    element: "canvasOwner",
+                    icon: "fa fa-pie-chart",
+                },
+                "polarArea": {
+                    type: "polarArea",
+                    element: "canvasOwner",
+                    icon: "glyphicon glyphicon-cd",
+                },
+                /*"table": {
+                    type: "table",
+                    element: "pv-data-table",
+                    icon: "fa fa-table",
+                },*/
+                "pivot": {
+                    type: "pivot",
+                    element: "pv-pivot",
+                    icon: "fa fa-table",
+                },
+            }
             };
         },
         props:[
@@ -66,15 +118,21 @@
                 return colspan;
             },
             setType: function(chart) {
+                this.chartType=chart.type;
                 $(this.$el).find('.canvasOwner').addClass("collapse");
                 $(this.$el).find('.pv-data-table').addClass("collapse");
+                $(this.$el).find('.pv-pivot').addClass("collapse");
                 $(this.$el).find('.'+chart.element).removeClass("collapse");
                 if (chart.element==='canvasOwner') {
-                    this.chartType=chart.type;
-                    this.drawChart();
+                    if(!$(this.$el).find(".div-ajax-loader").is(':visible')) {
+                        this.drawChart();
+                    }
                 }
                 if(chart.element==='pv-data-table') {
 
+                }
+                if(chart.element==='pv-pivot') {
+                    this.refreshPivot();
                 }
             },
             classType: function(type) {
@@ -126,12 +184,12 @@
                 self.ys_label.length=0;
                 self.rows.length=0;
                 self.cols.length=0;
-                self.model.cols.split(",").forEach(function(name) {
+                (self.model.cols?self.model.cols:"").split(",").forEach(function(name) {
                     if(name) self.cols.push(name);
                 });
                 self.rows.push('variable');
-                self.model.rows.split(",").forEach(function(name) {
-                    if(name) self.rows.push(name);
+                (self.model.rows?self.model.rows:"").split(",").forEach(function(name) {
+                    if(self.model.rows) self.rows.push(name);
                 });
                 data.x.forEach(function(names){
                     var xl=[];
@@ -147,6 +205,14 @@
                         break;
                     }
                 }
+                Vue.nextTick(function () {
+                    if($(self.$el).find(".pv-pivot").is(':visible')) {
+                        self.refreshPivot();
+                    }
+                });
+                /**
+                 * Add a chart
+                 */
                 function addChart(rowId) {
                     var $canvas = $("<canvas></canvas>");
                     $(self.$el).find(".canvasOwner").append($canvas);
@@ -165,7 +231,7 @@
                     for(var a in data.series[rowId]) {
                         var yl=[a];
                         rowId.split("\x1b").forEach(function(name){
-                            yl.push(name);
+                            if (self.model.rows) yl.push(name);
                         });
                         self.ys.push(data.series[rowId][a]);
                         self.ys_label.push(yl);
@@ -302,6 +368,47 @@
                     }
                 }
             },
+            /**
+             * Generate Datatable from table
+             */
+            refreshPivot: function () {
+                    var self = this;
+                    var html = $(self.$el).find(".pv-data-table").html();
+                    $(self.$el).find(".pv-pivot").html(html);
+                    var table = $(self.$el).find(".pv-pivot table").DataTable( {
+                        scrollY: "300px",
+                        scrollX: true,
+                        scrollCollapse: true,
+                        paging: false,
+                        fixedColumns: {leftColumns: self.rows.length},
+                        language: {
+                            url: API_SERVER+"/api/lang/datatable"
+                        },
+                        "dom": 'Bft',
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                text: '<i class="fa fa-file-excel-o"></i> Excel',
+                                title: self.model.name,
+                                download: 'open',
+                                orientation:'landscape',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                            /*{
+                                extend: 'pdfHtml5',
+                                text: '<i class="fa fa-file-pdf-o"></i> PDF',
+                                title: self.model.name,
+                                download: 'open',
+                                orientation:'landscape',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            }*/
+                        ]
+                    } );
+            },
             toList: function (input) {
                 if (!input) {
                     return 'null';
@@ -318,12 +425,14 @@
             refresh: function (){
                 var self = this;
                 var model = self.model;
-                $(this.$el).find(".canvasOwner").html('<i class="ajax-loader"></i>');
+                $(this.$el).find(".canvasOwner").html('');
+                $(this.$el).find(".div-ajax-loader").show();
                 try {
                     $.ajax({
                         url: API_SERVER+'/api/pivot/valores_produccion/'+model.aggregator+'/defecto_valor_cargado/'+self.toList(model.rows)+'/'+self.toList(model.cols)+'/'+self.toList(model.variables)+'?filter='+model.filter,
                         dataType: 'json',
                         success:function(data) {
+                            $(self.$el).find(".div-ajax-loader").hide();
                             self.data = data;
                             self.drawChart();
                         },
@@ -333,50 +442,11 @@
                 } 
             },
         },
+        ready() {
+            console.log("READY", $(this.$el).find(".pv-data-table").html());
+        },
         mounted() {
             var self = this;
-            self.chartTypes = {
-                "bar": {
-                    type:"bar",
-                    element: "canvasOwner",
-                    icon: "fa fa-bar-chart",
-                },
-                "bar2": {
-                    type: "bar2",
-                    element: "canvasOwner",
-                    icon: "fa fa-bar-chart",
-                },
-                "horizontalBar": {
-                    type: "horizontalBar",
-                    element: "canvasOwner",
-                    icon: "fa fa-bars",
-                },
-                "area": {
-                    type: "area",
-                    element: "canvasOwner",
-                    icon: "fa fa-area-chart",
-                },
-                "line": {
-                    type: "line",
-                    element: "canvasOwner",
-                    icon: "fa fa-line-chart",
-                },
-                "pie": {
-                    type: "pie",
-                    element: "canvasOwner",
-                    icon: "fa fa-pie-chart",
-                },
-                "polarArea": {
-                    type: "polarArea",
-                    element: "canvasOwner",
-                    icon: "glyphicon glyphicon-cd",
-                },
-                "table": {
-                    type: "table",
-                    element: "pv-data-table",
-                    icon: "fa fa-table",
-                },
-            };
             self.refresh();
             this.$root.$on('changed', function(element){
                 if(typeof element.id!=='undefined') {

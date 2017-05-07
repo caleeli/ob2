@@ -43,3 +43,47 @@ Vue.http.interceptors.push((request, next) => {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+window.menues = [];
+menues.findPath = function (path, base, create) {
+    var p = path.shift();
+    if (typeof base === 'undefined') {
+        base = this;
+    }
+    for (var i = 0, l = base.length; i < l; i++) {
+        if (base[i].name === p && path.length === 0) {
+            return base[i].options;
+        } else if (base[i].name === p) {
+            return this.findPath(path, base[i].options, create);
+        }
+    }
+    if (!create) {
+        return null;
+    }
+    var menu = {
+        name: p,
+        text: p,
+        icon: "fa fa-tags",
+        options: [],
+    };
+    menu.options.menu = menu;
+    base.push(menu);
+    if (path.length === 0) {
+        return base[base.length - 1].options;
+    } else {
+        return this.findPath(path, base[base.length - 1].options, create);
+    }
+    return base;
+}
+window.registerMenu = function (menu) {
+    menu.options = [];
+    menu.options.menu = menu;
+    var option = menues.findPath((menu.path?menu.path+"/"+menu.name:menu.name).split("/"), menues, true).menu;
+    if(typeof menu.id!=='undefined') {
+        option.id = menu.id;
+    }
+    option.name = menu.name;
+    option.icon = menu.icon;
+    option.text = menu.text;
+}
+

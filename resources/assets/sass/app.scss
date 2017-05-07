@@ -209,15 +209,24 @@ $imagePerLine: 2.5;
     margin-right: 0.5em;
 }
 
-.ivRefresh {
+.ivTools {
     position: fixed;
     right: 1em;
+    z-index: 1;
+}
+
+.ivRefresh {
     border: 1px solid rgba(0,0,0,0.5);
     padding: 5px 8px;
     background-color: rgba(0,0,0,0.1);
     border-radius: 4px;
-    z-index: 1;
     cursor: pointer;
+}
+
+.ivSearch {
+    border: 1px solid rgb(238, 238, 238);
+    padding: 1px 4px;
+    border-radius: 4px;
 }
 
 .filter-group {
@@ -239,6 +248,14 @@ $imagePerLine: 2.5;
     font-weight: bold;
     line-height: 1;
     opacity: 0.5;
+}
+
+.form-control-tags {
+    height: auto!important;
+    position:relative;
+    min-height: 45px;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 // Extra small devices (portrait phones, less than 576px)
@@ -267,11 +284,19 @@ $imagePerLine: 2.5;
     .collapse-lg {
         display: none;
     }
+    .form-control-tags {
+        height: 54px!important;
+        overflow-x: scroll;
+    }
 }
 
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {
     .collapse-xl {
         display: none;
+    }
+    .form-control-tags {
+        height: 54px!important;
+        overflow-x: scroll;
     }
 }

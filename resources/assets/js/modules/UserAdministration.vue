@@ -6,10 +6,10 @@
                 <span></span>
             </abm>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length &gt; 1">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length &gt;= 1">
             <h2 id="nav-tabs">Usuarios</h2>
             <abm id="UserAdministration.Users" :model="user" refreshWith="UserAdministration.Roles" nameField="name">
-                <span>esto se agrega al formulario del ABM</span>
+                <span></span>
             </abm>
         </div>
     </div>
@@ -28,7 +28,9 @@
     };
     this.$name = "User";
     this.$pluralName = "Users";
-    this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"paterno":{"name":"paterno","label":"Paterno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"paterno","isAssociation":false},"materno":{"name":"materno","label":"Materno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"materno","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"unidad":{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad","isAssociation":false}};
+    this.$title = "user";
+    this.$pluralTitle = "users";
+    this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"paterno":{"name":"paterno","label":"Paterno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"paterno","isAssociation":false},"materno":{"name":"materno","label":"Materno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"materno","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"unidad":{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad","isAssociation":false},"variableTags":{"name":"variableTags","label":"Clases visibles","type":"tags","enum":[],"source":new ReportsFolders.VariableTag(),"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -36,8 +38,7 @@
         return [{"title":"Usuario","data":"attributes.username"},{"title":"Nombres","data":"attributes.nombres"},{"title":"Paterno","data":"attributes.paterno"}];
     };
     this.$methods = {
-sayHello:function(name,methodCallback,childrenAssociation){self.$call("sayHello",{"name":name}, childrenAssociation, methodCallback)},
-        registrar:function(data,methodCallback,childrenAssociation){self.$call("registrar",{"data":data}, childrenAssociation, methodCallback)}    };
+registrar:function(data,methodCallback,childrenAssociation){self.$call("registrar",{"data":data}, childrenAssociation, methodCallback)}    };
     if(id) {
         this.$load(id);
     }
@@ -54,6 +55,8 @@ UserAdministration.Role = function (url, id) {
     };
     this.$name = "Role";
     this.$pluralName = "Roles";
+    this.$title = "Rol";
+    this.$pluralTitle = "Roles";
     this.$ = {"name":{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"status":{"name":"status","label":"status","type":"select","enum":["ACTIVE","INACTIVE"],"source":undefined,"textField":undefined,"value":"status","isAssociation":false},"dashboard":{"name":"dashboard","label":"dashboard","type":"select","enum":["dashboard1","dashboard2"],"source":undefined,"textField":undefined,"value":"dashboard","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
@@ -79,6 +82,8 @@ UserAdministration.Login = function (url, id) {
     };
     this.$name = "Login";
     this.$pluralName = "Logins";
+    this.$title = "login";
+    this.$pluralTitle = "logins";
     this.$ = {"username":{"name":"username","label":"username","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"password","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"token":{"name":"token","label":"token","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"token","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
@@ -104,6 +109,8 @@ UserAdministration.Recover = function (url, id) {
     };
     this.$name = "Recover";
     this.$pluralName = "Recovers";
+    this.$title = "recover";
+    this.$pluralTitle = "recovers";
     this.$ = {"account":{"name":"account","label":"account","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"account","isAssociation":false},"key":{"name":"key","label":"key","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"key","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
@@ -131,6 +138,7 @@ UserAdministration.Recover.prototype.constructor = Model;
                 path: [],
                 user: new UserAdministration.User(function(){try{var url="/api/UserAdministration/roles/"+(module.role.id?module.role.id:"¡@!")+"/users";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
 role: new UserAdministration.Role(),
+variableTags: new ReportsFolders.VariableTag(),
             }
         },
         mounted: function() {

@@ -1,12 +1,15 @@
 <template>
     <div class="row">
-        <i class="fa fa-refresh ivRefresh" v-on:click="refresh"></i>
+        <div class="ivTools">
+            <input class="ivSearch" v-model="search" placeholder="buscar">
+            <i class="fa fa-refresh ivRefresh" v-on:click="refresh"></i>
+        </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div v-for="row in list">
                 <h4>{{row.attributes.name}}</h4>
                 <div class="ntScroll">
-                    <div v-for="item in row.relationships[children]" class="ntImage" :style="'background-image: url('+urlImage(item)+')'" v-on:click="clickImage(item)">
-                        <label>{{item.attributes.name}}</label>
+                    <div v-for="item in relationships(row)" class="ntImage" :style="'background-image: url('+urlImage(item)+')'" v-on:click="clickImage(item)">
+                        <label><p>{{item.attributes.name}}</p></label>
                     </div>
                 </div>
             </div>
@@ -20,6 +23,7 @@ import BaseComponent from './BaseComponent.js';
         data:function() {
             return {
                 "list": [],
+                "search": "",
             };
         },
         props:[
@@ -31,10 +35,23 @@ import BaseComponent from './BaseComponent.js';
         computed: {
         },
         methods: {
+            relationships: function(row) {
+                var self = this;
+                var list = [];
+                var search = new RegExp(this.search.replace(/[^A-Za-z0-9_]/g, '\\$&').replace(/\s+/g,'|'), 'gi');
+                this.children.split(",").forEach(function(child) {
+                    row.relationships[child].forEach(function(item) {
+                        if (item.attributes.name.match(search)) {
+                            list.push(item);
+                        }
+                    });
+                });
+                return list;
+            },
             urlImage: function (item) {
                 return item.attributes.image ? (item.attributes.image.substr(0,4)=='http' ?
                     item.attributes.image :
-                    API_SERVER+'/images/variables/'+item.attributes.image) : 'images/variables/33.jpg';
+                    API_SERVER+'/images/variables/'+item.attributes.image) : 'images/variables/report.png';
             },
             refresh: function (){
                 var self = this;

@@ -83,6 +83,8 @@ VueComponent.generate = function (module, views, data, template) {
             }
             var modelConfig = {
                 model: module.name + '.' + model.name,
+                title: model.title?model.title:model.name,
+                pluralTitle: model.pluralTitle ? model.pluralTitle : PHP.str_plural(model.name),
                 list: "fields=" + list.join(","),
                 fields: fields,
                 columns: columns,

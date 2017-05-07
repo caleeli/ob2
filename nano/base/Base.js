@@ -284,9 +284,10 @@ Module.Model.BelongsToMany = function (base) {
         module = module0;
     }
     this.code = function () {
+        
         return "    public function " + base.name + "()\n" +
           "    {\n" +
-          "        return $this->belongsToMany('App\\Models\\" + module.name + "\\" + PHP.upper_camel_case(base.model) + "');\n" +
+          "        return $this->belongsToMany('App\\Models\\" + (base.module?base.module:module.name) + "\\" + PHP.upper_camel_case(base.model) + "');\n" +
           "    }\n";
     }
     this.migration = function () {
@@ -336,6 +337,8 @@ Module.View.Model = function (base) {
           + '    };\n'
           + '    this.$name = ' + JSON.stringify(name.split('.').pop()) + ';\n'
           + '    this.$pluralName = ' + JSON.stringify(PHP.str_plural(name.split('.').pop())) + ';\n'
+          + '    this.$title = ' + JSON.stringify(base.title) + ';\n'
+          + '    this.$pluralTitle = ' + JSON.stringify(base.pluralTitle) + ';\n'
           + '    this.$ = ' + Module.stringify(array2object(this.fields, 'item.name', 'item')) + ';\n'
           + '    this.$fields = function () {\n'
           + '        return this.object2array(this.$, "item");\n'

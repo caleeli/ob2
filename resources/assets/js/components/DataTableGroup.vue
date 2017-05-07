@@ -26,7 +26,7 @@
         data() {
             return {
                 "currentGroup": this.root,
-                "path": [new PathItem({name: this.model.$pluralName, item: null}, this)],
+                "path": [new PathItem({name: this.model.$pluralTitle, item: null}, this)],
             };
         },
         methods: {

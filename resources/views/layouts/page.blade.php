@@ -12,7 +12,8 @@
         <link rel="stylesheet" type="text/css" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/jstree/dist/themes/default/style.min.css">
-        <link rel="stylesheet" type="text/css" href="css/test.css">
+        <link rel="stylesheet" type="text/css" href="bower_components/datatables-fixedcolumns/css/fixedColumns.bootstrap.scss">
+        <link rel="stylesheet" type="text/css" href="css/test.css?t=<?=filemtime(public_path('css/test.css'))?>">
         <!-- Styles -->
         <link rel="stylesheet" href="{{ elixir('css/app.css') }}?t=<?=filemtime(public_path().'/css/app.css')?>">
         <script>
@@ -38,6 +39,7 @@
 
         <script type="text/javascript" charset="utf8" src="bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
         <script type="text/javascript" charset="utf8" src="bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="bower_components/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>
         <script type="text/javascript" charset="utf8" src="bower_components/jstree/dist/jstree.min.js"></script>
 
         <script src="bower_components/chart.js/dist/Chart.bundle.js"></script>

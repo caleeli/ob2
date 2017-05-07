@@ -50,6 +50,9 @@
                                     <li><a href="#" v-on:click="changeTemplate('yeti')"><i class="glyphicon glyphicon-equalizer"></i> yeti</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="login"><i class="fa fa-sign-out"></i></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -76,5 +79,5 @@
                 </div>
             </div>
         </div>
-<script src="{{ elixir('js/app.js') }}?t=<?=filemtime(public_path().'/js/app.js')?>"></script>
+<script src="{{ elixir('js/admin.js') }}?t=<?=filemtime(public_path().'/js/admin.js')?>"></script>
 @stop
