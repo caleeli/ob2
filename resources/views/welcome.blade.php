@@ -15,7 +15,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#"><img src="images/logo64.png" style="height: 32px; display: inline;"> {{env('APP_NAME', 'Application Name')}}</a>
+                        <a class="navbar-brand" href="#"><img src="images/logo.jpg" style="height: 32px; display: inline;"> {{env('APP_NAME', 'Application Name')}}</a>
                         <!-- template-tuner template="cosmo"></template-tuner -->
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">

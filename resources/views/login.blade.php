@@ -29,7 +29,7 @@
     </div>
     <div id="app" style="visibility:hidden;">
         <h1>
-            <center><img src="images/logo64.png"
+            <center><img src="images/logo.jpg"
                          style="height: 48px; display: inline;"> {{env('APP_NAME', 'Application Name')}}</center>
         </h1>
         <carousel>

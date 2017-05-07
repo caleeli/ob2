@@ -15,7 +15,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#"><img src="images/logo64.png" style="height: 32px; display: inline;"> {{env('APP_NAME', 'Application Name')}}</a>
+                        <a class="navbar-brand" href="#"><img src="images/logo.jpg" style="height: 32px; display: inline;"> {{env('APP_NAME', 'Application Name')}}</a>
                         <!-- template-tuner template="cosmo"></template-tuner -->
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
@@ -32,6 +32,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="glyphicon glyphicon-equalizer"></i> Tema/Colores <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
+                                    <li><a href="#" v-on:click="changeTemplate('simplex')"><i class="glyphicon glyphicon-equalizer"></i> simplex</a></li>
                                     <li><a href="#" v-on:click="changeTemplate('cerulean')"><i class="glyphicon glyphicon-equalizer"></i> cerulean</a></li>
                                     <li><a href="#" v-on:click="changeTemplate('darkly')"><i class="glyphicon glyphicon-equalizer"></i> darkly</a></li>
                                     <li><a href="#" v-on:click="changeTemplate('flatly')"><i class="glyphicon glyphicon-equalizer"></i> flatly</a></li>
