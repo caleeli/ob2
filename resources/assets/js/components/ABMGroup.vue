@@ -5,7 +5,7 @@
         </carouselitem>
 
         <carouselitem>
-            <dv-form :model="model" v-on:cancel="cancelEdit" v-on:save="saveRow" :childrenurl="childrenUrl"></dv-form>
+            <dv-form :model="model" v-on:cancel="cancelEdit" v-on:save="saveRow" v-on:update="updateRow" v-on:custom="custom" :childrenurl="childrenUrl" :buttons="buttons"></dv-form>
         </carouselitem>
         
         <carouselitem>
@@ -24,6 +24,7 @@
             "leafType",
             "nameField",
             "childrenAssociation",
+            "buttons",
         ],
         data: function(){
             return {
@@ -49,17 +50,23 @@
                 this.carousel.slider(viewId, this.path);
             },
             newRecord: function(id){
+                var self=this;
                 if(!id) {
                     this.childrenUrl='';
                 } else {
                     this.childrenUrl='/'+id+'/'+this.childrenAssociation;
                 }
-                this.model.$load(0);
-                this.goto(1);
+                this.model.$load(0, function() {
+                    self.goto(1);
+                    self.$emit('new', self.model);
+                });
             },
             editRecord: function(id){
-                this.model.$load(id);
-                this.goto(1);
+                var self=this;
+                this.model.$load(id, function() {
+                    self.goto(1);
+                    self.$emit('edit', self.model);
+                });
             },
             selectRow: function(id){
                 var self = this;
@@ -72,10 +79,19 @@
             },
             cancelEdit: function(){
                 this.goto(0);
+                this.$emit('cancel', this.model);
             },
             saveRow: function(){
                 this.model.$refreshList();
                 this.goto(0);
+                this.$emit('save', this.model);
+            },
+            updateRow: function(){
+                this.model.$refreshList();
+                this.$emit('update', this.model);
+            },
+            custom: function(button, model, form) {
+                this.$emit(button, model, form);
             },
         },
         mounted: function() {

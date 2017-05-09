@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<root xmlns:vue='http://openbank.com/vue'>
+<root xmlns:vue='http://openbank.com/vue' xmlns:v-on='http://openbank.com/vue-on'>
 <template>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 collapse-xs collapse-sm collapse-md" data-toggle="collapse-xs collapse-sm collapse-md">
@@ -8,6 +8,8 @@
                 <abm
                         id="Captura.Captures"
                         vue:model="capture"
+                        buttons="close,save,update"
+                        v-on:update="update"
                         nameField="name">
                     <span></span>
                 </abm>
@@ -50,9 +52,10 @@
                     }),
                     new Module.Model.Field({
                         "name": "file",
-                        "type": "string",
+                        "type": "array",
                         "label": "Archivo",
                         "ui": "file",
+                        "textField": "file.name",
                     }),
                 ],
                 "associations": [
@@ -118,7 +121,12 @@
         "data": {
             capture: new Module.View.ModelInstance("Captura.Capture"),
             sheet: new Module.View.ModelInstance("Captura.Sheet", "Captura/captures/{module.capture.id}/sheets"),
-        }
+        },
+        "methods": {
+            update:function(){
+                console.log("actualizado!!!");
+            },
+        },
     });
 </script>
 </root>

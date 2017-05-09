@@ -15,6 +15,7 @@ export default function(uri0, id, type) {
     if(!type) {
         type = uri().substr(5).split('/').join('.');
     }
+    this.id = null;
     this.$url = uri;
     this.$load = function (id1, loadCallback) {
         try {
@@ -241,6 +242,7 @@ export default function(uri0, id, type) {
         for (var a in this) {
             if (typeof this[a] !== 'function') {
                 fields.push({
+                    name: a,
                     label: a,
                     type: 'text',
                     value: a,
@@ -263,6 +265,13 @@ export default function(uri0, id, type) {
             }
         }
         return data;
+    }
+    this.$initFields = function () {
+        this.$fields().forEach(function(field){
+            if(typeof self[field.name]==='undefined') {
+                self[field.name]=null;
+            }
+        });
     }
     //this.$load();
 }

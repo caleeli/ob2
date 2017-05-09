@@ -32,6 +32,8 @@ Route::get('/lang/datatable', function () {
 
     return $response;
 });
+Route::post('/uploadfile',
+            array('as' => 'api', 'uses' => 'UploadFileController@upload'));
 Route::get('/ping',
     array('as' => 'api', 'uses' => 'PingController@index'));
 

@@ -8109,4 +8109,21 @@ a.dt-button {
   }
 }
 
+.form-file-progress {
+  background: rgba(39, 127, 227, 0.1) no-repeat !important;
+  /* Old browsers */
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(39, 127, 227, 0.1)), color-stop(100%, rgba(39, 127, 227, 0.2))) no-repeat !important;
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, rgba(39, 127, 227, 0.1) 0%, rgba(39, 127, 227, 0.2) 100%) no-repeat !important;
+  /* Chrome10+,Safari5.1+ */
+  /* Opera 11.10+ */
+  /* IE10+ */
+  background: linear-gradient(to right, rgba(39, 127, 227, 0.1) 0%, rgba(39, 127, 227, 0.2) 100%) no-repeat !important;
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=1 ) no-repeat !important;
+  /* IE6-9 */
+  background-position: 0 0;
+}
+
 /*# sourceMappingURL=app.css.map */

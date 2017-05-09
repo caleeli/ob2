@@ -27,6 +27,7 @@
     </head>
     <body>
 @yield('content')
+        <script type="text/javascript" charset="utf8" src="bower_components/jq-ajax-progress/src/jq-ajax-progress.min.js"></script>
         <script type="text/javascript" charset="utf8" src="bower_components/datatables.net/js/jquery.dataTables.js"></script>
         <script type="text/javascript" charset="utf8" src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 

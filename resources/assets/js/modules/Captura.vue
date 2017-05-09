@@ -3,7 +3,7 @@
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 collapse-xs collapse-sm collapse-md" data-toggle="collapse-xs collapse-sm collapse-md">
             <div v-show.visible="!($root.getPaths().length &gt; 2 &amp;&amp; $root.getPaths()[$root.getPaths().length-1].name.substr(0,1)=='*')">
                 <h2 id="nav-tabs">Captura de datos</h2>
-                <abm id="Captura.Captures" :model="capture" nameField="name">
+                <abm id="Captura.Captures" :model="capture" buttons="close,save,update" v-on:update="update" nameField="name">
                     <span></span>
                 </abm>
             </div>
@@ -32,15 +32,16 @@
     this.$pluralName = "Captures";
     this.$title = "Captura";
     this.$pluralTitle = "Capturas";
-    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"part_of":{"name":"part_of","label":"Parte de","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"part_of","isAssociation":false},"file":{"name":"file","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":undefined,"value":"file","isAssociation":false}};
+    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"part_of":{"name":"part_of","label":"Parte de","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"part_of","isAssociation":false},"file":{"name":"file","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":"file.name","value":"file","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Nombre","data":"attributes.name"},{"title":"Parte de","data":"attributes.part_of"},{"title":"Archivo","data":"attributes.file"}];
+        return [{"title":"Nombre","data":"attributes.name"},{"title":"Parte de","data":"attributes.part_of"},{"title":"Archivo","data":"attributes.file.name"}];
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -68,6 +69,7 @@ Captura.Sheet = function (url, id) {
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -79,6 +81,9 @@ Captura.Sheet.prototype.constructor = Model;
         props:[
         ],
         methods: {
+            "update":function (){
+                console.log("actualizado!!!");
+            },
         },
         data: function () {
             module = this;

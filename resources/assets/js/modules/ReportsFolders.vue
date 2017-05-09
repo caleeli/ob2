@@ -54,6 +54,7 @@ dashboard1:function(t,methodCallback,childrenAssociation){self.$call("dashboard1
         tablas:function(conn,methodCallback,childrenAssociation){self.$call("tablas",{"conn":conn}, childrenAssociation, methodCallback)},
         columnas:function(tabla,methodCallback,childrenAssociation){self.$call("columnas",{"tabla":tabla}, childrenAssociation, methodCallback)},
         dimensiones:function(variables,domains,methodCallback,childrenAssociation){self.$call("dimensiones",{"variables":variables,"domains":domains}, childrenAssociation, methodCallback)}    };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -81,6 +82,7 @@ ReportsFolders.Folder = function (url, id) {
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -108,6 +110,7 @@ ReportsFolders.VariableTag = function (url, id) {
     };
     this.$methods = {
 tagsList:function(methodCallback,childrenAssociation){self.$call("tagsList",{}, childrenAssociation, methodCallback)}    };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -145,6 +148,7 @@ ReportsFolders.Variable = function (url, id) {
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -172,6 +176,7 @@ ReportsFolders.Unit = function (url, id) {
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -199,6 +204,7 @@ ReportsFolders.Family = function (url, id) {
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -226,6 +232,7 @@ ReportsFolders.Dimension = function (url, id) {
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -253,6 +260,7 @@ ReportsFolders.Domain = function (url, id) {
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -284,6 +292,7 @@ ReportsFolders.Formula = function (url, id) {
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }

@@ -1,7 +1,7 @@
 SplineFontDB: 3.0
-FontName: Untitled2
-FullName: Untitled2
-FamilyName: Untitled2
+FontName: FontNano
+FullName: FontNano
+FamilyName: FontNano
 Weight: Regular
 Copyright: Copyright (c) 2017, David Callizaya
 UComments: "2017-5-8: Created with FontForge (http://fontforge.org)"
@@ -24,7 +24,7 @@ OS2Version: 0
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 1
 CreationTime: 1494278636
-ModificationTime: 1494279226
+ModificationTime: 1494279380
 OS2TypoAscent: 0
 OS2TypoAOffset: 1
 OS2TypoDescent: 0

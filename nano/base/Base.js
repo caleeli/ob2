@@ -192,7 +192,13 @@ Module.Model.Field = function (base) {
         module = module0;
     }
     this.migration = function () {
-        var code = "            $table->" + base.type + "('" + base.name + "')" +
+        var type=base.type;
+        switch(base.type) {
+            case 'array':
+                type="string";
+                break;
+        }
+        var code = "            $table->" + type + "('" + base.name + "')" +
           (base.required ? '' : '->nullable()') + ";";
         return code;
     }
@@ -349,6 +355,7 @@ Module.View.Model = function (base) {
           + '    this.$methods = {\n'
           + (typeof base.methods !== 'undefined' ? base.methods.join(',\n        ') : '')
           + '    };\n'
+          + '    this.$initFields();\n'
           + '    if(id) {\n'
           + '        this.$load(id);\n'
           + '    }\n'

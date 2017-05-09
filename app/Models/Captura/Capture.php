@@ -21,7 +21,7 @@ class Capture extends Model
     protected $casts = array(
       'name' => 'string',
       'part_of' => 'string',
-      'file' => 'string',
+      'file' => 'array',
     );
     public function sheets()
     {

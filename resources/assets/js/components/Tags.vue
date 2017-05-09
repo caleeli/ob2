@@ -3,7 +3,7 @@
         <div style="position:absolute;left:0px;top:0px;min-width:100%;height:100%; padding: 11px; ">
             <select :placeholder="placeholder" style="position:absolute;left:0px;top:0px;width:100%;height:100%;opacity:0;"
                     v-on:change="select">
-                <option v-for="option in domain" v-bind:value="option.id" :hidden="isSelected(option.id)">{{option.attributes[field.textField]}}</option>
+                <option v-for="option in domain" v-bind:value="typeof option=='object'?option.id:option" :hidden="isSelected(typeof option=='object'?option.id:option)">{{typeof option=='object'?option.attributes[field.textField]:option}}</option>
                 <option value="" hidden=""></option>
             </select>
             <span v-for="option in selected" class="label label-tag" :value="option.value" style="position:relative;" v-on:click="remove">{{option.text}} <i class="glyphicon glyphicon-remove"></i></span>
@@ -34,7 +34,11 @@
                 this.changes;
                 if(this.domain && typeof this.domain.forEach==='function') {
                     this.domain.forEach(function(option){
-                        options[option.id] = option.attributes[self.field.textField];
+                        if(typeof option=='object') {
+                            options[option.id] = option.attributes[self.field.textField];
+                        } else {
+                            options[option] = option;
+                        }
                     });
                 }
 
@@ -92,15 +96,6 @@
                 var self = this;
                 var values = this.getValues();
                 this.options = {};
-                /*this.joptions = this.$$el.find("select option");
-                this.joptions.each(function(){
-                    if(typeof self.options[this.getAttribute("value")]==='undefined'){
-                        self.options[this.getAttribute("value")] = this.textContent;
-                        $(this).prop("hidden", values.findIndex(function(e){return e==this.getAttribute("value")})!==-1);
-                    } else {
-                        $(this).prop("hidden", true);
-                    }
-                });*/
                 this.changes++;
             },
             addLabel:function(newValue){
@@ -126,12 +121,12 @@
                 return values.findIndex(function(e){return e==label})!==-1;
             },
             select: function(event) {
-                var value = event.target.value*1;
+                var value = event.target.value;
                 event.target.value = '';
                 this.addLabel(value);
             },
             remove: function(event) {
-                var value = event.currentTarget.getAttribute("value")*1;
+                var value = event.currentTarget.getAttribute("value");
                 this.removeLabel(value);
             },
         },

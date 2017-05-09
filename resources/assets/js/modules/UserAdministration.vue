@@ -39,6 +39,7 @@
     };
     this.$methods = {
 registrar:function(data,methodCallback,childrenAssociation){self.$call("registrar",{"data":data}, childrenAssociation, methodCallback)}    };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -66,6 +67,7 @@ UserAdministration.Role = function (url, id) {
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -93,6 +95,7 @@ UserAdministration.Login = function (url, id) {
     };
     this.$methods = {
 validate:function(username, password,methodCallback,childrenAssociation){self.$call("validate",{"username":username,"password":password}, childrenAssociation, methodCallback)}    };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }
@@ -120,6 +123,7 @@ UserAdministration.Recover = function (url, id) {
     };
     this.$methods = {
 sendEmail:function(account,methodCallback,childrenAssociation){self.$call("sendEmail",{"account":account}, childrenAssociation, methodCallback)}    };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }

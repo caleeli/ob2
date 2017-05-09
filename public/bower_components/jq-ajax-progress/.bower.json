@@ -1,0 +1,51 @@
+{
+  "name": "jq-ajax-progress",
+  "description": "Lightweight jQuery plugin that adds support of `progress` and `uploadProgress` promises to $.ajax()",
+  "main": [
+    "src/jq-ajax-progress.min.js"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  },
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "jquery",
+    "ajax",
+    "progress",
+    "track",
+    "tracking",
+    "chunk",
+    "upload",
+    "download",
+    "plugin",
+    "jquery plugin"
+  ],
+  "authors": [
+    "Alexey Lizurchik <al.lizurchik@gmail.com> (http://likerrr.ru)"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    ".editorconfig",
+    "package.json",
+    "gulpfile.js"
+  ],
+  "homepage": "https://github.com/likerRr/jq-ajax-progress",
+  "version": "0.1.9",
+  "_release": "0.1.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.9",
+    "commit": "461a28b26fbe3ce02d8e85eb543d31b57939aced"
+  },
+  "_source": "https://github.com/likerRr/jq-ajax-progress.git",
+  "_target": "^0.1.9",
+  "_originalSource": "jq-ajax-progress",
+  "_direct": true
+}

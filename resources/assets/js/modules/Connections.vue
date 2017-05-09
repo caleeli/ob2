@@ -31,6 +31,7 @@
     };
     this.$methods = {
     };
+    this.$initFields();
     if(id) {
         this.$load(id);
     }

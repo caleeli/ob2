@@ -25,7 +25,7 @@ VueComponent.generate = function (module, views, data, template) {
                     list.push(field.name);
                     columns.push({
                         title: typeof field.label === 'undefined' ? field.name : field.label,
-                        data: "attributes." + field.name,
+                        data: "attributes." + (field.textField ? field.textField : field.name),
                     });
                 }
             });
