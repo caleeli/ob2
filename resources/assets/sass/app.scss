@@ -53,7 +53,7 @@ $rotate-template-count: 16 !default
 }
 .navbar-brand {
     font-weight: bold;
-    text-shadow: black 2px 2px 8px;
+    white-space: pre;
 }
 
 .plus-button {
@@ -260,6 +260,10 @@ $imagePerLine: 2.5;
 
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575px) {
+    .navbar-brand {
+        max-width: 80%;
+        overflow: hidden;
+    }
     .collapse-xs {
         display: none;
     }
@@ -267,6 +271,10 @@ $imagePerLine: 2.5;
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) and (max-width: 767px) {
+    .navbar-brand {
+        max-width: 80%;
+        overflow: hidden;
+    }
     .collapse-sm {
         display: none;
     }
@@ -274,6 +282,10 @@ $imagePerLine: 2.5;
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) and (max-width: 991px) {
+    .navbar-brand {
+        max-width: 30%;
+        overflow: hidden;
+    }
     .collapse-md {
         display: none;
     }
@@ -281,6 +293,10 @@ $imagePerLine: 2.5;
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) and (max-width: 1199px) {
+    .navbar-brand {
+        max-width: 30%;
+        overflow: hidden;
+    }
     .collapse-lg {
         display: none;
     }

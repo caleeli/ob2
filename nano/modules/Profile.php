@@ -11,6 +11,11 @@
 <script>
     /*
      * perdir contraseña anterior para cambiar por una nueva.
+     * adicionar sin poder eliminar correo electronico
+     * cerulean
+     * journal o readable
+     * flaty
+     * recuperar contraseña error.
      */
     var module = new Module({
         "name": "Profile",

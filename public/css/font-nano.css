@@ -1,0 +1,32 @@
+/*!
+ *  Extension fonts for FA @ nano2
+ */
+/* FONT PATH
+ * -------------------------- */
+@font-face {
+  font-family: 'FontNano';
+  src: url('../fonts/FontNano.ttf?v=1.0.0') format('truetype'),
+      url('../fonts/FontNano.svg?v=1.0.0') format('svg'),
+      url('../fonts/FontNano.woff?v=1.0.0') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+   readers do not read off random characters that represent icons */
+.na {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontNano;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.na-chart-staked-column:before {
+  content: "A";
+}
+.na-chart-horizontal-bar:before {
+  content: "B";
+}
+.na-bolivia:before {
+  content: "C";
+}

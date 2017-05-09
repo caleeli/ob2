@@ -35,6 +35,9 @@
 <script>
     /**
      * para los aros, cambiar los valores mostrados a %
+     * falta titulos de las columnas de variables y dimensiones
+     * 
+     * color para las filas: rgb(186, 235, 225)
      */
     export default {
         data:function() {
@@ -55,12 +58,12 @@
                 "bar2": {
                     type: "bar2",
                     element: "canvasOwner",
-                    icon: "fa fa-bar-chart",
+                    icon: "na na-chart-staked-column",
                 },
                 "horizontalBar": {
                     type: "horizontalBar",
                     element: "canvasOwner",
-                    icon: "fa fa-bars",
+                    icon: "na na-chart-horizontal-bar",
                 },
                 "area": {
                     type: "area",

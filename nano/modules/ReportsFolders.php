@@ -57,6 +57,8 @@
                         "textField": "name",
                         "ui": "tags",
                     }),
+                    //information_source
+                    //periodicity
                     new Module.Model.Field({
                         "name": "aggregator",
                         "type": "string",

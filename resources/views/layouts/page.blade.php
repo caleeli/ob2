@@ -8,6 +8,7 @@
         <title>{{env('APP_NAME', 'Application Name')}}</title>
 
         <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/font-nano.css">
         <link rel="stylesheet" type="text/css" href="css/buttons.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">

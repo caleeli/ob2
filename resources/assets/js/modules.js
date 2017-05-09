@@ -1,5 +1,5 @@
 Vue.component('captura', require('./modules/Captura.vue'));
-registerMenu({"path":"main\/Captura","name":"Captura","text":"Captura de datos","icon":"fa fa-cloud-upload","id":0});
+registerMenu({"path":"main\/Configuraci\u00f3n","name":"Captura","text":"Captura de datos","icon":"fa fa-cloud-upload","id":0});
 Vue.component('connections', require('./modules/Connections.vue'));
 registerMenu({"path":"main\/Configuraci\u00f3n","name":"Connections","text":"Connections","icon":"fa fa-database","id":1});
 Vue.component('dashboard', require('./modules/Dashboard.vue'));

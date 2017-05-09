@@ -82,7 +82,7 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 1
 FitToEm: 0
-WinInfo: 62019 27 9
+WinInfo: 62150 25 9
 BeginChars: 65539 707
 
 StartChar: .notdef
@@ -48712,6 +48712,7 @@ SplineSet
  1536 726 l 9,37,-1
  1792 726 l 17,34,-1
 EndSplineSet
+Validated: 9
 EndChar
 
 StartChar: uniF2E6
@@ -48745,6 +48746,7 @@ SplineSet
  1420 897 l 1,17,-1
  1420 1153 l 1,14,-1
 EndSplineSet
+Validated: 9
 EndChar
 
 StartChar: uniF2E7
@@ -48885,6 +48887,7 @@ SplineSet
  574 1189 574 1189 535 1272 c 1,191,-1
  536 1274 l 1,1,-1
 EndSplineSet
+Validated: 524321
 EndChar
 
 StartChar: _698
@@ -49029,6 +49032,7 @@ SplineSet
  514 1276 514 1276 507.25 1262.5 c 0,194,195
  499 1246 499 1246 500 1245 c 0,1,2
 EndSplineSet
+Validated: 524325
 EndChar
 
 StartChar: uniF2E9
