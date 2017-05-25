@@ -13,7 +13,7 @@ class CreateUsradmRecoversTable extends Migration
             $table->increments('id');
             $table->string('account');
             $table->string('key');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

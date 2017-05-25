@@ -32,6 +32,7 @@ class Recover extends Model
 
     public function sendEmail($account)
     {
+        $enviado = false;
         $usersByUsername = User::where('username', '=', $account)->get();
         $usersByEmail = User::where('email', '=', $account)->get();
         foreach ($usersByUsername as $user) {
@@ -42,6 +43,7 @@ class Recover extends Model
             $recover->user()->associate($user);
             \Mail::to($user->email)
                                     ->send(new \App\Mail\RecoverPassword($user, $recover));
+            $enviado = true;
         }
         foreach ($usersByEmail as $user) {
             if ($user->username===$user->email) {
@@ -54,6 +56,8 @@ class Recover extends Model
             $recover->user()->associate($user);
             \Mail::to($user->email)
                                     ->send(new \App\Mail\RecoverPassword($user, $recover));
+            $enviado = true;
         }
+        return $enviado;
     }
 }

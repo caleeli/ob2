@@ -110,8 +110,23 @@ $(document).ready(function () {
                 this.goto(0);
             },
             submitRecover: function() {
-                app.recover.$methods.sendEmail(app.recover.account);
-                this.goto(0);
+                var self=this;
+                app.recover.$methods.sendEmail(
+                    app.recover.account,
+                    {
+                        success: function(enviado) {
+                            if(enviado) {
+                                message('Se envio un correo para recuperar su contraseña.');
+                                self.goto(0);
+                            } else {
+                                message('No se pudo enviar el correo de recuperación, verifique que el usuario o email ingresado.');
+                            }
+                        },
+                        error: function(enviado) {
+                            message('No se pudo enviar el correo de recuperación, verifique el usuario o email ingresado.');
+                        },
+                    }
+                );
             },
         },
         data: {
