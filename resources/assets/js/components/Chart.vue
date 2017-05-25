@@ -5,7 +5,7 @@
                 <a v-for="chart in chartTypes" href="javascript:void(0)" v-on:click="setType(chart)" :class="classType(chart.type)"><i :class="chart.icon"></i></a>
             </div>
         </div>
-        <div class="div-ajax-loader">
+        <div class="div-ajax-loader" style='display: none;'>
             <br><i class="ajax-loader"></i>
         </div>
         <div class="canvasOwner">
@@ -432,10 +432,21 @@
                 var self = this;
                 var model = self.model;
                 $(this.$el).find(".canvasOwner").html('');
-                $(this.$el).find(".div-ajax-loader").show();
                 try {
+                    var listCols = self.toList(model.cols);
+                    var listVars = self.toList(model.variables);
+                    if (
+                      !model.aggregator || !listCols || listCols==='null' ||
+                      !listVars || listVars==='null'
+                    ) {
+                        return;
+                    }
+                    $(this.$el).find(".div-ajax-loader").show();
                     $.ajax({
-                        url: API_SERVER+'/api/pivot/valores_produccion/'+model.aggregator+'/defecto_valor_cargado/'+self.toList(model.rows)+'/'+self.toList(model.cols)+'/'+self.toList(model.variables)+'?filter='+model.filter,
+                        url: API_SERVER+'/api/pivot/valores_produccion/'+
+                          model.aggregator+'/defecto_valor_cargado/'+
+                          self.toList(model.rows)+'/'+listCols+'/'+
+                          listVars + '?filter='+model.filter,
                         dataType: 'json',
                         success:function(data) {
                             $(self.$el).find(".div-ajax-loader").hide();

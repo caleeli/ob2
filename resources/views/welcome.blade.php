@@ -68,5 +68,5 @@
                 </div>
             </div>
         </div>
-<script src="{{ elixir('js/admin.js') }}?t=<?=filemtime(public_path().'/js/admin.js')?>"></script>
+<script src="{{ elixir('js/admin.js') }}?t=<?=filemtime(public_path('js/admin.js'))?>"></script>
 @stop
