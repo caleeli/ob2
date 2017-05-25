@@ -282,10 +282,6 @@ $imagePerLine: 2.5;
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) and (max-width: 991px) {
-    .navbar-brand {
-        max-width: 30%;
-        overflow: hidden;
-    }
     .collapse-md {
         display: none;
     }
@@ -293,10 +289,6 @@ $imagePerLine: 2.5;
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) and (max-width: 1199px) {
-    .navbar-brand {
-        max-width: 30%;
-        overflow: hidden;
-    }
     .collapse-lg {
         display: none;
     }

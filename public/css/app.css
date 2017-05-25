@@ -8076,20 +8076,12 @@ a.dt-button {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  .navbar-brand {
-    max-width: 30%;
-    overflow: hidden;
-  }
   .collapse-md {
     display: none;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-  .navbar-brand {
-    max-width: 30%;
-    overflow: hidden;
-  }
   .collapse-lg {
     display: none;
   }
