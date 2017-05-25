@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 collapse-xs collapse-sm collapse-md" data-toggle="collapse-xs collapse-sm collapse-md">
+        <div id="configChart" class="col-xs-12 col-sm-12 col-md-4 col-lg-4 collapse-xs collapse-sm collapse-md" data-toggle="collapse-xs collapse-sm collapse-md">
             <div v-show.visible="!($root.getPaths().length &gt; 2 &amp;&amp; $root.getPaths()[$root.getPaths().length-1].name.substr(0,1)=='*')">
                 <h2 id="nav-tabs">Carpetas</h2>
                 <abmgroup id="ReportsFolders.Folders" :model="folder" groupField="folder_id" :root="null" typeField="type" nameField="name" leafType="LEAF" childrenAssociation="children">

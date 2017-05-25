@@ -27,7 +27,6 @@
 }
 .ntImage label p {
     background-color:rgba(44, 62, 80, 0.7);
-        font-size:150%!important;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -36,7 +35,7 @@
     }
 }
 
-// Extra large devices (large desktops, 1200px and up)
+/* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
     .ntImage label p {
         font-size:150%!important;

@@ -3,6 +3,7 @@
         <div class="btn-toolbar">
             <div class="btn-group">
                 <a v-for="chart in chartTypes" href="javascript:void(0)" v-on:click="setType(chart)" :class="classType(chart.type)"><i :class="chart.icon"></i></a>
+                <a href="javascript:void(0)" v-on:click="toggleConfig()" class="btn btn-info visible-xs-inline visible-sm-inline visible-md-inline"><i class="fa fa-cog"></i></a>
             </div>
         </div>
         <div class="div-ajax-loader" style='display: none;'>
@@ -109,6 +110,9 @@
             }
         },
         methods: {
+            toggleConfig: function () {
+                $("#configChart").toggleClass($("#configChart").attr("data-toggle"));
+            },
             isDifferentCol: function (xs_label, i, colI) {
                 return i==0 ? true : xs_label[i][colI]!=xs_label[i-1][colI];
             },

@@ -2,7 +2,7 @@
 <root xmlns:vue='http://nano2.com/vue'>
 <template>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 collapse-xs collapse-sm collapse-md" data-toggle="collapse-xs collapse-sm collapse-md">
+        <div id='configChart' class="col-xs-12 col-sm-12 col-md-4 col-lg-4 collapse-xs collapse-sm collapse-md" data-toggle="collapse-xs collapse-sm collapse-md">
             <div v-show.visible="!($root.getPaths().length > 2 &amp;&amp; $root.getPaths()[$root.getPaths().length-1].name.substr(0,1)=='*')">
                 <h2 id="nav-tabs">Carpetas</h2>
                 <abmgroup
