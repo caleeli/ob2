@@ -32,22 +32,11 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="glyphicon glyphicon-equalizer"></i> Tema/Colores <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#" v-on:click="changeTemplate('cerulean')"><i class="glyphicon glyphicon-equalizer"></i> cerulean</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('cosmo')"><i class="glyphicon glyphicon-equalizer"></i> cosmo</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('cyborg')"><i class="glyphicon glyphicon-equalizer"></i> cyborg</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('darkly')"><i class="glyphicon glyphicon-equalizer"></i> darkly</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('flatly')"><i class="glyphicon glyphicon-equalizer"></i> flatly</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('journal')"><i class="glyphicon glyphicon-equalizer"></i> journal</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('lumen')"><i class="glyphicon glyphicon-equalizer"></i> lumen</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('paper')"><i class="glyphicon glyphicon-equalizer"></i> paper</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('readable')"><i class="glyphicon glyphicon-equalizer"></i> readable</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('sandstone')"><i class="glyphicon glyphicon-equalizer"></i> sandstone</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('simplex')"><i class="glyphicon glyphicon-equalizer"></i> simplex</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('slate')"><i class="glyphicon glyphicon-equalizer"></i> slate</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('spacelab')"><i class="glyphicon glyphicon-equalizer"></i> spacelab</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('superhero')"><i class="glyphicon glyphicon-equalizer"></i> superhero</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('united')"><i class="glyphicon glyphicon-equalizer"></i> united</a></li>
-                                    <li><a href="#" v-on:click="changeTemplate('yeti')"><i class="glyphicon glyphicon-equalizer"></i> yeti</a></li>
+                                    <li v-bind:class="cssTemplateMenu('simplex')"><a href="#" v-on:click="changeTemplate('simplex')"><i class="glyphicon glyphicon-equalizer"></i> Sencillo</a></li>
+                                    <li v-bind:class="cssTemplateMenu('cerulean')"><a href="#" v-on:click="changeTemplate('cerulean')"><i class="glyphicon glyphicon-equalizer"></i> Azul claro</a></li>
+                                    <li v-bind:class="cssTemplateMenu('darkly')"><a href="#" v-on:click="changeTemplate('darkly')"><i class="glyphicon glyphicon-equalizer"></i> Oscuro</a></li>
+                                    <li v-bind:class="cssTemplateMenu('flatly')"><a href="#" v-on:click="changeTemplate('flatly')"><i class="glyphicon glyphicon-equalizer"></i> Contraste</a></li>
+                                    <li v-bind:class="cssTemplateMenu('united')"><a href="#" v-on:click="changeTemplate('united')"><i class="glyphicon glyphicon-equalizer"></i> United</a></li>
                                 </ul>
                             </li>
                             <li>

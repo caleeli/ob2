@@ -60,12 +60,19 @@ $(document).ready(function () {
                 $("#template-tuner").attr("href", "bower_components/bootswatch/" + template + "/bootstrap.min.css");
                 $("#template-tuner-extra").attr("href", "bower_components/bootswatch/" + template + "/extra.min.css");
                 localStorage.skin = template;
+                this.template = template;
+            },
+            cssTemplateMenu: function (template) {
+                //bind with this.template
+                this.template;
+                return localStorage.skin===template?'active':'';
             },
         },
         data: {
             pathChanged: 0,
             path: [],
             menues: menues.findPath(['main']),
+            template: localStorage.skin ? localStorage.skin : 'simplex',
         },
         mounted: function () {
             var self = this;
