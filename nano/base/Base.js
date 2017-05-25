@@ -27,6 +27,14 @@ function array2object(array, key, value) {
     });
     return a;
 }
+function object2object(object, key0, value0) {
+    var a = {};
+    for (var key in object) {
+        var item = object[key];
+        a[eval(key0)] = eval(value0);
+    }
+    return a;
+}
 function object2array(object, ev) {
     var a = [];
     for (var key in object) {
@@ -41,25 +49,23 @@ var Element = function (base, me) {
     }
 }
 var Module = function (base) {
+    Module.instances[base.name] = this;
     Element(base, this);
+    this.template = PHP.template;
+    this.register = function () {
+        for (var i in base.models) {
+            base.models[i].setModule(this);
+        }
+    }
     this.install = function () {
-        //	var module=PHP.createModule(base);
         PHP.createFolders([
-//            'app/Http/Controllers/' + base.name,
             'app/Models/' + base.name,
-//			'database/factories/'+base.name,
-//			'database/seeds/'+base.name,
         ]);
         for (var i in base.models) {
-            base.models[i].setModule(this);
-            base.models[i].install();
-        }
-        for (var i in base.models) {
-            base.models[i].setModule(this);
             base.models[i].install();
         }
         PHP.createFile('public/swagger/' + base.name + '.json', JSON.stringify(Swagger.generate(base.name, '1.0.0', 'localhost', this.models)));
-        PHP.createFile('resources/assets/js/modules/' + base.name + '.vue', VueComponent.generate(base, base.views, base.data, PHP.template));
+        PHP.createFile('resources/assets/js/modules/' + base.name + '.vue', VueComponent.generate(base, base.views, base.data, this.template));
         PHP.registerMenu(
             {
                 path: base.menu,
@@ -70,9 +76,15 @@ var Module = function (base) {
             base.name
         );
     }
-    this.install();
+    this.$models=function(name) {
+        return this.models.find(function(model){return model.name==name});
+    }
+    this.register();
+    //this.install();
 }
+Module.instances={};
 Module.Model = function (base) {
+    var self=this;
     Element(base, this);
     var module;
     this.setModule = function (module0) {
@@ -82,21 +94,70 @@ Module.Model = function (base) {
         for (var i in base.associations) {
             base.associations[i].setModule(module);
         }
+        if (base.events) for(var eventName in base.events) {
+            var $properties = {};
+            $properties['public $' + PHP.camel_case(base.name)] = null;
+            PHP.createClass({
+                filename: 'app/Events/' + module.name + '/' + PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName) + '.php',
+                namespace: 'App\\Events\\' + module.name,
+                uses: [
+                    'Illuminate\\Broadcasting\\Channel',
+                    'Illuminate\\Queue\\SerializesModels',
+                    'Illuminate\\Broadcasting\\PrivateChannel',
+                    'Illuminate\\Broadcasting\\InteractsWithSockets',
+                    'Illuminate\\Contracts\\Broadcasting\\ShouldBroadcast',
+                    'App\\Models\\'+module.name+'\\'+PHP.upper_camel_case(base.name),
+                ],
+                name: PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName),
+                extends: '',
+                implements: ['ShouldBroadcast'],
+                traits: ['InteractsWithSockets', 'SerializesModels'],
+                properties: $properties,
+                methods: {
+                    '__construct': "public function __construct("+PHP.upper_camel_case(base.name)+" $model){$this->"+PHP.camel_case(base.name)+"=$model;}",
+                    'broadcastOn': "public function broadcastOn(){return new PrivateChannel('channel-name');}",
+                },
+            });
+            PHP.createClass({
+                filename: 'app/Listeners/' + module.name + '/' + PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName) + 'Listener.php',
+                namespace: 'App\\Listeners\\' + module.name,
+                uses: [
+                    'Illuminate\\Queue\\InteractsWithQueue',
+                    'Illuminate\\Contracts\\Queue\\ShouldQueue',
+                    'App\\Models\\'+module.name+'\\'+PHP.upper_camel_case(base.name),
+                    'App\\Events\\'+module.name+'\\'+PHP.upper_camel_case(base.name)+ PHP.upper_camel_case(eventName),
+                ],
+                name: PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName)+'Listener',
+                extends: '',
+                implements: [],
+                traits: [],
+                properties: $properties,
+                methods: {
+                    'handle': "public function handle"+base.events[eventName].trim().substr(8),
+                },
+            });
+            PHP.registerListener(
+                'App\\Events\\' + module.name + '\\' + PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName),
+                'App\\Listeners\\' + module.name + '\\' + PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName)+'Listener'
+            );
+        }
         PHP.createClass({
             filename: 'app/Models/' + module.name + '/' + PHP.upper_camel_case(base.name) + '.php',
             namespace: 'App\\Models\\' + module.name,
             uses: [
                 'Illuminate\\Database\\Eloquent\\Model',
                 'Illuminate\\Database\\Eloquent\\SoftDeletes',
+                'Illuminate\\Notifications\\Notifiable',
             ],
             name: PHP.upper_camel_case(base.name),
             extends: 'Model',
-            traits: ['SoftDeletes'],
+            traits: ['SoftDeletes','Notifiable'],
             properties: {
                 'protected $table': Module.Model.getTableName(module, base),
                 'protected $fillable': array2array(base.fields, 'item.name').concat(array2array(base.associations, 'item.getFillableName()')),
                 'protected $attributes': array2object(base.fields, 'item.name', 'item.default'),
                 'protected $casts': array2object(base.fields, 'item.name', 'item.type'),
+                'protected $events': object2object(base.events, 'key', JSON.stringify('App\\Events\\'+module.name + '\\' + PHP.upper_camel_case(base.name)) + " + PHP.upper_camel_case(key)"),
             },
             methods: Object.assign({}, array2object(base.associations, 'item.name', 'item.code()'), base.methods),
         });
@@ -117,8 +178,8 @@ Module.Model = function (base) {
                   "    {\n" +
                   "        Schema::create('" + Module.Model.getTableName(module, base) + "', function (Blueprint $table) {\n" +
                   "            $table->increments('id');\n" +
-                  array2array(base.fields, 'item.migration()').join("\n") + "\n" +
-                  array2array(base.associations, 'item.migration()').join("") +
+                  array2array(base.fields, 'item.migration("'+self.name+'")').join("\n") + "\n" +
+                  array2array(base.associations, 'item.migration("'+self.name+'")').join("") +
                   "            $table->timestamps();\n" +
                   "            $table->softDeletes();\n" +
                   "        });\n" +
@@ -195,7 +256,7 @@ Module.Model.Field = function (base) {
         var type=base.type;
         switch(base.type) {
             case 'array':
-                type="string";
+                type="text";
                 break;
         }
         var code = "            $table->" + type + "('" + base.name + "')" +
@@ -263,14 +324,23 @@ Module.Model.BelongsTo = function (base) {
     this.code = function () {
         return "    public function " + base.name + "()\n" +
           "    {\n" +
-          "        return $this->belongsTo('App\\Models\\" + module.name + "\\" + PHP.upper_camel_case(base.model) + "'" +
+          "        return $this->belongsTo('App\\Models\\" + (base.module?base.module:module.name) + "\\" + PHP.upper_camel_case(base.model) + "'" +
           (typeof base.columns === 'undefined' ? '' : ',' + PHP.var_export(base.references) + ',' + PHP.var_export(base.columns) + ");\n") +
           ");\n" +
           "    }\n";
     }
-    this.migration = function () {
+    this.migration = function (modelName) {
         var foreign = PHP.snake_case(base.name);
-        return "            $table->integer('" + foreign + "_id')->unsigned()->nullable();\n";
+        var foreignModule = base.module?Module.instances[base.module]:module;
+        console.log("Schema::table('"+Module.Model.getTableName(module, module.$models(modelName))+"', function (Blueprint $table) {\n            $table->foreign('" + foreign + "_id')->references('id')->on('" +
+            Module.Model.getTableName(foreignModule, foreignModule.$models(base.model)) +
+            "')->onDelete('" + (base.nullable?'set null':'cascade') + "');\n});");
+        
+        return "            $table->integer('" + foreign + "_id')->unsigned()"+
+            (base.nullable?'->nullable()':'') + ";\n" /*+
+            "            $table->foreign('" + foreign + "_id')->references('id')->on('" +
+            Module.Model.getTableName(foreignModule, foreignModule.$models(base.model)) +
+            "')->onDelete('" + (base.nullable?'set null':'cascade') + "');\n"*/;
     }
     this.foreign = function () {
         var fmodel = array_find(module.models, function (item) {
@@ -368,7 +438,7 @@ Module.View.Model = function (base) {
 Module.View.ModelInstance = function (base, url, id) {
     var self = this;
     this.getCode = function () {
-        var urlFn = !url ? '' : 'function(){try{var url="/api/' + url.replace(/\{([^}]+)\}/, function (ma0, ma1) {
+        var urlFn = !url ? '' : 'function(){try{var url="/api/' + url.replace(/\{([^}]+)\}/g, function (ma0, ma1) {
             return '"+(' + ma1 + '?' + ma1 + ':"¡@!")+"'
         }) + '";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}';
         return 'new ' + base + '(' + urlFn + (id ? ',' + id : '') + ')';

@@ -3,10 +3,11 @@ namespace App\Models\UserAdministration;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
     protected $table = 'usradm_users';
     protected $fillable = array(
       0 => 'username',
@@ -35,6 +36,8 @@ class User extends Model
       'materno' => 'string',
       'email' => 'string',
       'unidad' => 'string',
+    );
+    protected $events = array(
     );
     public function logins()
     {

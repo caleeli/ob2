@@ -248,7 +248,8 @@
                 "associations": [
                     new Module.Model.BelongsTo({
                         "name": "folder",
-                        "model": "folder"
+                        "model": "folder",
+                        "nullable": true,
                     }),
                     new Module.Model.HasMany({
                         "name": "children",
@@ -433,16 +434,34 @@
                         "label": "Columna de la tabla",
                         "type": "string"
                     }),
+                    new Module.Model.Field({
+                        "name": "arbitrary",
+                        "label": "Arbitraria",
+                        "type": "string",
+                        "enum": ["si", "no"],
+                        "default": "no",
+                        "ui": "select",
+                    }),
+                    new Module.Model.Field({
+                        "name": "numeric",
+                        "label": "Es numeral",
+                        "type": "string",
+                        "enum": ["si", "no"],
+                        "default": "no",
+                        "ui": "select",
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
                         "name": "family",
                         "model": "family",
+                        "label": "Familia",
                         "ui": "select",
                         "source": function(){
                             return module.family;
                         },
                         "textField": "name",
+                        "nullable": true,
                     }),
                     new Module.Model.HasMany({
                         "name": "domains",

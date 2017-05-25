@@ -12,7 +12,7 @@ class CreateBeUnitsTable extends Migration
         Schema::create('be_units', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->integer('family_id')->unsigned()->nullable();
+            $table->integer('family_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

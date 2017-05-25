@@ -3,10 +3,11 @@ namespace App\Models\ReportsFolders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Variable extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
     protected $table = 'be_variables';
     protected $fillable = array(
       0 => 'name',
@@ -34,6 +35,8 @@ class Variable extends Model
       'rows' => 'string',
       'cols' => 'string',
       'filter' => 'string',
+    );
+    protected $events = array(
     );
     public function dimensions()
     {

@@ -3,10 +3,11 @@ namespace App\Models\ReportsFolders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class VariableTag extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
     protected $table = 'be_variable_tags';
     protected $fillable = array(
       0 => 'name',
@@ -16,6 +17,8 @@ class VariableTag extends Model
     );
     protected $casts = array(
       'name' => 'string',
+    );
+    protected $events = array(
     );
     public function variables()
     {

@@ -3,10 +3,11 @@ namespace App\Models\UserAdministration;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Recover extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
     protected $table = 'usradm_recovers';
     protected $fillable = array(
       0 => 'account',
@@ -20,6 +21,8 @@ class Recover extends Model
     protected $casts = array(
       'account' => 'string',
       'key' => 'string',
+    );
+    protected $events = array(
     );
     public function user()
     {

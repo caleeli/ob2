@@ -17,6 +17,29 @@ export default function(uri0, id, type) {
     }
     this.id = null;
     this.$url = uri;
+    this.$emptyUrl = '/api/empty';
+    function loadFromData(data) {
+        originalData = data.data;
+        Object.assign(self, originalData.attributes);
+        id = originalData.id;
+        self.id = originalData.id;
+        if(typeof originalData.relationships==="object") {
+            for(var a in originalData.relationships) {
+                self[a] = originalData.relationships[a];
+                if(self[a] && typeof self[a].forEach==='function') {
+                    self[a].get = function(id){
+                        var res;
+                        self[a].forEach(function(item) {
+                            if (item.id===id) {
+                                res = item;
+                            }
+                        });
+                        return res;
+                    }
+                }
+            }
+        }
+    }
     this.$load = function (id1, loadCallback) {
         try {
             if (typeof id1 === 'undefined') {
@@ -33,26 +56,7 @@ export default function(uri0, id, type) {
                 url: this.$url() + '/' + (!id1 ? 'create' : id1)+ (include.length>0 ? '?include='+include.join(',') : ''),
                 dataType: 'json',
                 success: function (data) {
-                    originalData = data.data;
-                    Object.assign(self, originalData.attributes);
-                    id = originalData.id;
-                    self.id = originalData.id;
-                    if(typeof originalData.relationships==="object") {
-                        for(var a in originalData.relationships) {
-                            self[a] = originalData.relationships[a];
-                            if(self[a] && typeof self[a].forEach==='function') {
-                                self[a].get = function(id){
-                                    var res;
-                                    self[a].forEach(function(item) {
-                                        if (item.id===id) {
-                                            res = item;
-                                        }
-                                    });
-                                    return res;
-                                }
-                            }
-                        }
-                    }
+                    loadFromData(data);
                     callback(self);
                     if(typeof loadCallback==='function'){
                         loadCallback(self);
@@ -79,8 +83,19 @@ export default function(uri0, id, type) {
             url = this.$url() + childrenAssociation + '/' + id;
         }
         this.$fields().forEach(function(field) {
-            if (field.isAssociation) {
-                relationships[field.name] = {data:self[field.name]};
+            if (field.isAssociation && field.isMultiple) {
+                //only update the relationship (id, not the rest of attributes)
+                if (typeof self[field.name]==='string') {
+                    relationships[field.name] = {data:[]};
+                    self[field.name].split(",").forEach(function(id) {
+                        relationships[field.name].data.push({id:id});
+                    });
+                } else {
+                    relationships[field.name] = {data:self[field.name]};
+                }
+            } else if (field.isAssociation && !field.isMultiple) {
+                var val = typeof self[field.name]==='object' && self[field.name] && typeof self[field.name].id!=='undefined' ? self[field.name].id : self[field.name];
+                relationships[field.name] = {data:{id:val}};
             } else {
                 attributes[field.name] = self[field.name];
             }
@@ -88,6 +103,7 @@ export default function(uri0, id, type) {
         $.ajax({
             method: method,
             url: url,
+            contentType: "application/json;charset=utf-8",
             dataType: 'json',
             data: JSON.stringify({
                 data: {
@@ -97,10 +113,8 @@ export default function(uri0, id, type) {
                 }
             }),
             success: function (data) {
-                if (data.success) {
-                    id = data.result.data.id;
-                    this.id = data.result.data.id;
-                    originalData = data.result.data.attributes;
+                if (data.data) {
+                    loadFromData(data);
                 }
                 callback(self);
                 if(typeof saveCallback==='function'){

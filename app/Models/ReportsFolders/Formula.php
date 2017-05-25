@@ -3,10 +3,11 @@ namespace App\Models\ReportsFolders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Formula extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
     protected $table = 'be_formulas';
     protected $fillable = array(
       0 => 'formula',
@@ -18,6 +19,8 @@ class Formula extends Model
     );
     protected $casts = array(
       'formula' => 'string',
+    );
+    protected $events = array(
     );
     public function origin()
     {

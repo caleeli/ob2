@@ -296,14 +296,6 @@
                         "ui": "select",
                         "enum": ["ACTIVE", "INACTIVE"]
                     }),
-                    new Module.Model.Field({
-                        "name": "dashboard",
-                        "type": "string",
-                        "default": "dashboard1",
-                        "required": true,
-                        "ui": "select",
-                        "enum": ["dashboard1", "dashboard2"]
-                    }),
                 ],
                 "associations": [
                     new Module.Model.HasMany({

@@ -34,8 +34,8 @@ Route::get('/lang/datatable', function () {
 });
 Route::post('/uploadfile',
             array('as' => 'api', 'uses' => 'UploadFileController@upload'));
-Route::get('/ping',
-    array('as' => 'api', 'uses' => 'PingController@index'));
+Route::get('/ping', array('as' => 'api', 'uses' => 'PingController@ping'));
+Route::get('/empty', array('as' => 'api', 'uses' => 'PingController@data'));
 
 Route::get('/pivot/{table}/{aggregator}/{measure}/{rows}/{cols}/{variables}',
            array('as' => 'api', 'uses' => 'PivotController@index'));

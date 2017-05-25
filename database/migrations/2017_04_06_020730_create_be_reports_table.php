@@ -17,7 +17,7 @@ class CreateBeReportsTable extends Migration
             $table->string('rows')->nullable();
             $table->string('cols')->nullable();
             $table->string('filter')->nullable();
-            $table->integer('folder_id')->unsigned()->nullable();
+            $table->integer('folder_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

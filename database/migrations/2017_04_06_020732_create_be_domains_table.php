@@ -13,7 +13,7 @@ class CreateBeDomainsTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('synonyms')->nullable();
-            $table->integer('dimension_id')->unsigned()->nullable();
+            $table->integer('dimension_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -3,10 +3,11 @@ namespace App\Models\Connections;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Connection extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
     protected $table = 'conn_connections';
     protected $fillable = array(
       0 => 'name',
@@ -40,6 +41,8 @@ class Connection extends Model
       'password' => 'string',
       'charset' => 'string',
       'collation' => 'string',
+    );
+    protected $events = array(
     );
     public static function boot()
     {

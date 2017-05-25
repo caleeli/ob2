@@ -19,9 +19,10 @@
                         v-on:change="changeFile($event, field)"></span>
                 </span>
             </div>
-            <select v-if="field.type==='select'" class="form-control" :placeholder="field.label" v-model="values[field.value]" v-on:change="change">
+            <select v-if="field.type==='select'" class="form-control" :placeholder="field.label" :value="getInitialValueOf(values[field.value])" v-on:change="changeSelect($event, field)">
+                <option value=""></option>
                 <option v-for="option in domains[field.name]" v-bind:value="option.id">{{option.attributes[field.textField]}}</option>
-                <option v-bind:value="values[field.value]" hidden="">{{values[field.value]}}</option>
+                <option v-bind:value="getInitialValueOf(values[field.value])" hidden="">{{getInitialTextOf(values[field.value], field.textField)}}</option>
             </select>
             <tags v-if="field.type==='tags'" :placeholder="field.label" :model="values" :property="field.value" :domain="domains[field.name]" :field="field" v-on:change="change" />
             <filters v-if="field.type==='filter'" :placeholder="field.label" :model="values" :property="field.value" :domain="domains[field.name]" :field="field"  v-on:change="change"/>
@@ -30,7 +31,7 @@
         <button v-else-if="button=='cancel'" type="button" v-on:click="cancel" class="btn btn-warning">Cancelar</button>
         <button v-else-if="button=='close'" type="button" v-on:click="cancel" class="btn btn-warning">Cerrar</button>
         <button v-else-if="button=='save'" type="button" v-on:click="save" class="btn btn-success">Guardar</button>
-        <button v-else-if="button=='update'" type="button" v-on:click="update" class="btn btn-primary">Actualizar</button>
+        <button v-else-if="button=='update'" type="button" v-on:click="update" class="btn btn-primary">Aplicar</button>
         <button v-else type="button" v-on:click="custom(button)" class="btn btn-default">{{button}}</button>
     </form>
 </template>
@@ -87,8 +88,14 @@
                 var self = this;
                 self.$emit('custom', button, self.model, self);
             },
-            change: function() {
+            change: function(event) {
                 var self = this;
+                self.$root.$emit('changed', self);
+            },
+            changeSelect: function(event, field) {
+                var value = event.target.value;
+                var self = this;
+                self.values[field.value] = value;
                 self.$root.$emit('changed', self);
             },
             changeFile: function(event, field) {
@@ -126,6 +133,14 @@
                 } catch (e) {
                 }
                 return {name:name, url:url, mime: mime};
+            },
+            getInitialValueOf: function (value) {
+                var val = typeof value==='object' && value && typeof value.id!=='undefined' ? value.id : value;
+                return val;
+            },
+            getInitialTextOf: function (value, textField) {
+                var val = typeof value==='object' && value && typeof value.attributes!=='undefined' ? value.attributes[textField] : value;
+                return val;
             },
         },
         mounted() {

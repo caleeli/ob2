@@ -46,11 +46,11 @@ abstract class BaseOperation
             } elseif ($model instanceof HasOne && $isString) {
                 $model = $model->$route();
             } elseif ($model instanceof HasMany && $isZero) {
-                $model = $model->newInstance();
+                $model = $model->getRelated()->newInstance();
             } elseif ($model instanceof HasMany && $isNumeric) {
                 $model = $model->whereId($route)->first();
             } elseif ($model instanceof BelongsToMany && $isZero) {
-                $model = $model->newInstance();
+                $model = $model->getRelated()->newInstance();
             } elseif ($model instanceof BelongsToMany && $isNumeric) {
                 $model = $model->whereId($route)->first();
             } else {
@@ -86,6 +86,8 @@ abstract class BaseOperation
             if ($this->createNewRows) {
                 $target = $model->getRelated()->create($data['attributes']);
             }
+        } elseif (array_key_exists('id', $data) && empty($data['id'])) {
+            $target = null;
         } elseif (!isset($data['id']) && !isset($data['attributes'])) {
             $target = [];
             foreach ($data as $row) {

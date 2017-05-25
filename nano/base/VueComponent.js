@@ -23,15 +23,21 @@ VueComponent.generate = function (module, views, data, template) {
                 }
                 if (typeof field.list === 'undefined' || field.list) {
                     list.push(field.name);
-                    columns.push({
+                    var columnDef = {
                         title: typeof field.label === 'undefined' ? field.name : field.label,
-                        data: "attributes." + (field.textField ? field.textField : field.name),
-                    });
+                        data: "attributes." + field.name,
+                    };
+                    if (typeof field.textField==='function') {
+                        columnDef.render = field.textField;
+                    } else if (typeof field.textField!=='undefined') {
+                        columnDef.data = field.textField;
+                    }
+                    columns.push(columnDef);
                 }
             });
             model.associations.forEach(function (field) {
                 if (typeof field.form !== 'undefined' && field.form) {
-                    fields.push({
+                    var def = {
                         name: field.name,
                         label: typeof field.label === 'undefined' ? field.name : field.label,
                         type: typeof field.ui === 'undefined' ? 'text' : field.ui,
@@ -42,20 +48,31 @@ VueComponent.generate = function (module, views, data, template) {
                         isAssociation: true,
                         isMultiple: field instanceof Module.Model.HasMany ||
                             field instanceof Module.Model.BelongsToMany,
-                    });
+                    };
+                    if(typeof field.position!=="undefined") {
+                        fields.splice(field.position, 0, def);
+                    } else {
+                        fields.push(def);
+                    }
                 }
                 if (typeof field.list !== 'undefined' && field.list) {
                     if (typeof field.textField === 'undefined') {
                         throw new Exception("'textField' is required for " + model.name + "." + field.name);
                     }
-                    list.push(field.name);
-                    columns.push({
+                    var def = {
                         title: typeof field.label === 'undefined' ? field.name : field.label,
                         data: "relationships." + field.name + ".attributes." + field.textField,
                         render: function (data, type, full, meta) {
                             return data ? data : '';
                         }
-                    });
+                    };
+                    if(typeof field.position!=="undefined") {
+                        columns.splice(field.position, 0, def);
+                        list.splice(field.position, 0, field.name);
+                    } else {
+                        columns.push(def);
+                        list.push(field.name);
+                    }
                 }
             });
             if (typeof model.methods !== 'undefined') {

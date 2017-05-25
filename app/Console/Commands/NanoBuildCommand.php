@@ -48,11 +48,42 @@ class NanoBuildCommand extends Command
                 }
             }
         };
-        $v8->var_export = function($value) {
-            return var_export($value, true);
+        $v8->var_export = function($value, $indent = '', $indentFirst = false) use($v8) {
+            $simpleArray = is_array($value) &&
+                array_keys($value) === array_keys(array_keys($value));
+            if ($simpleArray) {
+                $str = "[".($value?"\n":"");
+                foreach ($value as $v) {
+                    $str.=call_user_func($v8->var_export,$v, '    ', true).",\n";
+                }
+                $str.="]";
+            } elseif(is_array($value)) {
+                $str = "[".($value?"\n":"");
+                foreach ($value as $k => $v) {
+                    $str.="    ".var_export($k, true).
+                        " => ".
+                        call_user_func($v8->var_export,$v, '    ', false).",\n";
+                }
+                $str.="]";
+            } else {
+                $str=var_export($value,true);
+            }
+            return call_user_func($v8->indent, $str, $indent, $indentFirst);
+        };
+        $v8->indent = function($code, $tab, $firstLine = true) {
+            $lines = explode("\n", $code);
+            foreach ($lines as $i => &$line) {
+                if (($i == 0 && $firstLine) || ($i > 0)) {
+                    $line = $tab.$line;
+                }
+            }
+            return implode("\n", $lines);
         };
         $v8->upper_camel_case = function($value) {
             return ucfirst(camel_case($value));
+        };
+        $v8->camel_case = function($value) {
+            return camel_case($value);
         };
         $v8->str_plural = function($value) {
             return str_plural($value);
@@ -74,7 +105,7 @@ class NanoBuildCommand extends Command
                         : ''),
                 '',
                 'class '.$options->name.($options->extends ? ' extends '.$options->extends
-                        : ''),
+                        : '').(!empty($options->implements) ? " implements ".implode(", ", $options->implements):""),
                 '{',
                 ($options->traits ? "    use ".implode(", ", $options->traits).";"
                         : ''),
@@ -82,6 +113,9 @@ class NanoBuildCommand extends Command
                 ($options->methods ? implode("\n\n", (array) $options->methods) : ''),
                 '}',
             ]);
+            if (!file_exists(dirname($filename))) {
+                mkdir(dirname($filename), 0777, true);
+            }
             file_put_contents($filename, $code);
             exec('vendor/bin/php-cs-fixer fix '.$filename.' > /dev/null 2>&1 & echo $!');
         };
@@ -95,6 +129,26 @@ class NanoBuildCommand extends Command
                 dump($e->getMessage());
             }
             return glob(base_path().'/database/migrations/*'.snake_case($name).'.php')[0];
+        };
+        $v8->registerListener = function($eventClass, $listenerClass) use($v8){
+            $filename = app_path('Providers/EventServiceProvider.php');
+            $code = file_get_contents($filename);
+            if (preg_match('/protected \$listen\s*=\s*([^;]+);/', $code, $match,
+                           PREG_OFFSET_CAPTURE)) {
+                $i = $match[1][1];
+                $string = $match[1][0];
+                $length = strlen($string);
+                eval('$array='.$string.';');
+                if (!isset($array[$eventClass]) || array_search($listenerClass, $array[$eventClass]) === false) {
+                    $array[$eventClass][] = $listenerClass;
+                    $code = substr($code, 0, $i).
+                        trim(call_user_func($v8->var_export,$array, '    ', false)).
+                        //trim(str_replace(['{','}',':',',','[',']'],["[\n","\n]",'=>',",\n","[\n","\n]"],json_encode($array))).
+                        substr($code, $i + $length);
+                    file_put_contents($filename, $code);
+                }
+                exec('vendor/bin/php-cs-fixer fix '.$filename.' > /dev/null 2>&1 & echo $!');
+            }
         };
         $v8->log = function() {
             call_user_func_array('dump', func_get_args());
@@ -146,6 +200,10 @@ class NanoBuildCommand extends Command
             foreach ($dom->getElementsByTagName('script') as $script) {
                 $v8->executeString(str_repeat("\n", $script->getLineNo()-1) . $script->nodeValue, $filename);
             }
+        }
+        //Install Modules
+        $v8->executeString('object2array(Module.instances,"item.install()");');
+        foreach ($dirList as $id => $filename) {
             $name = basename($filename, '.php');
             $menues[$name]->id = $id;
             dump($filename);

@@ -11,13 +11,14 @@ class CreateExcSheetsTable extends Migration
     {
         Schema::create('exc_sheets', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('number')->nullable();
             $table->string('name')->nullable();
             $table->string('rows')->nullable();
             $table->string('cols')->nullable();
             $table->string('to_load')->nullable();
             $table->integer('load_order')->nullable();
             $table->string('process')->nullable();
-            $table->integer('capture_id')->unsigned()->nullable();
+            $table->integer('capture_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -217,18 +217,18 @@ ReportsFolders.Dimension = function (url, id) {
     this.$defaultUrl = "/api/ReportsFolders/dimensions";
     Model.call(this, url, id, "ReportsFolders.Dimension");
     this.$list = function () {
-        return "fields=name,column";
+        return "fields=name,column,arbitrary,numeric";
     };
     this.$name = "Dimension";
     this.$pluralName = "Dimensions";
     this.$title = "dimension";
     this.$pluralTitle = "dimensions";
-    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"column":{"name":"column","label":"Columna de la tabla","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"column","isAssociation":false}};
+    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"column":{"name":"column","label":"Columna de la tabla","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"column","isAssociation":false},"arbitrary":{"name":"arbitrary","label":"Arbitraria","type":"select","enum":["si","no"],"source":undefined,"textField":undefined,"value":"arbitrary","isAssociation":false},"numeric":{"name":"numeric","label":"Es numeral","type":"select","enum":["si","no"],"source":undefined,"textField":undefined,"value":"numeric","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Nombre","data":"attributes.name"},{"title":"Columna de la tabla","data":"attributes.column"}];
+        return [{"title":"Nombre","data":"attributes.name"},{"title":"Columna de la tabla","data":"attributes.column"},{"title":"Arbitraria","data":"attributes.arbitrary"},{"title":"Es numeral","data":"attributes.numeric"}];
     };
     this.$methods = {
     };

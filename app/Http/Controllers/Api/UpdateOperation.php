@@ -19,10 +19,15 @@ class UpdateOperation extends BaseOperation
         return $this->execute($this->model, $data);
     }
 
-    protected function isBelongsTo(BelongsTo $model, Model $target, $data)
+    protected function isBelongsTo(BelongsTo $model, Model $target = null, $data)
     {
-        $this->updateModel($target, $data);
-        $model->associate($target);
+        if ($target === null) {
+            $model->dissociate();
+        } else {
+            $this->updateModel($target, $data);
+            $model->associate($target);
+        }
+        $model->getParent()->save();
         return $target;
     }
 
@@ -54,7 +59,7 @@ class UpdateOperation extends BaseOperation
         return $target;
     }
 
-    protected function isModel(Model $model, Model $target=null, $data)
+    protected function isModel(Model $model, Model $target = null, $data)
     {
         $this->updateModel($model, $data);
         return $model;

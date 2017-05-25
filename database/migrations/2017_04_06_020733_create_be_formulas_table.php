@@ -12,8 +12,8 @@ class CreateBeFormulasTable extends Migration
         Schema::create('be_formulas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('formula')->nullable();
-            $table->integer('origin_id')->unsigned()->nullable();
-            $table->integer('target_id')->unsigned()->nullable();
+            $table->integer('origin_id')->unsigned();
+            $table->integer('target_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

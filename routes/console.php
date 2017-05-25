@@ -157,6 +157,7 @@ Artisan::command('be:analiza',
                     if (!isset($domains[$dimension->id][$val->$c])) {
                         $domains[$dimension->id][$val->$c] = Domain::firstOrNew([
                                 "name" => $val->$c,
+                                "dimension_id" => $dimension->id,
                         ]);
                         if (!$domains[$dimension->id][$val->$c]->exists) {
                             $domains[$dimension->id][$val->$c]->save();

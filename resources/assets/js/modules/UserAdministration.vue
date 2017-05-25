@@ -52,18 +52,18 @@ UserAdministration.Role = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/roles";
     Model.call(this, url, id, "UserAdministration.Role");
     this.$list = function () {
-        return "fields=name,status,dashboard";
+        return "fields=name,status";
     };
     this.$name = "Role";
     this.$pluralName = "Roles";
     this.$title = "Rol";
     this.$pluralTitle = "Roles";
-    this.$ = {"name":{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"status":{"name":"status","label":"status","type":"select","enum":["ACTIVE","INACTIVE"],"source":undefined,"textField":undefined,"value":"status","isAssociation":false},"dashboard":{"name":"dashboard","label":"dashboard","type":"select","enum":["dashboard1","dashboard2"],"source":undefined,"textField":undefined,"value":"dashboard","isAssociation":false}};
+    this.$ = {"name":{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"status":{"name":"status","label":"status","type":"select","enum":["ACTIVE","INACTIVE"],"source":undefined,"textField":undefined,"value":"status","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"name","data":"attributes.name"},{"title":"status","data":"attributes.status"},{"title":"dashboard","data":"attributes.dashboard"}];
+        return [{"title":"name","data":"attributes.name"},{"title":"status","data":"attributes.status"}];
     };
     this.$methods = {
     };

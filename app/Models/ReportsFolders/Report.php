@@ -3,10 +3,11 @@ namespace App\Models\ReportsFolders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Report extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
     protected $table = 'be_reports';
     protected $fillable = array(
       0 => 'name',
@@ -32,6 +33,8 @@ class Report extends Model
       'rows' => 'string',
       'cols' => 'string',
       'filter' => 'string',
+    );
+    protected $events = array(
     );
     public function folder()
     {

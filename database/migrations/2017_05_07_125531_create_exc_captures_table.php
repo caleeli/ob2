@@ -13,7 +13,7 @@ class CreateExcCapturesTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('part_of')->nullable();
-            $table->string('file')->nullable();
+            $table->text('file')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

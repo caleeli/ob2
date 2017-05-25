@@ -3,10 +3,11 @@ namespace App\Models\ReportsFolders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Domain extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
     protected $table = 'be_domains';
     protected $fillable = array(
       0 => 'name',
@@ -20,6 +21,8 @@ class Domain extends Model
     protected $casts = array(
       'name' => 'string',
       'synonyms' => 'string',
+    );
+    protected $events = array(
     );
     public function dimension()
     {

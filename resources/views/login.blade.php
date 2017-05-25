@@ -64,7 +64,7 @@
                                             <br>
                                             <label>
                                                 <i class="glyphicon glyphicon-question-sign"></i>
-                                                <a href="#olvido" v-on:click="goto(2)">¿Olvido su contraseña?</a>
+                                                <a href="#olvido" v-on:click="goto(2)">¿Olvidó su contraseña?</a>
                                             </label>
                                         </div>
                                     </div>

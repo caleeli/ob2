@@ -1,7 +1,7 @@
 <template>
     <carousel>
         <carouselitem class="active">
-            <datatablegroup :model="model" :groupField="groupField" :root="root" :typeField="typeField" :leafType="leafType" :nameField="nameField" v-on:newrecord="newRecord" v-on:editrecord="editRecord" v-on:selectrow="selectRow"></datatablegroup>
+            <datatablegroup :model="model" :groupField="groupField" :root="root" :typeField="typeField" :leafType="leafType" :nameField="nameField" v-on:newrecord="newRecord" v-on:editrecord="editRecord" v-on:selectrow="selectRow" :toolbar="toolbar"></datatablegroup>
         </carouselitem>
 
         <carouselitem>
@@ -25,6 +25,7 @@
             "nameField",
             "childrenAssociation",
             "buttons",
+            "toolbar",
         ],
         data: function(){
             return {
@@ -58,14 +59,14 @@
                 }
                 this.model.$load(0, function() {
                     self.goto(1);
-                    self.$emit('new', self.model);
+                    self.$emit('new', self.model, self);
                 });
             },
             editRecord: function(id){
                 var self=this;
                 this.model.$load(id, function() {
                     self.goto(1);
-                    self.$emit('edit', self.model);
+                    self.$emit('edit', self.model, self);
                 });
             },
             selectRow: function(id){
@@ -73,25 +74,25 @@
                 this.parentId = id;
                 this.model.$load(id, function(){
                     self.$root.$emit('changed', self);
-                    self.$emit('selectrow', id);
+                    self.$emit('selectrow', id, self);
                     //self.goto(2);
                 });
             },
             cancelEdit: function(){
                 this.goto(0);
-                this.$emit('cancel', this.model);
+                this.$emit('cancel', this.model, this);
             },
             saveRow: function(){
                 this.model.$refreshList();
                 this.goto(0);
-                this.$emit('save', this.model);
+                this.$emit('save', this.model, this);
             },
             updateRow: function(){
                 this.model.$refreshList();
-                this.$emit('update', this.model);
+                this.$emit('update', this.model, this);
             },
             custom: function(button, model, form) {
-                this.$emit(button, model, form);
+                this.$emit(button, model, form, this);
             },
         },
         mounted: function() {

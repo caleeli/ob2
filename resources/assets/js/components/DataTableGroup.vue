@@ -15,6 +15,7 @@
     export default {
         props:[
             "model",
+            "toolbar",
             "groupField",
             "root",
             "typeField",
@@ -71,58 +72,79 @@
         },
         mounted() {
             var self = this;
+            var toolbar = (this.toolbar=='empty') ? [] : (this.toolbar?this.toolbar:'new,edit,up,search').split(",");
+            var dom = ['','','rtp'];
+            var buttons = [];
+            toolbar.forEach(function(button) {
+                switch(button) {
+                    case 'new':
+                        dom[0]='B';
+                        buttons.push({
+                            text: '<i class="fa fa-plus"></i> Nuevo',
+                            action: function (e, dt, node, config) {
+                                self.$emit('newrecord', self.currentGroup);
+                            }
+                        });
+                        break;
+                    case 'edit':
+                        dom[0]='B';
+                        buttons.push({
+                            text: '<i class="fa fa-pencil-square-o"></i> Editar',
+                            action: function (e, dt, node, config) {
+                                self.$emit('editrecord', self.currentGroup);
+                            }
+                        });
+                        break;
+                    case 'up':
+                        dom[0]='B';
+                        buttons.push({
+                            text: '<i class="fa fa-arrow-up"></i>',
+                            action: function (e, dt, node, config) {
+                                if(self.path.length>1) {
+                                    self.path.pop();
+                                    self.open(self.path[self.path.length-1].item);
+                                    self.path[self.path.length-1].goto();
+                                }
+                            }
+                        });
+                        break;
+                    case 'copy':
+                        dom[0]='B';
+                        buttons.push({
+                            extend: 'copyHtml5',
+                            text: '<i class="fa fa-copy"></i> Copiar',
+                            exportOptions: {}
+                        });
+                        break;
+                    case 'excel':
+                        dom[0]='B';
+                        buttons.push({
+                            extend: 'excelHtml5',
+                            text: '<i class="fa fa-file-excel-o"></i> Excel',
+                            exportOptions: {}
+                        });
+                        break;
+                    case 'pdf':
+                        dom[0]='B';
+                        buttons.push({
+                            extend: 'pdfHtml5',
+                            text: '<i class="fa fa-file-pdf-o"></i> PDF',
+                            exportOptions: {}
+                        });
+                        break;
+                    case 'search':
+                        dom[1]='f';
+                        break;
+                }
+            });
             var table = $(this.$el).find("table").DataTable({
                 language: {
                     url: API_SERVER+"/api/lang/datatable"
                 },
                 //dom: 'Bfrtilp',
-                dom: 'Bfrtp',
+                dom: dom.join(""),
                 responsive: true,
-                buttons: [
-                    {
-                        text: '<i class="fa fa-plus"></i> Nuevo',
-                        action: function (e, dt, node, config) {
-                            self.$emit('newrecord', self.currentGroup);
-                        }
-
-                    },
-                    {
-                        text: '<i class="fa fa-pencil-square-o"></i> Editar',
-                        action: function (e, dt, node, config) {
-                            self.$emit('editrecord', self.currentGroup);
-                        }
-
-                    },
-                    {
-                        text: '<i class="fa fa-arrow-up"></i>',
-                        action: function (e, dt, node, config) {
-                            if(self.path.length>1) {
-                                self.path.pop();
-                                self.open(self.path[self.path.length-1].item);
-                                self.path[self.path.length-1].goto();
-                            }
-                        }
-
-                    },
-                    /*{
-                        extend: 'copyHtml5',
-                        text: '<i class="fa fa-copy"></i> Copiar',
-                        exportOptions: {
-                        }
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="fa fa-table"></i> Excel',
-                        exportOptions: {
-                        }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="fa fa-file-text"></i> PDF',
-                        exportOptions: {
-                        }
-                    }*/
-                ],
+                buttons: buttons,
                 "processing": true,
                 "ajax": self.model.$url() + '?' + self.model.$list() + '&filter[]=where,' + self.groupField + ',=,' + JSON.stringify(self.currentGroup),
                 "rowId": 'id',

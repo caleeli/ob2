@@ -18,7 +18,7 @@ class CreateUsradmUsersTable extends Migration
             $table->string('materno');
             $table->string('email');
             $table->string('unidad')->nullable();
-            $table->integer('role_id')->unsigned()->nullable();
+            $table->integer('role_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

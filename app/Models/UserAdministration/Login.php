@@ -3,10 +3,11 @@ namespace App\Models\UserAdministration;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Login extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Notifiable;
     protected $table = 'usradm_logins';
     protected $fillable = array(
       0 => 'username',
@@ -22,6 +23,8 @@ class Login extends Model
       'username' => 'string',
       'password' => 'string',
       'token' => 'string',
+    );
+    protected $events = array(
     );
     public function validate($username, $password)
     {

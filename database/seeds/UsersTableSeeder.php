@@ -21,5 +21,8 @@ class UsersTableSeeder extends Seeder
             'username'=>'admin',
             'password'=>'admin',
         ]);
+        $folder = \App\Models\ReportsFolders\Folder::create([
+            'name'=>'Mis Reportes',
+        ]);
     }
 }
