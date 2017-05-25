@@ -146,15 +146,21 @@ export default function(uri0, id, type) {
             }),
             success: function (response) {
                 if (response.success) {
-                    if(typeof methodCallback==='function'){
+                    if(typeof methodCallback==='function') {
                         methodCallback(response.response);
+                    } else if(typeof methodCallback==='object' && typeof methodCallback.success==='function') {
+                        methodCallback.success(response.response);
                     }
                 } else {
                     throw new Exception(response.error);
                 }
             },
-            failure: function (response) {
-
+            error: function (response) {
+                if(typeof methodCallback==='object' && typeof methodCallback.error==='function') {
+                    methodCallback.error(response);
+                } else {
+                    throw new Exception(response);
+                }
             },
         });
     };

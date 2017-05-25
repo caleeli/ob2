@@ -25,6 +25,14 @@ Vue.component('useradministration', require('./modules/UserAdministration.vue'))
 
 $(document).ready(function () {
     var app;
+    function message(message) {
+        var $msg=$('<div class="alert alert-dismissible alert-info">\
+            <button type="button" class="close" data-dismiss="alert">&times;</button>\
+            <p>'+message+'</p>\
+        </div>');
+        $("#message_box").append($msg);
+        setTimeout(function(){$("#message_box").html("");}, 4000);
+    }
     window.app = app = new Vue({
         el: '#app',
         carousel:{},
@@ -64,6 +72,8 @@ $(document).ready(function () {
                         localStorage.token = response.token;
                         localStorage.user_id = response.user_id;
                         window.location.href = response.redirect;
+                    } else {
+                        message('Nombre de usuario o contraseña incorrectos.');
                     }
                 });
             },
@@ -72,6 +82,7 @@ $(document).ready(function () {
                 this.goto(0);
             },
             submitReg:function(){
+                var self=this;
                 if (!this.user.username) {
                     $("#username").addClass("has-error").find("input").focus();
                     return ;
@@ -82,8 +93,17 @@ $(document).ready(function () {
                     return ;
                 }
                 $("#password2").removeClass("has-error");
-                app.user.$methods.registrar(app.user.$getData());
-                this.goto(0);
+                app.user.$methods.registrar(
+                    app.user.$getData(),
+                    {
+                        success: function() {
+                            self.goto(0);
+                        },
+                        error: function() {
+                            message('No fue posible registrar el usuario verifique sus datos o contactese con el administrador.');
+                        },
+                    }
+                );
             },
             resetRecover: function() {
                 app.recover.$reset();

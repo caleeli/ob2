@@ -135,7 +135,7 @@ ReportsFolders.Variable = function (url, id) {
                             return module.report.$selectFrom('dimensiones', {variables:self.id,domains:false});
                         },"textField":"name","value":"cols","isAssociation":false},"filter":{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:self.id,domains:true});
-                        },"textField":"name","value":"filter","isAssociation":false},"dimensions":{"name":"dimensions","label":"dimensions","type":"tags","enum":[],"source":function (){
+                        },"textField":"name","value":"filter","isAssociation":false},"information_source":{"name":"information_source","label":"Fuente de información","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"information_source","isAssociation":false},"periodicity":{"name":"periodicity","label":"Periodicidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"periodicity","isAssociation":false},"dimensions":{"name":"dimensions","label":"dimensions","type":"tags","enum":[],"source":function (){
                             return module.dimension;
                         },"textField":"name","value":"dimensions","isAssociation":true,"isMultiple":true},"variableTags":{"name":"variableTags","label":"Tags","type":"tags","enum":[],"source":function (){
                             return module.variableTags;

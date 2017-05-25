@@ -13,18 +13,16 @@ class User extends Model
       0 => 'username',
       1 => 'password',
       2 => 'nombres',
-      3 => 'paterno',
-      4 => 'materno',
-      5 => 'email',
-      6 => 'unidad',
-      7 => 'role_id',
+      3 => 'apellidos',
+      4 => 'email',
+      5 => 'unidad',
+      6 => 'role_id',
     );
     protected $attributes = array(
       'username' => '',
       'password' => '',
       'nombres' => '',
-      'paterno' => '',
-      'materno' => '',
+      'apellidos' => '',
       'email' => '',
       'unidad' => '',
     );
@@ -32,8 +30,7 @@ class User extends Model
       'username' => 'string',
       'password' => 'string',
       'nombres' => 'string',
-      'paterno' => 'string',
-      'materno' => 'string',
+      'apellidos' => 'string',
       'email' => 'string',
       'unidad' => 'string',
     );
@@ -59,11 +56,16 @@ class User extends Model
 
     public function registrar($data)
     {
+        $user = User::where('username', '=', $data['username'])
+                                ->first();
+        if ($user) {
+            throw new \Exception("Usuario ya existe");
+        }
         $data['role_id'] = 2;
         $user = new \App\Models\UserAdministration\User($data);
-        $user->save();
         \Mail::to($data['email'])
                                 ->send(new \App\Mail\RegistroUsuario($user));
+        $user->save();
         return $data;
     }
 }

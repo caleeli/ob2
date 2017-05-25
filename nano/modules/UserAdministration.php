@@ -56,16 +56,16 @@
                         "type": "string",
                         "label": "Nombres",
                         "default": "",
-                        "required": true
+                        "required": false
                     }),
                     new Module.Model.Field({
-                        "name": "paterno",
+                        "name": "apellidos",
                         "type": "string",
-                        "label": "Paterno",
+                        "label": "Apellidos",
                         "default": "",
-                        "required": true
+                        "required": false
                     }),
-                    new Module.Model.Field({
+                    /*new Module.Model.Field({
                         "name": "materno",
                         "type": "string",
                         "label": "Materno",
@@ -267,11 +267,16 @@
                 "methods": {
                     "registrar(data)": <?php
                         function registrar($data) {
+                            $user = User::where('username', '=', $data['username'])
+                                ->first();
+                            if ($user) {
+                                throw new \Exception("Usuario ya existe");
+                            }
                             $data['role_id'] = 2;
                             $user = new \App\Models\UserAdministration\User($data);
-                            $user->save();
                             \Mail::to($data['email'])
                                 ->send(new \App\Mail\RegistroUsuario($user));
+                            $user->save();
                             return $data;
                         }
                     ?>
@@ -337,7 +342,7 @@
                 ],
                 "methods": {
                     "validate(username, password)": <?php
-                    public function validate($username, $password) {
+                    public function validate($username="", $password="") {
                     $user = User::where('username', '=', $username)
                         ->where('password', '=', $password)
                         ->first();

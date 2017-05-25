@@ -26,7 +26,7 @@ class Login extends Model
     );
     protected $events = array(
     );
-    public function validate($username, $password)
+    public function validate($username="", $password="")
     {
         $user = User::where('username', '=', $username)
                         ->where('password', '=', $password)

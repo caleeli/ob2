@@ -13,9 +13,8 @@ class CreateUsradmUsersTable extends Migration
             $table->increments('id');
             $table->string('username');
             $table->string('password');
-            $table->string('nombres');
-            $table->string('paterno');
-            $table->string('materno');
+            $table->string('nombres')->nullable();
+            $table->string('apellidos')->nullable();
             $table->string('email');
             $table->string('unidad')->nullable();
             $table->integer('role_id')->unsigned();

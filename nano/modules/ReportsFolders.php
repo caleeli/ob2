@@ -360,6 +360,27 @@
                         "textField": "name",
                         "ui": "filter",
                     }),
+                    new Module.Model.Field({
+                        "name": "information_source",
+                        "label": "Fuente de información",
+                        "list": false,
+                        "form": true,
+                        "type": "string",
+                    }),
+                    new Module.Model.Field({
+                        "name": "periodicity",
+                        "label": "Periodicidad",
+                        "list": false,
+                        "form": true,
+                        "type": "string",
+                    }),
+                    new Module.Model.Field({
+                        "name": "source_link",
+                        "label": "Enlance de descarga",
+                        "list": false,
+                        "form": false,
+                        "type": "string",
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsToMany({

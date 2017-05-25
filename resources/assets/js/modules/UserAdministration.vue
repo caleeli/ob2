@@ -24,18 +24,18 @@
     this.$defaultUrl = "/api/UserAdministration/users";
     Model.call(this, url, id, "UserAdministration.User");
     this.$list = function () {
-        return "fields=username,nombres,paterno";
+        return "fields=username,nombres,apellidos";
     };
     this.$name = "User";
     this.$pluralName = "Users";
     this.$title = "user";
     this.$pluralTitle = "users";
-    this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"paterno":{"name":"paterno","label":"Paterno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"paterno","isAssociation":false},"materno":{"name":"materno","label":"Materno","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"materno","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"unidad":{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad","isAssociation":false},"variableTags":{"name":"variableTags","label":"Áreas de interes","type":"tags","enum":[],"source":new ReportsFolders.VariableTag(),"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
+    this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"apellidos":{"name":"apellidos","label":"Apellidos","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"apellidos","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"unidad":{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad","isAssociation":false},"variableTags":{"name":"variableTags","label":"Áreas de interes","type":"tags","enum":[],"source":new ReportsFolders.VariableTag(),"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Usuario","data":"attributes.username"},{"title":"Nombres","data":"attributes.nombres"},{"title":"Paterno","data":"attributes.paterno"}];
+        return [{"title":"Usuario","data":"attributes.username"},{"title":"Nombres","data":"attributes.nombres"},{"title":"Apellidos","data":"attributes.apellidos"}];
     };
     this.$methods = {
 registrar:function(data,methodCallback,childrenAssociation){self.$call("registrar",{"data":data}, childrenAssociation, methodCallback)}    };

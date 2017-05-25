@@ -18,6 +18,9 @@ class CreateBeVariablesTable extends Migration
             $table->string('rows')->nullable();
             $table->string('cols')->nullable();
             $table->string('filter')->nullable();
+            $table->string('information_source')->nullable();
+            $table->string('periodicity')->nullable();
+            $table->string('source_link')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

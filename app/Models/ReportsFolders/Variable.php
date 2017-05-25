@@ -17,6 +17,9 @@ class Variable extends Model
       4 => 'rows',
       5 => 'cols',
       6 => 'filter',
+      7 => 'information_source',
+      8 => 'periodicity',
+      9 => 'source_link',
     );
     protected $attributes = array(
       'name' => null,
@@ -26,6 +29,9 @@ class Variable extends Model
       'rows' => null,
       'cols' => null,
       'filter' => null,
+      'information_source' => null,
+      'periodicity' => null,
+      'source_link' => null,
     );
     protected $casts = array(
       'name' => 'string',
@@ -35,6 +41,9 @@ class Variable extends Model
       'rows' => 'string',
       'cols' => 'string',
       'filter' => 'string',
+      'information_source' => 'string',
+      'periodicity' => 'string',
+      'source_link' => 'string',
     );
     protected $events = array(
     );
