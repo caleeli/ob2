@@ -29,16 +29,20 @@
     background-color:rgba(44, 62, 80, 0.7);
 }
 
+.ntImage label p b {
+    font-size:120%!important;
+}
+
 @media (min-width: 992px) and (max-width: 1199px) {
     .ntImage label p {
-        font-size:150%!important;
+        font-size:120%!important;
     }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
     .ntImage label p {
-        font-size:150%!important;
+        font-size:120%!important;
     }
 }
 

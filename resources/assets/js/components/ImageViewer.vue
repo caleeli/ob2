@@ -9,9 +9,9 @@
                 <h4>{{row.attributes.name}}</h4>
                 <div class="ntScroll">
                     <div v-for="item in relationships(row)" class="ntImage" :style="'background-image: url('+urlImage(item)+')'" v-on:click="clickImage(item)">
-                        <label><p>{{item.attributes.name}}</p>
-                            <p><b>Fuente:</b> {{item.attributes.information_source}}</p>
-                            <p><b>Periodicidad:</b> {{item.attributes.periodicity}}</p>
+                        <label><p><b>{{item.attributes.name}}</b></p>
+                            <p>Fuente: {{item.attributes.information_source}}</p>
+                            <p>Periodicidad: {{item.attributes.periodicity}}</p>
                             <p v-html="item.attributes.description"></p>
                         </label>
                     </div>
