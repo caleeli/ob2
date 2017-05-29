@@ -58,13 +58,14 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-10">
+                                        <!--
                                         <label>
                                             <i class="fa fa-user-plus"></i>
-                                            <!-- Deshabilitar -->
                                             <a href="#registrar" v-on:click="goto(1)">Registrarse para obtener una
                                                 cuenta</a>
                                         </label>
                                         <br>
+                                        -->
                                         <label>
                                             <i class="glyphicon glyphicon-question-sign"></i>
                                             <a href="#olvido" v-on:click="goto(2)">¿Olvidó su contraseña?</a>
@@ -181,7 +182,6 @@
                                         <input type="text" class="form-control"
                                                placeholder="usuario o correo electrónico" v-model="recover.account">
                                     </div>
-                                    <!-- Si el correo no esta registrado notificar al usuario, para que no se quede esperando en vano. -->
                                 </div>
                                 <div class="form-group">
                                     <div class="col-lg-10 col-lg-offset-2">
