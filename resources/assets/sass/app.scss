@@ -112,6 +112,7 @@ $rotate-template-count: 16 !default
 
 .ntScroll {
     overflow-x: auto;
+    overflow-y: hidden;
     white-space: nowrap;
 }
 
