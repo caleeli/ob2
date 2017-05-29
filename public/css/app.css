@@ -8002,6 +8002,7 @@ a.dt-button {
   display: -webkit-inline-box;
   display: inline-flex;
   white-space: normal;
+  text-align: center;
   margin-right: 0.5em;
 }
 

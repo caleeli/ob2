@@ -47,7 +47,7 @@
         "prefix": "exc",
         "title": "Captura de datos",
         "icon": "fa fa-cloud-upload",
-        "menu": "main/Configuración",
+        "menu": "main/Reportes",
         "models": [
             new Module.Model({
                 "name": "capture",
