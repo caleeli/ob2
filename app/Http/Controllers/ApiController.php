@@ -103,13 +103,17 @@ class ApiController extends Controller
         if ($data) {
             $operation = new StoreOperation($route);
             $result = $operation->store($data);
-            $response = [
-                'data' => [
-                    'type'       => $this->getType($result),
-                    'id'         => $result->id,
-                    'attributes' => $result
-                ]
-            ];
+            if (is_array($result)) {
+                $response = $result;
+            } else {
+                $response = [
+                    'data' => [
+                        'type'       => $this->getType($result),
+                        'id'         => $result->id,
+                        'attributes' => $result
+                    ]
+                ];
+            }
         } elseif ($call) {
             $operation = new CallOperation($route);
             $result = $operation->callMethod($call);

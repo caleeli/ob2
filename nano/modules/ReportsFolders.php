@@ -462,6 +462,7 @@
                         "enum": ["si", "no"],
                         "default": "no",
                         "ui": "select",
+                        "list": false,
                     }),
                     new Module.Model.Field({
                         "name": "numeric",
@@ -470,6 +471,7 @@
                         "enum": ["si", "no"],
                         "default": "no",
                         "ui": "select",
+                        "list": false,
                     }),
                 ],
                 "associations": [
@@ -512,6 +514,7 @@
                     new Module.Model.BelongsTo({
                         "name": "dimension",
                         "model": "dimension"
+                        "nullable": true,
                     }),
                 ]
             }),
