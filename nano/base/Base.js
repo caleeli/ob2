@@ -111,7 +111,7 @@ Module.Model = function (base) {
                 name: PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName),
                 extends: '',
                 implements: ['ShouldBroadcast'],
-                traits: ['InteractsWithSockets', 'SerializesModels'],
+                traits: ['InteractsWithSockets'/*, 'SerializesModels'*/],
                 properties: $properties,
                 methods: {
                     '__construct': "public function __construct("+PHP.upper_camel_case(base.name)+" $model){$this->"+PHP.camel_case(base.name)+"=$model;}",

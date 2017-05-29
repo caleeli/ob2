@@ -20,32 +20,33 @@ class CaptureSavedListener
         $sheets = $import->load(storage_path('app/public/'.$event->capture->file['path']));
         $loadOrder = 1;
         foreach ($sheets as $sheet) {
-            if (!empty($sheet->table_name)) {
-                //$import->importSheet($sheet, DB::connection("datos"));
-            }
             $sheetModel = $event->capture->sheets()->firstOrNew([
                                 'number' => $sheet->number,
                             ]);
-            $sheetModel->name = $sheet->name;
-            $sheetModel->rows = $sheet->rows;
-            $sheetModel->cols = count($sheet->columns);
-            $sheetModel->to_load = $sheet->rows ? 'si' : 'no';
-            $sheetModel->load_order = $sheet->rows ? $loadOrder++ : null;
-            $sheetModel->process = 'descombinar';
-            $sheetModel->save();
+            if (!$sheetModel->exists) {
+                $sheetModel->name = $sheet->name;
+                $sheetModel->rows = $sheet->rows;
+                $sheetModel->cols = count($sheet->columns);
+                $sheetModel->to_load = $sheet->rows ? 'si' : 'no';
+                $sheetModel->load_order = $sheet->rows ? $loadOrder++ : null;
+                $sheetModel->process = 'descombinar';
+                $sheetModel->save();
+            }
             foreach ($sheet->columns as $c=>$column) {
                 $detail=$sheetModel->details()->firstOrNew([
                                     'name'=> $column
                                 ]);
-                $detail->name = $column;
-                $detail->type = $c==0?'variable':'dimension';
-                $detail->copia_inicio_fila = 2;
-                $detail->copia_inicio_columna = $c+1;
-                $detail->copia_fin_fila = $sheet->rows;
-                $detail->copia_fin_columna = $c+1;
-                $detail->pegado_inicio_fila = 1;
-                $detail->repetir_pegado = 1;
-                $detail->save();
+                if (!$detail->exists) {
+                    $detail->name = $column;
+                    $detail->type = $c==0?'variable':'dimension';
+                    $detail->copia_inicio_fila = 2;
+                    $detail->copia_inicio_columna = $c+1;
+                    $detail->copia_fin_fila = $sheet->rows;
+                    $detail->copia_fin_columna = $c+1;
+                    $detail->pegado_inicio_fila = 1;
+                    $detail->repetir_pegado = 1;
+                    $detail->save();
+                }
             }
         }
     }

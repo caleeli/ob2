@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Exceptions\InvalidApiCall;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 
 class IndexOperation extends BaseOperation
@@ -65,6 +66,16 @@ class IndexOperation extends BaseOperation
         $result = $model::select();
         return $this->addSorting($this->addFilter($result))
                 ->paginate($this->perPage)->getCollection();
+    }
+
+    protected function isArray($model, $target=null, $data)
+    {
+        return $model;
+    }
+
+    protected function isCollection(Collection $model, $target=null, $data)
+    {
+        return $model;
     }
 
     /**

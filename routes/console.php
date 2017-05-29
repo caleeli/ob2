@@ -65,6 +65,7 @@ Artisan::command('be:analiza',
                  function () {
     /* @var $variable \App\Models\ReportsFolders\Variable */
     /* @var $dimension \App\Models\ReportsFolders\Dimension */
+    /* @var $pdo \PDO */
     $variables = [];
     $dimensions = [];
     $families = [];

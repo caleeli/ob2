@@ -8,7 +8,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Models\Captura\Capture;
 
-class CaptureSaved implements ShouldBroadcast
+class CaptureCreating implements ShouldBroadcast
 {
     use InteractsWithSockets;
     public $capture = null;

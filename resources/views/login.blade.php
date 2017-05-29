@@ -60,6 +60,7 @@
                                     <div class="col-lg-10">
                                         <label>
                                             <i class="fa fa-user-plus"></i>
+                                            <!-- Deshabilitar -->
                                             <a href="#registrar" v-on:click="goto(1)">Registrarse para obtener una
                                                 cuenta</a>
                                         </label>

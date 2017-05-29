@@ -14,6 +14,8 @@ class CreateExcCapturesTable extends Migration
             $table->string('name')->nullable();
             $table->string('part_of')->nullable();
             $table->text('file')->nullable();
+            $table->string('temporal_table')->nullable();
+            $table->text('imported_columns')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

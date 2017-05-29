@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div v-show.visible="!($root.getPaths().length > 2 &amp;&amp; $root.getPaths()[$root.getPaths().length-1].name.substr(0,1)=='*')">
-                <h2 id="nav-tabs">Captura de datos</h2>
+                <h2 id="nav-tabs">Patrones de captura</h2>
                 <abm
                         id="Captura.Captures"
                         vue:model="capture"
@@ -36,6 +36,7 @@
                     <span></span>
                 </abm>
             </div>
+            <datatable vue:model="preview" toolbar="empty" refreshWith="Captura.Captures"></datatable>
         </div>
     </div>
 </template>
@@ -69,6 +70,18 @@
                         "ui": "file",
                         "textField": function(data){return data?data.name:''},
                     }),
+                    new Module.Model.Field({
+                        "name": "temporal_table",
+                        "type": "string",
+                        "form": false,
+                        "list": false,
+                    }),
+                    new Module.Model.Field({
+                        "name": "imported_columns",
+                        "type": "array",
+                        "form": false,
+                        "list": false,
+                    }),
                 ],
                 "associations": [
                     new Module.Model.HasMany({
@@ -77,6 +90,13 @@
                     }),
                 ],
                 "events": {
+                    "creating": <?php
+                    function (CaptureCreating $event) {
+                        $event->capture->temporal_table = uniqid('tpm_');
+                        \DB::select("CREATE TABLE ".$event->capture->temporal_table." ( like valores_produccion )");
+                        \DB::select('ALTER TABLE "'.$event->capture->temporal_table.'" ADD CONSTRAINT "'.$event->capture->temporal_table.'_id_valor_index" UNIQUE ("id_valor");');
+                    }
+                    ?>,
                     "saved": <?php
                     function (CaptureSaved $event){
                         if(empty($event->capture->file)) {
@@ -88,32 +108,33 @@
                         $sheets = $import->load(storage_path('app/public/'.$event->capture->file['path']));
                         $loadOrder = 1;
                         foreach ($sheets as $sheet) {
-                            if (!empty($sheet->table_name)) {
-                                //$import->importSheet($sheet, DB::connection("datos"));
-                            }
                             $sheetModel = $event->capture->sheets()->firstOrNew([
                                 'number' => $sheet->number,
                             ]);
-                            $sheetModel->name = $sheet->name;
-                            $sheetModel->rows = $sheet->rows;
-                            $sheetModel->cols = count($sheet->columns);
-                            $sheetModel->to_load = $sheet->rows ? 'si' : 'no';
-                            $sheetModel->load_order = $sheet->rows ? $loadOrder++ : null;
-                            $sheetModel->process = 'descombinar';
-                            $sheetModel->save();
+                            if (!$sheetModel->exists) {
+                                $sheetModel->name = $sheet->name;
+                                $sheetModel->rows = $sheet->rows;
+                                $sheetModel->cols = count($sheet->columns);
+                                $sheetModel->to_load = $sheet->rows ? 'si' : 'no';
+                                $sheetModel->load_order = $sheet->rows ? $loadOrder++ : null;
+                                $sheetModel->process = 'descombinar';
+                                $sheetModel->save();
+                            }
                             foreach ($sheet->columns as $c=>$column) {
                                 $detail=$sheetModel->details()->firstOrNew([
                                     'name'=> $column
                                 ]);
-                                $detail->name = $column;
-                                $detail->type = $c==0?'variable':'dimension';
-                                $detail->copia_inicio_fila = 2;
-                                $detail->copia_inicio_columna = $c+1;
-                                $detail->copia_fin_fila = $sheet->rows;
-                                $detail->copia_fin_columna = $c+1;
-                                $detail->pegado_inicio_fila = 1;
-                                $detail->repetir_pegado = 1;
-                                $detail->save();
+                                if (!$detail->exists) {
+                                    $detail->name = $column;
+                                    $detail->type = $c==0?'variable':'dimension';
+                                    $detail->copia_inicio_fila = 2;
+                                    $detail->copia_inicio_columna = $c+1;
+                                    $detail->copia_fin_fila = $sheet->rows;
+                                    $detail->copia_fin_columna = $c+1;
+                                    $detail->pegado_inicio_fila = 1;
+                                    $detail->repetir_pegado = 1;
+                                    $detail->save();
+                                }
                             }
                         }
                     }
@@ -126,18 +147,37 @@
                         $import->originalName = $this->file['name'];
                         $import->filename = $this->file['path'];
                         $sql = "BEGIN TRANSACTION;\n";
-                        $tmpTable = uniqid('tpm_');
-                        $sql.= "CREATE TABLE $tmpTable ( like valores_produccion );\n";
-                        $sql.= 'ALTER TABLE "'.$tmpTable.'" ADD CONSTRAINT "'.$tmpTable.'_id_valor_index" UNIQUE ("id_valor");'."\n";
+                        $sql.= "truncate ".$this->temporal_table.";\n";
+                        $targetCols = [];
                         foreach($this->sheets()->orderBy('load_order')->get() as $sheet) {
                             if($sheet->to_load!='si') {
                                 continue;
                             }
-                            $sql.=$sheet->import($import, $tmpTable);
+                            $sql.=$sheet->import($import, $this->temporal_table, $targetCols);
                         }
                         $sql.= "COMMIT;\n";
-                        $tmpFile = uniqid('tmp_').'.sql';
+                        $tmpFile = $this->temporal_table.'.sql';
                         \Storage::disk('local')->put($tmpFile, $sql);
+                        $datos = \App\Models\Connections\Connection::where("name", "datos")->first();
+                        $pdo = \DB::connection("datos")->getPdo();
+                        $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, 0);
+                        $pdo->exec($sql);
+                        $this->imported_columns = array_keys($targetCols);
+                        $this->save();
+                        return $this->imported_columns;
+                    }
+                    ?>,
+                    "preview()": <?php
+                    function preview() {
+                        if (empty($this->temporal_table)) {
+                            return [];
+                        }
+                        $importedColumns = $this->imported_columns;
+                        $importedColumns[] = \DB::raw('(select name from be_variables where be_variables.id=id_variable) as variable');
+                        return \DB::connection('datos')
+                                ->table($this->temporal_table)
+                                ->select($importedColumns)
+                                ->get();
                     }
                     ?>,
                 },
@@ -204,7 +244,7 @@
                 ],
                 "methods": {
                     "-import()": <?php
-                    function import(\App\Xls2Csv2Db $import, $tmpTable) {
+                    function import(\App\Xls2Csv2Db $import, $tmpTable, &$targetCols) {
                         $sheet = (object) [
                             "number" => $this->number,
                             "source" => $this->capture->file['path'],
@@ -227,7 +267,7 @@
                         $sql.= "CREATE TABLE $tmpVariables ( \"id\" integer NOT NULL );\n";
                         
                         foreach ($this->details as $detail) {
-                            $sql.=$detail->import($sheet, $tmpTable, $tmpDimensions,  $tmpVariables);
+                            $sql.=$detail->import($sheet, $tmpTable, $tmpDimensions,  $tmpVariables, $targetCols);
                         }
                         $columns = \DB::connection("datos")->getSchemaBuilder()->getColumnListing("valores_produccion");
                         $vpc=[];
@@ -240,7 +280,7 @@
                         $sql.= "insert into valores_produccion(".implode(',',$vpc).") select ".implode(',',$vpc)." from $tmpTable;\n";
                         $sql.= "insert into dimension_variable(dimension_id, variable_id) select distinct $tmpDimensions.id, $tmpVariables.id from $tmpDimensions, $tmpVariables;\n";
                         $sql.= "drop table ".$sheet->table_name.";\n";
-                        $sql.= "drop table $tmpTable;\n";
+                        //$sql.= "drop table $tmpTable;\n";
                         $sql.= "drop table $tmpDimensions;\n";
                         $sql.= "drop table $tmpVariables;\n";
                         return $sql;
@@ -376,10 +416,13 @@
                 ],
                 "methods": {
                     "-import()": <?php
-                    function import($sheet, $tmpTable, $tmpDimensions, $tmpVariables){
+                    function import($sheet, $tmpTable, $tmpDimensions, $tmpVariables, &$targetCols){
                         $sql = '';
                         $pegado_inicio_fila = $this->pegado_inicio_fila;
-                        for($rep=0;$rep<$this->repetir_pegado;$rep++) {
+                        //for($rep=0;$rep<$this->repetir_pegado;$rep++) {
+                            if ($this->capture==='Sin captura') {
+                                return '';
+                            }
                             if($this->direccion_incremento==='columna') {
                                 if($this->type=='variable') {
                                     $targetCol = 'id_variable';
@@ -390,22 +433,31 @@
                                     }
                                     $targetCol = $this->dimension->column;
                                 }
-                                for($c=$this->copia_inicio_columna;$c<=$this->copia_fin_columna;$c+=$this->incremento_secuencia) {
+                                for($c=$this->copia_inicio_columna;$c<=$this->copia_fin_columna;$c+=$this->incremento_secuencia)
+                                for($rep=0;$rep<$this->repetir_pegado;$rep++) {
                                     $sourceCol = 'Columna_'.\App\Xls2Csv2Db::columnName($c-1);
                                     $copia_inicio_fila = $this->copia_inicio_fila;
                                     $copia_fin_fila = $this->copia_fin_fila;
                                     if ($this->type=='variable' && $rep===0) {
                                         $sql.= 'insert into be_variables(name) select distinct '.$sheet->table_name.'."'.$sourceCol.'" from '.$sheet->table_name.' where id>='.$copia_inicio_fila.' and id<='.$copia_fin_fila.' and '.$sheet->table_name.'."'.$sourceCol.'" not in (select name from be_variables);'."\n";
-                                        //$sql.= "insert into $tmpVariables(id) values (currval('be_variables_id_seq'));\n";
                                     }
                                     if($this->type=='variable') {
                                         $sourceCol = "(select be_variables.id from be_variables where be_variables.name=".$sheet->table_name.".\"$sourceCol\")";
                                     }
-                                    if (empty($this->dimension)) {
-                                        $sourceColCasted = $sourceCol;
-                                    } else {
-                                        $sourceColCasted = $this->dimension->numeric=='si'? 'cast(replace("'.$sourceCol.'", \',\', \'\') as numeric)' : '"'.$sourceCol.'"';
+                                    if ($this->capture==='Capturar de hoja') {
+                                        if (empty($this->dimension)) {
+                                            $sourceColCasted = $sourceCol;
+                                        } else {
+                                            $sourceColCasted = $this->dimension->numeric=='si'? 'cast(replace("'.$sourceCol.'", \',\', \'\') as numeric)' : '"'.$sourceCol.'"';
+                                        }
+                                    } elseif ($this->capture==='Por defecto') {
+                                        if (empty($this->dimension)) {
+                                            $sourceColCasted = $this->default_value;
+                                        } else {
+                                            $sourceColCasted = $this->dimension->numeric=='si'? $this->default_value * 1 : "'".str_replace("'", "\\'", $this->default_value)."'";
+                                        }
                                     }
+                                    $targetCols[$targetCol]=$targetCol;
                                     $sql.= "insert into $tmpTable(id_valor,$targetCol) select $pegado_inicio_fila+id-$copia_inicio_fila, $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila ON CONFLICT(id_valor) DO UPDATE SET $targetCol=excluded.$targetCol;\n";
                                     $pegado_inicio_fila+=$this->copia_fin_fila - $this->copia_inicio_fila + 1;
                                     //$pegado_inicio_fila+=$this->pegado_salto;
@@ -421,29 +473,38 @@
                                     $targetCol = $this->dimension->column;
                                 }
                                 for($fila=$this->copia_inicio_fila;$fila<=$this->copia_fin_fila;$fila+=$this->incremento_secuencia) {
-                                    for($c=$this->copia_inicio_columna;$c<=$this->copia_fin_columna;$c+=$this->incremento_secuencia) {
+                                    for($c=$this->copia_inicio_columna;$c<=$this->copia_fin_columna;$c+=$this->incremento_secuencia)
+                                    for($rep=0;$rep<$this->repetir_pegado;$rep++) {
                                         $sourceCol = 'Columna_'.\App\Xls2Csv2Db::columnName($c-1);
                                         $copia_inicio_fila = $fila;
                                         $copia_fin_fila = $fila;
                                         if ($this->type=='variable' && $rep===0) {
                                             $sql.= 'insert into be_variables(name) select distinct '.$sheet->table_name.'."'.$sourceCol.'" from '.$sheet->table_name.' where id>='.$copia_inicio_fila.' and id<='.$copia_fin_fila.' and '.$sheet->table_name.'."'.$sourceCol.'" not in (select name from be_variables);'."\n";
-                                            //$sql.= "insert into $tmpVariables(id) values (currval('be_variables_id_seq'));\n";
                                         }
                                         if($this->type=='variable') {
                                             $sourceCol = "(select be_variables.id from be_variables where be_variables.name=".$sheet->table_name.".\"$sourceCol\")";
                                         }
-                                        if (empty($this->dimension)) {
-                                            $sourceColCasted = $sourceCol;
-                                        } else {
-                                            $sourceColCasted = $this->dimension->numeric=='si'? 'cast(replace("'.$sourceCol.'", \',\', \'\') as numeric)' : '"'.$sourceCol.'"';
+                                        if ($this->capture==='Capturar de hoja') {
+                                            if (empty($this->dimension)) {
+                                                $sourceColCasted = $sourceCol;
+                                            } else {
+                                                $sourceColCasted = $this->dimension->numeric=='si'? 'cast(replace("'.$sourceCol.'", \',\', \'\') as numeric)' : '"'.$sourceCol.'"';
+                                            }
+                                        } elseif ($this->capture==='Por defecto') {
+                                            if (empty($this->dimension)) {
+                                                $sourceColCasted = $this->default_value;
+                                            } else {
+                                                $sourceColCasted = $this->dimension->numeric=='si'? $this->default_value * 1 : "'".str_replace("'", "\\'", $this->default_value)."'";
+                                            }
                                         }
+                                        $targetCols[$targetCol]=$targetCol;
                                         $sql.= "insert into $tmpTable(id_valor,$targetCol) select $pegado_inicio_fila+id-$copia_inicio_fila, $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila ON CONFLICT(id_valor) DO UPDATE SET $targetCol=excluded.$targetCol;\n";
                                         $pegado_inicio_fila+= 1;
                                     }
                                     //$pegado_inicio_fila+=$this->pegado_salto;
                                 }
                             }
-                        }
+                        //}
                         $sql.= "insert into $tmpVariables(id) select id_variable from $tmpTable where id_variable is not null;\n";
                         if ($this->type==='nueva dimension') {
                             $sql.="insert into be_dimensions(\"name\",\"column\") values ('".str_replace("'","\\'",$this->dimension_name)."','".$this->dimension->column."');\n";
@@ -463,12 +524,38 @@
             capture: new Module.View.ModelInstance("Captura.Capture"),
             sheet: new Module.View.ModelInstance("Captura.Sheet", "Captura/captures/{module.capture.id}/sheets"),
             detail: new Module.View.ModelInstance("Captura.Detail", "Captura/captures/{module.capture.id}/sheets/{module.sheet.id}/details"),
+            preview: new Module.View.Code(function(){
+                return {
+                $url:function(){
+                    return '/api/Captura/captures/'+(module.capture.id?module.capture.id:"0")+'/preview';
+                },
+                $list:function(){return 'raw=1';},
+                $columns:function(){
+                    var columns = [];
+                    columns.push({title:'variable', data: 'variable'});
+                    if (module.capture.imported_columns &amp;&amp; typeof module.capture.imported_columns.forEach==='function') {
+                        module.capture.imported_columns.forEach(function (col) {
+                            columns.push({title:col, data: col});
+                            if (col==='id_variable') {
+                                columns.push({title:'variable', data: 'variable'});
+                            }
+                        });
+                    }
+                    return columns;
+                },
+                setRefreshListCallback: function() {
+                    
+                },
+            }}),
         },
         "methods": {
             procesar:function(model){
                 var self = this;
-                model.$methods.procesar(function(){
-                    self.goto(0);
+                model.$save('', function() {
+                    model.$methods.procesar(function(result){
+                        model.imported_columns = result;
+                        self.$children[3].redraw();
+                    });
                 });
             },
         },

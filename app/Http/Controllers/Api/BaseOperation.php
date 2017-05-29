@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Exceptions\InvalidApiCall;
 use App\Exceptions\NotFoundException;
+use Illuminate\Support\Collection;
 
 abstract class BaseOperation
 {
@@ -51,8 +52,10 @@ abstract class BaseOperation
                 $model = $model->whereId($route)->first();
             } elseif ($model instanceof BelongsToMany && $isZero) {
                 $model = $model->getRelated()->newInstance();
-            } elseif ($model instanceof BelongsToMany && $isNumeric) {
-                $model = $model->whereId($route)->first();
+            } elseif ($model instanceof Collection) {
+                $model = $model;
+            } elseif (is_array($model)) {
+                $model = $model;
             } else {
                 throw new NotFoundException('Resource not found ('.json_encode($route).') in '
                 .json_encode($routesArray).' from '.(is_object($model) ? get_class($model)
@@ -120,8 +123,12 @@ abstract class BaseOperation
             $target = $this->isBelongsToMany($model,
                                              is_array($target) ? $target : [$target],
                                                       $data);
+        } elseif ($model instanceof Collection) {
+            $target = $this->isCollection($model, $target, $data);
+        } elseif (is_array($model)) {
+            $target = $this->isArray($model, $target, $data);
         } else {
-            throw new Exception('Invalid $model');
+            throw new \Exception('Invalid $model');
         }
         if (isset($data['relationships'])) {
             foreach ($data['relationships'] as $rel => $json) {

@@ -31,7 +31,7 @@ class ApiController extends Controller
             static::PER_PAGE : $request['per_page'];
         $collection = $this->doSelect(
             null, $route, $request['fields'], $request['include'], $perPage,
-            $request['sort'], $request['filter']
+            $request['sort'], $request['filter'], $request['raw']
         );
         $minutes = 0.1;
         $response = response()->json(
@@ -48,10 +48,13 @@ class ApiController extends Controller
     }
 
     private function doSelect($modelBase, $route, $fields, $include, $perPage, $sort,
-                              $filter)
+                              $filter, $raw=false)
     {
         $operation = new IndexOperation($route, $modelBase);
         $result = $operation->index($sort, $filter, $perPage);
+        if ($raw) {
+            return $result;
+        }
         $type = $this->getType($operation->model);
         return $this->packResponse($result, $type, $fields, $include);
     }
@@ -77,8 +80,8 @@ class ApiController extends Controller
             $collection = [];
             foreach ($result as $row) {
                 $sparcedFields = $sparseFields ?
-                        $this->sparseFields($requiredFields, $row->toArray()) :
-                        $row->toArray();
+                        $this->sparseFields($requiredFields, $row instanceof Model ? $row->toArray() : $row) :
+                        ($row instanceof Model ? $row->toArray() : $row);
                 $collection[] = [
                     'type'          => $type,
                     'id'            => $row->id,
@@ -103,6 +106,7 @@ class ApiController extends Controller
             $response = [
                 'data' => [
                     'type'       => $this->getType($result),
+                    'id'         => $result->id,
                     'attributes' => $result
                 ]
             ];
@@ -125,6 +129,7 @@ class ApiController extends Controller
         $response = [
             'data' => [
                 'type'       => $this->getType($result),
+                'id'         => $result->id,
                 'attributes' => $result
             ]
         ];
@@ -150,9 +155,9 @@ class ApiController extends Controller
 
     protected function getType($model)
     {
-        if (is_array($model)) return $this->getType ($model[0]);
-        $class = is_string($model) ? $model : get_class($model instanceof Model ? $model
-                        : $model->getRelated());
+        if (is_array($model)) return isset($model[0]) ? $this->getType ($model[0]) : '';
+        $class = is_string($model) ? $model : ($model instanceof Model ? get_class($model)
+                        : ($model instanceof \Illuminate\Database\Eloquent\Relations\Relation ? get_class($model->getRelated()):'') );
         if (substr($class, 0, 1) != '\\') $class = '\\'.$class;
         return str_replace('\\', '.', substr($class, 12));
     }

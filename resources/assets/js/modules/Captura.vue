@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div v-show.visible="!($root.getPaths().length &gt; 2 &amp;&amp; $root.getPaths()[$root.getPaths().length-1].name.substr(0,1)=='*')">
-                <h2 id="nav-tabs">Captura de datos</h2>
+                <h2 id="nav-tabs">Patrones de captura</h2>
                 <abm id="Captura.Captures" :model="capture" buttons="close,save,Procesar" v-on:Procesar="procesar" nameField="name">
                     <span></span>
                 </abm>
@@ -19,6 +19,7 @@
                     <span></span>
                 </abm>
             </div>
+            <datatable :model="preview" toolbar="empty" refreshWith="Captura.Captures"></datatable>
         </div>
     </div>
 </template>
@@ -46,7 +47,8 @@
         return [{"title":"Nombre","data":"attributes.name"},{"title":"Parte de","data":"attributes.part_of"},{"title":"Archivo","data":"attributes.file","render":function (data){return data?data.name:''}}];
     };
     this.$methods = {
-procesar:function(methodCallback,childrenAssociation){self.$call("procesar",{}, childrenAssociation, methodCallback)}    };
+procesar:function(methodCallback,childrenAssociation){self.$call("procesar",{}, childrenAssociation, methodCallback)},
+        preview:function(methodCallback,childrenAssociation){self.$call("preview",{}, childrenAssociation, methodCallback)}    };
     this.$initFields();
     if(id) {
         this.$load(id);
@@ -119,8 +121,11 @@ Captura.Detail.prototype.constructor = Model;
         methods: {
             "procesar":function (model){
                 var self = this;
-                model.$methods.procesar(function(){
-                    self.goto(0);
+                model.$save('', function() {
+                    model.$methods.procesar(function(result){
+                        model.imported_columns = result;
+                        self.$children[3].redraw();
+                    });
                 });
             },
         },
@@ -131,6 +136,29 @@ Captura.Detail.prototype.constructor = Model;
                 capture: new Captura.Capture(),
 sheet: new Captura.Sheet(function(){try{var url="/api/Captura/captures/"+(module.capture.id?module.capture.id:"¡@!")+"/sheets";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
 detail: new Captura.Detail(function(){try{var url="/api/Captura/captures/"+(module.capture.id?module.capture.id:"¡@!")+"/sheets/"+(module.sheet.id?module.sheet.id:"¡@!")+"/details";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
+preview: (function (){
+                return {
+                $url:function(){
+                    return '/api/Captura/captures/'+(module.capture.id?module.capture.id:"0")+'/preview';
+                },
+                $list:function(){return 'raw=1';},
+                $columns:function(){
+                    var columns = [];
+                    columns.push({title:'variable', data: 'variable'});
+                    if (module.capture.imported_columns && typeof module.capture.imported_columns.forEach==='function') {
+                        module.capture.imported_columns.forEach(function (col) {
+                            columns.push({title:col, data: col});
+                            if (col==='id_variable') {
+                                columns.push({title:'variable', data: 'variable'});
+                            }
+                        });
+                    }
+                    return columns;
+                },
+                setRefreshListCallback: function() {
+                    
+                },
+            }})(),
             }
         },
         mounted: function() {

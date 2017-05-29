@@ -94,6 +94,8 @@ class Xls2Csv2Db
             $sheet->rows++;
             //fwrite($sheetHandler, $line0);
         }
+        //remove count of the last empty line
+        $sheet->rows--;
         //$sheetHandler && fclose($sheetHandler);
         fclose($handle);
         unlink($target);

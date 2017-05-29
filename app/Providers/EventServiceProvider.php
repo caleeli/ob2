@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\\Events\\Captura\\CaptureSaved' => [
             'App\\Listeners\\Captura\\CaptureSavedListener',
         ],
+        'App\\Events\\Captura\\CaptureCreating' => [
+            'App\\Listeners\\Captura\\CaptureCreatingListener',
+        ],
     ];
 
     /**

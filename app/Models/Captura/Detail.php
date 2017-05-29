@@ -70,76 +70,99 @@ class Detail extends Model
     }
 
 
-    public function import($sheet, $tmpTable, $tmpDimensions, $tmpVariables)
+    public function import($sheet, $tmpTable, $tmpDimensions, $tmpVariables, &$targetCols)
     {
         $sql = '';
         $pegado_inicio_fila = $this->pegado_inicio_fila;
-        for ($rep=0;$rep<$this->repetir_pegado;$rep++) {
-            if ($this->direccion_incremento==='columna') {
-                if ($this->type=='variable') {
-                    $targetCol = 'id_variable';
-                    $sourceColCasted = $targetCol;
-                } else {
-                    if (empty($this->dimension)) {
-                        return '';
-                    }
-                    $targetCol = $this->dimension->column;
+                        //for($rep=0;$rep<$this->repetir_pegado;$rep++) {
+                            if ($this->capture==='Sin captura') {
+                                return '';
+                            }
+        if ($this->direccion_incremento==='columna') {
+            if ($this->type=='variable') {
+                $targetCol = 'id_variable';
+                $sourceColCasted = $targetCol;
+            } else {
+                if (empty($this->dimension)) {
+                    return '';
                 }
-                for ($c=$this->copia_inicio_columna;$c<=$this->copia_fin_columna;$c+=$this->incremento_secuencia) {
+                $targetCol = $this->dimension->column;
+            }
+            for ($c=$this->copia_inicio_columna;$c<=$this->copia_fin_columna;$c+=$this->incremento_secuencia) {
+                for ($rep=0;$rep<$this->repetir_pegado;$rep++) {
                     $sourceCol = 'Columna_'.\App\Xls2Csv2Db::columnName($c-1);
                     $copia_inicio_fila = $this->copia_inicio_fila;
                     $copia_fin_fila = $this->copia_fin_fila;
                     if ($this->type=='variable' && $rep===0) {
                         $sql.= 'insert into be_variables(name) select distinct '.$sheet->table_name.'."'.$sourceCol.'" from '.$sheet->table_name.' where id>='.$copia_inicio_fila.' and id<='.$copia_fin_fila.' and '.$sheet->table_name.'."'.$sourceCol.'" not in (select name from be_variables);'."\n";
-                                        //$sql.= "insert into $tmpVariables(id) values (currval('be_variables_id_seq'));\n";
                     }
                     if ($this->type=='variable') {
                         $sourceCol = "(select be_variables.id from be_variables where be_variables.name=".$sheet->table_name.".\"$sourceCol\")";
                     }
-                    if (empty($this->dimension)) {
-                        $sourceColCasted = $sourceCol;
-                    } else {
-                        $sourceColCasted = $this->dimension->numeric=='si'? 'cast(replace("'.$sourceCol.'", \',\', \'\') as numeric)' : '"'.$sourceCol.'"';
-                    }
-                    $sql.= "insert into $tmpTable(id_valor,$targetCol) select $pegado_inicio_fila+id-$copia_inicio_fila, $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila ON CONFLICT(id_valor) DO UPDATE SET $targetCol=excluded.$targetCol;\n";
-                    $pegado_inicio_fila+=$this->copia_fin_fila - $this->copia_inicio_fila + 1;
-                                    //$pegado_inicio_fila+=$this->pegado_salto;
-                }
-            } else {
-                if ($this->type=='variable') {
-                    $targetCol = 'id_variable';
-                    $sourceColCasted = $targetCol;
-                } else {
-                    if (empty($this->dimension)) {
-                        return '';
-                    }
-                    $targetCol = $this->dimension->column;
-                }
-                for ($fila=$this->copia_inicio_fila;$fila<=$this->copia_fin_fila;$fila+=$this->incremento_secuencia) {
-                    for ($c=$this->copia_inicio_columna;$c<=$this->copia_fin_columna;$c+=$this->incremento_secuencia) {
-                        $sourceCol = 'Columna_'.\App\Xls2Csv2Db::columnName($c-1);
-                        $copia_inicio_fila = $fila;
-                        $copia_fin_fila = $fila;
-                        if ($this->type=='variable' && $rep===0) {
-                            $sql.= 'insert into be_variables(name) select distinct '.$sheet->table_name.'."'.$sourceCol.'" from '.$sheet->table_name.' where id>='.$copia_inicio_fila.' and id<='.$copia_fin_fila.' and '.$sheet->table_name.'."'.$sourceCol.'" not in (select name from be_variables);'."\n";
-                                            //$sql.= "insert into $tmpVariables(id) values (currval('be_variables_id_seq'));\n";
-                        }
-                        if ($this->type=='variable') {
-                            $sourceCol = "(select be_variables.id from be_variables where be_variables.name=".$sheet->table_name.".\"$sourceCol\")";
-                        }
+                    if ($this->capture==='Capturar de hoja') {
                         if (empty($this->dimension)) {
                             $sourceColCasted = $sourceCol;
                         } else {
                             $sourceColCasted = $this->dimension->numeric=='si'? 'cast(replace("'.$sourceCol.'", \',\', \'\') as numeric)' : '"'.$sourceCol.'"';
                         }
-                        $sql.= "insert into $tmpTable(id_valor,$targetCol) select $pegado_inicio_fila+id-$copia_inicio_fila, $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila ON CONFLICT(id_valor) DO UPDATE SET $targetCol=excluded.$targetCol;\n";
-                        $pegado_inicio_fila+= 1;
+                    } elseif ($this->capture==='Por defecto') {
+                        if (empty($this->dimension)) {
+                            $sourceColCasted = $this->default_value;
+                        } else {
+                            $sourceColCasted = $this->dimension->numeric=='si'? $this->default_value * 1 : "'".str_replace("'", "\\'", $this->default_value)."'";
+                        }
                     }
+                    $targetCols[$targetCol]=$targetCol;
+                    $sql.= "insert into $tmpTable(id_valor,$targetCol) select $pegado_inicio_fila+id-$copia_inicio_fila, $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila ON CONFLICT(id_valor) DO UPDATE SET $targetCol=excluded.$targetCol;\n";
+                    $pegado_inicio_fila+=$this->copia_fin_fila - $this->copia_inicio_fila + 1;
                                     //$pegado_inicio_fila+=$this->pegado_salto;
                 }
             }
+        } else {
+            if ($this->type=='variable') {
+                $targetCol = 'id_variable';
+                $sourceColCasted = $targetCol;
+            } else {
+                if (empty($this->dimension)) {
+                    return '';
+                }
+                $targetCol = $this->dimension->column;
+            }
+            for ($fila=$this->copia_inicio_fila;$fila<=$this->copia_fin_fila;$fila+=$this->incremento_secuencia) {
+                for ($c=$this->copia_inicio_columna;$c<=$this->copia_fin_columna;$c+=$this->incremento_secuencia) {
+                    for ($rep=0;$rep<$this->repetir_pegado;$rep++) {
+                        $sourceCol = 'Columna_'.\App\Xls2Csv2Db::columnName($c-1);
+                        $copia_inicio_fila = $fila;
+                        $copia_fin_fila = $fila;
+                        if ($this->type=='variable' && $rep===0) {
+                            $sql.= 'insert into be_variables(name) select distinct '.$sheet->table_name.'."'.$sourceCol.'" from '.$sheet->table_name.' where id>='.$copia_inicio_fila.' and id<='.$copia_fin_fila.' and '.$sheet->table_name.'."'.$sourceCol.'" not in (select name from be_variables);'."\n";
+                        }
+                        if ($this->type=='variable') {
+                            $sourceCol = "(select be_variables.id from be_variables where be_variables.name=".$sheet->table_name.".\"$sourceCol\")";
+                        }
+                        if ($this->capture==='Capturar de hoja') {
+                            if (empty($this->dimension)) {
+                                $sourceColCasted = $sourceCol;
+                            } else {
+                                $sourceColCasted = $this->dimension->numeric=='si'? 'cast(replace("'.$sourceCol.'", \',\', \'\') as numeric)' : '"'.$sourceCol.'"';
+                            }
+                        } elseif ($this->capture==='Por defecto') {
+                            if (empty($this->dimension)) {
+                                $sourceColCasted = $this->default_value;
+                            } else {
+                                $sourceColCasted = $this->dimension->numeric=='si'? $this->default_value * 1 : "'".str_replace("'", "\\'", $this->default_value)."'";
+                            }
+                        }
+                        $targetCols[$targetCol]=$targetCol;
+                        $sql.= "insert into $tmpTable(id_valor,$targetCol) select $pegado_inicio_fila+id-$copia_inicio_fila, $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila ON CONFLICT(id_valor) DO UPDATE SET $targetCol=excluded.$targetCol;\n";
+                        $pegado_inicio_fila+= 1;
+                    }
+                }
+                                    //$pegado_inicio_fila+=$this->pegado_salto;
+            }
         }
-        $sql.= "insert into $tmpVariables(id) select id_variable from $tmpTable where id_variable is not null;\n";
+                        //}
+                        $sql.= "insert into $tmpVariables(id) select id_variable from $tmpTable where id_variable is not null;\n";
         if ($this->type==='nueva dimension') {
             $sql.="insert into be_dimensions(\"name\",\"column\") values ('".str_replace("'", "\\'", $this->dimension_name)."','".$this->dimension->column."');\n";
             $sql.="insert into $tmpDimensions(id) values (currval('be_dimensions_id_seq'));\n";

@@ -51,7 +51,7 @@ class Sheet extends Model
     }
 
 
-    public function import(\App\Xls2Csv2Db $import, $tmpTable)
+    public function import(\App\Xls2Csv2Db $import, $tmpTable, &$targetCols)
     {
         $sheet = (object) [
                             "number" => $this->number,
@@ -75,7 +75,7 @@ class Sheet extends Model
         $sql.= "CREATE TABLE $tmpVariables ( \"id\" integer NOT NULL );\n";
                         
         foreach ($this->details as $detail) {
-            $sql.=$detail->import($sheet, $tmpTable, $tmpDimensions, $tmpVariables);
+            $sql.=$detail->import($sheet, $tmpTable, $tmpDimensions, $tmpVariables, $targetCols);
         }
         $columns = \DB::connection("datos")->getSchemaBuilder()->getColumnListing("valores_produccion");
         $vpc=[];
@@ -88,8 +88,8 @@ class Sheet extends Model
         $sql.= "insert into valores_produccion(".implode(',', $vpc).") select ".implode(',', $vpc)." from $tmpTable;\n";
         $sql.= "insert into dimension_variable(dimension_id, variable_id) select distinct $tmpDimensions.id, $tmpVariables.id from $tmpDimensions, $tmpVariables;\n";
         $sql.= "drop table ".$sheet->table_name.";\n";
-        $sql.= "drop table $tmpTable;\n";
-        $sql.= "drop table $tmpDimensions;\n";
+                        //$sql.= "drop table $tmpTable;\n";
+                        $sql.= "drop table $tmpDimensions;\n";
         $sql.= "drop table $tmpVariables;\n";
         return $sql;
     }
