@@ -27,6 +27,8 @@
 }
 .ntImage label p {
     background-color:rgba(44, 62, 80, 0.7);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 .ntImage label p b {
