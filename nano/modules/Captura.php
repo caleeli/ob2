@@ -8,8 +8,9 @@
                 <abm
                         id="Captura.Captures"
                         vue:model="capture"
-                        buttons="close,save,Procesar"
+                        buttons="close,save,Procesar,Importar"
                         v-on:Procesar="procesar"
+                        v-on:Importar="importar"
                         nameField="name">
                     <span></span>
                 </abm>
@@ -180,6 +181,23 @@
                                 ->get();
                     }
                     ?>,
+                    "importar()": <?php
+                    function importar() {
+                        $columns = \DB::connection("datos")->getSchemaBuilder()->getColumnListing("valores_produccion");
+                        $vpc=[];
+                        foreach($columns as $c) {
+                            if($c!='id_valor') {
+                                $vpc[]=$c;
+                            }
+                        }
+                        $sql = "BEGIN TRANSACTION;\n";
+                        $sql.= "insert into valores_produccion(".implode(',',$vpc).") select ".implode(',',$vpc)." from ".$this->temporal_table.";\n";
+                        $sql.= "COMMIT;\n";
+                        $pdo = \DB::connection("datos")->getPdo();
+                        $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, 0);
+                        $pdo->exec($sql);
+                    }
+                    ?>,
                 },
             }),
             new Module.Model({
@@ -269,15 +287,15 @@
                         foreach ($this->details as $detail) {
                             $sql.=$detail->import($sheet, $tmpTable, $tmpDimensions,  $tmpVariables, $targetCols);
                         }
-                        $columns = \DB::connection("datos")->getSchemaBuilder()->getColumnListing("valores_produccion");
+                        /*$columns = \DB::connection("datos")->getSchemaBuilder()->getColumnListing("valores_produccion");
                         $vpc=[];
                         foreach($columns as $c) {
                             if($c!='id_valor') {
                                 $vpc[]=$c;
                             }
-                        }
+                        }*/
                         $sql.= "update $tmpTable set defecto_valor_cargado=valor_cargado;\n";
-                        $sql.= "insert into valores_produccion(".implode(',',$vpc).") select ".implode(',',$vpc)." from $tmpTable;\n";
+                        /*$sql.= "insert into valores_produccion(".implode(',',$vpc).") select ".implode(',',$vpc)." from $tmpTable;\n";*/
                         $sql.= "insert into dimension_variable(dimension_id, variable_id) select distinct $tmpDimensions.id, $tmpVariables.id from $tmpDimensions, $tmpVariables;\n";
                         $sql.= "drop table ".$sheet->table_name.";\n";
                         //$sql.= "drop table $tmpTable;\n";
@@ -556,6 +574,11 @@
                         model.imported_columns = result;
                         self.$children[3].redraw();
                     });
+                });
+            },
+            importar:function(model){
+                var self = this;
+                model.$methods.importar(function(result){
                 });
             },
         },

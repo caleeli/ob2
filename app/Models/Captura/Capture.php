@@ -79,4 +79,22 @@ class Capture extends Model
                                 ->select($importedColumns)
                                 ->get();
     }
+                    
+
+    public function importar()
+    {
+        $columns = \DB::connection("datos")->getSchemaBuilder()->getColumnListing("valores_produccion");
+        $vpc=[];
+        foreach ($columns as $c) {
+            if ($c!='id_valor') {
+                $vpc[]=$c;
+            }
+        }
+        $sql = "BEGIN TRANSACTION;\n";
+        $sql.= "insert into valores_produccion(".implode(',', $vpc).") select ".implode(',', $vpc)." from ".$this->temporal_table.";\n";
+        $sql.= "COMMIT;\n";
+        $pdo = \DB::connection("datos")->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, 0);
+        $pdo->exec($sql);
+    }
 }

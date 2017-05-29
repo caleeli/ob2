@@ -3,7 +3,7 @@
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <div v-show.visible="!($root.getPaths().length &gt; 2 &amp;&amp; $root.getPaths()[$root.getPaths().length-1].name.substr(0,1)=='*')">
                 <h2 id="nav-tabs">Patrones de captura</h2>
-                <abm id="Captura.Captures" :model="capture" buttons="close,save,Procesar" v-on:Procesar="procesar" nameField="name">
+                <abm id="Captura.Captures" :model="capture" buttons="close,save,Procesar,Importar" v-on:Procesar="procesar" v-on:Importar="importar" nameField="name">
                     <span></span>
                 </abm>
             </div>
@@ -48,7 +48,8 @@
     };
     this.$methods = {
 procesar:function(methodCallback,childrenAssociation){self.$call("procesar",{}, childrenAssociation, methodCallback)},
-        preview:function(methodCallback,childrenAssociation){self.$call("preview",{}, childrenAssociation, methodCallback)}    };
+        preview:function(methodCallback,childrenAssociation){self.$call("preview",{}, childrenAssociation, methodCallback)},
+        importar:function(methodCallback,childrenAssociation){self.$call("importar",{}, childrenAssociation, methodCallback)}    };
     this.$initFields();
     if(id) {
         this.$load(id);
@@ -126,6 +127,11 @@ Captura.Detail.prototype.constructor = Model;
                         model.imported_columns = result;
                         self.$children[3].redraw();
                     });
+                });
+            },
+            "importar":function (model){
+                var self = this;
+                model.$methods.importar(function(result){
                 });
             },
         },

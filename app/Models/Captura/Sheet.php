@@ -77,16 +77,16 @@ class Sheet extends Model
         foreach ($this->details as $detail) {
             $sql.=$detail->import($sheet, $tmpTable, $tmpDimensions, $tmpVariables, $targetCols);
         }
-        $columns = \DB::connection("datos")->getSchemaBuilder()->getColumnListing("valores_produccion");
-        $vpc=[];
-        foreach ($columns as $c) {
-            if ($c!='id_valor') {
-                $vpc[]=$c;
-            }
-        }
-        $sql.= "update $tmpTable set defecto_valor_cargado=valor_cargado;\n";
-        $sql.= "insert into valores_produccion(".implode(',', $vpc).") select ".implode(',', $vpc)." from $tmpTable;\n";
-        $sql.= "insert into dimension_variable(dimension_id, variable_id) select distinct $tmpDimensions.id, $tmpVariables.id from $tmpDimensions, $tmpVariables;\n";
+                        /*$columns = \DB::connection("datos")->getSchemaBuilder()->getColumnListing("valores_produccion");
+                        $vpc=[];
+                        foreach($columns as $c) {
+                            if($c!='id_valor') {
+                                $vpc[]=$c;
+                            }
+                        }*/
+                        $sql.= "update $tmpTable set defecto_valor_cargado=valor_cargado;\n";
+                        /*$sql.= "insert into valores_produccion(".implode(',',$vpc).") select ".implode(',',$vpc)." from $tmpTable;\n";*/
+                        $sql.= "insert into dimension_variable(dimension_id, variable_id) select distinct $tmpDimensions.id, $tmpVariables.id from $tmpDimensions, $tmpVariables;\n";
         $sql.= "drop table ".$sheet->table_name.";\n";
                         //$sql.= "drop table $tmpTable;\n";
                         $sql.= "drop table $tmpDimensions;\n";
