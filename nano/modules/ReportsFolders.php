@@ -513,7 +513,7 @@
                 "associations": [
                     new Module.Model.BelongsTo({
                         "name": "dimension",
-                        "model": "dimension"
+                        "model": "dimension",
                         "nullable": true,
                     }),
                 ]

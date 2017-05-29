@@ -217,7 +217,7 @@ ReportsFolders.Dimension = function (url, id) {
     this.$defaultUrl = "/api/ReportsFolders/dimensions";
     Model.call(this, url, id, "ReportsFolders.Dimension");
     this.$list = function () {
-        return "fields=name,column,arbitrary,numeric";
+        return "fields=name,column";
     };
     this.$name = "Dimension";
     this.$pluralName = "Dimensions";
@@ -228,7 +228,7 @@ ReportsFolders.Dimension = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Nombre","data":"attributes.name"},{"title":"Columna de la tabla","data":"attributes.column"},{"title":"Arbitraria","data":"attributes.arbitrary"},{"title":"Es numeral","data":"attributes.numeric"}];
+        return [{"title":"Nombre","data":"attributes.name"},{"title":"Columna de la tabla","data":"attributes.column"}];
     };
     this.$methods = {
     };
