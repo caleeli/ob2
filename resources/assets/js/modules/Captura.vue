@@ -154,9 +154,6 @@ preview: (function (){
                     if (module.capture.imported_columns && typeof module.capture.imported_columns.forEach==='function') {
                         module.capture.imported_columns.forEach(function (col) {
                             columns.push({title:col, data: col});
-                            if (col==='id_variable') {
-                                columns.push({title:'variable', data: 'variable'});
-                            }
                         });
                     }
                     return columns;

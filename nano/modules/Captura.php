@@ -476,7 +476,9 @@
                                         }
                                     }
                                     $targetCols[$targetCol]=$targetCol;
-                                    $sql.= "insert into $tmpTable(id_valor,$targetCol) select $pegado_inicio_fila+id-$copia_inicio_fila, $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila ON CONFLICT(id_valor) DO UPDATE SET $targetCol=excluded.$targetCol;\n";
+                                    //$sql.= "insert into $tmpTable(id_valor,$targetCol) select $pegado_inicio_fila+id-$copia_inicio_fila, $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila ON CONFLICT(id_valor) DO UPDATE SET $targetCol=excluded.$targetCol;\n";
+                                    $sql.= "insert into $tmpTable(id_valor) select $pegado_inicio_fila+id-$copia_inicio_fila from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila and $pegado_inicio_fila+id-$copia_inicio_fila not in (select id_valor from $tmpTable);\n";
+                                    $sql.= "update $tmpTable set $targetCol = $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila and id_valor=$pegado_inicio_fila+id-$copia_inicio_fila;\n";
                                     $pegado_inicio_fila+=$this->copia_fin_fila - $this->copia_inicio_fila + 1;
                                     //$pegado_inicio_fila+=$this->pegado_salto;
                                 }
@@ -516,7 +518,9 @@
                                             }
                                         }
                                         $targetCols[$targetCol]=$targetCol;
-                                        $sql.= "insert into $tmpTable(id_valor,$targetCol) select $pegado_inicio_fila+id-$copia_inicio_fila, $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila ON CONFLICT(id_valor) DO UPDATE SET $targetCol=excluded.$targetCol;\n";
+                                        //$sql.= "insert into $tmpTable(id_valor,$targetCol) select $pegado_inicio_fila+id-$copia_inicio_fila, $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila ON CONFLICT(id_valor) DO UPDATE SET $targetCol=excluded.$targetCol;\n";
+                                        $sql.= "insert into $tmpTable(id_valor) select $pegado_inicio_fila+id-$copia_inicio_fila from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila and $pegado_inicio_fila+id-$copia_inicio_fila not in (select id_valor from $tmpTable);\n";
+                                        $sql.= "update $tmpTable set $targetCol = $sourceColCasted from ".$sheet->table_name." where id>=$copia_inicio_fila and id<=$copia_fin_fila and id=$pegado_inicio_fila+id-$copia_inicio_fila;\n";
                                         $pegado_inicio_fila+= 1;
                                     }
                                     //$pegado_inicio_fila+=$this->pegado_salto;
@@ -554,9 +558,6 @@
                     if (module.capture.imported_columns &amp;&amp; typeof module.capture.imported_columns.forEach==='function') {
                         module.capture.imported_columns.forEach(function (col) {
                             columns.push({title:col, data: col});
-                            if (col==='id_variable') {
-                                columns.push({title:'variable', data: 'variable'});
-                            }
                         });
                     }
                     return columns;
