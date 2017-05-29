@@ -329,7 +329,7 @@
                         "name": "dimension_name",
                         "type": "string",
                         "label": "Nombre dimensión",
-                        "readonly": true,
+                        "form": false,
                     }),
                     new Module.Model.Field({
                         "name": "capture",
