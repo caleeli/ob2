@@ -15,8 +15,9 @@ class Report extends Model
       2 => 'aggregator',
       3 => 'rows',
       4 => 'cols',
-      5 => 'filter',
-      6 => 'folder_id',
+      5 => 'chart_type',
+      6 => 'filter',
+      7 => 'folder_id',
     );
     protected $attributes = array(
       'name' => null,
@@ -24,6 +25,7 @@ class Report extends Model
       'aggregator' => null,
       'rows' => null,
       'cols' => null,
+      'chart_type' => 'line',
       'filter' => null,
     );
     protected $casts = array(
@@ -32,6 +34,7 @@ class Report extends Model
       'aggregator' => 'string',
       'rows' => 'string',
       'cols' => 'string',
+      'chart_type' => 'string',
       'filter' => 'string',
     );
     protected $events = array(

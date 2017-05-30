@@ -128,6 +128,7 @@
                 return colspan;
             },
             setType: function(chart) {
+                this.model.chart_type=chart.type;
                 this.chartType=chart.type;
                 $(this.$el).find('.canvasOwner').addClass("collapse");
                 $(this.$el).find('.pv-data-table').addClass("collapse");
@@ -455,7 +456,11 @@
                         success:function(data) {
                             $(self.$el).find(".div-ajax-loader").hide();
                             self.data = data;
-                            self.drawChart();
+                            if (self.model.chart_type) {
+                                self.setType(self.chartTypes[self.model.chart_type]);
+                            } else {
+                                self.drawChart();
+                            }
                         },
                     });
                 } catch(e) {

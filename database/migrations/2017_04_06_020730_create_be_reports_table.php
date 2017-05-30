@@ -16,6 +16,7 @@ class CreateBeReportsTable extends Migration
             $table->string('aggregator')->nullable();
             $table->string('rows')->nullable();
             $table->string('cols')->nullable();
+            $table->string('chart_type')->nullable();
             $table->string('filter')->nullable();
             $table->integer('folder_id')->unsigned();
             $table->timestamps();

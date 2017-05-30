@@ -20,6 +20,7 @@ class Variable extends Model
       7 => 'information_source',
       8 => 'periodicity',
       9 => 'source_link',
+      10 => 'chart_type',
     );
     protected $attributes = array(
       'name' => null,
@@ -32,6 +33,7 @@ class Variable extends Model
       'information_source' => null,
       'periodicity' => null,
       'source_link' => null,
+      'chart_type' => 'line',
     );
     protected $casts = array(
       'name' => 'string',
@@ -44,6 +46,7 @@ class Variable extends Model
       'information_source' => 'string',
       'periodicity' => 'string',
       'source_link' => 'string',
+      'chart_type' => 'string',
     );
     protected $events = array(
     );
