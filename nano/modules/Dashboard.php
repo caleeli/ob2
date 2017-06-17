@@ -46,6 +46,7 @@
                                 macro.module.report.rows = item.attributes.rows;
                                 macro.module.report.cols = item.attributes.cols;
                                 macro.module.report.filter = item.attributes.filter;
+                                macro.module.report.chart_type = item.attributes.chart_type;
                                 macro.module.report.$.rows.domain.refresh(function() {
                                     form.$children[1].refresh();
                                 });
