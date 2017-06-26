@@ -1,0 +1,316 @@
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/toastr/toastr";
+
+.dataTables_length {
+    float: left;
+}
+.dataTables_paginate {
+    white-space: pre-line!important;
+}
+.dataTables_wrapper {
+}
+body{
+    padding-top: 6em;
+}
+
+a.dt-button {
+    border: 1px solid $btn-default-border;
+    border-radius: 4px;
+    color: $btn-default-color;
+    background-color: $btn-default-bg;
+}
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    opacity: 0.4;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    opacity: 0.4;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    opacity: 0.4;
+}
+:-moz-placeholder { /* Firefox 18- */
+    opacity: 0.4;
+}
+
+$rotate-template-count: 16 !default
+
+@for $i from 1 through $rotate-template-count {
+    .rotate-template-#{$i} {
+        -webkit-transform: rotate((-87deg+($i - 1)*256/($rotate-template-count - 1)));
+        -moz-transform: rotate((-87deg+($i - 1)*256/($rotate-template-count - 1)));
+        -o-transform: rotate((-87deg+($i - 1)*256/($rotate-template-count - 1)));
+        -ms-transform: rotate((-87deg+($i - 1)*256/($rotate-template-count - 1)));
+        transform: rotate((-87deg+($i - 1)*256/($rotate-template-count - 1)));
+    }
+}
+
+#now_loading {
+    text-align: center;
+}
+.navbar-brand {
+    font-weight: bold;
+    white-space: pre;
+}
+
+.plus-button {
+    position: absolute;
+    float:right;
+    box-shadow: 0px 0px 5px red;
+    background-color: rgba(255,0,0,0.5);
+    width: 3em;
+    height: 3em;
+    border-radius: 1.5em;
+    text-align: center;
+    line-height: 3em;
+    color: red;
+}
+
+.table tr {
+    cursor: pointer;
+}
+
+//tags control
+.label-tag {
+    cursor: pointer;
+}
+.label-tag:nth-child(5n+0) {
+  @include label-variant($label-default-bg);
+}
+
+.label-tag:nth-child(5n+1) {
+  @include label-variant($label-primary-bg);
+}
+
+.label-tag:nth-child(5n+2) {
+  @include label-variant($label-success-bg);
+}
+
+.label-tag:nth-child(5n+3) {
+  @include label-variant($label-info-bg);
+}
+
+.label-tag:nth-child(5n+4) {
+  @include label-variant($label-warning-bg);
+}
+
+.table-locked {
+    opacity: 0.7;
+}
+
+.if-has-error {
+    display: none !important;
+}
+.has-error {
+    .if-has-error {
+        display: inline !important;
+    }
+}
+
+.ntScroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+$portraitWidth: (1080/1080);
+$portraitHeight: (1600/1080);
+$portraitWidth2: (1600/1600);
+$portraitHeight2: (1080/1600);
+$imagePerLine: 2.5;
+
+@media (min-width:320px) and (orientation: portrait) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+    .ntImage {
+        width: ($portraitWidth*320px/$imagePerLine);
+        height: ($portraitHeight*320px/$imagePerLine);
+    }
+}
+@media (min-width:480px) and (orientation: portrait) { /* smartphones, Android phones, landscape iPhone */
+    .ntImage {
+        width: ($portraitWidth*480px/$imagePerLine);
+        height: ($portraitHeight*480px/$imagePerLine);
+    }
+}
+@media (min-width:600px) and (orientation: portrait) { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+    .ntImage {
+        width: ($portraitWidth*600px/$imagePerLine);
+        height: ($portraitHeight*600px/$imagePerLine);
+    }
+}
+@media (min-width:801px) and (orientation: portrait) { /* tablet, landscape iPad, lo-res laptops ands desktops */
+    .ntImage {
+        width: ($portraitWidth*801px/$imagePerLine);
+        height: ($portraitHeight*801px/$imagePerLine);
+    }
+}
+@media (min-width:1025px) and (orientation: portrait) { /* big landscape tablets, laptops, and desktops */
+    .ntImage {
+        width: ($portraitWidth*1025px/$imagePerLine);
+        height: ($portraitHeight*1025px/$imagePerLine);
+    }
+}
+@media (min-width:1281px) and (orientation: portrait) { /* hi-res laptops and desktops */
+    .ntImage {
+        width: ($portraitWidth*1281px/$imagePerLine);
+        height: ($portraitHeight*1281px/$imagePerLine);
+    }
+}
+/****/
+@media (min-width:480px) and (orientation: landscape) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+    .ntImage {
+        width: ($portraitWidth2*480px/$imagePerLine);
+        height: ($portraitHeight2*480px/$imagePerLine);
+    }
+}
+@media (min-width:600px) and (orientation: landscape) { /* smartphones, Android phones, landscape iPhone */
+    .ntImage {
+        width: ($portraitWidth2*600px/$imagePerLine);
+        height: ($portraitHeight2*600px/$imagePerLine);
+    }
+}
+@media (min-width:800px) and (orientation: landscape) { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+    .ntImage {
+        width: ($portraitWidth2*800px/$imagePerLine);
+        height: ($portraitHeight2*800px/$imagePerLine);
+    }
+}
+@media (min-width:1025px) and (orientation: landscape) { /* big landscape tablets, laptops, and desktops */
+    .ntImage {
+        width: ($portraitWidth2*1025px/$imagePerLine);
+        height: ($portraitHeight2*1025px/$imagePerLine);
+    }
+}
+@media (min-width:1281px) and (orientation: landscape) { /* hi-res laptops and desktops */
+    .ntImage {
+        width: ($portraitWidth2*1281px/$imagePerLine);
+        height: ($portraitHeight2*1281px/$imagePerLine);
+    }
+}
+@media (min-width:1900px) and (orientation: landscape) { /* hi-res laptops and desktops */
+    .ntImage {
+        width: ($portraitWidth2*1900px/$imagePerLine);
+        height: ($portraitHeight2*1900px/$imagePerLine);
+    }
+}
+
+.ntImage {
+    background-image: url(../images/variables/hand.jpg);
+    background-size: auto 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: rgba(0,0,80,0.3);
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    display: inline-flex;
+    white-space: normal;
+    margin-right: 0.5em;
+}
+
+.ivTools {
+    position: fixed;
+    right: 1em;
+    z-index: 1;
+}
+
+.ivRefresh {
+    border: 1px solid rgba(0,0,0,0.5);
+    padding: 5px 8px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ivSearch {
+    border: 1px solid rgb(238, 238, 238);
+    padding: 1px 4px;
+    border-radius: 4px;
+}
+
+.filter-group {
+    position: relative;
+}
+.filter-close {
+    position: absolute;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    right: 0.7em;
+    top: 0.5em;
+    z-index: 100;
+    color: black !important;
+    float: right;
+    font-size: 22.5px;
+    font-weight: bold;
+    line-height: 1;
+    opacity: 0.5;
+}
+
+.form-control-tags {
+    height: auto!important;
+    position:relative;
+    min-height: 45px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575px) {
+    .navbar-brand {
+        max-width: 80%;
+        overflow: hidden;
+    }
+    .collapse-xs {
+        display: none;
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 767px) {
+    .navbar-brand {
+        max-width: 80%;
+        overflow: hidden;
+    }
+    .collapse-sm {
+        display: none;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991px) {
+    .collapse-md {
+        display: none;
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1199px) {
+    .collapse-lg {
+        display: none;
+    }
+    .form-control-tags {
+        height: 54px!important;
+        overflow-x: scroll;
+    }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+    .collapse-xl {
+        display: none;
+    }
+    .form-control-tags {
+        height: 54px!important;
+        overflow-x: scroll;
+    }
+}
+
+.form-file-progress {
+    @include linearGradientH(rgba(39,127,227,0.1), rgba(39,127,227,0.2), no-repeat !important);
+    background-position: 0 0;
+}

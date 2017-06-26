@@ -1,19 +1,4 @@
-<template>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-            <h2 id="nav-tabs">Roles</h2>
-            <abm id="UserAdministration.Roles" :model="role" nameField="name">
-                <span></span>
-            </abm>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8" v-show.visible="$root.getPaths().length &gt;= 1">
-            <h2 id="nav-tabs">Usuarios</h2>
-            <abm id="UserAdministration.Users" :model="user" refreshWith="UserAdministration.Roles" nameField="name">
-                <span></span>
-            </abm>
-        </div>
-    </div>
-</template>
+
 <script>
     var module;
     var Model = require("../models/Model.js").default;
@@ -24,18 +9,18 @@
     this.$defaultUrl = "/api/UserAdministration/users";
     Model.call(this, url, id, "UserAdministration.User");
     this.$list = function () {
-        return "fields=username,nombres,apellidos";
+        return "fields=username,nombres,apellidos,avatar,numero_ci";
     };
     this.$name = "User";
     this.$pluralName = "Users";
     this.$title = "user";
     this.$pluralTitle = "users";
-    this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"apellidos":{"name":"apellidos","label":"Apellidos","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"apellidos","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"unidad":{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad","isAssociation":false},"variableTags":{"name":"variableTags","label":"Áreas de interes","type":"tags","enum":[],"source":new ReportsFolders.VariableTag(),"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
+    this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"apellidos":{"name":"apellidos","label":"Apellidos","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"apellidos","isAssociation":false},"avatar":{"name":"avatar","label":"Avatar","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"avatar","isAssociation":false},"numero_ci":{"name":"numero_ci","label":"Nro de CI","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"numero_ci","isAssociation":false},"tipo_doc_ci":{"name":"tipo_doc_ci","label":"Tipo Doc de CI","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_doc_ci","isAssociation":false},"ext_doc":{"name":"ext_doc","label":"Extensión Doc","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"ext_doc","isAssociation":false},"cod_estado_civil":{"name":"cod_estado_civil","label":"Estado Civil","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_estado_civil","isAssociation":false},"fecha_nac":{"name":"fecha_nac","label":"Fecha Nac","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_nac","isAssociation":false},"dep_cod":{"name":"dep_cod","label":"Codigo Dep","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"dep_cod","isAssociation":false},"cod_ciudad":{"name":"cod_ciudad","label":"Codigo Ciudad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_ciudad","isAssociation":false},"tipo_persona":{"name":"tipo_persona","label":"Tipo Persona","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_persona","isAssociation":false},"cod_nac":{"name":"cod_nac","label":"Cod Nac","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_nac","isAssociation":false},"nivel_edu":{"name":"nivel_edu","label":"Nivel de Educación","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nivel_edu","isAssociation":false},"cod_cliente":{"name":"cod_cliente","label":"Codigo Cliente","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_cliente","isAssociation":false},"fec_ven_cliente":{"name":"fec_ven_cliente","label":"Fecha de vencimiento Cliente","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fec_ven_cliente","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"nro_dependientes":{"name":"nro_dependientes","label":"Nro Dependientes","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nro_dependientes","isAssociation":false},"calificacion":{"name":"calificacion","label":"Calificación","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"calificacion","isAssociation":false},"direccion":{"name":"direccion","label":"Dirección","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"direccion","isAssociation":false},"ubicacion":{"name":"ubicacion","label":"Ubicación","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"ubicacion","isAssociation":false},"fec_registro":{"name":"fec_registro","label":"Fecha de Registro","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fec_registro","isAssociation":false},"hora_registro":{"name":"hora_registro","label":"Hora de Registro","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"hora_registro","isAssociation":false},"cod_mun":{"name":"cod_mun","label":"Codigo Municipio","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_mun","isAssociation":false},"cod_prov":{"name":"cod_prov","label":"Codigo Provincia","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_prov","isAssociation":false},"cod_zona":{"name":"cod_zona","label":"cod_zona","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_zona","isAssociation":false},"unidad":{"name":"unidad","label":"Entidad / Unidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"unidad","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Usuario","data":"attributes.username"},{"title":"Nombres","data":"attributes.nombres"},{"title":"Apellidos","data":"attributes.apellidos"}];
+        return [{"title":"Usuario","data":"attributes.username"},{"title":"Nombres","data":"attributes.nombres"},{"title":"Apellidos","data":"attributes.apellidos"},{"title":"Avatar","data":"attributes.avatar","render":function (data){return data?data.name:''}},{"title":"Nro de CI","data":"attributes.numero_ci"}];
     };
     this.$methods = {
 registrar:function(data,methodCallback,childrenAssociation){self.$call("registrar",{"data":data}, childrenAssociation, methodCallback)}    };
@@ -131,24 +116,4 @@ sendEmail:function(account,methodCallback,childrenAssociation){self.$call("sendE
 UserAdministration.Recover.prototype = Object.create(Model.prototype);
 UserAdministration.Recover.prototype.constructor = Model;
 
-    export default {
-        props:[
-        ],
-        methods: {
-        },
-        data: function () {
-            module = this;
-            return {
-                path: [],
-                user: new UserAdministration.User(function(){try{var url="/api/UserAdministration/roles/"+(module.role.id?module.role.id:"¡@!")+"/users";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
-role: new UserAdministration.Role(),
-variableTags: new ReportsFolders.VariableTag(),
-            }
-        },
-        mounted: function() {
-            var self = this;
-            this.path = this.$children[0].path;
-            if (this.$children[1] && this.$children[1].path) this.path.push(this.$children[1].path);
-        }
-    }
 </script>

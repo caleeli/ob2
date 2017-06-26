@@ -117,6 +117,7 @@ VueComponent.generate = function (module, views, data, template) {
         '\n    var ' + module.name + ' = {};' +
         '\n    window.' + module.name + ' = ' + module.name + ';' +
         '\n    ' + object2array(views, "item.getCode('" + module.name + ".'+key)").join("\n") +
+        (template ?
         '\n    export default {' +
         '\n        props:[' +
         '\n        ],' +
@@ -135,6 +136,8 @@ VueComponent.generate = function (module, views, data, template) {
         '\n            this.path = this.$children[0].path;' +
         '\n            if (this.$children[1] && this.$children[1].path) this.path.push(this.$children[1].path);' +
         '\n        }' +
-        '\n    }' +
+        '\n    }'
+        : ''
+        ) +
         '\n</script>';
 }

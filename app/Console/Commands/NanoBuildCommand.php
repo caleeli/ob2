@@ -110,7 +110,7 @@ class NanoBuildCommand extends Command
                 ($options->traits ? "    use ".implode(", ", $options->traits).";"
                         : ''),
                 $this->parseProperties($options->properties),
-                ($options->methods ? implode("\n\n", (array) $options->methods) : ''),
+                $this->parseMethods($options->methods),
                 '}',
             ]);
             if (!file_exists(dirname($filename))) {
@@ -193,6 +193,7 @@ class NanoBuildCommand extends Command
                 echo "Error in $filename: \n$xmlCode";
                 throw $e;
             }
+            $v8->template = '';
             foreach ($dom->getElementsByTagName('template') as $template) {
                 $v8->template = str_replace('vue:', ':',
                                             $dom->saveHTML($template));
@@ -224,6 +225,21 @@ class NanoBuildCommand extends Command
             $res[] = $name.' = '.var_export($value, true).';';
         }
         return $this->indent(implode("\n", $res), 4);
+    }
+
+    protected function parseMethods($methods)
+    {
+        $res = [];
+        foreach ((array) $methods as $def => $code) {
+            $hasName = preg_match('/function\s+(\w+)\s*\(/', $code);
+            if ($hasName) {
+                $res[] = $code;
+            } else {
+                preg_match('/(\w+)/', $def, $name);
+                $res[] = '    function '.$name[1].substr(trim($code), 8);
+            }
+        }
+        return implode("\n\n", $res);
     }
 
     protected function indent($str, $spaces = 4)

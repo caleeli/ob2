@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 class Login extends Model
 {
     use SoftDeletes, Notifiable;
-    protected $table = 'usradm_logins';
+    protected $table = 'adm_logins';
     protected $fillable = array(
       0 => 'username',
       1 => 'password',
@@ -29,8 +29,8 @@ class Login extends Model
     public function validate($username="", $password="")
     {
         $user = User::where('username', '=', $username)
-                        ->where('password', '=', $password)
-                        ->first();
+                                ->where('password', '=', $password)
+                                ->first();
         $token = uniqid();
         if (!empty($user)) {
             $login = new Login();

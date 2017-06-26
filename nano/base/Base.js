@@ -64,6 +64,8 @@ var Module = function (base) {
         for (var i in base.models) {
             base.models[i].install();
         }
+        typeof base.views==='undefined' ? base.views={} : null;
+        typeof base.data==='undefined' ? base.data={} : null;
         PHP.createFile('public/swagger/' + base.name + '.json', JSON.stringify(Swagger.generate(base.name, '1.0.0', 'localhost', this.models)));
         PHP.createFile('resources/assets/js/modules/' + base.name + '.vue', VueComponent.generate(base, base.views, base.data, this.template));
         PHP.registerMenu(
@@ -459,18 +461,3 @@ Module.View.Code = function (fn) {
         return '(' + fn.toString() + ')()';
     }
 }
-
-/**
- * Helper definitions
- */
-Module.Model.Field.UI = {
-    SELECT: "select",
-    TEXT: "text",
-    PASSWORD: "password",
-    TAGS: "tags",
-};
-Module.Model.Field.TYPE = {
-    STRING: "string",
-    NUMBER: "number",
-    DOUBLE: "double",
-};

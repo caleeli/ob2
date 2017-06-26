@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 class Recover extends Model
 {
     use SoftDeletes, Notifiable;
-    protected $table = 'usradm_recovers';
+    protected $table = 'adm_recovers';
     protected $fillable = array(
       0 => 'account',
       1 => 'key',

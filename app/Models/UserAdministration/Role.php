@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 class Role extends Model
 {
     use SoftDeletes, Notifiable;
-    protected $table = 'usradm_roles';
+    protected $table = 'adm_roles';
     protected $fillable = array(
       0 => 'name',
       1 => 'status',
