@@ -11,19 +11,6 @@
 |
 */
 
-Route::get('/login', function () {
-    return view('login', ['template'=>'flatly']);
-});
-
 Route::get('/', function () {
-    return view('login', ['template'=>'flatly']);
+    return redirect('/documentacion/login.html');
 });
-
-Route::get('/admin', function () {
-    return view('welcome', ['template'=>'darkly']);
-});
-
-Route::get('/basic', function () {
-    return view('basic', ['template'=>'flatly']);
-});
-
