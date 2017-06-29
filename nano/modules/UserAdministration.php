@@ -370,7 +370,7 @@
                         "name": "grafico_valores",
                         "label": "Gráfico valores",
                         "type": "string",
-                        "list": false,
+                        "list": true,
                         "default": "4500,4000"
                     })
                 ],
