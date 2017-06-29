@@ -20,6 +20,7 @@ class StoreOperation extends BaseOperation
     protected function isBelongsTo(BelongsTo $model, Model $target, $data)
     {
         $model->associate($target);
+        $model->save();
         return $target;
     }
 
