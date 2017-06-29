@@ -17,7 +17,7 @@ class CreateAdmEstadoFinancierosTable extends Migration
             $table->text('archivo')->nullable();
             $table->string('grafico_texto')->nullable();
             $table->string('grafico_valores')->nullable();
-            $table->integer('empresa_id')->unsigned();
+            $table->integer('empresa_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

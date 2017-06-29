@@ -23,8 +23,8 @@ class EstadoFinanciero extends Model
       'informes_auditoria' => '',
       'gestion' => '',
       'archivo' => null,
-      'grafico_texto' => '',
-      'grafico_valores' => '',
+      'grafico_texto' => 'activo,pasivo',
+      'grafico_valores' => '4500,4000',
     );
     protected $casts = array(
       'tipo_estado_financiero' => 'string',

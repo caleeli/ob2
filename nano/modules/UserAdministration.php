@@ -335,6 +335,9 @@
                         "name": "tipo_estado_financiero",
                         "type": "string",
                         "label": "Tipo estado financiero",
+                        //"ui": "select",
+                        /*"enum": ["Balance General", "Estado de Resultados", "Estado de Flujo de Efectivo", "Estado Cambios en el Patrimonio Neto",
+                        "Estado de Ejecución Presupuestaria de Recursos", "Cuenta Ahorro Financiamiento"],*/
                         "default": ""
                     }),
                     new Module.Model.Field({
@@ -361,23 +364,26 @@
                         "label": "Gráfico texto",
                         "type": "string",
                         "list": false,
-                        "default": ""
+                        "default": "activo,pasivo"
                     }),
                     new Module.Model.Field({
                         "name": "grafico_valores",
                         "label": "Gráfico valores",
                         "type": "string",
                         "list": false,
-                        "default": ""
-                    }),
+                        "default": "4500,4000"
+                    })
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
                         "name": "empresa",
                         "model": "empresa",
-                        "nullable": false,
+                        "nullable": true,
                         "list": true,
-                        "textField": function(data){return data?data.empresa.attributes.nombre_empresa:''},
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
+                        "form": true
                     })
                 ]
             }),
