@@ -240,6 +240,155 @@ Module.Model = function (base) {
         return PHP.upper_camel_case(this.name);
     }
 }
+Module.ViewModel = function (base) {
+    var self=this;
+    Element(base, this);
+    var module;
+    this.setModule = function (module0) {
+        module = module0;
+    }
+    this.install = function () {
+        for (var i in base.associations) {
+            base.associations[i].setModule(module);
+        }
+        if (base.events) for(var eventName in base.events) {
+            var $properties = {};
+            $properties['public $' + PHP.camel_case(base.name)] = null;
+            PHP.createClass({
+                filename: 'app/Events/' + module.name + '/' + PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName) + '.php',
+                namespace: 'App\\Events\\' + module.name,
+                uses: [
+                    'Illuminate\\Broadcasting\\Channel',
+                    'Illuminate\\Queue\\SerializesModels',
+                    'Illuminate\\Broadcasting\\PrivateChannel',
+                    'Illuminate\\Broadcasting\\InteractsWithSockets',
+                    'Illuminate\\Contracts\\Broadcasting\\ShouldBroadcast',
+                    'App\\Models\\'+module.name+'\\'+PHP.upper_camel_case(base.name),
+                ],
+                name: PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName),
+                extends: '',
+                implements: ['ShouldBroadcast'],
+                traits: ['InteractsWithSockets'/*, 'SerializesModels'*/],
+                properties: $properties,
+                methods: {
+                    '__construct': "public function __construct("+PHP.upper_camel_case(base.name)+" $model){$this->"+PHP.camel_case(base.name)+"=$model;}",
+                    'broadcastOn': "public function broadcastOn(){return new PrivateChannel('channel-name');}",
+                },
+            });
+            PHP.createClass({
+                filename: 'app/Listeners/' + module.name + '/' + PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName) + 'Listener.php',
+                namespace: 'App\\Listeners\\' + module.name,
+                uses: [
+                    'Illuminate\\Queue\\InteractsWithQueue',
+                    'Illuminate\\Contracts\\Queue\\ShouldQueue',
+                    'App\\Models\\'+module.name+'\\'+PHP.upper_camel_case(base.name),
+                    'App\\Events\\'+module.name+'\\'+PHP.upper_camel_case(base.name)+ PHP.upper_camel_case(eventName),
+                ],
+                name: PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName)+'Listener',
+                extends: '',
+                implements: [],
+                traits: [],
+                properties: $properties,
+                methods: {
+                    'handle': "public function handle"+base.events[eventName].trim().substr(8),
+                },
+            });
+            PHP.registerListener(
+                'App\\Events\\' + module.name + '\\' + PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName),
+                'App\\Listeners\\' + module.name + '\\' + PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName)+'Listener'
+            );
+        }
+        PHP.createClass({
+            filename: 'app/Models/' + module.name + '/' + PHP.upper_camel_case(base.name) + '.php',
+            namespace: 'App\\Models\\' + module.name,
+            uses: [
+                'Illuminate\\Database\\Eloquent\\Model',
+            ],
+            name: PHP.upper_camel_case(base.name),
+            extends: 'Model',
+            traits: [],
+            properties: {
+                'protected $table': Module.Model.getTableName(module, base),
+                'protected $fillable': array2array(base.fields, 'item.name').concat(array2array(base.associations, 'item.getFillableName()')),
+                'protected $attributes': array2object(base.fields, 'item.name', 'item.default'),
+                'protected $casts': array2object(base.fields, 'item.name', 'item.type'),
+                'protected $events': object2object(base.events, 'key', JSON.stringify('App\\Events\\'+module.name + '\\' + PHP.upper_camel_case(base.name)) + " + PHP.upper_camel_case(key)"),
+            },
+            methods: Object.assign({}, array2object(base.associations, 'item.name', 'item.code()'), base.methods),
+        });
+        var sql = "CREATE VIEW "+Module.Model.getTableName(module, base)+" AS "+base.sql;
+        PHP.var_export(sql);
+        PHP.createClass({
+            filename: PHP.createMigration('Create' + PHP.upper_camel_case(module.prefix) + PHP.upper_camel_case(PHP.str_plural(base.name)) + 'Table'),
+            namespace: "",
+            uses: [
+                'Illuminate\\Support\\Facades\\Schema',
+                'Illuminate\\Database\\Schema\\Blueprint',
+                'Illuminate\\Database\\Migrations\\Migration',
+            ],
+            name: 'Create' + PHP.upper_camel_case(module.prefix) + PHP.upper_camel_case(PHP.str_plural(base.name)) + 'Table',
+            extends: 'Migration',
+            traits: [],
+            properties: [],
+            methods: {
+                'up': "    public function up()\n" +
+                  "    {\n" +
+                  "        DB::statement("+PHP.var_export(sql)+");\n" +
+                  "    }\n",
+                'down': "    public function down()\n" +
+                  "    {\n" +
+                  "        Schema::dropIfExists('" + Module.Model.getTableName(module, base) + "');\n" +
+                  "    }\n"
+            },
+        });
+    }
+    this.swaggerDefinition = function () {
+        var properties;
+        for (var i in base.associations) {
+            base.associations[i].setModule(this);
+        }
+        properties = array2object(base.fields, 'item.name', 'item.swaggerDefinition()');
+        properties.created_at = {
+            "$ref": "#/definitions/DateTime"
+        };
+        properties.updated_at = {
+            "$ref": "#/definitions/DateTime"
+        };
+        return {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "1001"
+                },
+                "type": {
+                    "default": this.name,
+                    "type": "string",
+                    "example": this.name
+                },
+                "attributes": {
+                    "required": [
+                    ],
+                    "type": "object",
+                    "properties": properties
+                }
+            }
+        };
+    }
+    this.plural = function () {
+        return PHP.str_plural(this.name);
+    }
+    this.Plural = function () {
+        var str = this.plural();
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    this.upperCamelCase = function () {
+        return PHP.upper_camel_case(this.name);
+    }
+}
 Module.Model.addIndex = function (table, type, columns) {
     return "            Schema::table('" + table + "', function (Blueprint $table) {\n" +
       "                $table->" + type + "(" + JSON.stringify(columns) + ");\n" +
@@ -304,9 +453,25 @@ Module.Model.HasMany = function (base) {
         module = module0;
     }
     this.code = function () {
+        var where=[];
+        if (base.where) {
+            base.where.forEach(function(w){
+                where.push("->where(");
+                /*var p=[];
+                w.forEach(function(h){
+                    p.push(PHP.var_export(h));
+                });
+                where.push(p.join(", "));*/
+                where.push(w);
+                where.push(")");
+            });
+        }
         return "    public function " + base.name + "()\n" +
           "    {\n" +
-          "        return $this->hasMany('App\\Models\\" + module.name + "\\" + PHP.upper_camel_case(base.model) + "');\n" +
+          "        return $this->hasMany('App\\Models\\" + module.name + "\\" + PHP.upper_camel_case(base.model) + "'"+
+                    (base.foreignKey?", "+PHP.var_export(base.foreignKey):(base.localKey?", 'id'":''))+
+                    (base.localKey?", "+PHP.var_export(base.localKey):'')+")"+
+                    (where.join(""))+";\n" +
           "    }\n";
     }
     this.migration = function () {

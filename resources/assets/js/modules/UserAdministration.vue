@@ -93,18 +93,20 @@ UserAdministration.EstadoFinanciero = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/estado_financieros";
     Model.call(this, url, id, "UserAdministration.EstadoFinanciero");
     this.$list = function () {
-        return "fields=tipo_estado_financiero,informes_auditoria,gestion,archivo";
+        return "fields=tipo_estado_financiero,informes_auditoria,gestion,archivo,empresa";
     };
     this.$name = "EstadoFinanciero";
     this.$pluralName = "EstadoFinancieros";
     this.$title = "Estado financiero";
     this.$pluralTitle = "Estados financieros";
-    this.$ = {"tipo_estado_financiero":{"name":"tipo_estado_financiero","label":"Tipo","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_estado_financiero","isAssociation":false},"informes_auditoria":{"name":"informes_auditoria","label":"Caracter","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"informes_auditoria","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false},"grafico_texto":{"name":"grafico_texto","label":"Gráfico texto","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico_texto","isAssociation":false},"grafico_valores":{"name":"grafico_valores","label":"Gráfico valores","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico_valores","isAssociation":false}};
+    this.$ = {"tipo_estado_financiero":{"name":"tipo_estado_financiero","label":"Tipo estado financiero","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_estado_financiero","isAssociation":false},"informes_auditoria":{"name":"informes_auditoria","label":"Informes auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"informes_auditoria","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false},"grafico_texto":{"name":"grafico_texto","label":"Gráfico texto","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico_texto","isAssociation":false},"grafico_valores":{"name":"grafico_valores","label":"Gráfico valores","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico_valores","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Tipo","data":"attributes.tipo_estado_financiero"},{"title":"Caracter","data":"attributes.informes_auditoria"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}}];
+        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Informes auditoria","data":"attributes.informes_auditoria"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}},{"title":"empresa","data":"relationships.empresa.attributes.function (data){return data?data.empresa.attributes.nombre_empresa:''}","render":function (data, type, full, meta) {
+                            return data ? data : '';
+                        }}];
     };
     this.$methods = {
     };
@@ -115,6 +117,34 @@ UserAdministration.EstadoFinanciero = function (url, id) {
 }
 UserAdministration.EstadoFinanciero.prototype = Object.create(Model.prototype);
 UserAdministration.EstadoFinanciero.prototype.constructor = Model;
+
+UserAdministration.EmpresaEstado = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/empresa_estados";
+    Model.call(this, url, id, "UserAdministration.EmpresaEstado");
+    this.$list = function () {
+        return "fields=nombre_empresa,gestion";
+    };
+    this.$name = "EmpresaEstado";
+    this.$pluralName = "EmpresaEstados";
+    this.$title = "Estado financiero por empresa";
+    this.$pluralTitle = "Estados financieros por empresa";
+    this.$ = {"nombre_empresa":{"name":"nombre_empresa","label":"Tipo","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombre_empresa","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Tipo","data":"attributes.nombre_empresa"},{"title":"Gestión","data":"attributes.gestion"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.EmpresaEstado.prototype = Object.create(Model.prototype);
+UserAdministration.EmpresaEstado.prototype.constructor = Model;
 
 UserAdministration.Login = function (url, id) {
     var self = this;

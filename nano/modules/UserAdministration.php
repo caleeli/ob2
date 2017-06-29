@@ -334,12 +334,12 @@
                     new Module.Model.Field({
                         "name": "tipo_estado_financiero",
                         "type": "string",
-                        "label": "Tipo",
+                        "label": "Tipo estado financiero",
                         "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "informes_auditoria",
-                        "label": "Caracter",
+                        "label": "Informes auditoria",
                         "type": "string",
                         "default": ""
                     }),
@@ -375,8 +375,40 @@
                     new Module.Model.BelongsTo({
                         "name": "empresa",
                         "model": "empresa",
-                        "nullable": false
+                        "nullable": false,
+                        "list": true,
+                        "textField": function(data){return data?data.empresa.attributes.nombre_empresa:''},
                     })
+                ]
+            }),
+            new Module.ViewModel({
+                "name": "empresa_estado",
+                "title": "Estado financiero por empresa",
+                "pluralTitle": "Estados financieros por empresa",
+                "sql": "select adm_estado_financieros.id, adm_empresas.id as empresa_id, nombre_empresa, gestion from adm_estado_financieros left join adm_empresas\n\
+                                on (adm_estado_financieros.empresa_id=adm_empresas.id)",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "nombre_empresa",
+                        "type": "string",
+                        "label": "Tipo",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "gestion",
+                        "label": "Gestión",
+                        "type": "string",
+                        "default": ""
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.HasMany({
+                        "name": "estados",
+                        "model": "estado_financiero",
+                        "foreignKey": "empresa_id",
+                        "localKey": "empresa_id",
+                        "where": ["'gestion', '=', $this->gestion"]
+                    }),
                 ]
             }),
             new Module.Model({

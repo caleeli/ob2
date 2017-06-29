@@ -164,7 +164,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3" v-if="!!estado.attributes.grafico_valores">
                                                 <table class="table small m-b-xs">
                                                     <tbody>
                                                         <tr v-for="(texto,indice) in estado.attributes.grafico_texto.split(',')">
@@ -178,7 +178,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3" v-if="!!estado.attributes.grafico_valores">
                                                 <span class="pie" style="width:64px; height: 64px;">{{estado.attributes.grafico_valores}}</span>
                                             </div>
                                         </div>                                        
@@ -196,7 +196,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v3"></script>
+        <script src="../js/server.js?v4"></script>
         <script>
 $(document).ready(function () {
     var app = new Vue({
@@ -207,7 +207,7 @@ $(document).ready(function () {
             return {
                 user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
                 empresa: new UserAdministration.Empresa(),
-                empresa_estado: new UserAdministration.Empresa(),
+                empresa_estado: new UserAdministration.EmpresaEstado(),
                 estado_financiero_aux: new UserAdministration.EstadoFinanciero(function(){try{var url="/api/UserAdministration/empresa/"+(app.empresa_estado.id?app.empresa_estado.id:"¡@!")+"/estados";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
                 estados_financieros: [],
                 PathItem: [],
@@ -218,7 +218,7 @@ $(document).ready(function () {
                 window.location.hash='#descripcionEmpresa';
             },
             cargarEstadosFinancieros: function() {
-                var model = new UserAdministration.EstadoFinanciero("/api/UserAdministration/empresa/"+app.empresa_estado.id+"/estados");
+                var model = new UserAdministration.EstadoFinanciero("/api/UserAdministration/empresa_estados/"+app.empresa_estado.id+"/estados");
                 model.$select(function(resultado){
                     app.estados_financieros.splice(0);
                     resultado.data.forEach(function(row){
