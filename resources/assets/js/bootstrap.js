@@ -113,5 +113,8 @@ window.PathItem=function(base, self) {
     }
 }
 $(window).on('hashchange', function() {
-  $(window.location.hash).parent().slider(window.location.hash);
+    var $parent = $(window.location.hash).parent();
+    if ($parent.hasClass("carousel")) {
+        $parent.slider(window.location.hash);
+    }
 });

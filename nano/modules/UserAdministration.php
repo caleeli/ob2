@@ -320,6 +320,63 @@
                     })
                 ],
                 "associations": [
+                    new Module.Model.HasMany({
+                        "name": "estados",
+                        "model": "estado_financiero"
+                    }),
+                ]
+            }),
+            new Module.Model({
+                "name": "estado_financiero",
+                "title": "Estado financiero",
+                "pluralTitle": "Estados financieros",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "tipo_estado_financiero",
+                        "type": "string",
+                        "label": "Tipo",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "informes_auditoria",
+                        "label": "Caracter",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "gestion",
+                        "label": "Gestión",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "archivo",
+                        "type": "array",
+                        "label": "Archivo",
+                        "ui": "file",
+                        "textField": function(data){return data?data.name:''},
+                    }),
+                    new Module.Model.Field({
+                        "name": "grafico_texto",
+                        "label": "Gráfico texto",
+                        "type": "string",
+                        "list": false,
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "grafico_valores",
+                        "label": "Gráfico valores",
+                        "type": "string",
+                        "list": false,
+                        "default": ""
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "empresa",
+                        "model": "empresa",
+                        "nullable": false
+                    })
                 ]
             }),
             new Module.Model({

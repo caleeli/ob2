@@ -45,10 +45,11 @@
                     self.$emit('new', self.model, self);
                 });
             },
-            selectRow: function(id){
+            selectRow: function(id, data){
                 var self = this;
                 this.model.$load(id, function(){
                     self.$root.$emit('changed', self);
+                    self.$emit('selectrow', self.model, self);
                     if (typeof self.editable==='undefined' || self.editable) {
                         self.goto(1);
                         self.$emit('edit', self.model, self);

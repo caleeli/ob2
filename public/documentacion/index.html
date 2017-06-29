@@ -90,7 +90,7 @@
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
 
-                                                    <abm v-bind:model="empresa" v-bind:editable="false" toolbar="excel,pdf,search" v-on:selectrow="irADescripcion"></abm>
+                                                    <abm v-bind:model="empresa" v-bind:editable="false" toolbar="excel,pdf,search" v-on:selectrow="seleccionaEmpresa"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,6 +116,77 @@
                             </div>
                         </div>
                     </carouselitem>
+
+                    <!--
+                        ESTADOS FINANCIEROS
+                    -->
+                    <carouselitem id="estadosFinancieros">
+                        <div class="row wrapper border-bottom white-bg page-heading">
+                            <div class="col-lg-10">
+                                <h2>Estados financieros </h2>
+                            </div>
+                            <div class="wrapper wrapper-content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-content">
+                                                <div class="table-responsive" style="overflow-y: scroll;">
+                                                    <abm id="empresa_estado" v-bind:model="empresa_estado" v-bind:editable="false" v-on:selectrow="cargarEstadosFinancieros" toolbar="excel,pdf,search"></abm>
+                                                    <!-- AUXILIAR: INICIO -->
+                                                    <abm refreshWith="empresa_estado" v-bind:model="estado_financiero_aux" v-bind:editable="true" v-on:selectrow="cargarEstadosFinancieros"></abm>
+                                                    <!-- AUXILIAR: FIN -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div id="documentosEstadosFinancieros" class="col-lg-12">
+                                        <!-- FOR (estado  in  estados_financieros)-->
+                                        <div class="row m-b-lg m-t-lg" v-for="estado in estados_financieros">
+                                            <div class="col-md-6">
+
+                                                <div class="profile-image">
+                                                    <h1><i class="fa fa-file-pdf-o"></i></h1>
+                                                </div>
+                                                <div class="profile-info">
+                                                    <div class="">
+                                                        <div>
+                                                            <h2 class="no-margins">
+                                                                {{estado.attributes.archivo.name}}
+                                                            </h2>
+                                                            <small>
+                                                                <a v-bind:href="estado.attributes.archivo.url" class=""><i class="fa fa-download "></i> descargar</a>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <table class="table small m-b-xs">
+                                                    <tbody>
+                                                        <tr v-for="(texto,indice) in estado.attributes.grafico_texto.split(',')">
+                                                            <td>
+                                                                <strong>{{texto}}</strong>
+                                                            </td>
+                                                            <td>
+                                                                {{estado.attributes.grafico_valores.split(',')[indice]}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <span class="pie" style="width:64px; height: 64px;">{{estado.attributes.grafico_valores}}</span>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </carouselitem>
                 </carousel>
 
 
@@ -131,29 +202,52 @@ $(document).ready(function () {
         el: '#wrapper',
         carousel: {},
         data: function () {
+            var self = this;
             return {
                 user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
                 empresa: new UserAdministration.Empresa(),
+                empresa_estado: new UserAdministration.Empresa(),
+                estado_financiero_aux: new UserAdministration.EstadoFinanciero(function(){try{var url="/api/UserAdministration/empresa/"+(module.empresa_estado.id?module.empresa_estado.id:"¡@!")+"/estados";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
+                estados_financieros: [],
                 PathItem: [],
             };
         },
         methods: {
-            irADescripcion: function() {
-                location.hash='descripcionEmpresa';
-                console.log(location.hash);
+            seleccionaEmpresa: function () {
+                window.location.hash='#descripcionEmpresa';
+            },
+            cargarEstadosFinancieros: function() {
+                var model = new UserAdministration.EstadoFinanciero("/api/UserAdministration/empresa/"+app.empresa_estado.id+"/estados");
+                model.$select(function(resultado){
+                    app.estados_financieros.length=0;
+                    resultado.data.forEach(function(row){
+                        app.estados_financieros.push(row);
+                    });
+                    Vue.nextTick(function () {
+                        $("span.pie").peity("pie", {
+                            fill: ['#1ab394', '#d7d7d7', '#ffffff'],
+                            width: 80,
+                            height: 80
+                        })
+                    });
+                });
             }
         },
         mounted: function () {
             this.carousel = this.$children[0];
             $("#now_loading").hide();
             $(this.$el).css("visibility", "visible");
+            location.hash='';
         }
     });
     window.app = app;
 });
         </script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="js/inspinia.js"></script>
+        <!-- Peity -->
+        <script src="js/plugins/peity/jquery.peity.min.js"></script>
+
+        <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="js/inspinia.js"></script>
     </body>
 </html>

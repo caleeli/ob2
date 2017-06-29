@@ -38,4 +38,8 @@ class Empresa extends Model
     );
     protected $events = array(
     );
+    public function estados()
+    {
+        return $this->hasMany('App\Models\UserAdministration\EstadoFinanciero');
+    }
 }
