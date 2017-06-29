@@ -220,7 +220,7 @@ $(document).ready(function () {
             cargarEstadosFinancieros: function() {
                 var model = new UserAdministration.EstadoFinanciero("/api/UserAdministration/empresa/"+app.empresa_estado.id+"/estados");
                 model.$select(function(resultado){
-                    app.estados_financieros.length=0;
+                    app.estados_financieros.splice(0);
                     resultado.data.forEach(function(row){
                         app.estados_financieros.push(row);
                     });
