@@ -391,8 +391,7 @@
                 "name": "empresa_estado",
                 "title": "Estado financiero por empresa",
                 "pluralTitle": "Estados financieros por empresa",
-                "sql": "select adm_estado_financieros.id, adm_empresas.id as empresa_id, nombre_empresa, gestion from adm_estado_financieros left join adm_empresas\n\
-                                on (adm_estado_financieros.empresa_id=adm_empresas.id)",
+                "sql": "select max(adm_estado_financieros.id) as id, adm_empresas.id as empresa_id, nombre_empresa, gestion from adm_estado_financieros left join adm_empresas on (adm_estado_financieros.empresa_id=adm_empresas.id) group by adm_empresas.id, gestion",
                 "fields": [
                     new Module.Model.Field({
                         "name": "nombre_empresa",
