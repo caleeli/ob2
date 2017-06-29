@@ -23,12 +23,15 @@
         <link rel="stylesheet" type="text/css" href="/css/buttons.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="/bower_components/datatables-fixedcolumns/css/fixedColumns.bootstrap.scss">
 
     </head>
 
     <body>
-        <div id="wrapper">
+        <div id="now_loading">
+            Cargando ...<br/>
+            <i class="ajax-loader"></i>
+        </div>
+        <div id="wrapper" style="visibility:hidden">
             <nav class="navbar-default navbar-static-side" role="navigation">
                 <div class="sidebar-collapse">
                     <ul class="nav metismenu" id="side-menu">
@@ -87,7 +90,7 @@
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
 
-                                                    <abm v-bind:model="empresa" v-bind:editable="false" toolbar="excel,pdf,search"></abm>
+                                                    <abm v-bind:model="empresa" v-bind:editable="false" toolbar="excel,pdf,search" v-on:selectrow="irADescripcion"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,7 +124,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v1"></script>
+        <script src="../js/server.js?v3"></script>
         <script>
 $(document).ready(function () {
     var app = new Vue({
@@ -135,10 +138,15 @@ $(document).ready(function () {
             };
         },
         methods: {
+            irADescripcion: function() {
+                location.hash='descripcionEmpresa';
+                console.log(location.hash);
+            }
         },
         mounted: function () {
-            var self = this;
             this.carousel = this.$children[0];
+            $("#now_loading").hide();
+            $(this.$el).css("visibility", "visible");
         }
     });
     window.app = app;
