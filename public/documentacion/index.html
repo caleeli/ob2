@@ -171,7 +171,7 @@
                                                     <tbody>
                                                         <tr v-for="(texto,indice) in estado.attributes.grafico_texto.split(',')">
                                                             <td>
-                                                                <strong>{{texto}}</strong>
+                                                                <strong>{{texto.split("|")[0]}}</strong>
                                                             </td>
                                                             <td>
                                                                 {{addCommas(estado.attributes.grafico_valores.split(',')[indice])}}
@@ -181,7 +181,7 @@
                                                 </table>
                                             </div>
                                             <div class="col-md-3" v-if="!!estado.attributes.grafico_valores">
-                                                <span class="pie" style="width:64px; height: 64px;">{{estado.attributes.grafico_valores}}</span>
+                                                <span class="peityChart" v-bind:chart="estado.attributes.grafico_texto.split('|')[1]" style="width:64px; height: 64px;">{{estado.attributes.grafico_valores}}</span>
                                             </div>
                                         </div>                                        
                                     </div>
@@ -251,11 +251,13 @@ $(document).ready(function () {
                         app.estados_financieros.push(row);
                     });
                     Vue.nextTick(function () {
-                        $("span.pie").peity("pie", {
-                            fill: ['#1ab394', '#d7d7d7', '#ffffff'],
-                            width: 80,
-                            height: 80
-                        })
+                        $("span.peityChart").each(function(){
+                            $(this).peity($(this).attr("chart")?$(this).attr("chart"):'pie', {
+                                fill: ['#1ab394', '#d7d7d7', '#ffffff'],
+                                width: 80,
+                                height: 80
+                            })
+                        });
                     });
                 });
             },
