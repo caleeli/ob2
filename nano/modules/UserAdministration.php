@@ -279,36 +279,36 @@
                     new Module.Model.Field({
                         "name": "cod_empresa",
                         "type": "string",
-                        "title": "Código",
+                        "label": "Código",
                         "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "nombre_empresa",
-                        "title": "Empresa",
+                        "label": "Empresa",
                         "type": "string",
                         "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "corporacion",
-                        "title": "Corporación",
+                        "label": "Corporación",
                         "type": "string",
                         "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "caracter",
-                        "title": "Caracter",
+                        "label": "Caracter",
                         "type": "string",
                         "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "rubro",
-                        "title": "Rubro",
+                        "label": "Rubro",
                         "type": "string",
                         "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "tipologia",
-                        "title": "Tipologia",
+                        "label": "Tipologia",
                         "type": "string",
                         "default": ""
                     }),

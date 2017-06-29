@@ -46,7 +46,7 @@
                                 </ul>
                             </div>
                             <div class="logo-element">
-                                IN+
+                                SCEP
                             </div>
                         </li>
                         <li class="active">
@@ -84,7 +84,7 @@
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
 
-                                                    <abm v-bind:model="empresa" v-bind:editable="false" toolbar="excel,pdf,search" v-on:selectrow="seleccionaEmpresa"></abm>
+                                                    <abm v-bind:model="empresa" v-bind:editable="false" toolbar="excel,pdf,search"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -129,15 +129,9 @@ $(document).ready(function () {
                 user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
                 empresa: new UserAdministration.Empresa(),
                 PathItem: [],
-                nombre_empresa: '',
-                descripcion_empresa: ''
             };
         },
         methods: {
-            seleccionaEmpresa: function (id, data) {
-                this.nombre_empresa = data.nombre_empresa;
-                this.descripcion_empresa = data.descripcion_empresa;
-            }
         },
         mounted: function () {
             var self = this;
@@ -147,7 +141,8 @@ $(document).ready(function () {
     window.app = app;
 });
         </script>
-
-
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/inspinia.js"></script>
     </body>
 </html>
