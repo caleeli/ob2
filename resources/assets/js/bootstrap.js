@@ -93,10 +93,14 @@ window.registerMenu = function (menu) {
         if ( typeof viewId === 'undefined') {
             this.children().slideUp();
             this.children('.active').slideDown();
-        } else {
+        } else if($.isNumeric(viewId)) {
             this.children('.active').slideUp();
             $(this.children()[viewId]).slideDown();
             $(this.children()[viewId]).addClass('active');
+        } else {
+            this.children('.active').slideUp();
+            $(viewId).slideDown();
+            $(viewId).addClass('active');
         }
     };
 })( jQuery );
@@ -108,3 +112,6 @@ window.PathItem=function(base, self) {
         this[a] = base[a];
     }
 }
+$(window).on('hashchange', function() {
+  $(window.location.hash).parent().slider(window.location.hash);
+});
