@@ -20,6 +20,7 @@
             "refreshWith",
             "buttons",
             "toolbar",
+            "editable",
         ],
         carousel:{},
         data: function(){
@@ -48,8 +49,10 @@
                 var self = this;
                 this.model.$load(id, function(){
                     self.$root.$emit('changed', self);
-                    self.goto(1);
-                    self.$emit('edit', self.model, self);
+                    if (typeof self.editable==='undefined' || self.editable) {
+                        self.goto(1);
+                        self.$emit('edit', self.model, self);
+                    }
                 });
             },
             cancelEdit: function(){

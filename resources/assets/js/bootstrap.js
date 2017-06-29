@@ -86,5 +86,25 @@ window.registerMenu = function (menu) {
     option.name = menu.name;
     option.icon = menu.icon;
     option.text = menu.text;
-}
+};
 
+(function ( $ ) {
+    $.fn.slider = function(viewId) {
+        if ( typeof viewId === 'undefined') {
+            this.children().slideUp();
+            this.children('.active').slideDown();
+        } else {
+            this.children('.active').slideUp();
+            $(this.children()[viewId]).slideDown();
+            $(this.children()[viewId]).addClass('active');
+        }
+    };
+})( jQuery );
+window.PathItem=function(base, self) {
+    this.goto = function(){
+        self.goto(this.item, this);
+    }
+    for (var a in base) {
+        this[a] = base[a];
+    }
+}

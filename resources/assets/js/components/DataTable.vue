@@ -19,9 +19,9 @@
             clickButton:function (index) {
                 $(this.table.buttons()[index].node).click();
             },
-            selectRow: function (id) {
+            selectRow: function (id, data) {
                 var self = this;
-                self.$emit('selectrow', id);
+                self.$emit('selectrow', id, data);
             },
             redraw: function () {
                 var self = this;
@@ -151,8 +151,9 @@
                 }
                 $(self.$el).addClass('table-locked');
                 setTimeout((function($el){return function(){$el.removeClass('table-locked');}})($(self.$el)), 1000);
-                var id = self.table.row( this ).id();
-                self.selectRow(id);
+                var row = self.table.row( this );
+                var id = row.id();
+                self.selectRow(id, row.data());
             } );
             this.model.setRefreshListCallback(function(){
                 self.table.ajax.reload();

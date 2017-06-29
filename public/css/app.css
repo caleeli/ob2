@@ -9788,4 +9788,8 @@ body.md-skin {
   }
 }
 
+.dataTable tr {
+  cursor: pointer;
+}
+
 /*# sourceMappingURL=app.css.map */
