@@ -272,6 +272,57 @@
                 ]
             }),
             new Module.Model({
+                "name": "empresa",
+                "title": "empresa",
+                "pluralTitle": "empresas",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "cod_empresa",
+                        "type": "string",
+                        "title": "Código",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "nombre_empresa",
+                        "title": "Empresa",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "corporacion",
+                        "title": "Corporación",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "caracter",
+                        "title": "Caracter",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "rubro",
+                        "title": "Rubro",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "tipologia",
+                        "title": "Tipologia",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "detalle_empresa",
+                        "type": "string",
+                        "list": false,
+                        "default": ""
+                    })
+                ],
+                "associations": [
+                ]
+            }),
+            new Module.Model({
                 "name": "login",
                 "fields": [
                     new Module.Model.Field({

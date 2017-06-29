@@ -60,6 +60,34 @@ UserAdministration.Role = function (url, id) {
 UserAdministration.Role.prototype = Object.create(Model.prototype);
 UserAdministration.Role.prototype.constructor = Model;
 
+UserAdministration.Empresa = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/empresas";
+    Model.call(this, url, id, "UserAdministration.Empresa");
+    this.$list = function () {
+        return "fields=cod_empresa,nombre_empresa,corporacion,caracter,rubro,tipologia";
+    };
+    this.$name = "Empresa";
+    this.$pluralName = "Empresas";
+    this.$title = "empresa";
+    this.$pluralTitle = "empresas";
+    this.$ = {"cod_empresa":{"name":"cod_empresa","label":"cod_empresa","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_empresa","isAssociation":false},"nombre_empresa":{"name":"nombre_empresa","label":"nombre_empresa","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombre_empresa","isAssociation":false},"corporacion":{"name":"corporacion","label":"corporacion","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"corporacion","isAssociation":false},"caracter":{"name":"caracter","label":"caracter","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"caracter","isAssociation":false},"rubro":{"name":"rubro","label":"rubro","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"rubro","isAssociation":false},"tipologia":{"name":"tipologia","label":"tipologia","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipologia","isAssociation":false},"detalle_empresa":{"name":"detalle_empresa","label":"detalle_empresa","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle_empresa","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"cod_empresa","data":"attributes.cod_empresa"},{"title":"nombre_empresa","data":"attributes.nombre_empresa"},{"title":"corporacion","data":"attributes.corporacion"},{"title":"caracter","data":"attributes.caracter"},{"title":"rubro","data":"attributes.rubro"},{"title":"tipologia","data":"attributes.tipologia"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Empresa.prototype = Object.create(Model.prototype);
+UserAdministration.Empresa.prototype.constructor = Model;
+
 UserAdministration.Login = function (url, id) {
     var self = this;
     this.$defaultUrl = "/api/UserAdministration/logins";
