@@ -208,7 +208,7 @@ $(document).ready(function () {
                 user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
                 empresa: new UserAdministration.Empresa(),
                 empresa_estado: new UserAdministration.Empresa(),
-                estado_financiero_aux: new UserAdministration.EstadoFinanciero(function(){try{var url="/api/UserAdministration/empresa/"+(module.empresa_estado.id?module.empresa_estado.id:"¡@!")+"/estados";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
+                estado_financiero_aux: new UserAdministration.EstadoFinanciero(function(){try{var url="/api/UserAdministration/empresa/"+(app.empresa_estado.id?app.empresa_estado.id:"¡@!")+"/estados";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
                 estados_financieros: [],
                 PathItem: [],
             };
