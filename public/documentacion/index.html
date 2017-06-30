@@ -253,8 +253,9 @@ $(document).ready(function () {
                     });
                     Vue.nextTick(function () {
                         $("span.peityChart").each(function(){
-                            $(this).peity($(this).attr("chart")?$(this).attr("chart"):'pie', {
-                                fill: ['#1ab394', '#d7d7d7', '#8CD9C9'],
+                            var chart = $(this).attr("chart")?$(this).attr("chart"):'pie';
+                            $(this).peity(chart, {
+                                fill: chart==='pie'?['#1ab394', '#d7d7d7', '#8CD9C9']:'#1ab394',
                                 width: 80,
                                 height: 80
                             })
