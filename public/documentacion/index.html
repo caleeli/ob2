@@ -255,7 +255,7 @@ $(document).ready(function () {
                         $("span.peityChart").each(function(){
                             var chart = $(this).attr("chart")?$(this).attr("chart"):'pie';
                             $(this).peity(chart, {
-                                fill: chart==='pie'?['#1ab394', '#d7d7d7', '#8CD9C9']:'#1ab394',
+                                fill: chart==='pie' || chart==='bar'?['#1ab394', '#d7d7d7', '#8CD9C9']:'#1ab394',
                                 width: 80,
                                 height: 80
                             })
