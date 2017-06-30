@@ -205,6 +205,78 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
+                                                    <abm v-bind:model="estado_financiero_aux" v-bind:editable="true"></abm>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </carouselitem>
+                    <!--
+                        FIRMAS
+                    -->
+                    <carouselitem id="firmasDeAuditoria">
+                        <div class="row wrapper border-bottom white-bg page-heading">
+                            <div class="col-lg-10">
+                                <h2>Firmas de auditoria</h2>
+                            </div>
+                            <div class="wrapper wrapper-content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-content">
+                                                <div class="table-responsive" style="overflow-y: scroll;">
+                                                    <abm v-bind:model="firma_auditoria" v-bind:editable="true"></abm>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </carouselitem>
+                    <!--
+                        FIRMAS
+                    -->
+                    <carouselitem id="UAI">
+                        <div class="row wrapper border-bottom white-bg page-heading">
+                            <div class="col-lg-10">
+                                <h2>UAI</h2>
+                            </div>
+                            <div class="wrapper wrapper-content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-content">
+                                                <div class="table-responsive" style="overflow-y: scroll;">
+                                                    <abm v-bind:model="uai" v-bind:editable="true"></abm>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </carouselitem>
+                    <!--
+                        ESTADOS FINANCIEROS ADMIN
+                    -->
+                    <carouselitem id="estadosFinancierosAdmin">
+                        <div class="row wrapper border-bottom white-bg page-heading">
+                            <div class="col-lg-10">
+                                <h2>Estados financieros ADMIN</h2>
+                            </div>
+                            <div class="wrapper wrapper-content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox float-e-margins">
+                                            <div class="ibox-content">
+                                                <div class="table-responsive" style="overflow-y: scroll;">
                                                     <abm v-bind:model="estado_financiero_aux" v-bind:editable="true" v-on:selectrow="cargarEstadosFinancieros"></abm>
                                                 </div>
                                             </div>
@@ -223,7 +295,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v7"></script>
+        <script src="../js/server.js?v9"></script>
         <script>
 $(document).ready(function () {
     var app = new Vue({
@@ -235,7 +307,9 @@ $(document).ready(function () {
                 user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
                 empresa: new UserAdministration.Empresa(),
                 empresa_estado: new UserAdministration.EmpresaEstado(),
-                estado_financiero_aux: new UserAdministration.EstadoFinanciero(),//(function(){try{var url="/api/UserAdministration/empresa/"+(app.empresa_estado.id?app.empresa_estado.id:"¡@!")+"/estados";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
+                estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
+                firma_auditoria: new UserAdministration.Firma(),
+                uai: new UserAdministration.Uai(),
                 estados_financieros: [],
                 PathItem: [],
             };

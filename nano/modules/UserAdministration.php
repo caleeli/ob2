@@ -416,6 +416,173 @@
                     }),
                 ]
             }),
+            /**
+             * Firmas.
+             *
+             */
+            new Module.Model({
+                "name": "firma",
+                "title": "Firma",
+                "pluralTitle": "Firmas de auditoria",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "cod_firma",
+                        "type": "string",
+                        "label": "Código",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "gestion",
+                        "label": "Gestión",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "detalle",
+                        "label": "Detalle",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "tipo_firma",
+                        "label": "Tipo de firma",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "representante_legal",
+                        "label": "Representante legal",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "socios",
+                        "label": "Socios",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "vigencia_certificado",
+                        "label": "Vigencia certificado",
+                        "type": "string",
+                        "list": false,
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "documento_firma",
+                        "type": "array",
+                        "label": "Documento Firma",
+                        "ui": "file",
+                        "textField": function(data){return data?data.name:''},
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "empresa",
+                        "model": "empresa",
+                        "nullable": true,
+                        "list": false,
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
+                        "form": false
+                    })
+                ]
+            }),
+            /**
+             * UAIs
+             *
+             */
+            new Module.Model({
+                "name": "uai",
+                "title": "UAI",
+                "pluralTitle": "UAIs",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "cod_uai",
+                        "type": "string",
+                        "label": "Código",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "titular_uai",
+                        "label": "Titular UAI",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "estructura_uai",
+                        "label": "Estructura UAI",
+                        "type": "string",
+                        "default": ""
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "empresa",
+                        "model": "empresa",
+                        "nullable": true,
+                        "list": false,
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
+                        "form": false
+                    })
+                ]
+            }),
+            /**
+             * Tareas
+             *
+             */
+            /*new Module.Model({
+                "name": "tarea",
+                "title": "Tarea",
+                "pluralTitle": "Tareas",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "cod_tarea",
+                        "type": "string",
+                        "label": "Código",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "usuario_id",
+                        "label": "Usuario",
+                        "type": "integer",
+                        "textField": "username",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "nombre_tarea",
+                        "label": "Tarea",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "nombre_tarea",
+                        "label": "Tarea",
+                        "type": "string",
+                        "default": ""
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "empresa",
+                        "model": "empresa",
+                        "nullable": true,
+                        "list": false,
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
+                        "form": false
+                    })
+                ]
+            }),*/
+            /**
+             * Login
+             */
             new Module.Model({
                 "name": "login",
                 "fields": [

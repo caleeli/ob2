@@ -146,6 +146,62 @@ UserAdministration.EmpresaEstado = function (url, id) {
 UserAdministration.EmpresaEstado.prototype = Object.create(Model.prototype);
 UserAdministration.EmpresaEstado.prototype.constructor = Model;
 
+UserAdministration.Firma = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/firmas";
+    Model.call(this, url, id, "UserAdministration.Firma");
+    this.$list = function () {
+        return "fields=cod_firma,gestion,detalle,tipo_firma,representante_legal,socios,documento_firma";
+    };
+    this.$name = "Firma";
+    this.$pluralName = "Firmas";
+    this.$title = "Firma";
+    this.$pluralTitle = "Firmas de auditoria";
+    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"tipo_firma":{"name":"tipo_firma","label":"Tipo de firma","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_firma","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Representante legal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"socios":{"name":"socios","label":"Socios","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"socios","isAssociation":false},"vigencia_certificado":{"name":"vigencia_certificado","label":"Vigencia certificado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"vigencia_certificado","isAssociation":false},"documento_firma":{"name":"documento_firma","label":"Documento Firma","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"documento_firma","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Detalle","data":"attributes.detalle"},{"title":"Tipo de firma","data":"attributes.tipo_firma"},{"title":"Representante legal","data":"attributes.representante_legal"},{"title":"Socios","data":"attributes.socios"},{"title":"Documento Firma","data":"attributes.documento_firma","render":function (data){return data?data.name:''}}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Firma.prototype = Object.create(Model.prototype);
+UserAdministration.Firma.prototype.constructor = Model;
+
+UserAdministration.Uai = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/uais";
+    Model.call(this, url, id, "UserAdministration.Uai");
+    this.$list = function () {
+        return "fields=cod_uai,titular_uai,estructura_uai";
+    };
+    this.$name = "Uai";
+    this.$pluralName = "Uais";
+    this.$title = "UAI";
+    this.$pluralTitle = "UAIs";
+    this.$ = {"cod_uai":{"name":"cod_uai","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_uai","isAssociation":false},"titular_uai":{"name":"titular_uai","label":"Titular UAI","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"titular_uai","isAssociation":false},"estructura_uai":{"name":"estructura_uai","label":"Estructura UAI","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"estructura_uai","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Código","data":"attributes.cod_uai"},{"title":"Titular UAI","data":"attributes.titular_uai"},{"title":"Estructura UAI","data":"attributes.estructura_uai"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Uai.prototype = Object.create(Model.prototype);
+UserAdministration.Uai.prototype.constructor = Model;
+
 UserAdministration.Login = function (url, id) {
     var self = this;
     this.$defaultUrl = "/api/UserAdministration/logins";
