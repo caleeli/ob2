@@ -118,3 +118,15 @@ $(window).on('hashchange', function() {
         $parent.slider(window.location.hash);
     }
 });
+/**
+ * Auxiliar function to identify object instances.
+ */
+var identifyObjectList=[];
+function identifyObject(object) {
+    var index = identifyObjectList.indexOf(object);
+    if (index===-1) {
+        index = identifyObjectList.length;
+        identifyObjectList.push(object);
+    }
+    return index;
+}

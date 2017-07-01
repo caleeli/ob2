@@ -123,6 +123,32 @@ export default function(uri0, id, type) {
             }
         });
     };
+    this.$delete = function (childrenAssociation, saveCallback) {
+        var method;
+        var url;
+        var self = this;
+        if(typeof childrenAssociation==='undefined') {
+            childrenAssociation = '';
+        }
+        method = 'DELETE';
+        if (!id) {
+            throw "model does not have id";
+        } else {
+            url = this.$url() + childrenAssociation + '/' + id;
+        }
+        $.ajax({
+            method: method,
+            url: url,
+            contentType: "application/json;charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                callback(self);
+                if(typeof saveCallback==='function') {
+                    saveCallback(self);
+                }
+            }
+        });
+    };
     this.$call = function (methodName, params, childrenAssociation, methodCallback) {
         var url;
         if(typeof childrenAssociation==='undefined') {

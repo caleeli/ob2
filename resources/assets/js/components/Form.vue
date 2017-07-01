@@ -32,6 +32,7 @@
         <button v-else-if="button=='close'" type="button" v-on:click="cancel" class="btn btn-warning">Cerrar</button>
         <button v-else-if="button=='save'" type="button" v-on:click="save" class="btn btn-success">Guardar</button>
         <button v-else-if="button=='update'" type="button" v-on:click="update" class="btn btn-primary">Aplicar</button>
+        <button v-else-if="button=='delete'" type="button" v-on:click="remove" class="btn btn-danger">Eliminar</button>
         <button v-else type="button" v-on:click="custom(button)" class="btn btn-default">{{button}}</button>
     </form>
 </template>
@@ -82,6 +83,12 @@
                 var self = this;
                 this.model.$save(this.childrenurl, function(){
                     self.$emit('update');
+                });
+            },
+            remove: function() {
+                var self = this;
+                this.model.$delete(this.childrenurl, function(){
+                    self.$emit('delete');
                 });
             },
             custom: function(button) {

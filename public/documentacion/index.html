@@ -205,7 +205,7 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
-                                                    <abm v-bind:model="estado_financiero_aux" v-bind:editable="true"></abm>
+                                                    <abm v-bind:model="estado_financiero_aux" v-bind:editable="true" buttons='close,save,delete'></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -240,7 +240,7 @@
                         </div>
                     </carouselitem>
                     <!--
-                        FIRMAS
+                        UAI
                     -->
                     <carouselitem id="UAI">
                         <div class="row wrapper border-bottom white-bg page-heading">
@@ -263,30 +263,6 @@
                             </div>
                         </div>
                     </carouselitem>
-                    <!--
-                        ESTADOS FINANCIEROS ADMIN
-                    -->
-                    <carouselitem id="estadosFinancierosAdmin">
-                        <div class="row wrapper border-bottom white-bg page-heading">
-                            <div class="col-lg-10">
-                                <h2>Estados financieros ADMIN</h2>
-                            </div>
-                            <div class="wrapper wrapper-content">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="ibox float-e-margins">
-                                            <div class="ibox-content">
-                                                <div class="table-responsive" style="overflow-y: scroll;">
-                                                    <abm v-bind:model="estado_financiero_aux" v-bind:editable="true" v-on:selectrow="cargarEstadosFinancieros"></abm>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </carouselitem>
                 </carousel>
 
 
@@ -295,7 +271,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v9"></script>
+        <script src="../js/server.js?v0.14"></script>
         <script>
 $(document).ready(function () {
     var app = new Vue({

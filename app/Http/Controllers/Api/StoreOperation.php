@@ -17,9 +17,10 @@ class StoreOperation extends BaseOperation
         return $this->execute($this->model, $data);
     }
 
-    protected function isBelongsTo(BelongsTo $model, Model $target, $data)
+    protected function isBelongsTo(BelongsTo $model, Model $target=null, $data=[])
     {
         $model->associate($target);
+        $model->getParent()->save();
         return $target;
     }
 

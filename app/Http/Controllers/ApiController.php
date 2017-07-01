@@ -16,6 +16,7 @@ use Exception;
 use App\Http\Controllers\Api\IndexOperation;
 use App\Http\Controllers\Api\StoreOperation;
 use App\Http\Controllers\Api\UpdateOperation;
+use App\Http\Controllers\Api\DeleteOperation;
 use App\Http\Controllers\Api\CallOperation;
 
 class ApiController extends Controller
@@ -142,19 +143,10 @@ class ApiController extends Controller
 
     public function delete(...$route)
     {
-        $method = function ($model) {
-            if (is_string($model)) {
-                throw new InvalidApiCall();
-            } elseif ($model instanceof Model) {
-                $model->delete();
-            } elseif ($model === null) {
-                throw new NotFoundException();
-            } else {
-                throw new InvalidApiCall();
-            }
-            return $model;
-        };
-        $this->resolve($route, $method);
+        $operation = new DeleteOperation($route);
+        $operation->delete();
+        $response = [];
+        return response()->json($response);
     }
 
     protected function getType($model)

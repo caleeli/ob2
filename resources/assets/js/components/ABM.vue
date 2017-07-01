@@ -5,7 +5,7 @@
         </carouselitem>
 
         <carouselitem>
-            <dv-form :id="'form@'+id" :model="model" v-on:cancel="cancelEdit" v-on:save="saveRow" v-on:update="updateRow" v-on:custom="custom" :buttons="buttons"></dv-form>
+            <dv-form :id="'form@'+id" :model="model" v-on:cancel="cancelEdit" v-on:save="saveRow" v-on:update="updateRow" v-on:delete="deleteRow" v-on:custom="custom" :buttons="buttons"></dv-form>
         </carouselitem>
     </carousel>
 </template>
@@ -69,6 +69,12 @@
             updateRow: function(){
                 this.model.$refreshList();
                 this.$emit('update', this.model, this);
+                this.$root.$emit('changed', this);
+            },
+            deleteRow: function(){
+                this.model.$refreshList();
+                this.goto(0);
+                this.$emit('delete', this.model, this);
                 this.$root.$emit('changed', this);
             },
             custom: function(button, model, form) {
