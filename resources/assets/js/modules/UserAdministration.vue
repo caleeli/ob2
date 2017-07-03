@@ -202,6 +202,36 @@ UserAdministration.Uai = function (url, id) {
 UserAdministration.Uai.prototype = Object.create(Model.prototype);
 UserAdministration.Uai.prototype.constructor = Model;
 
+UserAdministration.Tarea = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/tareas";
+    Model.call(this, url, id, "UserAdministration.Tarea");
+    this.$list = function () {
+        return "fields=cod_tarea,usuario,nombre_tarea,descripcion,fecha_ini,fecha_fin";
+    };
+    this.$name = "Tarea";
+    this.$pluralName = "Tareas";
+    this.$title = "Tarea";
+    this.$pluralTitle = "Tareas";
+    this.$ = {"cod_tarea":{"name":"cod_tarea","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_tarea","isAssociation":false},"usuario":{"name":"usuario","label":"Usuario","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"value":"usuario","isAssociation":true,"isMultiple":false},"nombre_tarea":{"name":"nombre_tarea","label":"Tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombre_tarea","isAssociation":false},"descripcion":{"name":"descripcion","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"descripcion","isAssociation":false},"fecha_ini":{"name":"fecha_ini","label":"Fecha inicio","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_ini","isAssociation":false},"fecha_fin":{"name":"fecha_fin","label":"Fecha finalización","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_fin","isAssociation":false},"revisor1":{"name":"revisor1","label":"Revisor 1","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"revisor1","isAssociation":true,"isMultiple":false},"aprobacion1":{"name":"aprobacion1","label":"Aprovación 1","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"aprobacion1","isAssociation":true,"isMultiple":false},"revisor2":{"name":"revisor2","label":"Revisor 2","type":"select","enum":[],"source":new UserAdministration.User(),"textField":"username","value":"revisor2","isAssociation":true,"isMultiple":false},"aprobacion2":{"name":"aprobacion2","label":"Aprovación 2","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"aprobacion2","isAssociation":true,"isMultiple":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Código","data":"attributes.cod_tarea"},{"title":"Usuario","data":"relationships.usuario.attributes.function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''}","render":function (data, type, full, meta) {
+                            return data ? data : '';
+                        }},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Tarea.prototype = Object.create(Model.prototype);
+UserAdministration.Tarea.prototype.constructor = Model;
+
 UserAdministration.Login = function (url, id) {
     var self = this;
     this.$defaultUrl = "/api/UserAdministration/logins";

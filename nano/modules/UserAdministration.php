@@ -534,7 +534,7 @@
              * Tareas
              *
              */
-            /*new Module.Model({
+            new Module.Model({
                 "name": "tarea",
                 "title": "Tarea",
                 "pluralTitle": "Tareas",
@@ -546,40 +546,92 @@
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "usuario_id",
-                        "label": "Usuario",
-                        "type": "integer",
-                        "textField": "username",
-                        "ui": "select",
-                        "source": new Module.View.ModelInstance("UserAdministration.User"),
-                        "default": ""
-                    }),
-                    new Module.Model.Field({
                         "name": "nombre_tarea",
                         "label": "Tarea",
                         "type": "string",
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "nombre_tarea",
-                        "label": "Tarea",
+                        "name": "descripcion",
+                        "label": "Descripción",
                         "type": "string",
+                        //"ui": "textarea",
                         "default": ""
                     }),
+                    new Module.Model.Field({
+                        "name": "fecha_ini",
+                        "label": "Fecha inicio",
+                        "type": "string",
+                        //"ui": "textarea",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "fecha_fin",
+                        "label": "Fecha finalización",
+                        "type": "string",
+                        //"ui": "textarea",
+                        "default": ""
+                    })
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
-                        "name": "empresa",
-                        "model": "empresa",
+                        "name": "usuario",
+                        "label": "Usuario",
+                        "model": "user",
+                        "textField": function(data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "position": 1,
+                        "form": true,
+                        "list": true
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "revisor1",
+                        "label": "Revisor 1",
+                        "model": "user",
                         "nullable": true,
                         "list": false,
-                        "textField": "nombre_empresa",
+                        "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
                         "ui": "select",
-                        "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
-                        "form": false
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "form": true
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "aprobacion1",
+                        "label": "Aprovación 1",
+                        "model": "user",
+                        "nullable": true,
+                        "list": false,
+                        "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "form": true
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "revisor2",
+                        "label": "Revisor 2",
+                        "model": "user",
+                        "nullable": true,
+                        "list": false,
+                        "textField": "username",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "form": true
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "aprobacion2",
+                        "label": "Aprovación 2",
+                        "model": "user",
+                        "nullable": true,
+                        "list": false,
+                        "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "form": true
                     })
                 ]
-            }),*/
+            }),
             /**
              * Login
              */
