@@ -305,7 +305,12 @@
                                                     <td class="project-completion">
                                                         <small>Avance: {{tareaI.attributes.avance}}%</small>
                                                         <div class="progress progress-mini">
-                                                            <div v-bind:style="{width: tareaI.attributes.avance+'%'}" class="progress-bar"></div>
+                                                            <div v-bind:style="{width: tareaI.attributes.avance+'%'}" v-bind:class="{
+                                                                'progress-bar': true,
+                                                                'progress-bar-danger': tareaI.attributes.avance*1 <= 30,
+                                                                'progress-bar-warning': 30 < tareaI.attributes.avance*1 && tareaI.attributes.avance*1 < 70,
+                                                                'progress-bar-primary': 70 <= tareaI.attributes.avance*1
+                                                            }"></div>
                                                         </div>
                                                     </td>
                                                     <td class="project-user">
@@ -373,9 +378,9 @@
                                                             <div v-bind:class="{'progress progress-striped active m-b-sm': tarea.avance < 100, 'progress progress-bar-default': tarea.avance == 100 }">
                                                                 <div v-bind:style="{width: tarea.avance+'%'}" v-bind:class="{
                                                                      'progress-bar': true,
-                                                                     'progress-bar-danger': tarea.avance < 30,
+                                                                     'progress-bar-danger': tarea.avance <= 30,
                                                                      'progress-bar-warning': 30 < tarea.avance && tarea.avance < 70,
-                                                                     'progress-bar-primary': 70 < tarea.avance
+                                                                     'progress-bar-primary': 70 <= tarea.avance
                                                                 }"></div>
                                                             </div>
                                                             <small>
