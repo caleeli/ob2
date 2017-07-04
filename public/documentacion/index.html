@@ -95,7 +95,7 @@
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
 
-                                                    <abm v-bind:model="empresa" v-bind:editable="false" toolbar="excel,pdf,search" v-on:selectrow="seleccionaEmpresa"></abm>
+                                                    <abm v-bind:model="empresa" v-bind:editable="false" toolbar="pdf,search" v-on:selectrow="seleccionaEmpresa"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -136,7 +136,7 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
-                                                    <abm id="empresa_estado" v-bind:model="empresa_estado" v-bind:editable="false" v-on:selectrow="cargarEstadosFinancieros" toolbar="excel,pdf,search"></abm>
+                                                    <abm id="empresa_estado" v-bind:model="empresa_estado" v-bind:editable="false" v-on:selectrow="cargarEstadosFinancieros" toolbar="search"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -273,13 +273,13 @@
                                 <div class="ibox-title">
                                     <h5>Tareas</h5>
                                     <div class="ibox-tools">
-                                        <a href="" class="btn btn-primary btn-xs">Asignar tarea</a>
+                                        <a href="#asignarTarea" class="btn btn-primary btn-xs" v-on:click='crearTarea'>Asignar tarea</a>
                                     </div>
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row m-b-sm m-t-sm">
                                         <div class="col-md-1">
-                                            <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Recargar</button>
+                                            <button type="button" id="loading-example-btn" class="btn btn-white btn-sm" v-on:click='listarTareas'><i class="fa fa-refresh"></i> Recargar</button>
                                         </div>
                                         <div class="col-md-11">
                                             <div class="input-group">
@@ -293,273 +293,27 @@
 
                                         <table class="table table-hover">
                                             <tbody>
-                                                <tr>
+                                                <tr v-for='tareaI in tareas'>
                                                     <td class="project-status">
-                                                        <span class="label label-primary">Pendiente</span>
+                                                        <span class="label label-primary">{{tareaI.attributes.estado}}</span>
                                                     </td>
                                                     <td class="project-title">
-                                                        <a href="#detalleTarea">Revisión de las carpetas de Ecofuturo</a>
+                                                        <a href="#detalleTarea" v-on:click='seleccionaTarea(tareaI)'>{{tareaI.attributes.cod_tarea}} {{tareaI.attributes.nombre_tarea}}</a>
                                                         <br>
-                                                        <small>Creado el 17-06-2017</small>
+                                                        <small>{{tareaI.attributes.created_at}}</small>
                                                     </td>
                                                     <td class="project-completion">
-                                                        <small>Avance: 48%</small>
+                                                        <small>Avance: {{tareaI.attributes.avance}}%</small>
                                                         <div class="progress progress-mini">
-                                                            <div style="width: 48%;" class="progress-bar"></div>
+                                                            <div v-bind:style="{width: tareaI.attributes.avance+'%'}" class="progress-bar"></div>
                                                         </div>
                                                     </td>
                                                     <td class="project-user">
-                                                        Angela Choque
+                                                        {{tareaI.relationships.usuario.attributes.nombres+' '+tareaI.relationships.usuario.attributes.apellidos}}
                                                     </td>
                                                     <td class="project-actions">
-                                                        <a href="#detalleTarea" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Ver </a>
-                                                        <a href="#editarTarea" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="project-status">
-                                                        <span class="label label-primary">Active</span>
-                                                    </td>
-                                                    <td class="project-title">
-                                                        <a href="project_detail.html">There are many variations of passages</a>
-                                                        <br>
-                                                        <small>Created 11.08.2014</small>
-                                                    </td>
-                                                    <td class="project-completion">
-                                                        <small>Completion with: 28%</small>
-                                                        <div class="progress progress-mini">
-                                                            <div style="width: 28%;" class="progress-bar"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="project-people">
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a7.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a6.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                                    </td>
-                                                    <td class="project-actions">
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="project-status">
-                                                        <span class="label label-default">Unactive</span>
-                                                    </td>
-                                                    <td class="project-title">
-                                                        <a href="project_detail.html">Many desktop publishing packages and web</a>
-                                                        <br>
-                                                        <small>Created 10.08.2014</small>
-                                                    </td>
-                                                    <td class="project-completion">
-                                                        <small>Completion with: 8%</small>
-                                                        <div class="progress progress-mini">
-                                                            <div style="width: 8%;" class="progress-bar"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="project-people">
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                                    </td>
-                                                    <td class="project-actions">
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="project-status">
-                                                        <span class="label label-primary">Active</span>
-                                                    </td>
-                                                    <td class="project-title">
-                                                        <a href="project_detail.html">Letraset sheets containing</a>
-                                                        <br>
-                                                        <small>Created 22.07.2014</small>
-                                                    </td>
-                                                    <td class="project-completion">
-                                                        <small>Completion with: 83%</small>
-                                                        <div class="progress progress-mini">
-                                                            <div style="width: 83%;" class="progress-bar"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="project-people">
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a7.jpg"></a>
-                                                    </td>
-                                                    <td class="project-actions">
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="project-status">
-                                                        <span class="label label-primary">Active</span>
-                                                    </td>
-                                                    <td class="project-title">
-                                                        <a href="project_detail.html">Contrary to popular belief</a>
-                                                        <br>
-                                                        <small>Created 14.07.2014</small>
-                                                    </td>
-                                                    <td class="project-completion">
-                                                        <small>Completion with: 97%</small>
-                                                        <div class="progress progress-mini">
-                                                            <div style="width: 97%;" class="progress-bar"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="project-people">
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>
-                                                    </td>
-                                                    <td class="project-actions">
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="project-status">
-                                                        <span class="label label-primary">Active</span>
-                                                    </td>
-                                                    <td class="project-title">
-                                                        <a href="project_detail.html">Contract with Zender Company</a>
-                                                        <br>
-                                                        <small>Created 14.08.2014</small>
-                                                    </td>
-                                                    <td class="project-completion">
-                                                        <small>Completion with: 48%</small>
-                                                        <div class="progress progress-mini">
-                                                            <div style="width: 48%;" class="progress-bar"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="project-people">
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
-                                                    </td>
-                                                    <td class="project-actions">
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="project-status">
-                                                        <span class="label label-primary">Active</span>
-                                                    </td>
-                                                    <td class="project-title">
-                                                        <a href="project_detail.html">There are many variations of passages</a>
-                                                        <br>
-                                                        <small>Created 11.08.2014</small>
-                                                    </td>
-                                                    <td class="project-completion">
-                                                        <small>Completion with: 28%</small>
-                                                        <div class="progress progress-mini">
-                                                            <div style="width: 28%;" class="progress-bar"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="project-people">
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a7.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a6.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                                    </td>
-                                                    <td class="project-actions">
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="project-status">
-                                                        <span class="label label-default">Unactive</span>
-                                                    </td>
-                                                    <td class="project-title">
-                                                        <a href="project_detail.html">Many desktop publishing packages and web</a>
-                                                        <br>
-                                                        <small>Created 10.08.2014</small>
-                                                    </td>
-                                                    <td class="project-completion">
-                                                        <small>Completion with: 8%</small>
-                                                        <div class="progress progress-mini">
-                                                            <div style="width: 8%;" class="progress-bar"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="project-people">
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                                    </td>
-                                                    <td class="project-actions">
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="project-status">
-                                                        <span class="label label-primary">Active</span>
-                                                    </td>
-                                                    <td class="project-title">
-                                                        <a href="project_detail.html">Letraset sheets containing</a>
-                                                        <br>
-                                                        <small>Created 22.07.2014</small>
-                                                    </td>
-                                                    <td class="project-completion">
-                                                        <small>Completion with: 83%</small>
-                                                        <div class="progress progress-mini">
-                                                            <div style="width: 83%;" class="progress-bar"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="project-people">
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
-                                                    </td>
-                                                    <td class="project-actions">
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="project-status">
-                                                        <span class="label label-primary">Active</span>
-                                                    </td>
-                                                    <td class="project-title">
-                                                        <a href="project_detail.html">Contrary to popular belief</a>
-                                                        <br>
-                                                        <small>Created 14.07.2014</small>
-                                                    </td>
-                                                    <td class="project-completion">
-                                                        <small>Completion with: 97%</small>
-                                                        <div class="progress progress-mini">
-                                                            <div style="width: 97%;" class="progress-bar"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="project-people">
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>
-                                                    </td>
-                                                    <td class="project-actions">
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="project-status">
-                                                        <span class="label label-primary">Active</span>
-                                                    </td>
-                                                    <td class="project-title">
-                                                        <a href="project_detail.html">There are many variations of passages</a>
-                                                        <br>
-                                                        <small>Created 11.08.2014</small>
-                                                    </td>
-                                                    <td class="project-completion">
-                                                        <small>Completion with: 28%</small>
-                                                        <div class="progress progress-mini">
-                                                            <div style="width: 28%;" class="progress-bar"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="project-people">
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a7.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a6.jpg"></a>
-                                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                                    </td>
-                                                    <td class="project-actions">
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                        <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                        <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Ver </a>
+                                                        <a href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -569,25 +323,28 @@
                             </div>
                         </div>
                     </carouselitem>
+                    <!--
+                        Visualizar detalle de tarea
+                    -->
                     <carouselitem id="detalleTarea">
                         <div class="row">
-                            <div class="col-lg-9">
+                            <div class="col-lg-12">
                                 <div class="wrapper wrapper-content animated fadeInUp">
                                     <div class="ibox">
                                         <div class="ibox-content">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="m-b-md">
-                                                        <a href="#" class="btn btn-white btn-xs pull-right">Modificar tarea</a>
-                                                        <h2>Revisión de las carpetas de Ecofuturo</h2>
+                                                        <a href="#registrarAvance" class="btn btn-success btn-xs pull-right" v-on:click="crearAvance">Registrar avance</a>
+                                                        <h2>{{tarea.cod_tarea}} {{tarea.nombre_tarea}}</h2>
                                                     </div>
                                                     <dl class="dl-horizontal">
-                                                        <dt>Estado:</dt> <dd><span class="label label-primary">Pendiente</span></dd>
+                                                        <dt>Estado:</dt> <dd><span class="label label-primary">{{tarea.estado}}</span></dd>
                                                         <div style="height: 4px;"></div>
                                                         <dt>Prioridad:</dt>
                                                         <dd>
                                                             <p class="small font-bold">
-                                                                <span><i class="fa fa-circle text-warning"></i> Prioriadad Alta</span>
+                                                                <span><i v-bind:class="{'fa fa-circle':true, 'text-danger':tarea.prioridad=='Alta', 'text-warning':tarea.prioridad=='Media', 'text-primary':tarea.prioridad=='Baja'}"></i> {{tarea.prioridad}}</span>
                                                             </p>
                                                         </dd>
                                                     </dl>
@@ -596,15 +353,15 @@
                                             <div class="row">
                                                 <div class="col-lg-5">
                                                     <dl class="dl-horizontal">
-                                                        <dt>Creado por:</dt> <dd>Alex Smith</dd>
-                                                        <dt>Asignado a:</dt> <dd>Angela Choque</dd>
+                                                        <dt>Creado por:</dt> <dd>{{tarea.revisor1 ? tarea.revisor1.attributes.username : ''}}</dd>
+                                                        <dt>Asignado a:</dt> <dd>{{tarea.usuario ? tarea.usuario.attributes.username : ''}}</dd>
                                                     </dl>
                                                 </div>
                                                 <div class="col-lg-7" id="cluster_info">
                                                     <dl class="dl-horizontal">
 
-                                                        <dt>Creación:</dt> <dd>16-07-2014 12:15:57</dd>
-                                                        <dt>Última actualización:</dt> <dd>10-08-2014 23:36:57</dd>
+                                                        <dt>Creación:</dt> <dd>{{tarea.created_at}}</dd>
+                                                        <dt>Última actualización:</dt> <dd>{{tarea.updated_at}}</dd>
                                                     </dl>
                                                 </div>
                                             </div>
@@ -613,11 +370,16 @@
                                                     <dl class="dl-horizontal">
                                                         <dt>Avance:</dt>
                                                         <dd>
-                                                            <div class="progress progress-striped active m-b-sm">
-                                                                <div style="width: 60%;" class="progress-bar progress-bar-warning"></div>
+                                                            <div v-bind:class="{'progress progress-striped active m-b-sm': tarea.avance < 100, 'progress progress-bar-default': tarea.avance == 100 }">
+                                                                <div v-bind:style="{width: tarea.avance+'%'}" v-bind:class="{
+                                                                     'progress-bar': true,
+                                                                     'progress-bar-danger': tarea.avance < 30,
+                                                                     'progress-bar-warning': 30 < tarea.avance && tarea.avance < 70,
+                                                                     'progress-bar-primary': 70 < tarea.avance
+                                                                }"></div>
                                                             </div>
                                                             <small>
-                                                                El avance de la tarea es de <strong>60%</strong>.
+                                                                El avance de la tarea es de <strong>{{tarea.avance}}%</strong>.
                                                             </small>
                                                         </dd>
                                                     </dl>
@@ -629,7 +391,7 @@
                                                         <div class="panel-heading">
                                                             <div class="panel-options">
                                                                 <ul class="nav nav-tabs">
-                                                                    <li class="active"><a href="#tab-1" data-toggle="tab">Mensajes</a></li>
+                                                                    <li class="active"><a href="#tab-1" data-toggle="tab">Descripción</a></li>
                                                                     <li class=""><a href="#tab-2" data-toggle="tab">Actividades</a></li>
                                                                 </ul>
                                                             </div>
@@ -639,79 +401,15 @@
 
                                                             <div class="tab-content">
                                                                 <div class="tab-pane active" id="tab-1">
-                                                                    <div class="feed-activity-list">
-                                                                        <div class="feed-element">
-                                                                            <a href="#" class="pull-left">
-                                                                                <img alt="image" class="img-circle" src="img/a2.jpg">
-                                                                            </a>
-                                                                            <div class="media-body ">
-                                                                                <small class="pull-right">2h ago</small>
-                                                                                <strong>Mark Johnson</strong> posted message on <strong>Monica Smith</strong> site. <br>
-                                                                                <small class="text-muted">Today 2:10 pm - 12.06.2014</small>
-                                                                                <div class="well">
-                                                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                                                                                    Over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="feed-element">
-                                                                            <a href="#" class="pull-left">
-                                                                                <img alt="image" class="img-circle" src="img/a3.jpg">
-                                                                            </a>
-                                                                            <div class="media-body ">
-                                                                                <small class="pull-right">2h ago</small>
-                                                                                <strong>Janet Rosowski</strong> add 1 photo on <strong>Monica Smith</strong>. <br>
-                                                                                <small class="text-muted">2 days ago at 8:30am</small>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="feed-element">
-                                                                            <a href="#" class="pull-left">
-                                                                                <img alt="image" class="img-circle" src="img/a4.jpg">
-                                                                            </a>
-                                                                            <div class="media-body ">
-                                                                                <small class="pull-right text-navy">5h ago</small>
-                                                                                <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
-                                                                                <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                                                                                <div class="actions">
-                                                                                    <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> Like </a>
-                                                                                    <a class="btn btn-xs btn-white"><i class="fa fa-heart"></i> Love</a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="feed-element">
-                                                                            <a href="#" class="pull-left">
-                                                                                <img alt="image" class="img-circle" src="img/a5.jpg">
-                                                                            </a>
-                                                                            <div class="media-body ">
-                                                                                <small class="pull-right">2h ago</small>
-                                                                                <strong>Kim Smith</strong> posted message on <strong>Monica Smith</strong> site. <br>
-                                                                                <small class="text-muted">Yesterday 5:20 pm - 12.06.2014</small>
-                                                                                <div class="well">
-                                                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                                                                                    Over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="feed-element">
-                                                                            <a href="#" class="pull-left">
-                                                                                <img alt="image" class="img-circle" src="img/profile.jpg">
-                                                                            </a>
-                                                                            <div class="media-body ">
-                                                                                <small class="pull-right">23h ago</small>
-                                                                                <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
-                                                                                <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="feed-element">
-                                                                            <a href="#" class="pull-left">
-                                                                                <img alt="image" class="img-circle" src="img/a7.jpg">
-                                                                            </a>
-                                                                            <div class="media-body ">
-                                                                                <small class="pull-right">46h ago</small>
-                                                                                <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
-                                                                                <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
-                                                                            </div>
-                                                                        </div>
+                                                                    <p>
+                                                                        {{tarea.descripcion}}
+                                                                    </p>
+                                                                    <h5>Adjuntos</h5>
+                                                                    <ul class="list-unstyled project-files">
+                                                                        <li v-for="adjunto in tarea.adjuntos"><a :href="adjunto.attributes.archivo.url"><i class="fa fa-file"></i> {{adjunto.attributes.archivo.url}}</a></li>
+                                                                    </ul>
+                                                                    <div class="text-center m-t-md">
+                                                                        <a href="#" class="btn btn-xs btn-primary">Agregar archivo</a>
                                                                     </div>
 
                                                                 </div>
@@ -720,195 +418,26 @@
                                                                     <table class="table table-striped">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Status</th>
-                                                                                <th>Title</th>
-                                                                                <th>Start Time</th>
-                                                                                <th>End Time</th>
-                                                                                <th>Comments</th>
+                                                                                <th>Avance</th>
+                                                                                <th>Fecha y Hora</th>
+                                                                                <th>Comentarios</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr>
+                                                                            <tr v-for="avance in tarea.avances">
                                                                                 <td>
-                                                                                    <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
+                                                                                    <span class="label label-primary">{{avance.attributes.avance}}</span>
                                                                                 </td>
                                                                                 <td>
-                                                                                    Create project in webapp
-                                                                                </td>
-                                                                                <td>
-                                                                                    12.07.2014 10:10:1
-                                                                                </td>
-                                                                                <td>
-                                                                                    14.07.2014 10:16:36
+                                                                                    {{avance.attributes.created_at}}
                                                                                 </td>
                                                                                 <td>
                                                                                     <p class="small">
-                                                                                        Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
+                                                                                        {{avance.attributes.descripcion}}
                                                                                     </p>
                                                                                 </td>
 
                                                                             </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    Various versions
-                                                                                </td>
-                                                                                <td>
-                                                                                    12.07.2014 10:10:1
-                                                                                </td>
-                                                                                <td>
-                                                                                    14.07.2014 10:16:36
-                                                                                </td>
-                                                                                <td>
-                                                                                    <p class="small">
-                                                                                        Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                                                    </p>
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    There are many variations
-                                                                                </td>
-                                                                                <td>
-                                                                                    12.07.2014 10:10:1
-                                                                                </td>
-                                                                                <td>
-                                                                                    14.07.2014 10:16:36
-                                                                                </td>
-                                                                                <td>
-                                                                                    <p class="small">
-                                                                                        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which
-                                                                                    </p>
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    Latin words
-                                                                                </td>
-                                                                                <td>
-                                                                                    12.07.2014 10:10:1
-                                                                                </td>
-                                                                                <td>
-                                                                                    14.07.2014 10:16:36
-                                                                                </td>
-                                                                                <td>
-                                                                                    <p class="small">
-                                                                                        Latin words, combined with a handful of model sentence structures
-                                                                                    </p>
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    The generated Lorem
-                                                                                </td>
-                                                                                <td>
-                                                                                    12.07.2014 10:10:1
-                                                                                </td>
-                                                                                <td>
-                                                                                    14.07.2014 10:16:36
-                                                                                </td>
-                                                                                <td>
-                                                                                    <p class="small">
-                                                                                        The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-                                                                                    </p>
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    The first line
-                                                                                </td>
-                                                                                <td>
-                                                                                    12.07.2014 10:10:1
-                                                                                </td>
-                                                                                <td>
-                                                                                    14.07.2014 10:16:36
-                                                                                </td>
-                                                                                <td>
-                                                                                    <p class="small">
-                                                                                        The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                                                                                    </p>
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    The standard chunk
-                                                                                </td>
-                                                                                <td>
-                                                                                    12.07.2014 10:10:1
-                                                                                </td>
-                                                                                <td>
-                                                                                    14.07.2014 10:16:36
-                                                                                </td>
-                                                                                <td>
-                                                                                    <p class="small">
-                                                                                        The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
-                                                                                    </p>
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    Lorem Ipsum is that
-                                                                                </td>
-                                                                                <td>
-                                                                                    12.07.2014 10:10:1
-                                                                                </td>
-                                                                                <td>
-                                                                                    14.07.2014 10:16:36
-                                                                                </td>
-                                                                                <td>
-                                                                                    <p class="small">
-                                                                                        Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
-                                                                                    </p>
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    Contrary to popular
-                                                                                </td>
-                                                                                <td>
-                                                                                    12.07.2014 10:10:1
-                                                                                </td>
-                                                                                <td>
-                                                                                    14.07.2014 10:16:36
-                                                                                </td>
-                                                                                <td>
-                                                                                    <p class="small">
-                                                                                        Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
-                                                                                    </p>
-                                                                                </td>
-
-                                                                            </tr>
-
                                                                         </tbody>
                                                                     </table>
 
@@ -924,21 +453,275 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="wrapper wrapper-content project-manager">
-                                    <h4>Descripción de la tarea</h4>
-                                    <p class="small">
-                                        Revisar las carpetas de documentación de la empresa ECOFUTURO.
-                                    </p>
-                                    <h5>Adjuntos</h5>
-                                    <ul class="list-unstyled project-files">
-                                        <li><a href=""><i class="fa fa-file"></i> Project_document.docx</a></li>
-                                        <li><a href=""><i class="fa fa-file-picture-o"></i> Logo_zender_company.jpg</a></li>
-                                        <li><a href=""><i class="fa fa-stack-exchange"></i> Email_from_Alex.mln</a></li>
-                                        <li><a href=""><i class="fa fa-file"></i> Contract_20_11_2014.docx</a></li>
-                                    </ul>
-                                    <div class="text-center m-t-md">
-                                        <a href="#" class="btn btn-xs btn-primary">Agregar archivo</a>
+                        </div>
+                    </carouselitem>
+                    <!--
+                        Asignar una nueva tarea
+                    -->
+                    <carouselitem id="asignarTarea">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="wrapper wrapper-content animated fadeInUp">
+                                    <div class="ibox">
+                                        <div class="ibox-title">
+                                            <h5>Tarea</h5>
+                                            <div class="ibox-tools">
+                                                <a href="#asignarTarea" class="btn btn-primary btn-xs" v-on:click='guardarTarea'>Guardar Tarea</a>
+                                            </div>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Código:</dt> <dd>{{tarea.cod_tarea}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Tarea:</dt> <dd><input type="text" class="form-control" placeholder="tarea" v-model="tarea.nombre_tarea"></dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Estado:</dt> <dd><span class="label label-primary">Pendiente</span></dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Prioridad:</dt>
+                                                        <dd>
+                                                            <select class="form-control" placeholder="prioridad" v-model="tarea.prioridad">
+                                                                <option value="Baja">Baja</option>
+                                                                <option value="Media">Media</option>
+                                                                <option value="Alta">Alta</option>
+                                                            </select>
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Creado por:</dt> <dd>{{user.nombres + ' ' + user.apellidos}}</dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Asignado a:</dt> <dd>
+                                                            <select class="form-control" placeholder="asignado" v-model="tarea.usuario_id">
+                                                                <option value="1">Angela Choque</option>
+                                                            </select>
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                                <div class="col-lg-7" id="cluster_info">
+                                                    <dl class="dl-horizontal">
+
+                                                        
+                                                        
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Avance:</dt>
+                                                        <dd>
+                                                            <div class="progress progress-striped active m-b-sm">
+                                                                <div v-bind:style="{width: tarea.avance+'%'}" class="progress-bar progress-bar-warning"></div>
+                                                            </div>
+                                                            <small>
+                                                                El avance de la tarea es de <strong>{{tarea.avance}}%</strong>.
+                                                            </small>
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                            <div class="row m-t-sm">
+                                                <div class="col-lg-12">
+                                                    <div class="panel blank-panel">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-options">
+                                                                <ul class="nav nav-tabs">
+                                                                    <li class="active"><a href="#tab-1" data-toggle="tab">Descripción</a></li>
+                                                                    <li class=""><a href="#tab-2" data-toggle="tab">Actividades</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="panel-body">
+
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane active" id="tab-1">
+                                                                    <p>
+                                                                        <textarea class="form-control" v-model="tarea.descripcion" placeholder="Descripción"></textarea>
+                                                                    </p>
+                                                                    <h5>Adjuntos</h5>
+                                                                    <ul class="list-unstyled project-files">
+                                                                        <li v-for="adjunto in tarea.adjuntos"><a :href="adjunto.attributes.archivo.url"><i class="fa fa-file"></i> {{adjunto.attributes.archivo.url}}</a></li>
+                                                                    </ul>
+                                                                    <div class="text-center m-t-md">
+                                                                        <a href="#" class="btn btn-xs btn-primary">Agregar archivo</a>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="tab-pane" id="tab-2">
+
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Avance</th>
+                                                                                <th>Fecha y Hora</th>
+                                                                                <th>Comentarios</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="avance in tarea.avances">
+                                                                                <td>
+                                                                                    <span class="label label-primary">{{avance.attributes.avance}}</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{avance.attributes.created_at}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="small">
+                                                                                        {{avance.attributes.descripcion}}
+                                                                                    </p>
+                                                                                </td>
+
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </carouselitem>
+                    <!--
+                        Registrar avance de tarea
+                    -->
+                    <carouselitem id="registrarAvance">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="wrapper wrapper-content animated fadeInUp">
+                                    <div class="ibox">
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="m-b-md">
+                                                        <a href="javascript:history.back()" class="btn btn-success btn-xs pull-right" v-on:click="guardarAvance">Guardar avance</a>
+                                                        <h2>{{tarea.cod_tarea}} {{tarea.nombre_tarea}}</h2>
+                                                    </div>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Estado:</dt> <dd><span class="label label-primary">{{tarea.estado}}</span></dd>
+                                                        <div style="height: 4px;"></div>
+                                                        <dt>Prioridad:</dt>
+                                                        <dd>
+                                                            <p class="small font-bold">
+                                                                <span><i v-bind:class="{'fa fa-circle':true, 'text-danger':tarea.prioridad=='Alta', 'text-warning':tarea.prioridad=='Media', 'text-primary':tarea.prioridad=='Baja'}"></i> {{tarea.prioridad}}</span>
+                                                            </p>
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Creado por:</dt> <dd>{{tarea.revisor1 ? tarea.revisor1.attributes.username : ''}}</dd>
+                                                        <dt>Asignado a:</dt> <dd>{{tarea.usuario ? tarea.usuario.attributes.username : ''}}</dd>
+                                                    </dl>
+                                                </div>
+                                                <div class="col-lg-7" id="cluster_info">
+                                                    <dl class="dl-horizontal">
+
+                                                        <dt>Creación:</dt> <dd>{{tarea.created_at}}</dd>
+                                                        <dt>Última actualización:</dt> <dd>{{tarea.updated_at}}</dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Avance:</dt>
+                                                        <dd>
+                                                            <input type="number" min="0" max="100" class="form-control" placeholder="avance" v-model="avance.avance">
+                                                        </dd>
+                                                    </dl>
+                                                    <dl class="dl-horizontal">
+                                                        <dt>Comentario de avance:</dt>
+                                                        <dd>
+                                                            <textarea class="form-control" v-model="avance.descripcion" placeholder="Descripción"></textarea>
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                            <div class="row m-t-sm">
+                                                <div class="col-lg-12">
+                                                    <div class="panel blank-panel">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-options">
+                                                                <ul class="nav nav-tabs">
+                                                                    <li class="active"><a href="#tab-1" data-toggle="tab">Descripción</a></li>
+                                                                    <li class=""><a href="#tab-2" data-toggle="tab">Actividades</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="panel-body">
+
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane active" id="tab-1">
+                                                                    <p>
+                                                                        {{tarea.descripcion}}
+                                                                    </p>
+                                                                    <h5>Adjuntos</h5>
+                                                                    <ul class="list-unstyled project-files">
+                                                                        <li v-for="adjunto in tarea.adjuntos"><a :href="adjunto.attributes.archivo.url"><i class="fa fa-file"></i> {{adjunto.attributes.archivo.url}}</a></li>
+                                                                    </ul>
+                                                                    <div class="text-center m-t-md">
+                                                                        <a href="#" class="btn btn-xs btn-primary">Agregar archivo</a>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="tab-pane" id="tab-2">
+
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Avance</th>
+                                                                                <th>Fecha y Hora</th>
+                                                                                <th>Comentarios</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="avance in tarea.actividades">
+                                                                                <td>
+                                                                                    <span class="label label-primary">{{avance.attributes.avance}}</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{avance.attributes.created_at}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="small">
+                                                                                        {{avance.attributes.descripcion}}
+                                                                                    </p>
+                                                                                </td>
+
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -952,73 +735,111 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.18"></script>
+        <script src="../js/server.js?v0.21"></script>
         <script>
-$(document).ready(function () {
-    var app = new Vue({
-        el: '#wrapper',
-        carousel: {},
-        data: function () {
-            var self = this;
-            return {
-                user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
-                empresa: new UserAdministration.Empresa(),
-                empresa_estado: new UserAdministration.EmpresaEstado(),
-                estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
-                firma_auditoria: new UserAdministration.Firma(),
-                uai: new UserAdministration.Uai(),
-                tarea: new UserAdministration.Tarea(),
-                estados_financieros: [],
-                PathItem: [],
-            };
-        },
-        methods: {
-            seleccionaEmpresa: function () {
-                window.location.hash = '#descripcionEmpresa';
-            },
-            cargarEstadosFinancieros: function () {
-                var model = new UserAdministration.EstadoFinanciero("/api/UserAdministration/empresa_estados/" + app.empresa_estado.id + "/estados");
-                model.$select(function (resultado) {
-                    app.estados_financieros.splice(0);
-                    resultado.data.forEach(function (row) {
-                        app.estados_financieros.push(row);
-                    });
-                    Vue.nextTick(function () {
-                        $("span.peityChart").each(function () {
-                            var chart = $(this).attr("chart") ? $(this).attr("chart") : 'pie';
-                            $(this).peity(chart, {
-                                fill: chart === 'pie' || chart === 'bar' ? ['#1ab394', '#d7d7d7', '#8CD9C9'] : '#1ab394',
-                                width: 80,
-                                height: 80
-                            })
+        $(document).ready(function () {
+            var app = new Vue({
+                el: '#wrapper',
+                carousel: {},
+                tareaAvance: 0,
+                data: function () {
+                    var self = this;
+                    return {
+                        user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
+                        empresa: new UserAdministration.Empresa(),
+                        empresa_estado: new UserAdministration.EmpresaEstado(),
+                        estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
+                        firma_auditoria: new UserAdministration.Firma(),
+                        uai: new UserAdministration.Uai(),
+                        tareas: [],
+                        tarea: new UserAdministration.Tarea(),
+                        avance: new UserAdministration.Avance(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/avances") : "/api/UserAdministration/avances"}),
+                        estados_financieros: [],
+                        PathItem: [],
+                    };
+                },
+                methods: {
+                    seleccionaEmpresa: function () {
+                        window.location.hash = '#descripcionEmpresa';
+                    },
+                    listarTareas: function () {
+                        var self = this;
+                        this.tareas.splice(0);
+                        this.tarea.$select(function (data) {
+                            data.data.forEach(function (row) {
+                                self.tareas.push(row);
+                            });
                         });
-                    });
-                });
-            },
-            addCommas: function (nStr)
-            {
-                nStr += '';
-                x = nStr.split('.');
-                x1 = x[0];
-                x2 = x.length > 1 ? '.' + x[1] : '';
-                var rgx = /(\d+)(\d{3})/;
-                while (rgx.test(x1)) {
-                    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                    },
+                    seleccionaTarea: function (tarea) {
+                        this.tarea.$load(tarea.id);
+                    },
+                    crearTarea: function () {
+                        this.tarea.$load(0);
+                    },
+                    guardarTarea: function () {
+                        this.tarea.$save();
+                    },
+                    crearAvance: function () {
+                        this.avance.$load(0);
+                    },
+                    guardarAvance: function () {
+                        var self = this;
+                        this.avance.tarea_id = this.tarea.id;
+                        this.avance.$save('', function() {
+                            self.listarTareas();
+                            self.tarea.$load(self.tarea.id);
+                        });
+                    },
+                    registrarAvanceTarea: function (tarea) {
+                        this.tarea.$load(tarea.id);
+                        this.avance.$load(0);
+                    },
+                    cargarEstadosFinancieros: function () {
+                        var model = new UserAdministration.EstadoFinanciero("/api/UserAdministration/empresa_estados/" + app.empresa_estado.id + "/estados");
+                        model.$select(function (resultado) {
+                            app.estados_financieros.splice(0);
+                            resultado.data.forEach(function (row) {
+                                app.estados_financieros.push(row);
+                            });
+                            Vue.nextTick(function () {
+                                $("span.peityChart").each(function () {
+                                    var chart = $(this).attr("chart") ? $(this).attr("chart") : 'pie';
+                                    $(this).peity(chart, {
+                                        fill: chart === 'pie' || chart === 'bar' ? ['#1ab394', '#d7d7d7', '#8CD9C9'] : '#1ab394',
+                                        width: 80,
+                                        height: 80
+                                    })
+                                });
+                            });
+                        });
+                    },
+                    addCommas: function (nStr)
+                    {
+                        nStr += '';
+                        x = nStr.split('.');
+                        x1 = x[0];
+                        x2 = x.length > 1 ? '.' + x[1] : '';
+                        var rgx = /(\d+)(\d{3})/;
+                        while (rgx.test(x1)) {
+                            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                        }
+                        return x1 + x2;
+                    }
+                },
+                mounted: function () {
+                    var self = this;
+                    this.carousel = this.$children[0];
+                    $("#now_loading").hide();
+                    $(this.$el).css("visibility", "visible");
+                    var hash0 = location.hash;
+                    location.hash = '';
+                    location.hash = hash0;
+                    this.listarTareas();
                 }
-                return x1 + x2;
-            }
-        },
-        mounted: function () {
-            this.carousel = this.$children[0];
-            $("#now_loading").hide();
-            $(this.$el).css("visibility", "visible");
-            var hash0 = location.hash;
-            location.hash = '';
-            location.hash = hash0;
-        }
-    });
-    window.app = app;
-});
+            });
+            window.app = app;
+        });
         </script>
         <!-- Peity -->
         <script src="js/plugins/peity/jquery.peity.min.js"></script>

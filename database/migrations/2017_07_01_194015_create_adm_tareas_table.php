@@ -16,6 +16,9 @@ class CreateAdmTareasTable extends Migration
             $table->string('descripcion')->nullable();
             $table->string('fecha_ini')->nullable();
             $table->string('fecha_fin')->nullable();
+            $table->string('estado')->nullable();
+            $table->integer('avance')->nullable();
+            $table->string('prioridad')->nullable();
             $table->integer('usuario_id')->unsigned();
             $table->integer('revisor1_id')->unsigned()->nullable();
             $table->integer('aprobacion1_id')->unsigned()->nullable();

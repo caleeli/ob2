@@ -543,7 +543,7 @@
                         "name": "cod_tarea",
                         "type": "string",
                         "label": "Código",
-                        "default": ""
+                        "default": "REV-003"
                     }),
                     new Module.Model.Field({
                         "name": "nombre_tarea",
@@ -555,23 +555,38 @@
                         "name": "descripcion",
                         "label": "Descripción",
                         "type": "string",
-                        //"ui": "textarea",
                         "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "fecha_ini",
                         "label": "Fecha inicio",
                         "type": "string",
-                        //"ui": "textarea",
                         "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "fecha_fin",
                         "label": "Fecha finalización",
                         "type": "string",
-                        //"ui": "textarea",
                         "default": ""
-                    })
+                    }),
+                    new Module.Model.Field({
+                        "name": "estado",
+                        "label": "Estado",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "avance",
+                        "label": "Avance",
+                        "type": "integer",
+                        "default": "0"
+                    }),
+                    new Module.Model.Field({
+                        "name": "prioridad",
+                        "label": "Prioridad",
+                        "type": "string",
+                        "default": "Media"
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
@@ -629,8 +644,76 @@
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.User"),
                         "form": true
-                    })
+                    }),
+                    new Module.Model.HasMany({
+                        "name": "adjuntos",
+                        "model": "adjunto",
+                        "form": true
+                    }),
+                    new Module.Model.HasMany({
+                        "name": "avances",
+                        "model": "avance",
+                        "form": true
+                    }),
                 ]
+            }),
+            /**
+             * Adjuntos de tarea
+             */
+            new Module.Model({
+                "name": "adjunto",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "archivo",
+                        "type": "array",
+                        "label": "Archivo",
+                        "ui": "file",
+                        "textField": function(data){return data?data.name:''},
+                    })
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "tarea",
+                        "model": "tarea",
+                        "nullable": true,
+                    }),
+                ]
+            }),
+            /**
+             * Actividades de la tarea
+             */
+            new Module.Model({
+                "name": "avance",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "avance",
+                        "type": "integer",
+                        "label": "Avance",
+                    }),
+                    new Module.Model.Field({
+                        "name": "descripcion",
+                        "type": "string",
+                        "label": "Descripción",
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "tarea",
+                        "model": "tarea",
+                        "nullable": true,
+                    }),
+                ],
+                "events": {
+                    "saved": <?php
+                    function (AvanceSaved $event) {
+                        if (!$event->avance->tarea_id) {
+                            return;
+                        }
+                        $event->avance->tarea->avance = $event->avance->avance;
+                        $event->avance->tarea->save();
+                    }
+                    ?>
+                }
             }),
             /**
              * Login

@@ -15,18 +15,24 @@ class Tarea extends Model
       2 => 'descripcion',
       3 => 'fecha_ini',
       4 => 'fecha_fin',
-      5 => 'usuario_id',
-      6 => 'revisor1_id',
-      7 => 'aprobacion1_id',
-      8 => 'revisor2_id',
-      9 => 'aprobacion2_id',
+      5 => 'estado',
+      6 => 'avance',
+      7 => 'prioridad',
+      8 => 'usuario_id',
+      9 => 'revisor1_id',
+      10 => 'aprobacion1_id',
+      11 => 'revisor2_id',
+      12 => 'aprobacion2_id',
     );
     protected $attributes = array(
-      'cod_tarea' => '',
+      'cod_tarea' => 'REV-003',
       'nombre_tarea' => '',
       'descripcion' => '',
       'fecha_ini' => '',
       'fecha_fin' => '',
+      'estado' => '',
+      'avance' => '0',
+      'prioridad' => 'Media',
     );
     protected $casts = array(
       'cod_tarea' => 'string',
@@ -34,6 +40,9 @@ class Tarea extends Model
       'descripcion' => 'string',
       'fecha_ini' => 'string',
       'fecha_fin' => 'string',
+      'estado' => 'string',
+      'avance' => 'integer',
+      'prioridad' => 'string',
     );
     protected $events = array(
     );
@@ -64,5 +73,17 @@ class Tarea extends Model
     public function aprobacion2()
     {
         return $this->belongsTo('App\Models\UserAdministration\User');
+    }
+
+
+    public function adjuntos()
+    {
+        return $this->hasMany('App\Models\UserAdministration\Adjunto');
+    }
+
+
+    public function avances()
+    {
+        return $this->hasMany('App\Models\UserAdministration\Avance');
     }
 }

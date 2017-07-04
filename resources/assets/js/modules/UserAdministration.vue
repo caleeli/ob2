@@ -207,20 +207,20 @@ UserAdministration.Tarea = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/tareas";
     Model.call(this, url, id, "UserAdministration.Tarea");
     this.$list = function () {
-        return "fields=cod_tarea,usuario,nombre_tarea,descripcion,fecha_ini,fecha_fin";
+        return "fields=cod_tarea,usuario,nombre_tarea,descripcion,fecha_ini,fecha_fin,estado,avance,prioridad";
     };
     this.$name = "Tarea";
     this.$pluralName = "Tareas";
     this.$title = "Tarea";
     this.$pluralTitle = "Tareas";
-    this.$ = {"cod_tarea":{"name":"cod_tarea","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_tarea","isAssociation":false},"usuario":{"name":"usuario","label":"Usuario","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"value":"usuario","isAssociation":true,"isMultiple":false},"nombre_tarea":{"name":"nombre_tarea","label":"Tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombre_tarea","isAssociation":false},"descripcion":{"name":"descripcion","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"descripcion","isAssociation":false},"fecha_ini":{"name":"fecha_ini","label":"Fecha inicio","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_ini","isAssociation":false},"fecha_fin":{"name":"fecha_fin","label":"Fecha finalización","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_fin","isAssociation":false},"revisor1":{"name":"revisor1","label":"Revisor 1","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"revisor1","isAssociation":true,"isMultiple":false},"aprobacion1":{"name":"aprobacion1","label":"Aprovación 1","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"aprobacion1","isAssociation":true,"isMultiple":false},"revisor2":{"name":"revisor2","label":"Revisor 2","type":"select","enum":[],"source":new UserAdministration.User(),"textField":"username","value":"revisor2","isAssociation":true,"isMultiple":false},"aprobacion2":{"name":"aprobacion2","label":"Aprovación 2","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"aprobacion2","isAssociation":true,"isMultiple":false}};
+    this.$ = {"cod_tarea":{"name":"cod_tarea","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_tarea","isAssociation":false},"usuario":{"name":"usuario","label":"Usuario","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"value":"usuario","isAssociation":true,"isMultiple":false},"nombre_tarea":{"name":"nombre_tarea","label":"Tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombre_tarea","isAssociation":false},"descripcion":{"name":"descripcion","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"descripcion","isAssociation":false},"fecha_ini":{"name":"fecha_ini","label":"Fecha inicio","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_ini","isAssociation":false},"fecha_fin":{"name":"fecha_fin","label":"Fecha finalización","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_fin","isAssociation":false},"estado":{"name":"estado","label":"Estado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"estado","isAssociation":false},"avance":{"name":"avance","label":"Avance","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"avance","isAssociation":false},"prioridad":{"name":"prioridad","label":"Prioridad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"prioridad","isAssociation":false},"revisor1":{"name":"revisor1","label":"Revisor 1","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"revisor1","isAssociation":true,"isMultiple":false},"aprobacion1":{"name":"aprobacion1","label":"Aprovación 1","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"aprobacion1","isAssociation":true,"isMultiple":false},"revisor2":{"name":"revisor2","label":"Revisor 2","type":"select","enum":[],"source":new UserAdministration.User(),"textField":"username","value":"revisor2","isAssociation":true,"isMultiple":false},"aprobacion2":{"name":"aprobacion2","label":"Aprovación 2","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"aprobacion2","isAssociation":true,"isMultiple":false},"adjuntos":{"name":"adjuntos","label":"adjuntos","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"adjuntos","isAssociation":true,"isMultiple":true},"avances":{"name":"avances","label":"avances","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"avances","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Código","data":"attributes.cod_tarea"},{"title":"Usuario","data":"relationships.usuario.attributes.function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''}","render":function (data, type, full, meta) {
                             return data ? data : '';
-                        }},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"}];
+                        }},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"},{"title":"Estado","data":"attributes.estado"},{"title":"Avance","data":"attributes.avance"},{"title":"Prioridad","data":"attributes.prioridad"}];
     };
     this.$methods = {
     };
@@ -231,6 +231,62 @@ UserAdministration.Tarea = function (url, id) {
 }
 UserAdministration.Tarea.prototype = Object.create(Model.prototype);
 UserAdministration.Tarea.prototype.constructor = Model;
+
+UserAdministration.Adjunto = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/adjuntos";
+    Model.call(this, url, id, "UserAdministration.Adjunto");
+    this.$list = function () {
+        return "fields=archivo";
+    };
+    this.$name = "Adjunto";
+    this.$pluralName = "Adjuntos";
+    this.$title = "adjunto";
+    this.$pluralTitle = "adjuntos";
+    this.$ = {"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Adjunto.prototype = Object.create(Model.prototype);
+UserAdministration.Adjunto.prototype.constructor = Model;
+
+UserAdministration.Avance = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/avances";
+    Model.call(this, url, id, "UserAdministration.Avance");
+    this.$list = function () {
+        return "fields=avance,descripcion";
+    };
+    this.$name = "Avance";
+    this.$pluralName = "Avances";
+    this.$title = "avance";
+    this.$pluralTitle = "avances";
+    this.$ = {"avance":{"name":"avance","label":"Avance","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"avance","isAssociation":false},"descripcion":{"name":"descripcion","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"descripcion","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Avance","data":"attributes.avance"},{"title":"Descripción","data":"attributes.descripcion"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Avance.prototype = Object.create(Model.prototype);
+UserAdministration.Avance.prototype.constructor = Model;
 
 UserAdministration.Login = function (url, id) {
     var self = this;

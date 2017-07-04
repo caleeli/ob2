@@ -205,9 +205,15 @@ export default function(uri0, id, type) {
     };
     this.$select = function (loadCallback) {
         try {
+            var include = [];
+            self.$fields().forEach(function(field) {
+                if (field.isAssociation) {
+                    include.push(field.name);
+                }
+            });
             $.ajax({
                 method: "GET",
-                url: this.$url(),
+                url: this.$url() + (include.length>0 ? '?include='+include.join(',') : ''),
                 dataType: 'json',
                 success: function (data) {
                     if(typeof loadCallback==='function'){
