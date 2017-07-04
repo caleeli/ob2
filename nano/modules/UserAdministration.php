@@ -720,6 +720,9 @@
                         if (!$event->avance->tarea_id) {
                             return;
                         }
+                        if ($event->avance->avance==100) {
+                            $event->avance->tarea->estado = 'Completado';
+                        }
                         $event->avance->tarea->avance = $event->avance->avance;
                         $event->avance->tarea->save();
                     }
