@@ -28,6 +28,12 @@ class EventServiceProvider extends ServiceProvider
         'App\\Events\\UserAdministration\\AvanceSaved' => [
             'App\\Listeners\\UserAdministration\\AvanceSavedListener',
         ],
+        'App\\Events\\UserAdministration\\TareaCreating' => [
+            'App\\Listeners\\UserAdministration\\TareaCreatingListener',
+        ],
+        'App\\Events\\UserAdministration\\TareaSaved' => [
+            'App\\Listeners\\UserAdministration\\TareaSavedListener',
+        ],
     ];
 
     /**

@@ -543,7 +543,7 @@
                         "name": "cod_tarea",
                         "type": "string",
                         "label": "Código",
-                        "default": "REV-003"
+                        "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "nombre_tarea",
@@ -573,7 +573,7 @@
                         "name": "estado",
                         "label": "Estado",
                         "type": "string",
-                        "default": ""
+                        "default": "Pendiente"
                     }),
                     new Module.Model.Field({
                         "name": "avance",
@@ -598,6 +598,7 @@
                         "source": new Module.View.ModelInstance("UserAdministration.User"),
                         "default": "",
                         "position": 1,
+                        "nullable": true,
                         "form": true,
                         "list": true
                     }),
@@ -655,7 +656,17 @@
                         "model": "avance",
                         "form": true
                     }),
-                ]
+                ],
+                "events": {
+                    "saved": <?php
+                    function ($event) {
+                        if (!$event->tarea->cod_tarea) {
+                            $event->tarea->cod_tarea = "SCEP-" . $event->tarea->id;
+                            $event->tarea->save();
+                        }
+                    }
+                    ?>
+                }
             }),
             /**
              * Adjuntos de tarea

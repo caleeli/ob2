@@ -354,7 +354,7 @@
                                                 <div class="col-lg-5">
                                                     <dl class="dl-horizontal">
                                                         <dt>Creado por:</dt> <dd>{{tarea.revisor1 ? tarea.revisor1.attributes.username : ''}}</dd>
-                                                        <dt>Asignado a:</dt> <dd>{{tarea.usuario ? tarea.usuario.attributes.username : ''}}</dd>
+                                                        <dt>Asignado a:</dt> <dd>{{typeof tarea.usuario=='object' && tarea.usuario ? (tarea.usuario.attributes ? tarea.usuario.attributes.username: tarea.usuario.username) : ''}}</dd>
                                                     </dl>
                                                 </div>
                                                 <div class="col-lg-7" id="cluster_info">
@@ -466,14 +466,14 @@
                                         <div class="ibox-title">
                                             <h5>Tarea</h5>
                                             <div class="ibox-tools">
-                                                <a href="#asignarTarea" class="btn btn-primary btn-xs" v-on:click='guardarTarea'>Guardar Tarea</a>
+                                                <a href="#seguimientoDeTareas" class="btn btn-primary btn-xs" v-on:click='guardarTarea'>Guardar Tarea</a>
                                             </div>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <dl class="dl-horizontal">
-                                                        <dt>Código:</dt> <dd>{{tarea.cod_tarea}}</dd>
+                                                        <dt>Código:</dt> <dd>(se generará al asignar la tarea)</dd>
                                                     </dl>
                                                     <dl class="dl-horizontal">
                                                         <dt>Tarea:</dt> <dd><input type="text" class="form-control" placeholder="tarea" v-model="tarea.nombre_tarea"></dd>
@@ -500,7 +500,7 @@
                                                     </dl>
                                                     <dl class="dl-horizontal">
                                                         <dt>Asignado a:</dt> <dd>
-                                                            <select class="form-control" placeholder="asignado" v-model="tarea.usuario_id">
+                                                            <select class="form-control" placeholder="asignado" v-model="tarea.usuario">
                                                                 <option value="1">Angela Choque</option>
                                                             </select>
                                                         </dd>
@@ -630,7 +630,7 @@
                                                 <div class="col-lg-5">
                                                     <dl class="dl-horizontal">
                                                         <dt>Creado por:</dt> <dd>{{tarea.revisor1 ? tarea.revisor1.attributes.username : ''}}</dd>
-                                                        <dt>Asignado a:</dt> <dd>{{tarea.usuario ? tarea.usuario.attributes.username : ''}}</dd>
+                                                        <dt>Asignado a:</dt> <dd>{{typeof tarea.usuario=='object' && tarea.usuario ? (tarea.usuario.attributes ? tarea.usuario.attributes.username: tarea.usuario.username) : ''}}</dd>
                                                     </dl>
                                                 </div>
                                                 <div class="col-lg-7" id="cluster_info">
@@ -735,7 +735,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.21"></script>
+        <script src="../js/server.js?v0.22"></script>
         <script>
         $(document).ready(function () {
             var app = new Vue({
@@ -778,7 +778,10 @@
                         this.tarea.$load(0);
                     },
                     guardarTarea: function () {
-                        this.tarea.$save();
+                        var self = this;
+                        this.tarea.$save('', function() {
+                            self.listarTareas();
+                        });
                     },
                     crearAvance: function () {
                         this.avance.$load(0);

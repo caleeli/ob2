@@ -25,12 +25,12 @@ class Tarea extends Model
       12 => 'aprobacion2_id',
     );
     protected $attributes = array(
-      'cod_tarea' => 'REV-003',
+      'cod_tarea' => '',
       'nombre_tarea' => '',
       'descripcion' => '',
       'fecha_ini' => '',
       'fecha_fin' => '',
-      'estado' => '',
+      'estado' => 'Pendiente',
       'avance' => '0',
       'prioridad' => 'Media',
     );
@@ -45,6 +45,7 @@ class Tarea extends Model
       'prioridad' => 'string',
     );
     protected $events = array(
+      'saved' => 'App\\Events\\UserAdministration\\TareaSaved',
     );
     public function usuario()
     {
