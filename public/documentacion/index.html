@@ -411,7 +411,7 @@
                                                                     </p>
                                                                     <h5>Adjuntos</h5>
                                                                     <ul class="list-unstyled project-files">
-                                                                        <li v-for="adjunto in tarea.adjuntos" v-if='adjunto.attributes.archivo'><a :href="adjunto.attributes.archivo?adjunto.attributes.archivo.url:''"><i class="fa fa-file"></i> {{adjunto.attributes.archivo?adjunto.attributes.archivo.name:''}}</a></li>
+                                                                        <li v-for="adjunto in tarea.adjuntos" v-if='adjunto.attributes.archivo'><a :href="adjunto.attributes.archivo?adjunto.attributes.archivo.url:''" target="_blank"><i class="fa fa-file"></i> {{adjunto.attributes.archivo?adjunto.attributes.archivo.name:''}}</a></li>
                                                                     </ul>
                                                                 </div>
                                                                 <div class="tab-pane" id="tab-2">
@@ -551,7 +551,7 @@
                                                                     </p>
                                                                     <h5>Adjuntos</h5>
                                                                     <ul class="list-unstyled project-files">
-                                                                        <li v-for="adjunto in tarea.adjuntos" v-if='adjunto.attributes.archivo'><a :href="adjunto.attributes.archivo?adjunto.attributes.archivo.url:''"><i class="fa fa-file"></i> {{adjunto.attributes.archivo?adjunto.attributes.archivo.name:''}}</a></li>
+                                                                        <li v-for="adjunto in tarea.adjuntos" v-if='adjunto.attributes.archivo'><a :href="adjunto.attributes.archivo?adjunto.attributes.archivo.url:''" target="_blank"><i class="fa fa-file"></i> {{adjunto.attributes.archivo?adjunto.attributes.archivo.name:''}}</a></li>
                                                                     </ul>
                                                                     <div class="text-center m-t-md">
                                                                         
@@ -679,7 +679,7 @@
                                                                     </p>
                                                                     <h5>Adjuntos</h5>
                                                                     <ul class="list-unstyled project-files">
-                                                                        <li v-for="adjunto in tarea.adjuntos" v-if='adjunto.attributes.archivo'><a :href="adjunto.attributes.archivo?adjunto.attributes.archivo.url:''"><i class="fa fa-file"></i> {{adjunto.attributes.archivo?adjunto.attributes.archivo.name:''}}</a></li>
+                                                                        <li v-for="adjunto in tarea.adjuntos" v-if='adjunto.attributes.archivo'><a :href="adjunto.attributes.archivo?adjunto.attributes.archivo.url:''" target="_blank"><i class="fa fa-file"></i> {{adjunto.attributes.archivo?adjunto.attributes.archivo.name:''}}</a></li>
                                                                     </ul>
                                                                     <dv-form :model="Adjunto" v-on:custom="adjuntarArchivo" buttons="Adjuntar"></dv-form>
                                                                 </div>
