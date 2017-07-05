@@ -179,7 +179,7 @@ UserAdministration.Uai = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/uais";
     Model.call(this, url, id, "UserAdministration.Uai");
     this.$list = function () {
-        return "fields=cod_uai,titular_uai,estructura_uai,gestion_uai";
+        return "fields=cod_uai,titular_uai,estructura_uai,gestion_uai,empresa";
     };
     this.$name = "Uai";
     this.$pluralName = "Uais";
@@ -190,7 +190,9 @@ UserAdministration.Uai = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_uai"},{"title":"Titular UAI","data":"attributes.titular_uai"},{"title":"Estructura UAI","data":"attributes.estructura_uai"},{"title":"Gestión","data":"attributes.gestion_uai"}];
+        return [{"title":"Código","data":"attributes.cod_uai"},{"title":"Titular UAI","data":"attributes.titular_uai"},{"title":"Estructura UAI","data":"attributes.estructura_uai"},{"title":"Gestión","data":"attributes.gestion_uai"},{"title":"empresa","data":"relationships.empresa.attributes.nombre_empresa","render":function (data, type, full, meta) {
+                            return data ? data : '';
+                        }}];
     };
     this.$methods = {
     };

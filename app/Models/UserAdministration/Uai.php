@@ -32,6 +32,6 @@ class Uai extends Model
     );
     public function empresa()
     {
-        return $this->belongsTo('App\Models\UserAdministration\Empresa');
+        return $this->belongsTo('App\Models\UserAdministration\Empresa', 'empresa_id', 'cod_empresa');
     }
 }

@@ -528,11 +528,13 @@
                         "name": "empresa",
                         "model": "empresa",
                         "nullable": true,
-                        "list": false,
+                        "list": true,
                         "textField": "nombre_empresa",
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
-                        "form": false
+                        "form": false,
+                        "references": 'empresa_id',
+                        "columns": 'cod_empresa',
                     })
                 ]
             }),

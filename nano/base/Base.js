@@ -492,7 +492,7 @@ Module.Model.BelongsTo = function (base) {
         return "    public function " + base.name + "()\n" +
           "    {\n" +
           "        return $this->belongsTo('App\\Models\\" + (base.module?base.module:module.name) + "\\" + PHP.upper_camel_case(base.model) + "'" +
-          (typeof base.columns === 'undefined' ? '' : ',' + PHP.var_export(base.references) + ',' + PHP.var_export(base.columns) + ");\n") +
+          (typeof base.columns === 'undefined' ? '' : ',' + PHP.var_export(base.references) + ',' + PHP.var_export(base.columns)) +
           ");\n" +
           "    }\n";
     }
