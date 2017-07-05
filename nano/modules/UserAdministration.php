@@ -532,7 +532,7 @@
                         "textField": "nombre_empresa",
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
-                        "form": false,
+                        "form": true,
                         "references": 'empresa_id',
                         "columns": 'cod_empresa',
                     })
