@@ -1,5 +1,5 @@
 <template>
-    <carousel>
+    <carousel :id="id">
         <carouselitem class="active">
             <datatable :model="model" v-on:newrecord="newRecord" v-on:selectrow="selectRow" :toolbar="toolbar"></datatable>
         </carouselitem>
