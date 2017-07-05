@@ -69,6 +69,17 @@ class Report extends Model
     }
                     
 
+    public function listVariables($ids)
+    {
+        $variables = explode(',', $ids);
+        $list = [];
+        foreach ($variables as $var) {
+            $list[] = \App\Models\ReportsFolders\Variable::findOrFail($var);
+        }
+        return $list;
+    }
+                    
+
     public function tablas($conn=null)
     {
         $collection = [];

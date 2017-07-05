@@ -4,6 +4,7 @@
             <div class="btn-group">
                 <a v-for="chart in chartTypes" href="javascript:void(0)" v-on:click="setType(chart)" :class="classType(chart.type)"><i :class="chart.icon"></i></a>
                 <a href="javascript:void(0)" v-on:click="toggleConfig()" class="btn btn-info visible-xs-inline visible-sm-inline visible-md-inline"><i class="fa fa-cog"></i></a>
+                <a v-for="source in sources" v-bind:href="source.url" target="_blank" v-bind:title="source.name" class="btn btn-info"><i class="fa fa-file-excel-o"></i></a>
             </div>
         </div>
         <div class="div-ajax-loader" style='display: none;'>
@@ -43,6 +44,7 @@
     export default {
         data:function() {
             return {
+                "sources": [],
                 "chartType": "line",
                 "xs":[],
                 "ys":[],
@@ -110,6 +112,17 @@
             }
         },
         methods: {
+            loadSources: function () {
+                var self = this;
+                self.sources.splice(0);
+                self.model.$methods.listVariables(self.model.variables, function (list) {
+                    list.forEach(function (variable) {
+                        if (variable.file) {
+                            self.sources.push(variable.file);
+                        }
+                    });
+                });
+            },
             toggleConfig: function () {
                 $("#configChart").toggleClass($("#configChart").attr("data-toggle"));
             },
@@ -436,6 +449,7 @@
             refresh: function (){
                 var self = this;
                 var model = self.model;
+                this.loadSources();
                 $(this.$el).find(".canvasOwner").html('');
                 try {
                     var listCols = self.toList(model.cols);

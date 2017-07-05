@@ -154,6 +154,17 @@
                             return $res;
                         }
                     ?>,
+                    "listVariables(ids)": <?php
+                        function listVariables($ids)
+                        {
+                            $variables = explode(',', $ids);
+                            $list = [];
+                            foreach($variables as $var) {
+                                $list[] = \App\Models\ReportsFolders\Variable::findOrFail($var);
+                            }
+                            return $list;
+                        }
+                    ?>,
                     "tablas(conn)": <?php
                     function tablas($conn=null) {
                         $collection = [];
@@ -387,6 +398,13 @@
                         "type": "string",
                     }),
                     new Module.Model.Field({
+                        "name": "file",
+                        "type": "array",
+                        "label": "Archivo fuente",
+                        "ui": "file",
+                        "textField": function(data){return data?data.name:''},
+                    }),
+                    new Module.Model.Field({
                         "name": "periodicity",
                         "label": "Periodicidad",
                         "list": false,
@@ -424,6 +442,7 @@
                     new Module.Model.BelongsToMany({
                         "name": "dimensions",
                         "model": "dimension",
+                        "position": 4,
                         "form": true,
                         "ui": "tags",
                         "source": function(){
