@@ -7897,48 +7897,48 @@ a.dt-button {
 @media (min-width: 320px) and (orientation: portrait) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .ntImage {
-    width: 128px;
-    height: 189.62962963px;
+    width: 80px;
+    height: 118.518518519px;
   }
 }
 
 @media (min-width: 480px) and (orientation: portrait) {
   /* smartphones, Android phones, landscape iPhone */
   .ntImage {
-    width: 192px;
-    height: 284.444444444px;
+    width: 120px;
+    height: 177.777777778px;
   }
 }
 
 @media (min-width: 600px) and (orientation: portrait) {
   /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
   .ntImage {
-    width: 240px;
-    height: 355.555555556px;
+    width: 150px;
+    height: 222.222222222px;
   }
 }
 
 @media (min-width: 801px) and (orientation: portrait) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
   .ntImage {
-    width: 320.4px;
-    height: 474.666666667px;
+    width: 200.25px;
+    height: 296.666666667px;
   }
 }
 
 @media (min-width: 1025px) and (orientation: portrait) {
   /* big landscape tablets, laptops, and desktops */
   .ntImage {
-    width: 410px;
-    height: 607.407407407px;
+    width: 256.25px;
+    height: 379.62962963px;
   }
 }
 
 @media (min-width: 1281px) and (orientation: portrait) {
   /* hi-res laptops and desktops */
   .ntImage {
-    width: 512.4px;
-    height: 759.111111111px;
+    width: 320.25px;
+    height: 474.444444444px;
   }
 }
 
@@ -7946,48 +7946,48 @@ a.dt-button {
 @media (min-width: 480px) and (orientation: landscape) {
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .ntImage {
-    width: 192px;
-    height: 129.6px;
+    width: 120px;
+    height: 81px;
   }
 }
 
 @media (min-width: 600px) and (orientation: landscape) {
   /* smartphones, Android phones, landscape iPhone */
   .ntImage {
-    width: 240px;
-    height: 162px;
+    width: 150px;
+    height: 101.25px;
   }
 }
 
 @media (min-width: 800px) and (orientation: landscape) {
   /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
   .ntImage {
-    width: 320px;
-    height: 216px;
+    width: 200px;
+    height: 135px;
   }
 }
 
 @media (min-width: 1025px) and (orientation: landscape) {
   /* big landscape tablets, laptops, and desktops */
   .ntImage {
-    width: 410px;
-    height: 276.75px;
+    width: 256.25px;
+    height: 172.96875px;
   }
 }
 
 @media (min-width: 1281px) and (orientation: landscape) {
   /* hi-res laptops and desktops */
   .ntImage {
-    width: 512.4px;
-    height: 345.87px;
+    width: 320.25px;
+    height: 216.16875px;
   }
 }
 
 @media (min-width: 1900px) and (orientation: landscape) {
   /* hi-res laptops and desktops */
   .ntImage {
-    width: 760px;
-    height: 513px;
+    width: 475px;
+    height: 320.625px;
   }
 }
 
@@ -8003,6 +8003,7 @@ a.dt-button {
   display: inline-flex;
   white-space: normal;
   margin-right: 0.5em;
+  font-size: 80%;
 }
 
 .ivTools {

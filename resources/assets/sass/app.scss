@@ -120,7 +120,7 @@ $portraitWidth: (1080/1080);
 $portraitHeight: (1600/1080);
 $portraitWidth2: (1600/1600);
 $portraitHeight2: (1080/1600);
-$imagePerLine: 2.5;
+$imagePerLine: 4;
 
 @media (min-width:320px) and (orientation: portrait) { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
     .ntImage {
@@ -207,6 +207,7 @@ $imagePerLine: 2.5;
     display: inline-flex;
     white-space: normal;
     margin-right: 0.5em;
+    font-size: 80%;
 }
 
 .ivTools {
