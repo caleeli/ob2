@@ -413,10 +413,6 @@
                                                                     <ul class="list-unstyled project-files">
                                                                         <li v-for="adjunto in tarea.adjuntos" v-if='adjunto.attributes.archivo'><a :href="adjunto.attributes.archivo?adjunto.attributes.archivo.url:''"><i class="fa fa-file"></i> {{adjunto.attributes.archivo?adjunto.attributes.archivo.name:''}}</a></li>
                                                                     </ul>
-                                                                    <div id='agregarAdjunto'>
-                                                                        <dv-form :model="Adjunto" v-on:save="adjuntarArchivo" buttons="save"></dv-form>
-                                                                    </div>
-
                                                                 </div>
                                                                 <div class="tab-pane" id="tab-2">
 
@@ -685,10 +681,7 @@
                                                                     <ul class="list-unstyled project-files">
                                                                         <li v-for="adjunto in tarea.adjuntos" v-if='adjunto.attributes.archivo'><a :href="adjunto.attributes.archivo?adjunto.attributes.archivo.url:''"><i class="fa fa-file"></i> {{adjunto.attributes.archivo?adjunto.attributes.archivo.name:''}}</a></li>
                                                                     </ul>
-                                                                    <div class="text-center m-t-md">
-                                                                        
-                                                                    </div>
-
+                                                                    <dv-form :model="Adjunto" v-on:custom="adjuntarArchivo" buttons="Adjuntar"></dv-form>
                                                                 </div>
                                                                 <div class="tab-pane" id="tab-2">
 
@@ -834,9 +827,11 @@
                         this.avance.$load(0);
                     },
                     adjuntarArchivo: function () {
-                        console.log("entro!!");
-                        this.Adjunto.$load(0);
-                        this.tarea.$load(this.tarea.id);
+                        var self = this;
+                        this.Adjunto.$save('', function () {
+                            self.Adjunto.$load(0);
+                            self.tarea.$load(self.tarea.id);
+                        });
                     },
                     abrirUAI: function () {
                         $("#abmUAI").get(0).__vue__.goto(0);
