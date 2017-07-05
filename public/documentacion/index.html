@@ -253,7 +253,7 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
-                                                    <abm v-bind:model="uai" v-bind:editable="true"></abm>
+                                                    <abm v-bind:model="uai" v-bind:editable="false" toolbar='search'></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -740,7 +740,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.22"></script>
+        <script src="../js/server.js?v0.23"></script>
         <script>
         $(document).ready(function () {
             var app = new Vue({

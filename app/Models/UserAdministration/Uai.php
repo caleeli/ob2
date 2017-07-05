@@ -13,17 +13,20 @@ class Uai extends Model
       0 => 'cod_uai',
       1 => 'titular_uai',
       2 => 'estructura_uai',
-      3 => 'empresa_id',
+      3 => 'gestion_uai',
+      4 => 'empresa_id',
     );
     protected $attributes = array(
       'cod_uai' => '',
       'titular_uai' => '',
       'estructura_uai' => '',
+      'gestion_uai' => '',
     );
     protected $casts = array(
       'cod_uai' => 'string',
       'titular_uai' => 'string',
       'estructura_uai' => 'string',
+      'gestion_uai' => 'string',
     );
     protected $events = array(
     );

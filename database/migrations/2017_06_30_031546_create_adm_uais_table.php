@@ -14,6 +14,7 @@ class CreateAdmUaisTable extends Migration
             $table->string('cod_uai')->nullable();
             $table->string('titular_uai')->nullable();
             $table->string('estructura_uai')->nullable();
+            $table->string('gestion_uai')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();

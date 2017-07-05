@@ -516,6 +516,12 @@
                         "type": "string",
                         "default": ""
                     }),
+                    new Module.Model.Field({
+                        "name": "gestion_uai",
+                        "label": "Gestión",
+                        "type": "string",
+                        "default": ""
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
