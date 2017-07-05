@@ -413,8 +413,8 @@
                                                                     <ul class="list-unstyled project-files">
                                                                         <li v-for="adjunto in tarea.adjuntos"><a :href="adjunto.attributes.archivo.url"><i class="fa fa-file"></i> {{adjunto.attributes.archivo.url}}</a></li>
                                                                     </ul>
-                                                                    <div class="text-center m-t-md">
-                                                                        <a href="#" class="btn btn-xs btn-primary">Agregar archivo</a>
+                                                                    <div id='agregarAdjunto'>
+                                                                        <dv-form :model="Adjunto" v-on:save="adjuntarArchivo" buttons="save"></dv-form>
                                                                     </div>
 
                                                                 </div>
@@ -760,6 +760,7 @@
                         tarea: new UserAdministration.Tarea(),
                         avance: new UserAdministration.Avance(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/avances") : "/api/UserAdministration/avances"}),
                         estados_financieros: [],
+                        Adjunto: new UserAdministration.Adjunto(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/adjuntos") : "/api/UserAdministration/adjuntos"}),
                         PathItem: [],
                     };
                 },
@@ -802,6 +803,11 @@
                     registrarAvanceTarea: function (tarea) {
                         this.tarea.$load(tarea.id);
                         this.avance.$load(0);
+                    },
+                    adjuntarArchivo: function () {
+                        console.log("entro!!");
+                        this.Adjunto.$load(0);
+                        this.tarea.$load(this.tarea.id);
                     },
                     cargarEstadosFinancieros: function () {
                         var model = new UserAdministration.EstadoFinanciero("/api/UserAdministration/empresa_estados/" + app.empresa_estado.id + "/estados");
