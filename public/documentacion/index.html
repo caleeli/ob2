@@ -283,8 +283,8 @@
                                         </div>
                                         <div class="col-md-11">
                                             <div class="input-group">
-                                                <input type="text" placeholder="Busqueda" class="input-sm form-control">
-                                                <span class="input-group-btn"><button type="button" class="btn btn-sm btn-primary"> Buscar</button> </span>
+                                                <input type="text" placeholder="Busqueda" class="input-sm form-control" v-model="busquedaTareas">
+                                                <span class="input-group-btn"><button type="button" class="btn btn-sm btn-primary" v-on:click="buscarTarea"> Buscar</button> </span>
                                             </div>
                                         </div>
                                     </div>
@@ -756,12 +756,14 @@
                         estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
                         firma_auditoria: new UserAdministration.Firma(),
                         uai: new UserAdministration.Uai(),
-                        tareas: [],
                         tarea: new UserAdministration.Tarea(),
                         avance: new UserAdministration.Avance(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/avances") : "/api/UserAdministration/avances"}),
                         estados_financieros: [],
                         Adjunto: new UserAdministration.Adjunto(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/adjuntos") : "/api/UserAdministration/adjuntos"}),
                         PathItem: [],
+                        busquedaTareas: '',
+                        tareasTodas: [],
+                        tareas: [],
                     };
                 },
                 methods: {
@@ -770,11 +772,38 @@
                     },
                     listarTareas: function () {
                         var self = this;
-                        this.tareas.splice(0);
+                        this.tareasTodas.splice(0);
                         this.tarea.$select(function (data) {
                             data.data.forEach(function (row) {
-                                self.tareas.push(row);
+                                self.tareasTodas.push(row);
                             });
+                            self.pintarTareas();
+                        });
+                    },
+                    pintarTareas: function () {
+                        var self = this;
+                        self.tareas.splice(0);
+                        var limit = 50;
+                        self.tareasTodas.forEach(function (row) {
+                            if (self.tareas.length>=limit) {
+                                return;
+                            }
+                            if (self.busquedaTareas) {
+                                for(var att in row.attributes) {
+                                    var val = row.attributes[att];
+                                    if (
+                                        (val && typeof val.indexOf==='function' &&
+                                        val.indexOf(self.busquedaTareas)!==-1) ||
+                                        val==self.busquedaTareas
+                                    ) {
+                                        console.log(val, self.busquedaTareas);
+                                        self.tareas.push(row);
+                                        break;
+                                    }
+                                }
+                            } else {
+                                self.tareas.push(row);
+                            }
                         });
                     },
                     seleccionaTarea: function (tarea) {
@@ -814,6 +843,9 @@
                     },
                     abrirFirmasDeAuditoria: function () {
                         $("#abmFirmasDeAuditoria").get(0).__vue__.goto(0);
+                    },
+                    buscarTarea: function () {
+                        this.pintarTareas();
                     },
                     cargarEstadosFinancieros: function () {
                         var model = new UserAdministration.EstadoFinanciero("/api/UserAdministration/empresa_estados/" + app.empresa_estado.id + "/estados");
