@@ -15,7 +15,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#"><img src="images/logo.jpg" style="height: 40px;display: inline;margin-top: -8px;"></a>
+                        <a class="navbar-brand" href="#"><img src="images/logo.png" style="height: 40px;display: inline;margin-top: -8px;"></a>
                         <!-- template-tuner template="cosmo"></template-tuner -->
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
@@ -29,7 +29,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+                            <!-- li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="glyphicon glyphicon-equalizer"></i> Tema/Colores <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li v-bind:class="cssTemplateMenu('simplex')"><a href="#" v-on:click="changeTemplate('simplex')"><i class="glyphicon glyphicon-equalizer"></i> Sencillo</a></li>
@@ -38,7 +38,7 @@
                                     <li v-bind:class="cssTemplateMenu('flatly')"><a href="#" v-on:click="changeTemplate('flatly')"><i class="glyphicon glyphicon-equalizer"></i> Contraste</a></li>
                                     <li v-bind:class="cssTemplateMenu('united')"><a href="#" v-on:click="changeTemplate('united')"><i class="glyphicon glyphicon-equalizer"></i> United</a></li>
                                 </ul>
-                            </li>
+                            </li -->
                             <li>
                                 <a href="login"><i class="fa fa-sign-out"></i></a>
                             </li>

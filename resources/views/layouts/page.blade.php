@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="{{ elixir('css/app.css') }}?t=<?=filemtime(public_path().'/css/app.css')?>">
         <script>
             !function(){
-                var skin = localStorage.skin ? localStorage.skin : 'simplex';
+                var skin = 'slate';
                 document.writeln('<link id="template-tuner" rel="stylesheet" type="text/css" href="bower_components/bootswatch/'+skin+'/bootstrap.min.css">');
                 document.writeln('<link id="template-tuner-extra" rel="stylesheet" type="text/css" href="bower_components/bootswatch/'+skin+'/extra.min.css">');
             }()

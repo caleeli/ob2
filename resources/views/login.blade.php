@@ -31,7 +31,7 @@
         </div>
     </div>
     <h1 style="font-size: 19px;">
-        <center><img src="images/logo.jpg"
+        <center><img src="images/logo.png"
                      style="height: 64px; display: inline; margin-top: -25px;"> {{env('APP_NAME', 'Application Name')}}</center>
     </h1>
     <carousel>
