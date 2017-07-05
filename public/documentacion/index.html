@@ -411,7 +411,7 @@
                                                                     </p>
                                                                     <h5>Adjuntos</h5>
                                                                     <ul class="list-unstyled project-files">
-                                                                        <li v-for="adjunto in tarea.adjuntos"><a :href="adjunto.attributes.archivo.url"><i class="fa fa-file"></i> {{adjunto.attributes.archivo.url}}</a></li>
+                                                                        <li v-for="adjunto in tarea.adjuntos"><a :href="adjunto.attributes.archivo.url"><i class="fa fa-file"></i> {{adjunto.attributes.archivo.name}}</a></li>
                                                                     </ul>
                                                                     <div id='agregarAdjunto'>
                                                                         <dv-form :model="Adjunto" v-on:save="adjuntarArchivo" buttons="save"></dv-form>
