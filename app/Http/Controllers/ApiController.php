@@ -36,9 +36,7 @@ class ApiController extends Controller
         );
         $minutes = 0.1;
         $response = response()->json(
-            [
-            'data' => $collection
-            ], 200,
+            $collection, 200,
             [
             'Cache-Control' => 'max-age='.($minutes * 60).', public',
             ]
@@ -57,7 +55,7 @@ class ApiController extends Controller
             return $result;
         }
         $type = $this->getType($operation->model);
-        return $this->packResponse($result, $type, $fields, $include);
+        return ['data'=>$this->packResponse($result, $type, $fields, $include)];
     }
 
     protected function packResponse($result, $type, $requiredFields,
