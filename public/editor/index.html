@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>NANO Systems</title>
+
+        <link href="../css/app.css" rel="stylesheet">
+        <link href="../bower_components/codemirror/lib/codemirror.css" rel="stylesheet">
+        <link href="../bower_components/codemirror/theme/eclipse.css" rel="stylesheet">
+        <link href="../bower_components/codemirror/theme/mdn-like.css" rel="stylesheet">
+        <link href="../bower_components/codemirror/addon/fold/foldgutter.css" rel="stylesheet">
+        <style>
+            html,body {
+                overflow: hidden;
+                height: 100%;
+            }
+            .CodeMirror {
+                height: 100%!important;
+            }
+            #wrapper {
+                overflow: hidden;
+                height: 100%;
+                position: relative;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="now_loading">
+            Cargando ...<br/>
+            <i class="ajax-loader"></i>
+        </div>
+        <div id="wrapper" style="visibility:hidden">
+            <textarea id="code" class="form-control" rows="45"></textarea>
+            <a class="btn btn-primary">Compilar</a>
+        </div>
+
+        <!-- Mainly scripts -->
+        <script src="/js/server.js?v0.29"></script>
+        <script src="../bower_components/codemirror/lib/codemirror.js"></script>
+
+        <script src="../bower_components/codemirror/addon/edit/matchbrackets.js"></script>
+        <script src="../bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+        <script src="../bower_components/codemirror/mode/xml/xml.js"></script>
+        <script src="../bower_components/codemirror/mode/javascript/javascript.js"></script>
+        <script src="../bower_components/codemirror/mode/css/css.js"></script>
+        <script src="../bower_components/codemirror/mode/clike/clike.js"></script>
+        <script src="../bower_components/codemirror/mode/php/php.js"></script>
+
+        <script src="../bower_components/codemirror/addon/fold/foldcode.js"></script>
+        <script src="../bower_components/codemirror/addon/fold/brace-fold.js"></script>
+        <script src="../bower_components/codemirror/addon/fold/foldgutter.js"></script>
+        <script src="../bower_components/codemirror/addon/fold/indent-fold.js"></script>
+        <script src="../bower_components/codemirror/addon/fold/markdown-fold.js"></script>
+        <script src="../bower_components/codemirror/addon/fold/xml-fold.js"></script>
+        <script>
+        $(document).ready(function () {
+            var app = new Vue({
+                el: '#wrapper',
+                carousel: {},
+                tareaAvance: 0,
+                data: function () {
+                    return {};
+                },
+                methods: {
+                },
+                mounted: function () {
+                    var self = this;
+                    $("#now_loading").hide();
+                    $(this.$el).css("visibility", "visible");
+                    var foldFunc = CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder);
+                    var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("code"), {
+                        lineNumbers: true,
+                        lineWrapping: true,
+                        matchBrackets: true,
+                        mode: "application/x-httpd-php",
+                        //mode: "javascript",
+                        indentUnit: 4,
+                        theme: 'mdn-like',
+                        //onGutterClick: foldFunc,
+                        //glutters: ["CodeMirror-gutter"],
+                        extraKeys: {"Ctrl-Q": function(cm){foldFunc(cm, cm.getCursor().line);}}
+                    });
+                    window.myCodeMirror=myCodeMirror;
+                    foldFunc(myCodeMirror, 9);
+                    foldFunc(myCodeMirror, 20);
+                }
+            });
+            window.app = app;
+        });
+        </script>
+    </body>
+</html>

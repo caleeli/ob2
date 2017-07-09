@@ -20,6 +20,7 @@
     "jstree": "^3.3.3",
     "chart.js": "chartjs#^2.4.0",
     "datatables-fixedcolumns": "datatables-fixedColumns#^3.2.2",
-    "jq-ajax-progress": "^0.1.9"
+    "jq-ajax-progress": "^0.1.9",
+    "codemirror": "^5.27.2"
   }
 }
