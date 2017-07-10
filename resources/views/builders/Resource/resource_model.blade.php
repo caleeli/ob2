@@ -14,5 +14,12 @@ class {!! $resource->name() !!} extends Model
     protected $casts = {!! $resource->casts() !!};
     protected $events = {!! $resource->events() !!};
 
-{!! $resource->methods() !!}
+@foreach ($resource->relationships() as $relationship)
+    public function {!! $relationship->name() !!}() {
+        return {!! $relationship->relationshipType() !!}({!! $relationship->className() !!}, {!! $relationship->foreign() !!}, {!! $relationship->local() !!});
+    }
+@endforeach
+@foreach ($resource->methods() as $method)
+    public {!! $method->method() !!}
+@endforeach
 }

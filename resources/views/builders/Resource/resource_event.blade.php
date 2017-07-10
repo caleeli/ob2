@@ -8,7 +8,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Models\{!! $resource->package->name() !!}\{!! $resource->name() !!};
 
-class {!! $resource->name() !!}Created implements ShouldBroadcast
+class {!! $resource->name() !!}{!! $event->name() !!} implements ShouldBroadcast
 {
     use InteractsWithSockets;
     public ${!! lcfirst($resource->name()) !!} = null;

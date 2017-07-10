@@ -36,3 +36,11 @@ Artisan::command(
     }
     Artisan::call('migrate', ['--seed' => true]);
 })->describe('Instala la aplicacion de 0');
+
+Artisan::command(
+    'parse {filename}',
+    function ($filename) {
+        $nano = new \App\Builder\Nano($filename);
+        $nano->build();
+    }
+)->describe('Parse a nano file');
