@@ -185,7 +185,7 @@
                                                 <span class="peityChart" v-bind:chart="estado.attributes.grafico_texto.split('|')[1]" style="width:64px; height: 64px;">{{estado.attributes.grafico_valores}}</span>
                                             </div>
                                         </div>                                        
-            <div class="col-lg-3">
+            <div class="col-lg-3" v-if="0<estados_financieros.length">
                 <div class="widget lazur-bg no-padding">
                     <div class="p-m">
                         <h1 class="m-xs">$ 210,660</h1>
