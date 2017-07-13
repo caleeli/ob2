@@ -202,12 +202,12 @@ h3, h4, h5 {
 }
 
 ul.nav-second-level {
-  background: #293846;
+  background: rgba(41, 56, 70, 0.3);
 }
 
 .nav > li.active {
   border-left: 4px solid #19aa8d;
-  background: #293846;
+  background: rgba(41, 56, 70, 0.3);
 }
 
 .nav.nav-second-level > li.active {
