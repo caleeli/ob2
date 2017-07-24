@@ -32,11 +32,15 @@ class Relationship extends Element
 
     public function foreign()
     {
-
+        return json_encode(
+            empty($this->foreign) ?
+                snake_case($this->name).'_id' :
+                $this->foreign
+        );
     }
 
     public function local()
     {
-
+        return json_encode(empty($this->local) ? 'id' : $this->local);
     }
 }

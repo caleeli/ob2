@@ -18,4 +18,5 @@ Nano.extends({!! $resource->fullNamePlural() !!}, Nano.Resources);
 Nano.extends({!! $resource->fullName() !!}, Nano.Resource);
 {!! $resource->fullName() !!}.prototype.type = '{!! $resource->fullName() !!}';
 Nano.Resource.types['{!! $resource->fullName() !!}'] = {!! $resource->fullName() !!};
+{!! $resource->fullName() !!}.resources = new {!! $resource->fullNamePlural() !!};
 {!! $resource->fullName() !!}.definition = {!! $resource->definition() !!};

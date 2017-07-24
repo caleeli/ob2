@@ -52,7 +52,7 @@ class Element
 
     public function plural()
     {
-        return camel_case(empty($this->plural) ? str_plural($this->name) : $this->plural);
+        return ucfirst(camel_case(empty($this->plural) ? str_plural($this->name) : $this->plural));
     }
 
     public function varExport($value)

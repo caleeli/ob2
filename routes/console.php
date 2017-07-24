@@ -38,9 +38,9 @@ Artisan::command(
 })->describe('Instala la aplicacion de 0');
 
 Artisan::command(
-    'parse {filename}',
-    function ($filename) {
+    'parse {filename} {target}',
+    function ($filename, $target) {
         $nano = new \App\Builder\Nano($filename);
-        $nano->build();
+        $nano->build($target);
     }
 )->describe('Parse a nano file');

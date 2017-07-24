@@ -16,7 +16,7 @@ class {!! $resource->name() !!} extends Model
 
 @foreach ($resource->relationships() as $relationship)
     public function {!! $relationship->name() !!}() {
-        return {!! $relationship->relationshipType() !!}({!! $relationship->className() !!}, {!! $relationship->foreign() !!}, {!! $relationship->local() !!});
+        return {!! $relationship->relationshipType() !!}({!! $relationship->className() !!}::class, {!! $relationship->foreign() !!}, {!! $relationship->local() !!});
     }
 @endforeach
 @foreach ($resource->methods() as $method)

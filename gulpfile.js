@@ -15,5 +15,5 @@ require('laravel-elixir-vue-2');
 
 elixir((mix) => {
     mix.sass('app.scss')
-        .webpack('admin.js');
+        .scripts(['base.js','NanoIde.js','modules/NanoIde/Project.js','modules/NanoIde/Script.js'], 'public/js/NanoIde.js');
 });

@@ -31,8 +31,8 @@ class Resource extends Element
 
     public function makeFile($path, $content, $type)
     {
-        if (!file_exists(dirname($filename))) {
-            mkdir(dirname($filename), 0777, true);
+        if (!file_exists(dirname($path))) {
+            mkdir(dirname($path), 0777, true);
         }
         file_put_contents($path, $content);
         if ($type === 'php') {
@@ -43,8 +43,10 @@ class Resource extends Element
         }
     }
 
-    public function makeMigration($name)
+    public function makeMigration($name, $pathBase)
     {
+        $res = glob($pathBase.'/database/migrations/*'.snake_case($name).'.php');
+        return count($res) ? $res[0] : $pathBase.'/database/migrations/'.Date('Y_m_d_His_').snake_case($name).'.php';
         return base_path().'/database/migrations/'.snake_case($name).'.php';
         try {
             if (isset(glob(base_path().'/database/migrations/*'.snake_case($name).'.php')[0])) {
@@ -147,7 +149,7 @@ class Resource extends Element
         return json_encode($this->selection);
     }
 
-    public function build() {
-        return view('builders.resource', ['resource'=>$this])->render();
+    public function build($pathBase) {
+        return view('builders.resource', ['resource'=>$this,'pathBase'=>$pathBase])->render();
     }
 }

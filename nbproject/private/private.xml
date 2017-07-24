@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/resources/assets/js/modules/Connections.vue</file>
-            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/resources/assets/js/models/Model.js</file>
-            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/resources/views/layouts/page.blade.php</file>
-            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/nano/base/Base.js</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/.env</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/resources/assets/js/modules/NanoIde/Project.js</file>
+            <file>file:/Users/davidcallizaya/NetBeansProjects/nano2/resources/views/builders/Resource/resource_js.blade.php</file>
         </group>
     </open-files>
 </project-private>

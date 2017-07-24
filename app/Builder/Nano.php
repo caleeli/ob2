@@ -75,8 +75,9 @@ class Nano
     /**
      * Build the code.
      */
-    public function build()
+    public function build($target)
     {
+        $this->v8->target = $target;
         foreach ($this->dom->getElementsByTagName('script') as $script) {
             $this->v8->executeString(
                 str_repeat("\n", $script->getLineNo() - 1).
