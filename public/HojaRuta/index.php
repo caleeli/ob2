@@ -26,9 +26,12 @@ and open the template in the editor.
         </style>
     </head>
     <body>
-        <div id ="wrapper" class="container">
-            <div class="row justify-content-md-center noprint">
-                <div class="col-md-10" style="padding-top: 8px;padding-bottom: 8px;">
+        <div id ="wrapper" class="container" style="padding-top:80px;">
+            <div class="navbar navbar-default navbar-fixed-top navbar-custom affix-top">
+                <div class="col-md-1">
+                    <img src="images/logo1.png" style="height:48px">
+                </div>
+                <div class="col-md-11" style="padding-top: 8px;padding-bottom: 8px;">
                     <a href='#recepcion' class='btn btn-primary' v-on:click='nueva' v-if="!window.isManager">Recepción</a>
                     <a href='#busqueda' class='btn btn-warning' v-if="!window.isManager">Búsqueda</a>
                     <a href='#busqueda' class='btn btn-warning' v-if="window.isManager">Dashboard</a>
@@ -103,7 +106,7 @@ and open the template in the editor.
 
                 </div>
                 <div class="col-md-10" v-if="menu=='editar'">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" v-if="!window.isManager">
                         <fieldset>
                             <legend>Hoja de ruta - SCEP </legend>
                             <div class="form-group">
@@ -194,6 +197,7 @@ and open the template in the editor.
                             </div>
                         </fieldset>
                     </form>
+                    <input class="form-control" v-model='filtroDerivacion' placeholder="busqueda" v-on:keyup='filtrarDerivacion'>
                     <table class="table table-striped table-hover ">
                         <thead>
                             <tr>
@@ -335,13 +339,14 @@ and open the template in the editor.
         }
         Recepcion.prototype.color = function () {
             var semanas = Math.ceil((new Date().getTime()-new Date(this.fecha).getTime())/1000/60/60/24/7);
-            var color = this.concluido() ? '': 'label label-success';
-            color = semanas==1?'label label-success':color;
+            var color;
+            color = semanas<=1?'label label-success':color;
             color = semanas==2?'label label-warning':color;
             color = semanas>=3?'label label-danger':color;
+            color = this.concluido() ? 'label label-default':color;
             return color;
         }
-        Recepcion.prototype.selectDerivations = function (list){
+        Recepcion.prototype.selectDerivations = function (list, filter){
             var self = this;
             list.splice(0);
             $.ajax({
@@ -349,7 +354,7 @@ and open the template in the editor.
                 url: 'selectDerivacion.php',
                 data: {
                     hoja_ruta_id: self.id,
-                    filter: '',
+                    filter: filter ? filter : '',
                     t: Math.floor(new Date().getTime()/1000)
                 },
                 dataType: 'json',
@@ -404,6 +409,7 @@ and open the template in the editor.
                         hojasDeRutaBusqueda: [],
                         derivacion: new Derivacion(),
                         derivaciones: [],
+                        filtroDerivacion: '',
                     };
                 },
                 methods: {
@@ -465,7 +471,8 @@ and open the template in the editor.
                             success: function () {
                             }
                         }).done(function() {
-                            self.hoja.selectDerivations(self.derivaciones);
+                            self.filtroDerivacion = '';
+                            self.hoja.selectDerivations(self.derivaciones, self.filtroDerivacion);
                             if (typeof callback==='function') {
                                 callback();
                             }
@@ -485,7 +492,10 @@ and open the template in the editor.
                             self.hoja.conclusion = self.anio(fecha)+
                               '-'+self.mes(fecha)+
                               '-'+self.dia(fecha);
-                            self.save();
+                            self.save(function(){
+                                self.filtrar();
+                            });
+                            
                         });
                     },
                     generar: function() {
@@ -562,6 +572,9 @@ and open the template in the editor.
                             }
                         });
                     },
+                    filtrarDerivacion: function () {
+                        this.hoja.selectDerivations(this.derivaciones, this.filtroDerivacion);
+                    },
                     dia: function (fecha){
                         if (!fecha) return '';
                         var d = "0"+(new Date(fecha)).getDate();
@@ -585,7 +598,8 @@ and open the template in the editor.
                             comentarios: '',
                             instruccion: '',
                         });
-                        this.hoja.selectDerivations(this.derivaciones);
+                        self.filtroDerivacion = '';
+                        this.hoja.selectDerivations(this.derivaciones, self.filtroDerivacion);
                     },
                     registrar: function () {
                         
@@ -657,6 +671,7 @@ and open the template in the editor.
             window.app = app;
             $(window).on('hashchange', function() {
                 app.menu=window.location.hash.substr(1);
+                app.menu=app.menu?app.menu:'busqueda';
                 if (app.menu=='busqueda') {
                     app.dibujarDashboard();
                 }

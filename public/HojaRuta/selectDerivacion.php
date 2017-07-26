@@ -11,7 +11,7 @@ if (empty($_REQUEST['filter'])) {
 
 } else {
     $stmt = $connection->prepare('select * from derivacion where '
-        . '(fecha like :filter or cometarios like :filter or destinatario like :filter or '
+        . '(fecha like :filter or comentarios like :filter or destinatario like :filter or '
         . 'instruccion like :filter) and (hoja_ruta_id=:hoja_ruta_id) order by fecha asc, id asc limit 15');
     $stmt->execute([
         'hoja_ruta_id' => $_REQUEST['hoja_ruta_id'],
