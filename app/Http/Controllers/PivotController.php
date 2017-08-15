@@ -44,8 +44,8 @@ class PivotController extends Controller
                     $dimension = Dimension::find($f[0]);
                     if ($dimension) {
                         $f0 = $dimension->column;
-                        $whereFilter[$dimension->name]['query'][] = '(' . $f0 . $f[1] . '?)';
-                        $whereFilter[$dimension->name]['params'][] = $f[2];
+                        $whereFilter[$f0]['query'][] = '(' . $f0 . $f[1] . '?)';
+                        $whereFilter[$f0]['params'][] = $f[2];
                     }
                 }
             }
@@ -106,7 +106,7 @@ class PivotController extends Controller
                 $series[$rowId][$name] = $vals;
             }
         }
-        return response()->json(['sql' => $sql, 'x' => array_values($x), 'series' => $series]);
+        return response()->json(['sql' => $sql, 'x' => array_values($x), 'series' => $series, 'whereFilter'=>$whereFilter]);
     }
 
     private function convertToColumns($groups0, $dim)
