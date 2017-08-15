@@ -44,13 +44,20 @@ class PivotController extends Controller
                     $dimension = Dimension::find($f[0]);
                     if ($dimension) {
                         $f0 = $dimension->column;
-                        $whereFilter[] = '(' . $f0 . $f[1] . '?)';
-                        $sqlParams[] = $f[2];
+                        $whereFilter[$dimension->name]['query'][] = '(' . $f0 . $f[1] . '?)';
+                        $whereFilter[$dimension->name]['params'][] = $f[2];
                     }
                 }
             }
             if (count($whereFilter) > 0) {
-                $where .= ' and (' . implode(' or ', $whereFilter) . ')';
+                $whereF = [];
+                foreach($whereFilter as $name => $filters) {
+                    $whereF[]='(' . implode(' or ', $filters['query']) . ')';
+                    foreach($filters['params'] as $param) {
+                        $sqlParams[] = $param;
+                    }
+                }
+                $where .= ' and ' . implode(' and ', $whereF) . '';
             }
         }
         $sql = "SELECT $groups, id_variable, $aggregator($measure) as agg_value_1 from $table where $where group by $groups, id_variable order by $groups, id_variable";
