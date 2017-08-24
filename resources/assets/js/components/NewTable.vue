@@ -37,6 +37,7 @@
             "group",
             "open",
             "title",
+            "id_field",
 //            {name:"page", type: Number},
 //            {name:"rows", type: Number},
         ],
@@ -99,7 +100,8 @@
                 var keys = self.groupByFields;
                 var values = [];
                 keys.forEach(function (key) {
-                    values.push(row.attributes[key]);
+                    var keyCode = row.attributes[key].split(".");
+                    values.push(keyCode.length==1 || keyCode[1]=='0' ? 0 : keyCode[0]);
                 });
                 return values;
             },
@@ -115,7 +117,7 @@
             },
             isOpened: function (row) {
                 var self = this;
-                var key = [row.id];
+                var key = [row.attributes[self.id_field]];
                 return self.findOpened(key) !== undefined;
             },
             isVisible: function (row) {
@@ -142,7 +144,7 @@
             },
             openCloseRow: function (row) {
                 var self = this;
-                var key = [row.id];
+                var key = [row.attributes[self.id_field]];
                 var opened = self.findOpened(key);
                 if (opened===undefined) {
                     self.opened.push(key);
