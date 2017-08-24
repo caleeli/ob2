@@ -97,7 +97,7 @@
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
 
-                                                    <abm v-bind:model="empresa" v-bind:editable="false" toolbar="search" v-on:selectrow="seleccionaEmpresa"></abm>
+                                                    <newtable v-bind:model="empresa" v-on:selectrow="seleccionaEmpresa" title="Empresas Públicas" group="sub_empresa" open="0" />
                                                 </div>
                                             </div>
                                         </div>
@@ -818,7 +818,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.28"></script>
+        <script src="../js/server.js?v0.30"></script>
         <script>
         $(document).ready(function () {
             var app = new Vue({

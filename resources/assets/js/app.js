@@ -12,6 +12,7 @@ Vue.component('chart2', require('./components/Chart2.vue'));
 Vue.component('tags', require('./components/Tags.vue'));
 Vue.component('filters', require('./components/Filter.vue'));
 Vue.component('imageviewer', require('./components/ImageViewer.vue'));
+Vue.component('newtable', require('./components/NewTable.vue'));
 /*
 $(function() {
     window.toastr.options = {

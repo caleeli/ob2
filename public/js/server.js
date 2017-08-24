@@ -1,6 +1,7 @@
 var API_SERVER='';
-document.writeln('\n<link href="/css/app.css?v0.28" rel="stylesheet">\n');
-document.writeln('\n<script src="/js/admin.js?v0.28"></script>\n');
+document.writeln('\n<link href="/css/app.css?v0.30" rel="stylesheet">\n');
+document.writeln('\n<link href="/css/rowGroup.dataTables.min.css" rel="stylesheet">\n');
+document.writeln('\n<script src="/js/admin.js?v0.30"></script>\n');
 document.writeln('\n<script type="text/javascript" charset="utf8" src="/bower_components/jq-ajax-progress/src/jq-ajax-progress.min.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net/js/jquery.dataTables.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>\n');
@@ -14,3 +15,4 @@ document.writeln('\n<script type="text/javascript" src="/bower_components/datata
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.min.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>\n');
+document.writeln('\n<script type="text/javascript" src="/js/dataTables.rowGroup.min.js"></script>\n');

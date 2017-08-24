@@ -317,6 +317,12 @@
                         "type": "string",
                         "list": false,
                         "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "sub_empresa",
+                        "type": "string",
+                        "list": false,
+                        "default": "0"
                     })
                 ],
                 "associations": [

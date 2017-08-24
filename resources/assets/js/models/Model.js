@@ -18,6 +18,16 @@ export default function(uri0, id, type) {
     this.id = null;
     this.$url = uri;
     this.$emptyUrl = '/api/empty';
+    function makeUrl(url, query) {
+        var q = {};
+		for(var name in query) {
+			if (query[name]!==undefined) {
+				q[name] = query[name];
+			}
+		}
+		var params = $.param(q);
+		return url + (params ? '?' + params : '');
+	};
     function loadFromData(data) {
         originalData = data.data;
         Object.assign(self, originalData.attributes);
@@ -203,7 +213,7 @@ export default function(uri0, id, type) {
         this.id = originalData.id;
         callback(self);
     };
-    this.$select = function (loadCallback) {
+    this.$select = function (loadCallback, params) {
         try {
             var include = [];
             self.$fields().forEach(function(field) {
@@ -211,9 +221,15 @@ export default function(uri0, id, type) {
                     include.push(field.name);
                 }
             });
+            var queryParams = $.extend(
+                {
+                    include:include.length>0 ? include.join(',') : undefined,
+                },
+                params
+            );
             $.ajax({
                 method: "GET",
-                url: this.$url() + (include.length>0 ? '?include='+include.join(',') : ''),
+                url: makeUrl(this.$url(), queryParams),
                 dataType: 'json',
                 success: function (data) {
                     if(typeof loadCallback==='function'){

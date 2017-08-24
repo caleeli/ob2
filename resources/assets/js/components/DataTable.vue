@@ -10,6 +10,7 @@
             "model",
             "toolbar",
             "refreshWith",
+            "groupBy",
         ],
         methods: {
             refresh: function() {
@@ -91,6 +92,7 @@
                     ajax: self.model.$url() + '?' + self.model.$list(),
                     rowId: 'id',
                     columns: self.model.$columns(),
+                    rowGroup: self.groupBy ? {dataSrc:self.groupBy} : undefined,
                 });
             },
         },

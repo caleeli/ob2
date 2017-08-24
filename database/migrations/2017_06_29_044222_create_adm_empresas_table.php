@@ -18,6 +18,7 @@ class CreateAdmEmpresasTable extends Migration
             $table->string('rubro')->nullable();
             $table->string('tipologia')->nullable();
             $table->string('detalle_empresa')->nullable();
+            $table->string('sub_empresa')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
