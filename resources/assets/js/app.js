@@ -13,6 +13,7 @@ Vue.component('tags', require('./components/Tags.vue'));
 Vue.component('filters', require('./components/Filter.vue'));
 Vue.component('imageviewer', require('./components/ImageViewer.vue'));
 Vue.component('newtable', require('./components/NewTable.vue'));
+Vue.component('basic-chart', require('./components/BaseChart.vue'));
 /*
 $(function() {
     window.toastr.options = {

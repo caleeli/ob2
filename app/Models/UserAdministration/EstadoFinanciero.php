@@ -15,8 +15,10 @@ class EstadoFinanciero extends Model
       2 => 'gestion',
       3 => 'archivo',
       4 => 'grafico_texto',
-      5 => 'grafico_valores',
-      6 => 'empresa_id',
+      5 => 'prefix',
+      6 => 'tablas',
+      7 => 'grafico_valores',
+      8 => 'empresa_id',
     );
     protected $attributes = array(
       'tipo_estado_financiero' => '',
@@ -24,6 +26,8 @@ class EstadoFinanciero extends Model
       'gestion' => '',
       'archivo' => null,
       'grafico_texto' => 'activo,pasivo',
+      'prefix' => null,
+      'tablas' => null,
       'grafico_valores' => '4500,4000',
     );
     protected $casts = array(
@@ -32,9 +36,12 @@ class EstadoFinanciero extends Model
       'gestion' => 'string',
       'archivo' => 'array',
       'grafico_texto' => 'string',
+      'prefix' => 'string',
+      'tablas' => 'array',
       'grafico_valores' => 'string',
     );
     protected $events = array(
+      'saving' => 'App\\Events\\UserAdministration\\EstadoFinancieroSaving',
     );
     public function empresa()
     {

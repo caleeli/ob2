@@ -373,6 +373,22 @@
                         "default": "activo,pasivo"
                     }),
                     new Module.Model.Field({
+                        "name": "prefix",
+                        "type": "string",
+                        "label": "prefix",
+                        "list": false,
+                        "form": false,
+                    }),
+                    new Module.Model.Field({
+                        "name": "tablas",
+                        "type": "array",
+                        "label": "Tablas",
+                        "ui": "tags",
+                        "list": false,
+                        "form": false,
+                        "textField": function(data){console.log(data);return data?data.table_name:''},
+                    }),
+                    new Module.Model.Field({
                         "name": "grafico_valores",
                         "label": "Gráfico valores",
                         "type": "string",
@@ -391,7 +407,21 @@
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
                         "form": true
                     })
-                ]
+                ],
+                "events": {
+                    "saving": <?php
+                    function ($event) {
+                        if (empty($event->estadoFinanciero->prefix)) {
+                            $event->estadoFinanciero->prefix = uniqid('tmp_');
+                        }
+                        $file = realpath(storage_path('app/public/'.$event->estadoFinanciero->archivo['path']));
+                        $event->estadoFinanciero->tablas = \App\Xls2Csv2Db::import(
+                            $event->estadoFinanciero->prefix,
+                            $file
+                        );
+                    }
+                    ?>
+                }
             }),
             new Module.ViewModel({
                 "name": "empresa_estado",

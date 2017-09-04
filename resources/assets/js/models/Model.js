@@ -3,6 +3,14 @@ export default function(uri0, id, type) {
     var callback = function () {};
     var refreshListCallback = function () {};
     var originalData = {};
+    var events = {
+        "load": [],
+        "save": [],
+        "delete": [],
+        "call": [],
+        "select": [],
+        "reset": [],
+    };
     var uri;
     //var owner = arguments.callee.caller.owner;
     if(typeof uri0!=='function') {
@@ -71,6 +79,9 @@ export default function(uri0, id, type) {
                     if(typeof loadCallback==='function'){
                         loadCallback(self);
                     }
+                    events.load.forEach(function(evn){
+                        evn[0].call(env[1], self);
+                    });
                 }
             });
         }catch(err) {
@@ -130,6 +141,9 @@ export default function(uri0, id, type) {
                 if(typeof saveCallback==='function'){
                     saveCallback(self);
                 }
+                events.save.forEach(function(evn){
+                    evn[0].call(env[1], self);
+                });
             }
         });
     };
@@ -156,6 +170,9 @@ export default function(uri0, id, type) {
                 if(typeof saveCallback==='function') {
                     saveCallback(self);
                 }
+                events.delete.forEach(function(evn){
+                    evn[0].call(env[1], self);
+                });
             }
         });
     };
@@ -187,6 +204,9 @@ export default function(uri0, id, type) {
                     } else if(typeof methodCallback==='object' && typeof methodCallback.success==='function') {
                         methodCallback.success(response.response);
                     }
+                    events.call.forEach(function(evn){
+                        evn[0].call(env[1], response.response);
+                    });
                 } else {
                     throw new Exception(response.error);
                 }
@@ -212,6 +232,9 @@ export default function(uri0, id, type) {
         id = originalData.id;
         this.id = originalData.id;
         callback(self);
+        events.reset.forEach(function(evn){
+            evn[0].call(env[1], self);
+        });
     };
     this.$select = function (loadCallback, params) {
         try {
@@ -235,6 +258,9 @@ export default function(uri0, id, type) {
                     if(typeof loadCallback==='function'){
                         loadCallback(data);
                     }
+                    events.select.forEach(function(evn){
+                        evn[0].call(env[1], self);
+                    });
                 }
             });
         }catch(err) {
@@ -341,5 +367,12 @@ export default function(uri0, id, type) {
             }
         });
     }
+    this.$on = function (event, callback, owner) {
+        if (events[event].findIndex(function(a){
+            return a[0]===callback && a[1]===owner
+        })===-1) {
+            events[event].push([callback, owner]);
+        }
+    };
     //this.$load();
-}
+};

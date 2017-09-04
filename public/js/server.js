@@ -14,3 +14,5 @@ document.writeln('\n<script type="text/javascript" src="/bower_components/datata
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.min.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>\n');
+document.writeln('\n<script type="text/javascript" src="/bower_components/chart.js/dist/Chart.bundle.js"></script>\n');
+document.writeln('\n<script type="text/javascript" src="/bower_components/chart.js/samples/utils.js"></script>\n');

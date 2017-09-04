@@ -138,7 +138,53 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
-                                                    <abm id="empresa_estado" v-bind:model="empresa_estado" v-bind:editable="false" v-on:selectrow="cargarEstadosFinancieros" toolbar="search"></abm>
+                                                    <!-- abm 
+                                                        id="empresa_estado" 
+                                                        v-bind:model="empresa_estado" 
+                                                        v-bind:editable="false" 
+                                                        v-on:selectrow="cargarEstadosFinancieros" 
+                                                        toolbar="search"
+                                                    ></abm-->
+                                                    <div class="form-group">
+                                                      <label for="select" class="col-lg-2 control-label">Empresa Pública</label>
+                                                      <div class="col-lg-10">
+                                                        <select class="form-control" id="select">
+                                                            <option>Yacimientos Petroliferos Fiscales</option>
+                                                            <option>Sub empresa de yacimientos</option>
+                                                            <option>Sub empresa 2 de yacimientos</option>
+                                                            <option>ENDE</option>
+                                                            <option>QUIPUS</option>
+                                                            <option>BOLIVIA TV</option>
+                                                        </select>
+                                                      </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Presupuesto aprobado" mcols="aprobado" type="line"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [100,400,900],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [100,400,900],
+                                                                                    "ejecutado": [90,380,850]
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <!-- img src="/images/ejecucion.png" style="width:350px" />
+                                                        <img src="/images/aprobado_ejecutado_config.png" style="width:350px" /-->
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

@@ -13,6 +13,9 @@ default Vue.extend({
     },
     mounted() {
         var self = this;
+        if (typeof self.init === 'function') {
+            self.init();
+        }
         self.refresh();
         this.$root.$on('changed', function(element){
             if(typeof element.id!=='undefined') {

@@ -34,6 +34,12 @@ class EventServiceProvider extends ServiceProvider
         'App\\Events\\UserAdministration\\TareaSaved' => [
             'App\\Listeners\\UserAdministration\\TareaSavedListener',
         ],
+        'App\\Events\\UserAdministration\\EstadoFinancieroSave' => [
+            'App\\Listeners\\UserAdministration\\EstadoFinancieroSaveListener',
+        ],
+        'App\\Events\\UserAdministration\\EstadoFinancieroSaving' => [
+            'App\\Listeners\\UserAdministration\\EstadoFinancieroSavingListener',
+        ],
     ];
 
     /**
