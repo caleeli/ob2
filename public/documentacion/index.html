@@ -148,17 +148,18 @@
                                                     <div class="form-group">
                                                       <label for="select" class="col-lg-2 control-label">Empresa Pública</label>
                                                       <div class="col-lg-10">
-                                                        <select class="form-control" id="select">
-                                                            <option>Yacimientos Petroliferos Fiscales</option>
-                                                            <option>Sub empresa de yacimientos</option>
-                                                            <option>Sub empresa 2 de yacimientos</option>
-                                                            <option>ENDE</option>
-                                                            <option>QUIPUS</option>
-                                                            <option>BOLIVIA TV</option>
+                                                        <select class="form-control" id="select" v-model='empresaSeleccionada'>
+                                                            <option value='ypfb'>Yacimientos Petroliferos Fiscales</option>
+                                                            <option value='ypfb1'>Sub empresa de yacimientos</option>
+                                                            <option value='ypfb2'>Sub empresa 2 de yacimientos</option>
+                                                            <option value='ende'>ENDE</option>
+                                                            <option value='quipus'>QUIPUS</option>
+                                                            <option value='boliviatv'>BOLIVIA TV</option>
                                                         </select>
                                                       </div>
                                                     </div>
-                                                    <div class="row">
+                                                    {{empresaSeleccionada}}
+                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb"?"block":"none"}'>
                                                         <div class="col-md-4">
                                                             <basic-chart title="Presupuesto aprobado" mcols="aprobado" type="line"
                                                                          :mdata='{
@@ -182,8 +183,81 @@
                                                                             }
                                                                         }'/>
                                                         </div>
-                                                        <!-- img src="/images/ejecucion.png" style="width:350px" />
-                                                        <img src="/images/aprobado_ejecutado_config.png" style="width:350px" /-->
+                                                    </div>
+                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb1"?"block":"none"}'>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Presupuesto aprobado" mcols="aprobado" type="line"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [40,20,50],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [40,20,50],
+                                                                                    "ejecutado": [30,10,20]
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb2"?"block":"none"}'>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Presupuesto aprobado" mcols="aprobado" type="line"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [30,50,60],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [30,50,60],
+                                                                                    "ejecutado": [30,50,20]
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ende"?"block":"none"}'>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Presupuesto " mcols="aprobado" type="horizontalBar"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [140,120,150],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [140,120,150],
+                                                                                    "ejecutado": [130,110,100]
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -888,6 +962,7 @@
                         busquedaTareas: '',
                         tareasTodas: [],
                         tareas: [],
+                        empresaSeleccionada:"ypfb",
                     };
                 },
                 methods: {

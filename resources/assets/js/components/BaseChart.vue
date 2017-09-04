@@ -149,7 +149,6 @@
                  */
                 function addChart(rowId) {
                     var $canvas = $("<canvas></canvas>");
-                    console.log($(self.$el).find(".canvasOwner"));
                     $(self.$el).find(".canvasOwner").append($canvas);
                     var ctx = $canvas[0];
                     var chartData = {
@@ -305,6 +304,7 @@ console.log(e);
             },
             refresh: function () {
                 var self = this;
+                $(self.$el).find(".canvasOwner").html('');
                 self.drawChart();
             },
         }
