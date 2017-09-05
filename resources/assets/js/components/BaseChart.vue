@@ -1,7 +1,7 @@
 <template>
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>{{title}}</h5>
+            <h5>{{title}}</h5><i class="base-chart-aux"></i>
             <div class="ibox-tools">
                 <a v-on:click="download">
                     <i class="fa fa-download"></i>
@@ -27,7 +27,24 @@
                 </a>
             </div>
         </div>
-        <div class="ibox-content canvasOwner">
+        <div class="ibox-content">
+            <div class="canvasOwner"></div>
+            <div class="pv-data-table">
+                <table class="pv-data-table-table table table-striped table-bordered">
+                    <thead>
+                    <tr v-for="(col,colI) in cols">
+                        <th v-for="row in rows"></th>
+                        <th v-for="(x,xi) in xs_label" v-if="isDifferentCol(xs_label, xi, colI)" :colspan="colspan(xs_label, xi, colI)">{{x[colI]}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(yi,i) in ys">
+                        <th v-for="yLabel in ys_label[i]">{{yLabel}}</th>
+                        <td v-for="y in yi">{{Number(y).toLocaleString('es-419')}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </template>
@@ -79,12 +96,40 @@
             download: function () {
                 
             },
+            isDifferentCol: function (xs_label, i, colI) {
+                return i==0 ? true : xs_label[i][colI]!=xs_label[i-1][colI];
+            },
+            colspan: function (xs_label, i, colI) {
+                var colspan=0;
+                for(var j=i,l=xs_label.length;j<l;j++) {
+                    if (xs_label[j][colI]==xs_label[i][colI]) {
+                        colspan++;
+                    } else {
+                        return colspan;
+                    }
+                }
+                return colspan;
+            },
             onLoadModel: function () {
                 this.refresh();
             },
             init: function () {
                 var self = this;
                 //self.model.$on('load', self.onLoadModel, self);
+            },
+            colorToRgba: function (color, newAlpha) {
+                var $aa = $(this.$el).find(".base-chart-aux");
+                $aa.css("color", color);
+                var rgb = window.getComputedStyle($aa[0], null).getPropertyValue("color");
+                var colors;
+                if (rgb.substr(0,4)==='rgba') {
+                    colors = rgb.substr(5,rgb.length-6).split(",");
+                    colors[3] = newAlpha;
+                } else {
+                    colors = rgb.substr(4,rgb.length-5).split(",");
+                    colors.push(newAlpha);
+                }
+                return 'rgba('+colors.join(',')+')';
             },
             drawChart: function() {
                 var self = this;
@@ -112,6 +157,7 @@
                 ];
                 var MAX_ROWS=10;
                 var data = self.data;
+                var countSeries = 0;
                 $(self.$el).find(".canvasOwner").html("");
                 var maxNumCharts = MAX_ROWS;
                 self.xs.length=0;
@@ -134,8 +180,9 @@
                     });
                     self.xs_label.push(xl);
                 });
+                for(var rowId in data.series) countSeries++;
                 for(var rowId in data.series) {
-                    addChart(rowId);
+                    addChart(rowId, countSeries>1);
                     maxNumCharts--;
                     if(maxNumCharts<=0) {
                         break;
@@ -149,7 +196,7 @@
                 /**
                  * Add a chart
                  */
-                function addChart(rowId) {
+                function addChart(rowId, addTitle) {
                     var $canvas = $("<canvas></canvas>");
                     $(self.$el).find(".canvasOwner").append($canvas);
                     var ctx = $canvas[0];
@@ -160,8 +207,8 @@
                     chartData.labels = data.x;
                     chartData.datasets = [];
                     var colors = [];
-                    for(var color in window.chartColors) {
-                        colors.push(color);
+                    for(var color in pieColors) {
+                        colors.unshift(pieColors[color]);
                     }
                     var axis=["y-axis-2","y-axis-1"];
                     for(var a in data.series[rowId]) {
@@ -171,10 +218,11 @@
                         });
                         self.ys.push(data.series[rowId][a]);
                         self.ys_label.push(yl);
+                        var colorData = colors.pop();
                         chartData.datasets.push({
                             label: a,
-                            borderColor: colors.pop(),
-                            backgroundColor: colors.pop(),
+                            borderColor: colorData,
+                            backgroundColor: self.colorToRgba(colorData, 0.7),
                             fill: false,
                             data: data.series[rowId][a],
                             //yAxisID: axis[1],
@@ -186,7 +234,7 @@
                         hoverMode: 'index',
                         stacked: false,
                         title:{
-                            display: true,
+                            display: addTitle,
                             text: rowId,
                         },
                         scales: {
@@ -262,6 +310,7 @@
                                 //cutoutPercentage: 50
                             };
                             chartData.datasets.forEach(function(ds) {
+                                ds.borderColor = 'white';
                                 ds.backgroundColor = [];
                                 ds.data.forEach(function(data, i) {
                                     ds.backgroundColor.push(

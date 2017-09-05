@@ -160,11 +160,13 @@
                                                     </div>
                                                     <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb"?"block":"none"}'>
                                                         <div class="col-md-5">
-                                                            <basic-chart title="Presupuesto aprobado" mcols="aprobado" type="line"
+                                                            <basic-chart title="Presupuesto aprobado"
+                                                                         mcols="aprobado"
+                                                                         type="line"
                                                                          :mdata='{
                                                                             x: ["ene","feb","mar"],
                                                                             series: {
-                                                                                "presupuesto": {
+                                                                                "presupuesto2014": {
                                                                                     "aprobado": [100,400,900],
                                                                                 }
                                                                             }
@@ -948,7 +950,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.33"></script>
+        <script src="../js/server.js?v0.34"></script>
         <script>
         $(document).ready(function () {
             var app = new Vue({
