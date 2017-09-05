@@ -3,8 +3,8 @@
         <div class="ibox-title">
             <h5>{{title}}</h5>
             <div class="ibox-tools">
-                <a class="collapse-link">
-                    <i class="fa fa-chevron-up"></i>
+                <a v-on:click="download">
+                    <i class="fa fa-download"></i>
                 </a>
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="fa fa-wrench"></i>
@@ -76,6 +76,9 @@
             close: function () {
                 
             },
+            download: function () {
+                
+            },
             onLoadModel: function () {
                 this.refresh();
             },
@@ -86,7 +89,8 @@
             drawChart: function() {
                 var self = this;
                 var pieColors = [
-                    '#3366CC',
+                    '#22AA99',
+                    'darkgray',
                     '#DC3912',
                     '#FF9900',
                     '#109618',
@@ -98,7 +102,6 @@
                     '#B82E2E',
                     '#316395',
                     '#994499',
-                    '#22AA99',
                     '#AAAA11',
                     '#6633CC',
                     '#E67300',
@@ -131,7 +134,6 @@
                     });
                     self.xs_label.push(xl);
                 });
-                console.log(data.series);
                 for(var rowId in data.series) {
                     addChart(rowId);
                     maxNumCharts--;
@@ -196,6 +198,10 @@
                                 display: true,
                                 position: "left",
                                 id: "y-axis-1",
+                                ticks: {
+                                    scaleStartValue: 0,
+                                    beginAtZero: true,
+                                }
                             }],
                         }
                     };
@@ -221,6 +227,10 @@
                                     display: true,
                                     position: "bottom",
                                     id: "y-axis-1",
+                                    ticks: {
+                                        scaleStartValue: 0,
+                                        beginAtZero: true,
+                                    }
                                 }],
                                 yAxes: [{
                                     position: 'left'
@@ -249,7 +259,7 @@
                                 legend: {
                                     display: true
                                 },
-                                cutoutPercentage: 50
+                                //cutoutPercentage: 50
                             };
                             chartData.datasets.forEach(function(ds) {
                                 ds.backgroundColor = [];
@@ -298,7 +308,7 @@
                             options: options
                         });
                     } catch(e) {
-console.log(e);
+                        console.log(e);
                     }
                 }
             },

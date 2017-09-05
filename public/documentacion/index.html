@@ -137,7 +137,7 @@
                                     <div class="col-lg-12">
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
-                                                <div class="table-responsive" style="overflow-y: scroll;">
+                                                <div class="table-responsive" style="overflow: hidden;">
                                                     <!-- abm 
                                                         id="empresa_estado" 
                                                         v-bind:model="empresa_estado" 
@@ -158,9 +158,8 @@
                                                         </select>
                                                       </div>
                                                     </div>
-                                                    {{empresaSeleccionada}}
                                                     <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb"?"block":"none"}'>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-5">
                                                             <basic-chart title="Presupuesto aprobado" mcols="aprobado" type="line"
                                                                          :mdata='{
                                                                             x: ["ene","feb","mar"],
@@ -171,7 +170,7 @@
                                                                             }
                                                                         }'/>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-5">
                                                             <basic-chart title="Aprobado/Ejecutado" type="bar"
                                                                          :mdata='{
                                                                             x: ["ene","feb","mar"],
@@ -179,6 +178,17 @@
                                                                                 "presupuesto": {
                                                                                     "aprobado": [100,400,900],
                                                                                     "ejecutado": [90,380,850]
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <basic-chart title="% Ejecutado" type="pie"
+                                                                         :mdata='{
+                                                                            x: ["pendiente", "ejecutado"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "e": [400,300],
                                                                                 }
                                                                             }
                                                                         }'/>
