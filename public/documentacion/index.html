@@ -153,8 +153,7 @@
                                                             <option value='ypfb1'>Sub empresa de yacimientos</option>
                                                             <option value='ypfb2'>Sub empresa 2 de yacimientos</option>
                                                             <option value='ende'>ENDE</option>
-                                                            <option value='quipus'>QUIPUS</option>
-                                                            <option value='boliviatv'>BOLIVIA TV</option>
+                                                            <option value='easba'>EASBA</option>
                                                         </select>
                                                       </div>
                                                     </div>
@@ -266,6 +265,30 @@
                                                                                 "presupuesto": {
                                                                                     "aprobado": [140,120,150],
                                                                                     "ejecutado": [130,110,100]
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="easba"?"block":"none"}'>
+                                                        <div class="col-md-6">
+                                                            <basic-chart title="Balance general " mcols="total" type="bar"
+                                                                         :mdata='{
+                                                                            x: ["Activo Corriente","Activo No Corriente","Pasivo Corriente", "Pasivo No Corriente", "Patrimonio"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "total": [16719936,538400912,1546559,1713755979,160181690],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <basic-chart title="Balance general " mcols="total" type="pie"
+                                                                         :mdata='{
+                                                                            x: ["Activo Corriente","Activo No Corriente","Pasivo Corriente", "Pasivo No Corriente", "Patrimonio"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "total": [16719936,538400912,1546559,1713755979,160181690],
                                                                                 }
                                                                             }
                                                                         }'/>
@@ -400,7 +423,8 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
-                                                    <abm v-bind:model="estado_financiero_aux" v-bind:editable="true" buttons='close,save,delete'></abm>
+                                                    <!-- abm v-bind:model="estado_financiero_aux" v-bind:editable="true" buttons='close,save,delete'></abm -->
+                                                    <file-viewer />
                                                 </div>
                                             </div>
                                         </div>
@@ -950,7 +974,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.35"></script>
+        <script src="../js/server.js?v0.36"></script>
         <script>
         $(document).ready(function () {
             var app = new Vue({

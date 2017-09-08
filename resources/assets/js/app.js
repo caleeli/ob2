@@ -14,6 +14,7 @@ Vue.component('filters', require('./components/Filter.vue'));
 Vue.component('imageviewer', require('./components/ImageViewer.vue'));
 Vue.component('newtable', require('./components/NewTable.vue'));
 Vue.component('basic-chart', require('./components/BaseChart.vue'));
+Vue.component('file-viewer', require('./components/FileViewer.vue'));
 /*
 $(function() {
     window.toastr.options = {
