@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="ibox-content">
-            <div class="canvasOwner"></div>
+            <div class="canvasOwner" style="min-height: 300px;"></div>
             <div class="pv-data-table">
                 <table class="pv-data-table-table table table-striped table-bordered">
                     <thead>
@@ -198,6 +198,8 @@
                  */
                 function addChart(rowId, addTitle) {
                     var $canvas = $("<canvas></canvas>");
+                    $canvas.attr('width',300);
+                    $canvas.attr('height',400);
                     $(self.$el).find(".canvasOwner").append($canvas);
                     var ctx = $canvas[0];
                     var chartData = {
@@ -233,6 +235,7 @@
                         responsive: true,
                         hoverMode: 'index',
                         stacked: false,
+                        maintainAspectRatio: false,
                         title:{
                             display: addTitle,
                             text: rowId,
