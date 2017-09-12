@@ -18,6 +18,7 @@ class Empresa extends Model
       5 => 'tipologia',
       6 => 'detalle_empresa',
       7 => 'sub_empresa',
+      8 => 'es_principal',
     );
     protected $attributes = array(
       'cod_empresa' => '',
@@ -28,6 +29,7 @@ class Empresa extends Model
       'tipologia' => '',
       'detalle_empresa' => '',
       'sub_empresa' => '0',
+      'es_principal' => '0',
     );
     protected $casts = array(
       'cod_empresa' => 'string',
@@ -38,6 +40,7 @@ class Empresa extends Model
       'tipologia' => 'string',
       'detalle_empresa' => 'string',
       'sub_empresa' => 'string',
+      'es_principal' => 'string',
     );
     protected $events = array(
     );

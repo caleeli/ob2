@@ -149,9 +149,150 @@
                                                       <label for="select" class="col-lg-2 control-label">Empresa Pública</label>
                                                       <div class="col-lg-10">
                                                         <select class="form-control" id="select" v-model='empresaSeleccionada'>
-                                                            <option v-for="emp in empresas" v-bind:value='emp.id'>{{emp.attributes.name}}</option>
+                                                            <option value='ypfb'>Yacimientos Petroliferos Fiscales</option>
+                                                            <option value='ypfb1'>Sub empresa de yacimientos</option>
+                                                            <option value='ypfb2'>Sub empresa 2 de yacimientos</option>
+                                                            <option value='ende'>ENDE</option>
+                                                            <option value='easba'>EASBA</option>
                                                         </select>
                                                       </div>
+                                                    </div>
+                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb"?"block":"none"}'>
+                                                        <div class="col-md-5">
+                                                            <basic-chart title="Presupuesto aprobado"
+                                                                         mcols="aprobado"
+                                                                         type="line"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto2014": {
+                                                                                    "aprobado": [100,400,900],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [100,400,900],
+                                                                                    "ejecutado": [90,380,850]
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <basic-chart title="% Ejecutado" type="pie"
+                                                                         :mdata='{
+                                                                            x: ["pendiente", "ejecutado"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "presupuesto": [400,300],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb1"?"block":"none"}'>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Presupuesto aprobado" mcols="aprobado" type="line"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [40,20,50],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [40,20,50],
+                                                                                    "ejecutado": [30,10,20]
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb2"?"block":"none"}'>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Presupuesto aprobado" mcols="aprobado" type="line"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [30,50,60],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [30,50,60],
+                                                                                    "ejecutado": [30,50,20]
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ende"?"block":"none"}'>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Presupuesto " mcols="aprobado" type="horizontalBar"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [140,120,150],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
+                                                                         :mdata='{
+                                                                            x: ["ene","feb","mar"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "aprobado": [140,120,150],
+                                                                                    "ejecutado": [130,110,100]
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="easba"?"block":"none"}'>
+                                                        <div class="col-md-6">
+                                                            <basic-chart title="Balance general " mcols="total" type="bar"
+                                                                         :mdata='{
+                                                                            x: ["Activo Corriente","Activo No Corriente","Pasivo Corriente", "Pasivo No Corriente", "Patrimonio"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "total": [16719936,538400912,1546559,1713755979,160181690],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <basic-chart title="Balance general " mcols="total" type="pie"
+                                                                         :mdata='{
+                                                                            x: ["Activo Corriente","Activo No Corriente","Pasivo Corriente", "Pasivo No Corriente", "Patrimonio"],
+                                                                            series: {
+                                                                                "presupuesto": {
+                                                                                    "total": [16719936,538400912,1546559,1713755979,160181690],
+                                                                                }
+                                                                            }
+                                                                        }'/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -833,7 +974,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.36"></script>
+        <script src="../js/server.js?v0.37"></script>
         <script>
         $(document).ready(function () {
             var app = new Vue({
@@ -844,7 +985,6 @@
                     var self = this;
                     return {
                         user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
-                        empresas: [],
                         empresa: new UserAdministration.Empresa(),
                         empresa_estado: new UserAdministration.EmpresaEstado(),
                         estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
@@ -864,15 +1004,6 @@
                 methods: {
                     seleccionaEmpresa: function () {
                         window.location.hash = '#descripcionEmpresa';
-                    },
-                    listarEmpresas: function () {
-                        var self = this;
-                        this.empresas.splice(0);
-                        this.tarea.$select(function (data) {
-                            data.data.forEach(function (row) {
-                                self.empresas.push(row);
-                            });
-                        });
                     },
                     listarTareas: function () {
                         var self = this;

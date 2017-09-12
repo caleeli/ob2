@@ -323,6 +323,12 @@
                         "type": "string",
                         "list": false,
                         "default": "0"
+                    }),
+                    new Module.Model.Field({
+                        "name": "es_principal",
+                        "type": "string",
+                        "list": false,
+                        "default": "0"
                     })
                 ],
                 "associations": [

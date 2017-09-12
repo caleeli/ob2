@@ -27,7 +27,7 @@
                 </a>
             </div>
         </div>
-        <div class="ibox-content">
+        <div class="ibox-content chart-box">
             <div class="canvasOwner" style="min-height: 300px;"></div>
             <div class="pv-data-table">
                 <table class="pv-data-table-table table table-striped table-bordered">
@@ -198,8 +198,15 @@
                  */
                 function addChart(rowId, addTitle) {
                     var $canvas = $("<canvas></canvas>");
-                    $canvas.attr('width',300);
-                    $canvas.attr('height',400);
+                    var portrait = window.innerHeight > window.innerWidth;
+                    if (portrait) {
+                        //is Portrait
+                        $canvas.attr('width',300);
+                        $canvas.attr('height',350);
+                    } else {
+                        $canvas.attr('width',800);
+                        $canvas.attr('height',600);
+                    }
                     $(self.$el).find(".canvasOwner").append($canvas);
                     var ctx = $canvas[0];
                     var chartData = {
@@ -235,7 +242,7 @@
                         responsive: true,
                         hoverMode: 'index',
                         stacked: false,
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
                         title:{
                             display: addTitle,
                             text: rowId,

@@ -128,7 +128,7 @@
             isParent: function (row) {
                 var self = this;
                 var keys = self.getGroupKey(row);
-                return keys.length===1 && keys[0]==0;
+                return keys.length===1 && keys[0]==0 && (row.attributes.es_principal*1);
             },
             groupClass: function (row, group) {
                 var self = this;

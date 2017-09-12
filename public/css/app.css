@@ -9793,11 +9793,17 @@ body.md-skin {
 }
 
 .pv-data-table table th {
-  font-size: 8pt;
+  font-size: 6pt;
 }
 
 .pv-data-table table td {
-  font-size: 8pt;
+  font-size: 6pt;
+}
+
+@media (orientation: portrait) {
+  .chart-box {
+    padding: 0px !important;
+  }
 }
 
 /*# sourceMappingURL=app.css.map */
