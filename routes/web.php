@@ -27,3 +27,6 @@ Route::get('/basic', function () {
     return view('basic', ['template'=>'flatly']);
 });
 
+Route::get('/report', function () {
+    return view('chart', ['template'=>'flatly']);
+});
