@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return redirect('/documentacion/login.html');
+    return redirect('/test.html');
 });

@@ -319,6 +319,12 @@
                         "default": ""
                     })
                 ],
+                "methods": {
+                    "prueba(nombre)": <?php function($nombre) {
+                        return "Hola $nombre";
+                    }
+                    ?>
+                },
                 "associations": [
                     new Module.Model.HasMany({
                         "name": "estados",

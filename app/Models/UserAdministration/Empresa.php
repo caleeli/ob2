@@ -42,4 +42,10 @@ class Empresa extends Model
     {
         return $this->hasMany('App\Models\UserAdministration\EstadoFinanciero');
     }
+
+
+    public function prueba($nombre)
+    {
+        return "Hola $nombre";
+    }
 }
