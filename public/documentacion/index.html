@@ -1024,7 +1024,7 @@
                 methods: {
                     seleccionaEmpresa: function () {
                         window.location.hash = '#descripcionEmpresa';
-                        $(window).scrollTop($('#descripcionEmpresa').offset().top);
+                        $('#descripcionEmpresa')[0].scrollIntoView(true);
                     },
                     listarTareas: function () {
                         var self = this;
