@@ -244,6 +244,9 @@
                     ?>
                 }
             }),
+            /**
+             * roles
+             */
             new Module.Model({
                 "name": "role",
                 "title": "Rol",
@@ -271,6 +274,9 @@
                     })
                 ]
             }),
+            /**
+             * empresa
+             */
             new Module.Model({
                 "name": "empresa",
                 "title": "empresa",
@@ -336,8 +342,15 @@
                         "name": "estados",
                         "model": "estado_financiero"
                     }),
+                    new Module.Model.HasMany({
+                        "name": "graficos",
+                        "model": "empresa_grafico"
+                    }),
                 ]
             }),
+            /**
+             * estado_financiero
+             */
             new Module.Model({
                 "name": "estado_financiero",
                 "title": "Estado financiero",
@@ -429,6 +442,58 @@
                     ?>
                 }
             }),
+            /**
+             * empresa_grafico
+             */
+            new Module.Model({
+                "name": "empresa_grafico",
+                "title": "Empresa gráfico",
+                "pluralTitle": "Empresa gráficos",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "titulo",
+                        "type": "string",
+                        "label": "Título",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "tipo",
+                        "type": "string",
+                        "label": "Tipo",
+                        "ui": "select",
+                        "enum": ["bar", "line", "pie"],
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "informes_auditoria",
+                        "label": "Informes auditoria",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "datos",
+                        "label": "Datos",
+                        "type": "array",
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "empresa",
+                        "model": "empresa",
+                        "nullable": true,
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
+                        "list": false,
+                        "form": false
+                    })
+                ],
+                "events": {
+                }
+            }),
+            /**
+             * empresa_estado
+             */
             new Module.ViewModel({
                 "name": "empresa_estado",
                 "title": "Estado financiero por empresa",

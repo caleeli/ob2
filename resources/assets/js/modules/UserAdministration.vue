@@ -118,6 +118,34 @@ UserAdministration.EstadoFinanciero = function (url, id) {
 UserAdministration.EstadoFinanciero.prototype = Object.create(Model.prototype);
 UserAdministration.EstadoFinanciero.prototype.constructor = Model;
 
+UserAdministration.EmpresaGrafico = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/empresa_graficos";
+    Model.call(this, url, id, "UserAdministration.EmpresaGrafico");
+    this.$list = function () {
+        return "fields=titulo,tipo,informes_auditoria,datos";
+    };
+    this.$name = "EmpresaGrafico";
+    this.$pluralName = "EmpresaGraficos";
+    this.$title = "Empresa gráfico";
+    this.$pluralTitle = "Empresa gráficos";
+    this.$ = {"titulo":{"name":"titulo","label":"Título","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"titulo","isAssociation":false},"tipo":{"name":"tipo","label":"Tipo","type":"select","enum":["bar","line","pie"],"source":undefined,"textField":undefined,"value":"tipo","isAssociation":false},"informes_auditoria":{"name":"informes_auditoria","label":"Informes auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"informes_auditoria","isAssociation":false},"datos":{"name":"datos","label":"Datos","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"datos","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Título","data":"attributes.titulo"},{"title":"Tipo","data":"attributes.tipo"},{"title":"Informes auditoria","data":"attributes.informes_auditoria"},{"title":"Datos","data":"attributes.datos"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.EmpresaGrafico.prototype = Object.create(Model.prototype);
+UserAdministration.EmpresaGrafico.prototype.constructor = Model;
+
 UserAdministration.EmpresaEstado = function (url, id) {
     var self = this;
     this.$defaultUrl = "/api/UserAdministration/empresa_estados";

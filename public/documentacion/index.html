@@ -155,8 +155,21 @@
                                                             <option value='ende'>ENDE</option>
                                                             <option value='easba'>EASBA</option>
                                                         </select>
+                                                        <div class="col-lg-10">
+                                                          <select class="form-control" id="select" v-model='empresaSeleccionadaId'>
+                                                              <option v-for="emp in empresas" v-bind:value='emp.id'>{{emp.attributes.nombre_empresa}}</option>
+                                                          </select>
+                                                        </div>
                                                       </div>
                                                     </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6" v-for="grafico in graficos">
+                                                            <basic-chart v-bind:title="grafico.attributes.titulo"
+                                                                         mcols="aprobado"
+                                                                         v-bind:type="grafico.attributes.tipo"
+                                                                         v-bind:mdata='grafico.attributes.datos'/>
+                                                        </div>
+                                                    </div>>
                                                     <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb"?"block":"none"}'>
                                                         <div class="col-md-5">
                                                             <basic-chart title="Presupuesto aprobado"
@@ -974,10 +987,11 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.37"></script>
+        <script src="../js/server.js?v0.38"></script>
         <script>
         $(document).ready(function () {
-            var app = new Vue({
+            var app;
+            app = new Vue({
                 el: '#wrapper',
                 carousel: {},
                 tareaAvance: 0,
@@ -985,6 +999,7 @@
                     var self = this;
                     return {
                         user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
+                        empresas: [],
                         empresa: new UserAdministration.Empresa(),
                         empresa_estado: new UserAdministration.EmpresaEstado(),
                         estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
@@ -998,8 +1013,26 @@
                         busquedaTareas: '',
                         tareasTodas: [],
                         tareas: [],
-                        empresaSeleccionada:"ypfb",
+                        empresaSeleccionada: "ypfb",
+                        empresaSeleccionadaId: "",
+                        graficos:[],
+                        graficoModel: new UserAdministration.EmpresaGrafico(function(){return self.empresaSeleccionadaId? ("/api/UserAdministration/empresas/"+self.empresaSeleccionadaId+"/graficos") : "/api/UserAdministration/EmpresaGraficos"}),
                     };
+                },
+                computed: {
+                    /*onRefresh: function() {
+                        console.log(this);
+                        var self = this;
+                        var empresaId = self.empresaSeleccionadaId;
+                        console.log('onRefresh', empresaId);
+                        self.graficoModel.$select(function(data) {
+                            self.graficos.splice(0);
+                            data.data.forEach(function (row) {
+                                self.graficos.push(row);
+                            });
+                        });
+                        return self.graficos;
+                    },*/
                 },
                 methods: {
                     seleccionaEmpresa: function () {
@@ -1013,6 +1046,15 @@
                                 self.tareasTodas.push(row);
                             });
                             self.pintarTareas();
+                        });
+                    },
+                    listarEmpresas: function () {
+                        var self = this;
+                        self.empresas.splice(0);
+                        self.empresa.$select(function (data) {
+                            data.data.forEach(function (row) {
+                                self.empresas.push(row);
+                            });
                         });
                     },
                     pintarTareas: function () {
@@ -1125,6 +1167,7 @@
                     location.hash = '';
                     location.hash = hash0;
                     this.listarTareas();
+                    this.listarEmpresas();
                 }
             });
             window.app = app;

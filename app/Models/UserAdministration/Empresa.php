@@ -48,4 +48,10 @@ class Empresa extends Model
     {
         return $this->hasMany('App\Models\UserAdministration\EstadoFinanciero');
     }
+
+
+    public function graficos()
+    {
+        return $this->hasMany('App\Models\UserAdministration\EmpresaGrafico');
+    }
 }
