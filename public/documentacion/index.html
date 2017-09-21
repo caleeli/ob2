@@ -472,7 +472,7 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
-                                                    <abm id="abmUAI" v-bind:model="uai" v-bind:editable="false" toolbar='new,search'></abm>
+                                                    <abm id="abmUAI" v-bind:model="uai" v-bind:editable="true" toolbar='new,search' buttons="close,save,delete"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -974,7 +974,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.39"></script>
+        <script src="../js/server.js?v0.40"></script>
         <script>
         $(document).ready(function () {
             var app;

@@ -89,7 +89,7 @@
                     responsive: true,
                     buttons: self.buttons,
                     processing: true,
-                    ajax: self.model.$url() + '?' + self.model.$list(),
+                    ajax: self.model.$url() + '?' + self.model.$list()+',created_at,updated_at',
                     rowId: 'id',
                     columns: self.model.$columns(),
                     rowGroup: self.groupBy ? {dataSrc:self.groupBy} : undefined,

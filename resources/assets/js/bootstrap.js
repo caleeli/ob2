@@ -1,3 +1,4 @@
+window.dateFormat = require('dateformat');
 
 window._ = require('lodash');
 

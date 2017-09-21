@@ -561,7 +561,15 @@
                         "label": "Informe o Dictamen",
                         "type": "array",
                         "ui": "file",
-                        "textField": function(data){return data?data.name:''},
+                        "textField": function(data,type,row){
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            return data?data.name+'&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '+time:''
+                        },
                         "list": true,
                     }),
                     new Module.Model.Field({
@@ -576,7 +584,15 @@
                         "type": "array",
                         "label": "Documento Firma",
                         "ui": "file",
-                        "textField": function(data){return data?data.name:''},
+                        "textField": function(data,type,row){
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            return data?data.name+'&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '+time:''
+                        },
                     }),
                 ],
                 "associations": [
@@ -608,8 +624,8 @@
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "titular_uai",
-                        "label": "Titular UAI",
+                        "name": "gestion_uai",
+                        "label": "Gestión",
                         "type": "string",
                         "default": ""
                     }),
@@ -620,16 +636,49 @@
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "gestion_uai",
-                        "label": "Gestión",
+                        "name": "titular_uai",
+                        "label": "Titular UAI",
                         "type": "string",
                         "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "tipo_de_informes",
+                        "label": "Tipo de Informes",
+                        "type": "array",
+                        "ui": "file",
+                        "textField": function(data,type,row){
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            return data?data.name+'&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '+time:''
+                        },
+                        "list": true,
+                    }),
+                    new Module.Model.Field({
+                        "name": "informes_emitidos_scep",
+                        "label": "Informes emitidos SCEP",
+                        "type": "array",
+                        "ui": "file",
+                        "textField": function(data,type,row){
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            return data?data.name+'&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '+time:''
+                        },
+                        "list": true,
                     }),
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
                         "name": "empresa",
                         "model": "empresa",
+                        "label": "Empresa",
                         "nullable": true,
                         "list": true,
                         "textField": "nombre_empresa",
@@ -638,6 +687,7 @@
                         "form": true,
                         "references": 'empresa_id',
                         "columns": 'cod_empresa',
+                        "position": 2,
                     })
                 ]
             }),
