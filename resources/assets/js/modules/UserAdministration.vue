@@ -179,18 +179,18 @@ UserAdministration.Firma = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/firmas";
     Model.call(this, url, id, "UserAdministration.Firma");
     this.$list = function () {
-        return "fields=cod_firma,gestion,detalle,tipo_firma,representante_legal,socios,documento_firma";
+        return "fields=cod_firma,gestion,detalle,representante_legal,informe_dictamen,documento_firma";
     };
     this.$name = "Firma";
     this.$pluralName = "Firmas";
     this.$title = "Firma";
     this.$pluralTitle = "Firmas de auditoria";
-    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"tipo_firma":{"name":"tipo_firma","label":"Tipo de firma","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_firma","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Representante legal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"socios":{"name":"socios","label":"Socios","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"socios","isAssociation":false},"vigencia_certificado":{"name":"vigencia_certificado","label":"Vigencia certificado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"vigencia_certificado","isAssociation":false},"documento_firma":{"name":"documento_firma","label":"Documento Firma","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"documento_firma","isAssociation":false}};
+    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Representante legal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Informe o Dictamen","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"informe_dictamen","isAssociation":false},"vigencia_certificado":{"name":"vigencia_certificado","label":"Vigencia certificado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"vigencia_certificado","isAssociation":false},"documento_firma":{"name":"documento_firma","label":"Documento Firma","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"documento_firma","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Detalle","data":"attributes.detalle"},{"title":"Tipo de firma","data":"attributes.tipo_firma"},{"title":"Representante legal","data":"attributes.representante_legal"},{"title":"Socios","data":"attributes.socios"},{"title":"Documento Firma","data":"attributes.documento_firma","render":function (data){return data?data.name:''}}];
+        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Detalle","data":"attributes.detalle"},{"title":"Representante legal","data":"attributes.representante_legal"},{"title":"Informe o Dictamen","data":"attributes.informe_dictamen","render":function (data){return data?data.name:''}},{"title":"Documento Firma","data":"attributes.documento_firma","render":function (data){return data?data.name:''}}];
     };
     this.$methods = {
     };

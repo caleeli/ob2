@@ -551,22 +551,18 @@
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "tipo_firma",
-                        "label": "Tipo de firma",
-                        "type": "string",
-                        "default": ""
-                    }),
-                    new Module.Model.Field({
                         "name": "representante_legal",
                         "label": "Representante legal",
                         "type": "string",
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "socios",
-                        "label": "Socios",
-                        "type": "string",
-                        "default": ""
+                        "name": "informe_dictamen",
+                        "label": "Informe o Dictamen",
+                        "type": "array",
+                        "ui": "file",
+                        "textField": function(data){return data?data.name:''},
+                        "list": true,
                     }),
                     new Module.Model.Field({
                         "name": "vigencia_certificado",

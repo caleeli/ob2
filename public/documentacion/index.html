@@ -448,7 +448,7 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
-                                                    <abm id="abmFirmasDeAuditoria" v-bind:model="firma_auditoria" v-bind:editable="false"></abm>
+                                                    <abm id="abmFirmasDeAuditoria" v-bind:model="firma_auditoria" v-bind:editable="true" buttons="close,save,delete"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -974,7 +974,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.38"></script>
+        <script src="../js/server.js?v0.39"></script>
         <script>
         $(document).ready(function () {
             var app;

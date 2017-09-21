@@ -14,9 +14,8 @@ class CreateAdmFirmasTable extends Migration
             $table->string('cod_firma')->nullable();
             $table->string('gestion')->nullable();
             $table->string('detalle')->nullable();
-            $table->string('tipo_firma')->nullable();
             $table->string('representante_legal')->nullable();
-            $table->string('socios')->nullable();
+            $table->text('informe_dictamen')->nullable();
             $table->string('vigencia_certificado')->nullable();
             $table->text('documento_firma')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();
