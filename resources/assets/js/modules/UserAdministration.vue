@@ -186,42 +186,82 @@ UserAdministration.Firma = function (url, id) {
     this.$title = "Firma";
     this.$pluralTitle = "Firmas de auditoria";
     this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Representante legal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Informe o Dictamen","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
                                     new Date(row.attributes.updated_at+'Z'),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
-                            return data?data.name+'<br><i class="fa fa-clock-o"></i> '+time:''
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
                         },"value":"informe_dictamen","isAssociation":false},"vigencia_certificado":{"name":"vigencia_certificado","label":"Vigencia certificado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"vigencia_certificado","isAssociation":false},"documento_firma":{"name":"documento_firma","label":"Documento Firma","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
                                     new Date(row.attributes.updated_at+'Z'),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
-                            return data?data.name+'<br><i class="fa fa-clock-o"></i> '+time:''
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
                         },"value":"documento_firma","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Detalle","data":"attributes.detalle"},{"title":"Representante legal","data":"attributes.representante_legal"},{"title":"Informe o Dictamen","data":"attributes.informe_dictamen","render":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
                                     new Date(row.attributes.updated_at+'Z'),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
-                            return data?data.name+'<br><i class="fa fa-clock-o"></i> '+time:''
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
                         }},{"title":"Documento Firma","data":"attributes.documento_firma","render":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
                                     new Date(row.attributes.updated_at+'Z'),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
-                            return data?data.name+'<br><i class="fa fa-clock-o"></i> '+time:''
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
                         }}];
     };
     this.$methods = {
@@ -246,21 +286,41 @@ UserAdministration.Uai = function (url, id) {
     this.$title = "UAI";
     this.$pluralTitle = "UAIs";
     this.$ = {"cod_uai":{"name":"cod_uai","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_uai","isAssociation":false},"gestion_uai":{"name":"gestion_uai","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion_uai","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"estructura_uai":{"name":"estructura_uai","label":"Estructura UAI","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"estructura_uai","isAssociation":false},"titular_uai":{"name":"titular_uai","label":"Titular UAI","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"titular_uai","isAssociation":false},"tipo_de_informes":{"name":"tipo_de_informes","label":"Tipo de Informes","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
                                     new Date(row.attributes.updated_at+'Z'),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
-                            return data?data.name+'<br><i class="fa fa-clock-o"></i> '+time:''
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
                         },"value":"tipo_de_informes","isAssociation":false},"informes_emitidos_scep":{"name":"informes_emitidos_scep","label":"Informes emitidos SCEP","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
                                     new Date(row.attributes.updated_at+'Z'),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
-                            return data?data.name+'<br><i class="fa fa-clock-o"></i> '+time:''
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
                         },"value":"informes_emitidos_scep","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
@@ -269,21 +329,41 @@ UserAdministration.Uai = function (url, id) {
         return [{"title":"Código","data":"attributes.cod_uai"},{"title":"Gestión","data":"attributes.gestion_uai"},{"title":"Empresa","data":"relationships.empresa.attributes.nombre_empresa","render":function (data, type, full, meta) {
                             return data ? data : '';
                         }},{"title":"Estructura UAI","data":"attributes.estructura_uai"},{"title":"Titular UAI","data":"attributes.titular_uai"},{"title":"Tipo de Informes","data":"attributes.tipo_de_informes","render":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
                                     new Date(row.attributes.updated_at+'Z'),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
-                            return data?data.name+'<br><i class="fa fa-clock-o"></i> '+time:''
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
                         }},{"title":"Informes emitidos SCEP","data":"attributes.informes_emitidos_scep","render":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
                                     new Date(row.attributes.updated_at+'Z'),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
-                            return data?data.name+'<br><i class="fa fa-clock-o"></i> '+time:''
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
                         }}];
     };
     this.$methods = {

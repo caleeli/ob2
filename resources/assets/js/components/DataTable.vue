@@ -11,6 +11,7 @@
             "toolbar",
             "refreshWith",
             "groupBy",
+            "editable",
         ],
         methods: {
             refresh: function() {
@@ -81,6 +82,13 @@
                     this.table.destroy(true);
                     $owner.html('<table class="table table-striped table-bordered" cellspacing="0" width="100%"></table>');
                 }
+                var columns = self.model.$columns();
+                if (self.editable) {
+                    columns.push({
+                        "data":null,
+                        "defaultContent": "<a class='btn btn-default edit-button'><i class='fa fa-pencil-square-o'></i></a>",
+                    });
+                }
                 this.table = $(this.$el).find("table").DataTable({
                     language: {
                         url: API_SERVER+"/api/lang/datatable"
@@ -91,7 +99,7 @@
                     processing: true,
                     ajax: self.model.$url() + '?' + self.model.$list()+',created_at,updated_at',
                     rowId: 'id',
-                    columns: self.model.$columns(),
+                    columns: columns,
                     rowGroup: self.groupBy ? {dataSrc:self.groupBy} : undefined,
                 });
             },
@@ -99,13 +107,13 @@
         mounted() {
             var self = this;
             this.redraw(true);
-            $(this.$el).find('tbody').on( 'click', 'tr', function () {
+            $(this.$el).find('tbody').on( 'click', '.edit-button', function () {
                 if($(self.$el).hasClass('table-locked')) {
                     return;
                 }
                 $(self.$el).addClass('table-locked');
                 setTimeout((function($el){return function(){$el.removeClass('table-locked');}})($(self.$el)), 1000);
-                var row = self.table.row( this );
+                var row = self.table.row( $(this).closest("tr")[0] );
                 var id = row.id();
                 self.selectRow(id, row.data());
             } );
