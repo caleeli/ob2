@@ -146,7 +146,6 @@
                                                         toolbar="search"
                                                     ></abm-->
                                                     <div class="form-group">
-                                                      <label for="select" class="col-lg-2 control-label">Empresa Pública</label>
                                                       <div class="col-lg-10">
                                                         <select class="form-control" id="select" v-model='empresaSeleccionada'>
                                                             <option value='ypfb'>Yacimientos Petroliferos Fiscales</option>
@@ -156,22 +155,57 @@
                                                             <option value='easba'>EASBA</option>
                                                         </select>
                                                       </div>
+                                                      <div class="col-lg-2">
+                                                        <select class="form-control" id="gestion" v-model='empresaSeleccionadaGestion'>
+                                                            <option value='2017'>2017</option>
+                                                            <option value='2016'>2016</option>
+                                                            <option value='2015'>2015</option>
+                                                            <option value='2014'>2014</option>
+                                                            <option value='2013'>2013</option>
+                                                        </select>
+                                                      </div>
                                                     </div>
-                                                    <div>
-                                                        <div class="ibox float-e-margins">
-                                                            <div class="ibox-title">
-                                                                <span class="label label-primary pull-right">Today</span>
-                                                                <h5>Balance General</h5>
-                                                            </div>
-                                                            <div class="ibox-content">
-                                                                <a href="BG-YPFB_2016.pdf">BG-YPFB_2016.pdf</a>
-                                                                <div class="row">
-                                                                    <h1 class="label-primary col-md-6">22 285,400</h1>
-                                                                    <h1 class="label-primary col-md-6">22 285,400</h1>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="ibox float-e-margins">
+                                                                <div class="ibox-title">
+                                                                    <span class="label label-primary pull-right">{{empresaSeleccionadaGestion}}</span>
+                                                                    <h5>Balance General</h5>
+                                                                </div>
+                                                                <div class="ibox-content">
+                                                                    <a href="BG-YPFB_2016.pdf">BG-YPFB_2016.pdf</a>
+                                                                    <table width="100%">
+                                                                        <tr>
+                                                                            <td rowspan="2" class="label-warning">
+                                                                                <h1>22285,400</h1>
+                                                                                <small>ACTIVO</small>
+                                                                            </td>
+                                                                            <td class="label-danger">
+                                                                                <h2>22285,400</h2>
+                                                                                <small>PASIVO</small>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="label-primary">
+                                                                                <h2>22285,400</h2>
+                                                                                <small>PATRIMONIO</small>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
+                                                        <div class="col-md-6">
+                                                            <div class="ibox float-e-margins">
+                                                                <div class="ibox-title">
+                                                                    <span class="label label-primary pull-right">{{empresaSeleccionadaGestion}}</span>
+                                                                    <h5>Estado de recursos y gastos corrientes</h5>
+                                                                </div>
+                                                                <div class="ibox-content">
+                                                                    <a href="BG-YPFB_2016.pdf">ERGC-YPFB_2016.pdf</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb"?"block":"none"}'>
                                                         <div class="col-md-5">
@@ -1020,6 +1054,7 @@
                         empresaSeleccionadaId: "",
                         graficos:[],
                         graficoModel: new UserAdministration.EmpresaGrafico(function(){return self.empresaSeleccionadaId? ("/api/UserAdministration/empresas/"+self.empresaSeleccionadaId+"/graficos") : "/api/UserAdministration/EmpresaGraficos"}),
+                        empresaSeleccionadaGestion: '2017',
                     };
                 },
                 computed: {
