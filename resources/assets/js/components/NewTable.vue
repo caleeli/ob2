@@ -45,7 +45,7 @@
             return {
                 data: [],
                 page: 0,
-                rows: 30,
+                rows: 300,
                 opened: [this.open?this.open.split(","):[]],
                 filterText: '',
             };
