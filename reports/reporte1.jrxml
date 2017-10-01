@@ -3,13 +3,27 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[select * from adm_empresas]]>
 	</queryString>
-	<field name="nombre_empresa" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
 	<field name="cod_empresa" class="java.lang.String"/>
+	<field name="nombre_empresa" class="java.lang.String"/>
+	<field name="corporacion" class="java.lang.String"/>
+	<field name="caracter" class="java.lang.String"/>
+	<field name="rubro" class="java.lang.String"/>
+	<field name="tipologia" class="java.lang.String"/>
 	<field name="detalle_empresa" class="java.lang.String">
 		<fieldDescription><![CDATA[texto contenido en html]]></fieldDescription>
+	</field>
+	<field name="created_at" class="java.sql.Timestamp"/>
+	<field name="updated_at" class="java.sql.Timestamp"/>
+	<field name="deleted_at" class="java.sql.Timestamp"/>
+	<field name="sub_empresa" class="java.lang.String">
+		<fieldDescription><![CDATA[cod_empresa.indice sub empresa ej. 581.1]]></fieldDescription>
+	</field>
+	<field name="es_principal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[1 si tiene subsidiarias o filiales]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -43,7 +57,7 @@
 				<text><![CDATA[EMPRESA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="134" y="41" width="271" height="20" uuid="d4817a3b-bc1f-4b8a-b0cb-6b2859a24ca4"/>
+				<reportElement x="134" y="41" width="202" height="20" uuid="d4817a3b-bc1f-4b8a-b0cb-6b2859a24ca4"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -52,6 +66,22 @@
 			<line>
 				<reportElement x="0" y="40" width="572" height="1" uuid="68f3b983-9765-49db-bc51-42b9dd2de8fb"/>
 			</line>
+			<staticText>
+				<reportElement x="336" y="40" width="63" height="20" uuid="ce7d2c5f-f74a-4fb5-b3b1-46b0708a31a3"/>
+				<text><![CDATA[Corporación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="40" width="55" height="20" uuid="3e8f1463-9a51-4071-bd83-9d244e9aa833"/>
+				<text><![CDATA[Caracter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="40" width="38" height="20" uuid="95501632-ec00-4856-a531-78e4b85f6cda"/>
+				<text><![CDATA[Rubro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="492" y="40" width="100" height="20" uuid="e2d39e1d-5139-4226-bd63-509c01808e8e"/>
+				<text><![CDATA[Tipología]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
