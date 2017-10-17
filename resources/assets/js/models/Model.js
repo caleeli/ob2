@@ -88,6 +88,9 @@ export default function(uri0, id, type) {
             console.log(err);
         }
     };
+    this.$create = function (loadCallback) {
+        return this.$load(0, loadCallback);
+    };
     this.$save = function (childrenAssociation, saveCallback) {
         var method;
         var url;

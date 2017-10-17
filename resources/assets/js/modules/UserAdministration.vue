@@ -99,7 +99,7 @@ UserAdministration.EstadoFinanciero = function (url, id) {
     this.$pluralName = "EstadoFinancieros";
     this.$title = "Estado financiero";
     this.$pluralTitle = "Estados financieros";
-    this.$ = {"tipo_estado_financiero":{"name":"tipo_estado_financiero","label":"Tipo estado financiero","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_estado_financiero","isAssociation":false},"informes_auditoria":{"name":"informes_auditoria","label":"Informes auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"informes_auditoria","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false},"grafico_texto":{"name":"grafico_texto","label":"Gráfico texto","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico_texto","isAssociation":false},"grafico_valores":{"name":"grafico_valores","label":"Gráfico valores","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico_valores","isAssociation":false},"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false}};
+    this.$ = {"tipo_estado_financiero":{"name":"tipo_estado_financiero","label":"Tipo estado financiero","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_estado_financiero","isAssociation":false},"informes_auditoria":{"name":"informes_auditoria","label":"Informes auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"informes_auditoria","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false},"grafico_texto":{"name":"grafico_texto","label":"Gráfico texto","type":"html","enum":[],"source":undefined,"textField":undefined,"value":"grafico_texto","isAssociation":false},"grafico_valores":{"name":"grafico_valores","label":"Gráfico valores","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico_valores","isAssociation":false},"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -117,6 +117,34 @@ UserAdministration.EstadoFinanciero = function (url, id) {
 }
 UserAdministration.EstadoFinanciero.prototype = Object.create(Model.prototype);
 UserAdministration.EstadoFinanciero.prototype.constructor = Model;
+
+UserAdministration.CuadroFinanciero = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/cuadro_financieros";
+    Model.call(this, url, id, "UserAdministration.CuadroFinanciero");
+    this.$list = function () {
+        return "fields=titulo,contenido";
+    };
+    this.$name = "CuadroFinanciero";
+    this.$pluralName = "CuadroFinancieros";
+    this.$title = "Cuadro financiero";
+    this.$pluralTitle = "Cuadros financieros";
+    this.$ = {"titulo":{"name":"titulo","label":"Título","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"titulo","isAssociation":false},"contenido":{"name":"contenido","label":"Formula (html)","type":"html","enum":[],"source":undefined,"textField":undefined,"value":"contenido","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Título","data":"attributes.titulo"},{"title":"Formula (html)","data":"attributes.contenido"}];
+    };
+    this.$methods = {
+calculate:function(empresaId, gestion, html,methodCallback,childrenAssociation){self.$call("calculate",{"empresaId":empresaId,"gestion":gestion,"html":html}, childrenAssociation, methodCallback)}    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.CuadroFinanciero.prototype = Object.create(Model.prototype);
+UserAdministration.CuadroFinanciero.prototype.constructor = Model;
 
 UserAdministration.EmpresaGrafico = function (url, id) {
     var self = this;

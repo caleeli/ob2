@@ -10,12 +10,15 @@ default Vue.extend({
         refresh:function(){
             throw new Exception("refresh() method not implemented.");
         },
+        initialize:function(){
+        },
     },
     mounted() {
         var self = this;
         if (typeof self.init === 'function') {
             self.init();
         }
+        self.initialize();
         self.refresh();
         this.$root.$on('changed', function(element){
             if(typeof element.id!=='undefined') {

@@ -163,17 +163,28 @@
                                                     </div>
                                                     
                                                     <div class="row">
-                                                        <div v-for="estado in estados_financieros" v-if="estado.attributes.grafico_texto!=''" class="col-md-6">
-                                                            <div class="ibox float-e-margins">
+                                                        <div v-for="estado in cuadros_financieros" class="col-md-6">
+                                                            <div class="ibox float-e-margins" v-bind:title="empresaSeleccionada">
                                                                 <div class="ibox-title">
-                                                                    <span class="label label-primary pull-right">{{estado.gestion}}</span>
-                                                                    <h5>{{estado.attributes.tipo_estado_financiero}}</h5>
+                                                                    <h5>{{estado.attributes.titulo}}</h5>
+                                                                    <div class="ibox-tools">
+                                                                        <a v-if='eeffEditable.indexOf(estado.id)==-1' v-on:click='editEEFF(estado)'>
+                                                                            <i class="fa fa-pencil-square-o"></i>
+                                                                        </a>
+                                                                        <a v-if='eeffEditable.indexOf(estado.id)>-1' v-on:click='saveEEFF(estado)'>
+                                                                            <i class="fa fa-floppy-o"></i>
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="ibox-content">
-                                                                    <a v-bind:href="estado.attributes.archivo?estado.attributes.archivo.url:'#'">{{estado.attributes.archivo?estado.attributes.archivo.name:''}}</a>
-                                                                    <div v-html="estado.attributes.grafico_texto"></div>
+                                                                    <!-- a v-bind:href="estado.attributes.archivo?estado.attributes.archivo.url:'#'">{{estado.attributes.archivo?estado.attributes.archivo.name:''}}</a -->
+                                                                    <div v-if='eeffEditable.indexOf(estado.id)==-1' v-html="estado.html"></div>
+                                                                    <htmleditor v-if='eeffEditable.indexOf(estado.id)>-1' v-bind:model="estado.attributes" v-bind:property="'contenido'" />
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a class="btn btn-primary" v-on:click="addCCFF"><h1><i class="fa fa-plus-circle"></i></h1></a>
                                                         </div>
                                                     </div>
                                                     <!--
@@ -445,8 +456,8 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
-                                                    <!-- abm v-bind:model="estado_financiero_aux" v-bind:editable="true" buttons='close,save,delete'></abm -->
-                                                    <file-viewer />
+                                                    <abm v-bind:model="estado_financiero_adm" v-bind:editable="true" buttons='close,save,delete'></abm>
+                                                    <!-- file-viewer /-->
                                                 </div>
                                             </div>
                                         </div>
@@ -996,7 +1007,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.43"></script>
+        <script src="../js/server.js?v0.45"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1012,6 +1023,7 @@
                         empresa: new UserAdministration.Empresa(),
                         empresa_estado: new UserAdministration.EmpresaEstado(),
                         estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
+                        estado_financiero_adm: new UserAdministration.EstadoFinanciero(),
                         firma_auditoria: new UserAdministration.Firma(),
                         uai: new UserAdministration.Uai(),
                         tarea: new UserAdministration.Tarea(),
@@ -1027,6 +1039,9 @@
                         graficos:[],
                         graficoModel: new UserAdministration.EmpresaGrafico(function(){return self.empresaSeleccionadaId? ("/api/UserAdministration/empresas/"+self.empresaSeleccionadaId+"/graficos") : "/api/UserAdministration/EmpresaGraficos"}),
                         empresaSeleccionadaGestion: '2017',
+                        eeffEditable: [],
+                        cuadro_financiero: new UserAdministration.CuadroFinanciero(),
+                        cuadros_financieros: [],
                     };
                 },
                 computed: {
@@ -1139,6 +1154,9 @@
                     },
                     cargarEstadosFinancieros: function () {
                         var self = this;
+                        //indicators:
+                        self.cargarCuadrosFinancieros();
+                        //charts:
                         var model = new UserAdministration.EstadoFinanciero("/api/UserAdministration/estado_financieros");
                         model.$select(function (resultado) {
                             app.estados_financieros.splice(0);
@@ -1174,7 +1192,79 @@
                             x1 = x1.replace(rgx, '$1' + ',' + '$2');
                         }
                         return x1 + x2;
-                    }
+                    },
+                    /**
+                     * Carga los cuadros de estados financieros.
+                     *
+                     */
+                    cargarCuadrosFinancieros: function () {
+                        var self = this;
+                        var model = self.cuadro_financiero;
+                        model.$select(function (resultado) {
+                            app.cuadros_financieros.splice(0);
+                            resultado.data.forEach(function (row) {
+                                row.html = '';
+                                self.cuadro_financiero.$methods.calculate(
+                                    self.empresaSeleccionada,
+                                    self.empresaSeleccionadaGestion,
+                                    row.attributes.contenido,
+                                    function (html) {
+                                        console.log(html);
+                                        row.html = html;
+                                    }
+                                );
+                                app.cuadros_financieros.push(row);
+                            });
+                            Vue.nextTick(function () {
+                            });
+                        },
+                        {
+                        });
+                    },
+                    /**
+                     * Habilita el modo edición de un estado financiero.
+                     *
+                     */
+                    editEEFF: function (estado) {
+                        var self=this;
+                        self.eeffEditable.push(estado.id);
+                    },
+                    saveEEFF: function (estado) {
+                        var self=this;
+                        self.cuadro_financiero.$load(estado.id, function () {
+                            self.cuadro_financiero.contenido = estado.attributes.contenido;
+                            self.cuadro_financiero.$save();
+                            estado.html = '';
+                            self.cuadro_financiero.$methods.calculate(
+                                self.empresaSeleccionada,
+                                self.empresaSeleccionadaGestion,
+                                estado.attributes.contenido,
+                                function (html) {
+                                    estado.html = html;
+                                }
+                            );
+                            var i = self.eeffEditable.indexOf(estado.id);
+                            self.eeffEditable.splice(i,1);
+                        });
+                    },
+                    editableEEFF: function (estado) {
+                        var self=this;
+                        return self.eeffEditable.indexOf(estado.id)>-1;
+                    },
+                    /**
+                     * Agrega un cuadro de estado financiero.
+                     */
+                    addCCFF: function () {
+                        console.log(123);
+                        var self=this;
+                        self.cuadro_financiero.$create(function(estado) {
+                            estado.titulo = prompt('Nombre del cuadro');
+                            estado.contenido = '<table width="100%"><tr><td>1</td><td>2</td></tr><tr><td>3</td><td>4</td></tr></table>';
+                            estado.$save('', function() {
+                                self.cargarCuadrosFinancieros();
+                            });
+                        });
+                    },
                 },
                 mounted: function () {
                     var self = this;
@@ -1187,6 +1277,7 @@
                     this.listarTareas();
                     this.listarEmpresas();
                     this.cargarEstadosFinancieros();
+                    this.cargarCuadrosFinancieros();
                 }
             });
             window.app = app;

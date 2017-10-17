@@ -25,6 +25,7 @@
                 <option v-bind:value="getInitialValueOf(values[field.value])" hidden="">{{getInitialTextOf(values[field.value], field.textField)}}</option>
             </select>
             <tags v-if="field.type==='tags'" :placeholder="field.label" :model="values" :property="field.value" :domain="domains[field.name]" :field="field" v-on:change="change" />
+            <htmleditor v-if="field.type==='html'" :model="values" :property="field.value" v-on:change="change" />
             <filters v-if="field.type==='filter'" :placeholder="field.label" :model="values" :property="field.value" :domain="domains[field.name]" :field="field"  v-on:change="change"/>
         </div>
         <button v-for="button in myButtons" v-if="button=='reset'" type="button" v-on:click="reset" class="btn btn-default">Reestablecer</button>

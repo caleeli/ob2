@@ -389,6 +389,7 @@
                         "label": "Gráfico texto",
                         "type": "string",
                         "list": false,
+                        "ui": "html",
                         "default": "activo,pasivo"
                     }),
                     new Module.Model.Field({
@@ -439,6 +440,41 @@
                             $file
                         );
                     }
+                    ?>
+                }
+            }),
+            /**
+             * cuadro_financiero
+             */
+            new Module.Model({
+                "name": "cuadro_financiero",
+                "title": "Cuadro financiero",
+                "pluralTitle": "Cuadros financieros",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "titulo",
+                        "type": "string",
+                        "label": "Título",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "contenido",
+                        "type": "string",
+                        "label": "Formula (html)",
+                        "ui": "html",
+                        "default": ""
+                    })
+                ],
+                "associations": [
+                ],
+                "events": {
+                },
+                "methods": {
+                    "calculate(empresaId, gestion, html)": <?php
+                        function ($empresaId, $gestion, $html) {
+                            $ev = new \App\Evaluator($empresaId, $gestion);
+                            return $ev->calculate($html);
+                        }
                     ?>
                 }
             }),

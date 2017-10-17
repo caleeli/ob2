@@ -12,11 +12,24 @@ class Xls2Csv2Db
 {
     const PYTON = 'python';
     const CONVERTER_CMD = '/bin/xlsx2csv.py';
+    const CONVERTER_XLS2XLSX = '/bin/xls2xlsx';
 
     public static function load($prefix, $file, $fillMergedCells = true,
                          $ignoreEmptyRows = false)
     {
         $filepath = realpath($file);
+        $isXsl = substr($filepath, -1, 1) === '.'
+            || substr($filepath, -4, 4) === '.xls';
+        if($isXsl) {
+            exec(
+                base_path().
+                static::CONVERTER_XLS2XLSX.
+                ' -o '.
+                escapeshellarg($filepath.'.xlsx').' '.
+                escapeshellarg($filepath)
+            );
+            $filepath = $filepath . '.xlsx';
+        }
         $target = realpath(storage_path('/app')).'/public/'.basename($filepath).'.csv';
         exec(
             static::PYTON.
@@ -79,6 +92,7 @@ class Xls2Csv2Db
             ' > '.
             escapeshellarg($sheet->file)
         );
+        static::fixEmptyRowsBecauseExcelCursor($sheet->file);
         $sql = "drop table if exists ".$sheet->table_name.";\n";
         $sql .= "create table ".$sheet->table_name."(\n";
         foreach ($sheet->columns as $i => $column) {
@@ -90,6 +104,18 @@ class Xls2Csv2Db
         return $sql;
     }
 
+    private static function fixEmptyRowsBecauseExcelCursor($filename) {
+        copy($filename, $filename.'.tmp');
+        $handle = fopen($filename.'.tmp', 'r');
+        $handle1 = fopen($filename, 'w');
+        while($row=fgets($handle)) {
+            if ($row==="\n") break;
+            fwrite($handle1, $row);
+        }
+        fclose($handle);
+        fclose($handle1);
+        unlink($filename.'.tmp');
+    }
     private static function getNameFromNumber($num)
     {
         return static::columnName($num);

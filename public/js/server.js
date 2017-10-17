@@ -1,6 +1,6 @@
 var API_SERVER='';
-document.writeln('\n<link href="/css/app.css?v0.43" rel="stylesheet">\n');
-document.writeln('\n<script src="/js/admin.js?v0.43"></script>\n');
+document.writeln('\n<link href="/css/app.css?v0.45" rel="stylesheet">\n');
+document.writeln('\n<script src="/js/admin.js?v0.45"></script>\n');
 document.writeln('\n<script type="text/javascript" charset="utf8" src="/bower_components/jq-ajax-progress/src/jq-ajax-progress.min.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net/js/jquery.dataTables.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>\n');
@@ -16,3 +16,5 @@ document.writeln('\n<script type="text/javascript" src="/bower_components/datata
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/chart.js/dist/Chart.bundle.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/chart.js/samples/utils.js"></script>\n');
+document.writeln('\n<link href="/bower_components/froala-wysiwyg-editor/css/froala_editor.pkgd.min.css" rel="stylesheet">\n');
+document.writeln('\n<script type="text/javascript" src="/bower_components/froala-wysiwyg-editor/js/froala_editor.pkgd.min.js"></script>\n');
