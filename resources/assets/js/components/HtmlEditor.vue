@@ -60,7 +60,9 @@
                     self.$emit('change');
                 });*/
                 self.editorPromise=tinymce.init({
-                    plugins: "table textcolor colorpicker",
+                    plugins: "table textcolor colorpicker contextmenu lists",
+                    menubar: 'edit insert format table tools',
+                    toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright | numlist bullist outdent indent",
                     target: self.$el,
                     inline: true,
                     setup : function(editor) {
