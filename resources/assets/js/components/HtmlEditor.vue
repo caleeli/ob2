@@ -22,43 +22,6 @@
         methods: {
             initialize: function () {
                 var self = this;
-                /*$(self.$el).froalaEditor({
-                    toolbarInline: true,
-                    charCounterCount: false,
-                    toolbarButtons: [
-                        'bold',
-                        'italic',
-                        'underline',
-                        'strikeThrough',
-                        'color',
-                        'inlineStyle',
-                        'subscript',
-                        'superscript',
-                        '-',
-                        'paragraphFormat',
-                        'align',
-                        'formatOL',
-                        'formatUL',
-                        'indent',
-                        'outdent',
-                        'insertHR',
-                        '-',
-                        'specialCharacters',
-                        'insertTable',
-                        'insertImage',
-                        'insertLink',
-                        'clearFormatting',
-                        'html',
-                        'undo',
-                        'redo'
-                    ],
-                    toolbarVisibleWithoutSelection: true
-                });
-                $(self.$el).on('froalaEditor.contentChanged', function (e, editor) {
-                    var html = $(self.$el).froalaEditor('html.get');
-                    self.model[self.property] = html;
-                    self.$emit('change');
-                });*/
                 self.editorPromise=tinymce.init({
                     plugins: "table textcolor colorpicker contextmenu lists",
                     menubar: 'edit insert format table tools',

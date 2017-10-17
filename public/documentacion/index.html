@@ -138,13 +138,6 @@
                                         <div class="ibox float-e-margins">
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow: hidden;">
-                                                    <!-- abm 
-                                                        id="empresa_estado" 
-                                                        v-bind:model="empresa_estado" 
-                                                        v-bind:editable="false" 
-                                                        v-on:selectrow="cargarEstadosFinancieros" 
-                                                        toolbar="search"
-                                                    ></abm-->
                                                     <div class="form-group">
                                                       <div class="col-lg-10">
                                                         <select class="form-control" id="select" v-model='empresaSeleccionada' v-on:change="cargarEstadosFinancieros">
@@ -161,7 +154,7 @@
                                                         </select>
                                                       </div>
                                                     </div>
-                                                    
+                                                    <hr>
                                                     <div class="row">
                                                         <div v-for="estado in cuadros_financieros" class="col-md-6">
                                                             <div class="ibox float-e-margins" v-bind:title="empresaSeleccionada">
@@ -1007,7 +1000,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.46"></script>
+        <script src="../js/server.js?v0.47"></script>
         <script>
         $(document).ready(function () {
             var app;
