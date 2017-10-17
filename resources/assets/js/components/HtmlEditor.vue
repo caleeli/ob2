@@ -8,6 +8,7 @@
     export default BaseComponent.extend({
         data: function () {
             return {
+                tinymceId:'',
             };
         },
         props: [
@@ -21,7 +22,7 @@
         methods: {
             initialize: function () {
                 var self = this;
-                $(self.$el).froalaEditor({
+                /*$(self.$el).froalaEditor({
                     toolbarInline: true,
                     charCounterCount: false,
                     toolbarButtons: [
@@ -57,11 +58,28 @@
                     var html = $(self.$el).froalaEditor('html.get');
                     self.model[self.property] = html;
                     self.$emit('change');
+                });*/
+                self.editorPromise=tinymce.init({
+                    plugins: "table textcolor colorpicker",
+                    target: self.$el,
+                    inline: true,
+                    setup : function(editor) {
+                        editor.on('change', function(e) {
+                            var html = e.target.getContent();
+                            self.model[self.property] = html;
+                            self.$emit('change');
+                        });
+                    },
                 });
             },
             refresh: function () {
                 var self = this;
-                $(self.$el).froalaEditor('html.set', self.model[self.property]);
+                self.editorPromise.then(function(editor){
+                    try {
+                        editor[0].setContent(self.model[self.property]);
+                        editor[0].undoManager.clear();
+                    } catch(e) {}
+                });
             },
         }
     });
