@@ -1249,11 +1249,10 @@
                      * Agrega un cuadro de estado financiero.
                      */
                     addCCFF: function () {
-                        console.log(123);
                         var self=this;
                         self.cuadro_financiero.$create(function(estado) {
                             estado.titulo = prompt('Nombre del cuadro');
-                            estado.contenido = '<table width="100%"><tr><td>1</td><td>2</td></tr><tr><td>3</td><td>4</td></tr></table>';
+                            estado.contenido = '<table width="100%"><tbody><tr><td style="background-color: #a4a5d5; color: white;" rowspan="2"><h1 style="text-align: center;">{{$uc(\'1\')}}</h1><p style="text-align: center;">ACTIVO</p></td><td style="background-color: #d14550; color: white;"><h2 style="text-align: center;">{{$uc(\'2\')}}</h2><p style="text-align: center;">PASIVO</p></td></tr><tr><td style="background-color: #19a3ab; color: white;"><h2 style="text-align: center;">{{$uc(\'3\')}}</h2><p style="text-align: center;">PATRIMONIO</p></td></tr></tbody></table>';
                             estado.$save('', function() {
                                 self.cargarCuadrosFinancieros();
                             });
