@@ -10,4 +10,4 @@ dump.php
 .DS_Store
 .php_cs.cache
 /config/connections.php
-
+/nbproject
