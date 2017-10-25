@@ -24,6 +24,7 @@ and open the template in the editor.
            }
         }
         </style>
+        <link rel="shortcut icon" href="/HojaRuta/images/logo1.png">
     </head>
     <body>
         <div id ="wrapper" class="container" style="padding-top:80px;">
