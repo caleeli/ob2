@@ -19,10 +19,13 @@ class Evaluator
     const DECIMAL_SEPARATOR = '.';
 
     private $tablas = [];
+    private $tablasPre = [];
+    private $gestion = '';
 
     public function __construct($empresaId, $gestion)
     {
         /* @var $ef EstadoFinanciero */
+        $this->gestion = $gestion;
         $estados_financieros = EstadoFinanciero
             ::where('gestion', '=', $gestion)
             ->where('empresa_id', '=', $empresaId)
@@ -30,6 +33,47 @@ class Evaluator
         foreach ($estados_financieros as $ef) {
             foreach ($ef->tablas as $tabla) {
                 $this->tablas[] = $tabla;
+            }
+        }
+        $estados_financieros_pre = EstadoFinanciero
+            ::where('gestion', '=', $gestion-1)
+            ->where('empresa_id', '=', $empresaId)
+            ->get();
+        foreach ($estados_financieros_pre as $ef) {
+            foreach ($ef->tablas as $tabla) {
+                $this->tablasPre[] = $tabla;
+            }
+        }
+    }
+
+    private function uc($codigo)
+    {
+        return $this->getValue($codigo, $this->tablas);
+    }
+
+    private function ucp($codigo)
+    {
+        return $this->getValue($codigo, $this->tablasPre);
+    }
+
+    private function getValue($codigo, $from)
+    {
+        foreach ($from as $t) {
+            foreach ($t['columns'] as $col) {
+                $query = DB::table($t['table_name']);
+                $query->where($col, $codigo);
+                $row = $query->first();
+                if ($row) {
+                    $cols = (array) $row;
+                    unset($cols['id']);
+                    $cols = array_reverse($cols);
+                    foreach ($cols as $col => $val) {
+                        $num = $this->toNumber($val);
+                        if ($num !== '') {
+                            return $num;
+                        }
+                    }
+                }
             }
         }
     }
@@ -46,28 +90,18 @@ class Evaluator
              * Valor de la (U)ltima (C)olumna con código $codigo
              */
             'uc' => function ($codigo) {
-                foreach ($this->tablas as $t) {
-                    foreach ($t['columns'] as $col) {
-                        $query = DB::table($t['table_name']);
-                        $query->where($col, $codigo);
-                        $row = $query->first();
-                        if ($row) {
-                            $cols = (array) $row;
-                            unset($cols['id']);
-                            $cols = array_reverse($cols);
-                            foreach ($cols as $col => $val) {
-                                $num = $this->toNumber($val);
-                                if ($num !== '') {
-                                    return $num;
-                                }
-                            }
-                        }
-                    }
-                }
+                return $this->uc($codigo);
+            },
+            /**
+             * Valor de la (U)ltima (C)olumna con código $codigo
+             */
+            'ucp' => function ($codigo) {
+                return $this->ucp($codigo);
             },
             'format' => function ($value) {
                 return is_numeric($value) ? number_format($value, 2, '.', ',') : $value;
-            }
+            },
+            'gestion' => $this->gestion,
         ];
         return $this->bladeCompile($html, $args);
     }
@@ -102,8 +136,11 @@ class Evaluator
         // buffer so that no partially rendered views get thrown out
         // to the client and confuse the user with junk.
         catch (\Exception $e) {
-            ob_get_clean();
-            throw $e;
+            //ob_get_clean();
+            //throw $e;
+            echo $e->getMessage();
+        } catch(\Symfony\Component\Debug\Exception\FatalErrorException $e) {
+            echo $e->getMessage();
         }
 
         $content = ob_get_clean();

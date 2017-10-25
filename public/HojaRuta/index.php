@@ -35,6 +35,32 @@ and open the template in the editor.
                     <a href='#recepcion' class='btn btn-primary' v-on:click='nueva' v-if="!window.isManager">Recepción</a>
                     <a href='#busqueda' class='btn btn-warning' v-if="!window.isManager">Búsqueda</a>
                     <a href='#busqueda' class='btn btn-warning' v-if="window.isManager">Dashboard</a>
+                    <div class="btn-group">
+                        <a href="#nota_externa" class="btn btn-primary" v-on:click='nuevaNota' v-if="!window.isManager">Notas oficio</a>
+
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span> <!-- caret -->
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
+                            <li><a href="#nota_externa" v-on:click='nuevaNota' v-if="!window.isManager">Registrar</a></li>
+                            <li><a href="#">Búsqueda</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <a href="#nota_externa" class="btn btn-warning" v-on:click='nuevaNota' v-if="!window.isManager">Comunicación Interna</a>
+
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span> <!-- caret -->
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
+                            <li><a href="#nota_externa" v-on:click='nuevaNota' v-if="!window.isManager">Registrar</a></li>
+                            <li><a href="#">Búsqueda</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-md-center">
@@ -103,7 +129,145 @@ and open the template in the editor.
                             </div>
                         </fieldset>
                     </form>
-
+                </div>
+                <div class="col-md-10" v-if="menu=='nota_externa'">
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <legend>Nota Expedida</legend>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Nº Hoja de Ruta</label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="nota.hoja_de_ruta" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-lg-2 control-label">Fecha de emisión</label>
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        <div class='input-group date' id='notaExternaFechaEnvio'>
+                                            <input type='text' v-model="nota.fecha_emision" class="form-control" />
+                                            <span class="input-group-addon" v-on:click='notaExternaFechaEnvioPick'>
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Nº NOTA CGE/SCEP</label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="nota.hoja_de_ruta" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Reiterativa</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" v-model="nota.reiterativa">
+                                        <option value="SI">SI</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-lg-2 control-label">Fecha de entrega</label>
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        <div class='input-group date' id='notaExternaFechaEntrega'>
+                                            <input type='text' v-model="nota.fecha_entrega" class="form-control" />
+                                            <span class="input-group-addon" v-on:click='notaExternaFechaEntrega'>
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Entidad o Empresa</label>
+                                <div class="col-lg-10">
+                                    <input type="text" name="entidad_empresa" v-model="nota.entidad_empresa" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Nombre y apellidos</label>
+                                <div class="col-lg-10">
+                                    <input type="text" name="nombre_apellidos" v-model="nota.nombre_apellidos" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Cargo</label>
+                                <div class="col-lg-10">
+                                    <input type="text" name="cargo" v-model="nota.cargo" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="textArea" class="col-lg-2 control-label">Referencia</label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" v-model="nota.referencia" rows="3" id="textArea"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Días otorgados para respuesta</label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="nota.dias" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Días de retraso</label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="nota.retraso" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <legend>Nota Recibida</legend>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Nº Hoja de Ruta</label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="nota.hoja_de_ruta_recepcion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-lg-2 control-label">Fecha de recepción</label>
+                                <div class="col-lg-10">
+                                    <div class="form-group">
+                                        <div class='input-group date' id='notaExternaFechaRecepcion'>
+                                            <input type='text' v-model="nota.fecha_recepcion" class="form-control" />
+                                            <span class="input-group-addon" v-on:click='notaExternaFechaRecepcion'>
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Nº NOTA</label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="nota.nro_nota_recepcion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Remitente</label>
+                                <div class="col-lg-10">
+                                    <input type="text" name="remitente" v-model="nota.remitente_recepcion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="textArea" class="col-lg-2 control-label">Asunto o Referencia</label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" v-model="nota.referencia_recepcion" rows="3" id="textArea"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Fojas/ Arch./ Anillados/ Legajos/ Otros</label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="nota.fojas_recepcion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <button type="button" disabled v-on:click="generarNota" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
                 <div class="col-md-10" v-if="menu=='editar'">
                     <form class="form-horizontal" v-if="!window.isManager">
@@ -405,6 +569,7 @@ and open the template in the editor.
                         menu: 'recepcion',
                         hojasDeRuta: [],
                         hoja: new Recepcion(),
+                        nota: new Recepcion(),
                         filtro: '',
                         hojasDeRutaBusqueda: [],
                         derivacion: new Derivacion(),
@@ -451,6 +616,9 @@ and open the template in the editor.
                                 callback();
                             }
                         });
+                    },
+                    nuevaNota: function() {
+                        
                     },
                     saveDerivation: function(callback) {
                         var self = this;
@@ -511,6 +679,9 @@ and open the template in the editor.
                             }, 100);
                         });*/
                     },
+                    generarNota: function() {
+
+                    },
                     datepick: function() {
                         var self = this;
                         Vue.nextTick(function () {
@@ -538,6 +709,36 @@ and open the template in the editor.
                             $('#datetimepicker3').datepicker('show');
                             $("#datetimepicker3").on("changeDate", function (e) {
                                 self.derivacion.fecha = $("#datetimepicker3 input").val();
+                            });
+                        });
+                    },
+                    notaExternaFechaEnvioPick: function() {
+                        var self = this;
+                        Vue.nextTick(function () {
+                            $('#notaExternaFechaEnvio').datepicker({autoclose:true, format:'yyyy-mm-dd', language: 'es'});
+                            $('#notaExternaFechaEnvio').datepicker('show');
+                            $("#notaExternaFechaEnvio").on("changeDate", function (e) {
+                                self.nota.fecha = $("#notaExternaFechaEnvio input").val();
+                            });
+                        });
+                    },
+                    notaExternaFechaEntrega: function() {
+                        var self = this;
+                        Vue.nextTick(function () {
+                            $('#notaExternaFechaEntrega').datepicker({autoclose:true, format:'yyyy-mm-dd', language: 'es'});
+                            $('#notaExternaFechaEntrega').datepicker('show');
+                            $("#notaExternaFechaEntrega").on("changeDate", function (e) {
+                                self.nota.fecha = $("#notaExternaFechaEntrega input").val();
+                            });
+                        });
+                    },
+                    notaExternaFechaRecepcion: function() {
+                        var self = this;
+                        Vue.nextTick(function () {
+                            $('#notaExternaFechaRecepcion').datepicker({autoclose:true, format:'yyyy-mm-dd', language: 'es'});
+                            $('#notaExternaFechaRecepcion').datepicker('show');
+                            $("#notaExternaFechaRecepcion").on("changeDate", function (e) {
+                                self.nota.fecha = $("#notaExternaFechaRecepcion input").val();
                             });
                         });
                     },
