@@ -63,7 +63,11 @@
                     var ok = true;
                     if (filter) {
                         ok = false;
+                        var columns = self.model.$columns();
                         for (var a in self.data[i].attributes) {
+                            if (columns.find(function(e){return "attributes."+a===e.data})===undefined) {
+                                continue;
+                            }
                             var text = String(self.data[i].attributes[a]);
                             if (text.toLowerCase().indexOf(filter)>-1) {
                                 ok = true;
