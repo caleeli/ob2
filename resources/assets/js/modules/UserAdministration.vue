@@ -99,14 +99,12 @@ UserAdministration.EstadoFinanciero = function (url, id) {
     this.$pluralName = "EstadoFinancieros";
     this.$title = "Estado financiero";
     this.$pluralTitle = "Estados financieros";
-    this.$ = {"tipo_estado_financiero":{"name":"tipo_estado_financiero","label":"Tipo estado financiero","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_estado_financiero","isAssociation":false},"informes_auditoria":{"name":"informes_auditoria","label":"Informes auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"informes_auditoria","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false},"grafico_texto":{"name":"grafico_texto","label":"Gráfico texto","type":"html","enum":[],"source":undefined,"textField":undefined,"value":"grafico_texto","isAssociation":false},"grafico_valores":{"name":"grafico_valores","label":"Gráfico valores","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico_valores","isAssociation":false},"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false}};
+    this.$ = {"tipo_estado_financiero":{"name":"tipo_estado_financiero","label":"Tipo estado financiero","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_estado_financiero","isAssociation":false},"informes_auditoria":{"name":"informes_auditoria","label":"Informes auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"informes_auditoria","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false},"grafico_texto":{"name":"grafico_texto","label":"Gráfico texto","type":"html","enum":[],"source":undefined,"textField":undefined,"value":"grafico_texto","isAssociation":false},"grafico_valores":{"name":"grafico_valores","label":"Gráfico valores","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico_valores","isAssociation":false},"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":function (data){return data?data.cod_empresa+' '+data.nombre_empresa:''},"value":"empresa","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Informes auditoria","data":"attributes.informes_auditoria"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}},{"title":"Gráfico valores","data":"attributes.grafico_valores"},{"title":"empresa","data":"relationships.empresa.attributes.nombre_empresa","render":function (data, type, full, meta) {
-                            return data ? data : '';
-                        }}];
+        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Informes auditoria","data":"attributes.informes_auditoria"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}},{"title":"Gráfico valores","data":"attributes.grafico_valores"},{"title":"empresa","render":function (data){return data?data.cod_empresa+' '+data.nombre_empresa:''},"data":"relationships.empresa.attributes"}];
     };
     this.$methods = {
     };
@@ -354,9 +352,9 @@ UserAdministration.Uai = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_uai"},{"title":"Gestión","data":"attributes.gestion_uai"},{"title":"Empresa","data":"relationships.empresa.attributes.nombre_empresa","render":function (data, type, full, meta) {
+        return [{"title":"Código","data":"attributes.cod_uai"},{"title":"Gestión","data":"attributes.gestion_uai"},{"title":"Empresa","render":function (data, type, full, meta) {
                             return data ? data : '';
-                        }},{"title":"Estructura UAI","data":"attributes.estructura_uai"},{"title":"Titular UAI","data":"attributes.titular_uai"},{"title":"Tipo de Informes","data":"attributes.tipo_de_informes","render":function (data,type,row){
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Estructura UAI","data":"attributes.estructura_uai"},{"title":"Titular UAI","data":"attributes.titular_uai"},{"title":"Tipo de Informes","data":"attributes.tipo_de_informes","render":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -420,9 +418,7 @@ UserAdministration.Tarea = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_tarea"},{"title":"Usuario","data":"relationships.usuario.attributes.function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''}","render":function (data, type, full, meta) {
-                            return data ? data : '';
-                        }},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"},{"title":"Estado","data":"attributes.estado"},{"title":"Avance","data":"attributes.avance"},{"title":"Prioridad","data":"attributes.prioridad"}];
+        return [{"title":"Código","data":"attributes.cod_tarea"},{"title":"Usuario","render":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.usuario.attributes"},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"},{"title":"Estado","data":"attributes.estado"},{"title":"Avance","data":"attributes.avance"},{"title":"Prioridad","data":"attributes.prioridad"}];
     };
     this.$methods = {
     };

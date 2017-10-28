@@ -406,7 +406,7 @@
                         "ui": "tags",
                         "list": false,
                         "form": false,
-                        "textField": function(data){console.log(data);return data?data.table_name:''},
+                        "textField": function(data){return data?data.table_name:''},
                     }),
                     new Module.Model.Field({
                         "name": "grafico_valores",
@@ -422,7 +422,7 @@
                         "model": "empresa",
                         "nullable": true,
                         "list": true,
-                        "textField": "nombre_empresa",
+                        "textField": function(data){return data?data.cod_empresa+' '+data.nombre_empresa:''},
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
                         "form": true

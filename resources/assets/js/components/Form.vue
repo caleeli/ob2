@@ -21,7 +21,7 @@
             </div>
             <select v-if="field.type==='select'" class="form-control" :placeholder="field.label" :value="getInitialValueOf(values[field.value])" v-on:change="changeSelect($event, field)">
                 <option value=""></option>
-                <option v-for="option in domains[field.name]" v-bind:value="option.id">{{option.attributes[field.textField]}}</option>
+                <option v-for="option in domains[field.name]" v-bind:value="option.id">{{getTextField(option.attributes, field.textField)}}</option>
                 <option v-bind:value="getInitialValueOf(values[field.value])" hidden="">{{getInitialTextOf(values[field.value], field.textField)}}</option>
             </select>
             <tags v-if="field.type==='tags'" :placeholder="field.label" :model="values" :property="field.value" :domain="domains[field.name]" :field="field" v-on:change="change" />
@@ -131,24 +131,23 @@
                     }
                 });
             },
-            file:function(value){
-                var json, name='', url=false, mime='';
-                try{
-                    json = value;
-                    name = json.name;
-                    url = json.url;
-                    mime = json.mime;
-                } catch (e) {
-                }
+            file:function(json){
+                var name='', url=false, mime='';
+                name = json && typeof json.name!=='undefined' ? json.name : '';
+                url = json && typeof json.url!=='undefined' ? json.url : false;
+                mime = json && typeof json.mime!=='undefined' ? json.mime : '';
                 return {name:name, url:url, mime: mime};
             },
             getInitialValueOf: function (value) {
                 var val = typeof value==='object' && value && typeof value.id!=='undefined' ? value.id : value;
                 return val;
             },
-            getInitialTextOf: function (value, textField) {
+            getInitialTextOf: function (value, textField, field) {
                 var val = typeof value==='object' && value && typeof value.attributes!=='undefined' ? value.attributes[textField] : value;
                 return val;
+            },
+            getTextField: function (data, textField) {
+                return typeof textField==='function' ? textField(data) : data[textField];
             },
         },
         mounted() {

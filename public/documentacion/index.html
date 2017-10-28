@@ -1035,6 +1035,7 @@
                         eeffEditable: [],
                         cuadro_financiero: new UserAdministration.CuadroFinanciero(),
                         cuadros_financieros: [],
+                        editingEmpresa: true,
                     };
                 },
                 computed: {
@@ -1257,6 +1258,16 @@
                                 self.cargarCuadrosFinancieros();
                             });
                         });
+                    },
+                    editEmpresa: function () {
+                        var self = this;
+                        self.editingEmpresa = true;
+                        console.log(self.editingEmpresa);
+                    },
+                    saveEmpresa: function (empresa) {
+                        var self = this;
+                        self.editingEmpresa = false;
+                        empresa.$save();
                     },
                 },
                 mounted: function () {

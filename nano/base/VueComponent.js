@@ -61,11 +61,16 @@ VueComponent.generate = function (module, views, data, template) {
                     }
                     var def = {
                         title: typeof field.label === 'undefined' ? field.name : field.label,
-                        data: "relationships." + field.name + ".attributes." + field.textField,
                         render: function (data, type, full, meta) {
                             return data ? data : '';
                         }
                     };
+                    if (typeof field.textField==='function') {
+                        def.data = "relationships." + field.name + ".attributes";
+                        def.render = field.textField;
+                    } else if (typeof field.textField!=='undefined') {
+                        def.data = "relationships." + field.name + ".attributes." + field.textField;
+                    }
                     if(typeof field.position!=="undefined") {
                         columns.splice(field.position, 0, def);
                         list.splice(field.position, 0, field.name);
