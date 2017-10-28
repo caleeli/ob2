@@ -94,7 +94,7 @@
                         url: API_SERVER+"/api/lang/datatable"
                     },
                     dom: dom.join(""),
-                    responsive: true,
+                    responsive: false,
                     buttons: self.buttons,
                     processing: true,
                     ajax: self.model.$url() + '?' + self.model.$list()+',created_at,updated_at',

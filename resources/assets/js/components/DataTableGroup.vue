@@ -143,7 +143,7 @@
                 },
                 //dom: 'Bfrtilp',
                 dom: dom.join(""),
-                responsive: true,
+                responsive: false,
                 buttons: buttons,
                 "processing": true,
                 "ajax": self.model.$url() + '?' + self.model.$list() + '&filter[]=where,' + self.groupField + ',=,' + JSON.stringify(self.currentGroup),
