@@ -43,6 +43,9 @@ class Evaluator
             ->where('empresa_id', '=', $empresaId)
             ->get();
         foreach ($estados_financieros_pre as $ef) {
+            if (empty($ef->tablas) || !is_array($ef->tablas)) {
+                continue;
+            }
             foreach ($ef->tablas as $tabla) {
                 $this->tablasPre[] = $tabla;
             }
