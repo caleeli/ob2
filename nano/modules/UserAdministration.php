@@ -434,11 +434,14 @@
                         if (empty($event->estadoFinanciero->prefix)) {
                             $event->estadoFinanciero->prefix = uniqid('tmp_');
                         }
-                        $file = realpath(storage_path('app/public/'.$event->estadoFinanciero->archivo['path']));
-                        $event->estadoFinanciero->tablas = \App\Xls2Csv2Db::import(
-                            $event->estadoFinanciero->prefix,
-                            $file
-                        );
+                        $ext = @array_pop(explode('.', $event->estadoFinanciero->archivo['name']));
+                        if ($ext === 'xls' || $ext === 'xlsx') {
+                            $file = realpath(storage_path('app/public/'.$event->estadoFinanciero->archivo['path']));
+                            $event->estadoFinanciero->tablas = \App\Xls2Csv2Db::import(
+                                $event->estadoFinanciero->prefix,
+                                $file
+                            );
+                        }
                     }
                     ?>
                 }
@@ -558,6 +561,71 @@
                         "where": ["'gestion', '=', $this->gestion"]
                     }),
                 ]
+            }),
+            /**
+             * carga_estado
+             */
+            new Module.Model({
+                "name": "carga_estado",
+                "title": "Carga de estados financieros",
+                "pluralTitle": "Cargas de estados financieros",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "files",
+                        "type": "array",
+                        "label": "Archivos",
+                        "ui": "multiplefile"
+                    }),
+                ],
+                "associations": [],
+                "events": {
+                    "saving": <?php
+                    function ($event) {
+                        $files = $event->cargaEstado->files;
+                        foreach($files as $file) {
+                            list($name, $ext) = explode('.', strtolower($file['name']));
+                            list($cod, $emp, $gestion, $estado) = explode('_', $name);
+                            $em = \App\Models\UserAdministration\Empresa
+                                ::where('cod_empresa', '=', $cod)
+                                ->first();
+                            if (!$em) continue;
+                            $estadoF = [
+                                'bg'=>'Balance General',
+                                'erg'=>'Estado de Resultados y Gastos',
+                            ][$estado];
+                            $eeff = \App\Models\UserAdministration\EstadoFinanciero
+                                ::where('empresa_id', '=', $em->id)
+                                ->where('gestion', '=', $gestion)
+                                ->where('tipo_estado_financiero', '=', $estadoF)
+                                ->get();
+                            $ok = false;
+                            foreach($eeff as $ef) {
+                                $extF = strtolower(@array_pop(explode('.', $ef->archivo['name'])));
+                                if ( ($ext==='xls' || $ext==='xlsx') && ($extF==='xls' || $extF==='xlsx') ) {
+                                    $ef->archivo = $file;
+                                    $ef->save();
+                                    $ok = true;
+                                    break;
+                                }
+                                if ( ($ext==='pdf') && ($extF==='pdf') ) {
+                                    $ef->archivo = $file;
+                                    $ef->save();
+                                    $ok = true;
+                                    break;
+                                }
+                            }
+                            if (!$ok) {
+                                $ef = new \App\Models\UserAdministration\EstadoFinanciero;
+                                $ef->empresa_id = $em->id;
+                                $ef->gestion = $gestion;
+                                $ef->tipo_estado_financiero = $estadoF;
+                                $ef->archivo = $file;
+                                $ef->save();
+                            }
+                        }
+                    }
+                    ?>
+                }
             }),
             /**
              * Firmas.

@@ -10,12 +10,24 @@ class UploadFileController extends Controller
 
     public function upload(Request $request)
     {
-        $file = $request->file('file');
+        $files = $request->file('file');
+        $multiple = is_array($files);
+        $response = $multiple ? [] : $this->packResponse($files);
+        if ($multiple) {
+            foreach ($files as $file) {
+                $response[] = $this->packResponse($file);
+            }
+        }
+        return response()->json($response);
+    }
+
+    private function packResponse($file)
+    {
         $json = new stdClass();
         $json->name = $file->getClientOriginalName();
         $json->mime = $file->getClientMimeType();
         $json->path = $file->storePublicly('', 'public');
-        $json->url = asset('storage/'.$json->path);
-        return response()->json($json);
+        $json->url = asset('storage/' . $json->path);
+        return $json;
     }
 }

@@ -14,10 +14,13 @@ class EstadoFinancieroSavingListener
         if (empty($event->estadoFinanciero->prefix)) {
             $event->estadoFinanciero->prefix = uniqid('tmp_');
         }
-        $file = realpath(storage_path('app/public/'.$event->estadoFinanciero->archivo['path']));
-        $event->estadoFinanciero->tablas = \App\Xls2Csv2Db::import(
-                            $event->estadoFinanciero->prefix,
-                            $file
-                        );
+        $ext = @array_pop(explode('.', $event->estadoFinanciero->archivo['name']));
+        if ($ext === 'xls' || $ext === 'xlsx') {
+            $file = realpath(storage_path('app/public/'.$event->estadoFinanciero->archivo['path']));
+            $event->estadoFinanciero->tablas = \App\Xls2Csv2Db::import(
+                                $event->estadoFinanciero->prefix,
+                                $file
+                            );
+        }
     }
 }

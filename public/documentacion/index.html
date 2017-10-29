@@ -450,6 +450,7 @@
                                             <div class="ibox-content">
                                                 <div class="table-responsive" style="overflow-y: scroll;">
                                                     <abm v-bind:model="estado_financiero_adm" v-bind:editable="true" buttons='close,save,delete'></abm>
+                                                    <abm v-bind:model="carga_estado" v-bind:editable="true" buttons='close,save,delete'></abm>
                                                     <!-- file-viewer /-->
                                                 </div>
                                             </div>
@@ -1036,6 +1037,7 @@
                         cuadro_financiero: new UserAdministration.CuadroFinanciero(),
                         cuadros_financieros: [],
                         editingEmpresa: true,
+                        carga_estado: new UserAdministration.CargaEstado,
                     };
                 },
                 computed: {
@@ -1203,7 +1205,6 @@
                                     self.empresaSeleccionadaGestion,
                                     row.attributes.contenido,
                                     function (html) {
-                                        console.log(html);
                                         row.html = html;
                                     }
                                 );

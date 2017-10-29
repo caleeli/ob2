@@ -200,6 +200,34 @@ UserAdministration.EmpresaEstado = function (url, id) {
 UserAdministration.EmpresaEstado.prototype = Object.create(Model.prototype);
 UserAdministration.EmpresaEstado.prototype.constructor = Model;
 
+UserAdministration.CargaEstado = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/carga_estados";
+    Model.call(this, url, id, "UserAdministration.CargaEstado");
+    this.$list = function () {
+        return "fields=files";
+    };
+    this.$name = "CargaEstado";
+    this.$pluralName = "CargaEstados";
+    this.$title = "Carga de estados financieros";
+    this.$pluralTitle = "Cargas de estados financieros";
+    this.$ = {"files":{"name":"files","label":"Archivos","type":"multiplefile","enum":[],"source":undefined,"textField":undefined,"value":"files","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Archivos","data":"attributes.files"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.CargaEstado.prototype = Object.create(Model.prototype);
+UserAdministration.CargaEstado.prototype.constructor = Model;
+
 UserAdministration.Firma = function (url, id) {
     var self = this;
     this.$defaultUrl = "/api/UserAdministration/firmas";

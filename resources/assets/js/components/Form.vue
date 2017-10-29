@@ -5,9 +5,11 @@
             <input  v-if="field.type==='text'" type="text" class="form-control" :placeholder="field.label" v-model="values[field.value]" v-on:change="change">
             <input  v-if="field.type==='password'" type="password" class="form-control" :placeholder="field.label" v-model="values[field.value]" v-on:change="change">
             <input  v-if="field.type==='email'" type="email" class="form-control" :placeholder="field.label" v-model="values[field.value]" v-on:change="change">
-            <div v-if="field.type==='file'" class="input-group">
-                <a class="input-group-addon" :href="file(values[field.value]).url" :download="file(values[field.value]).name"><i class="fa fa-download"></i></a>
-                <input type="text" readonly="readonly" v-model="file(values[field.value]).name" class="form-control form-file-progress">
+            <div v-if="field.type==='file' || field.type==='multiplefile'" class="input-group">
+                <span v-if="field.type!=='multiplefile'" class="input-group-btn">
+                    <a class="btn btn-default" :href="file(values[field.value]).url" :download="file(values[field.value]).name"><i class="fa fa-download"></i></a>
+                </span>
+                <input type="text" readonly="readonly" v-model="file(values[field.value], field.type==='multiplefile').name" class="form-control form-file-progress">
                 <span class="input-group-btn">
                     <span class="btn btn-default" type="button"><i class="fa fa-folder-open"></i><input type="file" style="
                         width: 100%;
@@ -16,7 +18,9 @@
                         left: 0px;
                         top: 0px;
                         opacity: 0;"
-                        v-on:change="changeFile($event, field)"></span>
+                        v-on:change="changeFile($event, field, field.type==='multiplefile')"
+                        v-bind:multiple="field.type==='multiplefile'">
+                    </span>
                 </span>
             </div>
             <select v-if="field.type==='select'" class="form-control" :placeholder="field.label" :value="getInitialValueOf(values[field.value])" v-on:change="changeSelect($event, field)">
@@ -106,11 +110,11 @@
                 self.values[field.value] = value;
                 self.$root.$emit('changed', self);
             },
-            changeFile: function(event, field) {
+            changeFile: function(event, field, multiple) {
                 var self = this;
                 var data = new FormData();
                 for(var i=0,l=event.target.files.length;i<l;i++) {
-                    data.append('file', event.target.files[i]);
+                    data.append('file'+(multiple?'[]':''), event.target.files[i]);
                 }
                 $.ajax({
                     url: API_SERVER+"/api/uploadfile",
@@ -133,11 +137,17 @@
                     }
                 });
             },
-            file:function(json){
+            file:function(json, multiple){
                 var name='', url=false, mime='';
-                name = json && typeof json.name!=='undefined' ? json.name : '';
                 url = json && typeof json.url!=='undefined' ? json.url : false;
                 mime = json && typeof json.mime!=='undefined' ? json.mime : '';
+                if (multiple && json && typeof json.forEach==='function') {
+                    json.forEach(function (j) {
+                        name+=j.name+' | ';
+                    });
+                } else {
+                    name = json && typeof json.name!=='undefined' ? json.name : '';
+                }
                 return {name:name, url:url, mime: mime};
             },
             getInitialValueOf: function (value) {
