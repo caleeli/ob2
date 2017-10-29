@@ -109,9 +109,9 @@
             changeFile: function(event, field) {
                 var self = this;
                 var data = new FormData();
-                event.target.files.forEach(function (file) {
-                    data.append('file', file);
-                });
+                for(var i=0,l=event.target.files.length;i<l;i++) {
+                    data.append('file', event.target.files[i]);
+                }
                 $.ajax({
                     url: API_SERVER+"/api/uploadfile",
                     type: 'POST',
