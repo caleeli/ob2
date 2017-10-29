@@ -93,7 +93,7 @@ UserAdministration.EstadoFinanciero = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/estado_financieros";
     Model.call(this, url, id, "UserAdministration.EstadoFinanciero");
     this.$list = function () {
-        return "fields=tipo_estado_financiero,informes_auditoria,gestion,archivo,grafico_valores,empresa";
+        return "fields=tipo_estado_financiero,informes_auditoria,gestion,archivo,empresa";
     };
     this.$name = "EstadoFinanciero";
     this.$pluralName = "EstadoFinancieros";
@@ -104,7 +104,7 @@ UserAdministration.EstadoFinanciero = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Informes auditoria","data":"attributes.informes_auditoria"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}},{"title":"Gráfico valores","data":"attributes.grafico_valores"},{"title":"empresa","render":function (data){return data?data.cod_empresa+' '+data.nombre_empresa:''},"data":"relationships.empresa.attributes"}];
+        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Informes auditoria","data":"attributes.informes_auditoria"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}},{"title":"empresa","render":function (data){return data?data.cod_empresa+' '+data.nombre_empresa:''},"data":"relationships.empresa.attributes"}];
     };
     this.$methods = {
     };

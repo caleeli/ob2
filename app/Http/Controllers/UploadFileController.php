@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use stdClass;
 
 class UploadFileController extends Controller
 {
@@ -10,7 +11,7 @@ class UploadFileController extends Controller
     public function upload(Request $request)
     {
         $file = $request->file('file');
-        $json = new \stdClass();
+        $json = new stdClass();
         $json->name = $file->getClientOriginalName();
         $json->mime = $file->getClientMimeType();
         $json->path = $file->storePublicly('', 'public');

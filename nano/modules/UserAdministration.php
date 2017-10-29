@@ -412,7 +412,7 @@
                         "name": "grafico_valores",
                         "label": "Gráfico valores",
                         "type": "string",
-                        "list": true,
+                        "list": false,
                         "default": "4500,4000"
                     })
                 ],

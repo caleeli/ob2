@@ -109,7 +109,9 @@
             changeFile: function(event, field) {
                 var self = this;
                 var data = new FormData();
-                data.append('file', event.target.files[0]);
+                event.target.files.forEach(function (file) {
+                    data.append('file', file);
+                });
                 $.ajax({
                     url: API_SERVER+"/api/uploadfile",
                     type: 'POST',
@@ -125,9 +127,9 @@
                     if (data.lengthComputable) {
                         var progress = parseInt( ((data.loaded / data.total) * 100), 10 );
                         $(event.target)
-                          .closest(".input-group")
-                          .find(".form-file-progress")
-                          .css("cssText", "background-size: "+progress+"% 100%!important");
+                            .closest(".input-group")
+                            .find(".form-file-progress")
+                            .css("cssText", "background-size: "+progress+"% 100%!important");
                     }
                 });
             },
