@@ -169,7 +169,7 @@
                                                                         </a>
                                                                     </div>
                                                                 </div>
-                                                                <div class="ibox-content">
+                                                                <div class="ibox-content indicador">
                                                                     <!-- a v-bind:href="estado.attributes.archivo?estado.attributes.archivo.url:'#'">{{estado.attributes.archivo?estado.attributes.archivo.name:''}}</a -->
                                                                     <div v-if='eeffEditable.indexOf(estado.id)==-1' v-html="estado.html"></div>
                                                                     <htmleditor v-if='eeffEditable.indexOf(estado.id)>-1' v-bind:model="estado.attributes" v-bind:property="'contenido'" />
@@ -1001,7 +1001,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.50"></script>
+        <script src="../js/server.js?v0.51"></script>
         <script>
         $(document).ready(function () {
             var app;

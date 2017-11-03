@@ -9806,4 +9806,31 @@ body.md-skin {
   }
 }
 
+@media screen and (orientation: portrait) {
+  .indicador h1 {
+    font-size: 4vw;
+  }
+  .indicador h2 {
+    font-size: 3.6vw;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-device-width: 991px) {
+  .indicador h1 {
+    font-size: 3vw;
+  }
+  .indicador h2 {
+    font-size: 2.7vw;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-device-width: 992px) {
+  .indicador h1 {
+    font-size: 2vw;
+  }
+  .indicador h2 {
+    font-size: 1.8vw;
+  }
+}
+
 /*# sourceMappingURL=app.css.map */
