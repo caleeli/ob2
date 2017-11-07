@@ -17,6 +17,8 @@ and open the template in the editor.
         <script src="bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js"></script>
         <script src="bower_components/chart.js/dist/Chart.min.js"></script>
         <script src="bower_components/vue/dist/vue.min.js"></script>
+        <script src="bower_components/moment/min/moment-with-locales.min.js"></script>
+        <script src="/documentacion/js/plugins/peity/jquery.peity.min.js"></script>
         <style>
         @media print{
            .noprint{
@@ -57,7 +59,7 @@ and open the template in the editor.
 
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
                             <li><a href="#nota_oficio" v-on:click='nuevaNota' v-if="!window.isManager">Registrar</a></li>
-                            <li><a href="#">Búsqueda</a></li>
+                            <li><a href="#nota_busqueda">Búsqueda</a></li>
                         </ul>
                     </div>
                     <div class="btn-group">
@@ -70,7 +72,7 @@ and open the template in the editor.
 
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
                             <li><a href="#nota_oficio" v-on:click='nuevaNota' v-if="!window.isManager">Registrar</a></li>
-                            <li><a href="#">Búsqueda</a></li>
+                            <li><a href="#nota_busqueda">Búsqueda</a></li>
                         </ul>
                     </div>
                 </div>
@@ -178,7 +180,7 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Nº NOTA CGE/SCEP</label>
                                 <div class="col-lg-10">
-                                    <input type="text" v-model="nota.hoja_de_ruta" class="form-control" placeholder="">
+                                    <input type="text" v-model="nota.nro_nota" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -285,7 +287,7 @@ and open the template in the editor.
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="button" disabled v-on:click="generarNota" class="btn btn-primary">Guardar</button>
+                                    <button type="button" v-on:click="generarNota" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
                         </fieldset>
@@ -640,6 +642,39 @@ and open the template in the editor.
                         </tbody>
                     </table>
                 </div>
+                <div class="col-md-10" v-if="menu=='nota_busqueda'">
+                    <div class="row justify-content-md-center" v-if="window.isManager">
+                    </div>
+                    <input class="form-control" v-model='filtroNota' placeholder="busquedaNota" v-on:keyup='filtrar'>
+                    <table class="table table-striped table-hover ">
+                        <thead>
+                            <tr>
+                                <th>Hoja de Ruta</th>
+                                <th>Fecha Emision</th>
+                                <th>Nro Nota</th>
+                                <th>Reiterativa</th>
+                                <th>Fecha Entrega</th>
+                                <th>Entidad/Empresa</th>
+                                <th>Nombre</th>
+                                <th>Cargo</th>
+                                <th>Días</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for='note in notasBusqueda'>
+                                <td>{{note.hoja_de_ruta}}</td>
+                                <td>{{note.fecha_emision}}</td>
+                                <td>{{note.nro_nota}}</td>
+                                <td>{{note.reiterativa}}</td>
+                                <td>{{note.fecha_entrega}}</td>
+                                <td>{{note.entidad_empresa}}</td>
+                                <td>{{note.nombre_apellidos}}</td>
+                                <td>{{note.cargo}}</td>
+                                <td><span class="diasPasaron" v-bind:chart="note.pasaron()>note.dias?'pieRojo':'pie'">{{note.pasaron()}}/{{note.dias}}</span> {{note.pasaron()}}/{{note.dias}} días</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <script>
@@ -700,6 +735,39 @@ and open the template in the editor.
                 }
             });
         }
+        function Nota(values) {
+        	this.id = null;
+			this.hoja_de_ruta = '';
+			this.fecha_emision = '';
+			this.nro_nota = '';
+			this.reiterativa = '';
+			this.fecha_entrega = '';
+			this.entidad_empresa = '';
+			this.nombre_apellidos = '';
+			this.cargo = '';
+			this.referencia = '';
+			this.dias = '';
+			this.retraso = '';
+			this.hoja_de_ruta_recepcion = '';
+			this.fecha_recepcion = '';
+			this.nro_nota_recepcion = '';
+			this.remitente_recepcion = '';
+			this.referencia_recepcion = '';
+			this.fojas_recepcion = '';
+            this.load(values);
+        }
+        Nota.prototype.load = function (values){
+            if (typeof values==='object' && values) {
+                for(var a in values) if (typeof values[a]!='function') {
+                    this[a] = values[a];
+                }
+            }
+        }
+        Nota.prototype.pasaron = function () {
+            var from = moment(this.fecha_entrega+' 00:00:00', 'YYYY-MM-DD HH:mm:ss');
+            var to = moment();
+            return Math.floor(workday_count(from, to));
+        }
         function Derivacion(values) {
             this.id = null,
             this.hoja_ruta_id = '',
@@ -715,6 +783,16 @@ and open the template in the editor.
                     this[a] = values[a];
                 }
             }
+        }
+        window.workday_count = function(start,end) {
+            var first = start.clone().endOf('week'); // end of first week
+            var last = end.clone().startOf('week'); // start of last week
+            var days = last.diff(first,'days') * 5 / 7; // this will always multiply of 7
+            var wfirst = first.day() - start.day(); // check first week
+            if(start.day() == 0) --wfirst; // -1 if start with sunday
+            var wlast = end.day() - last.day(); // check last week
+            if(end.day() == 6) --wlast; // -1 if end with saturday
+            return wfirst + days + wlast; // get the total
         }
 
         /**
@@ -734,9 +812,11 @@ and open the template in the editor.
                         menu: 'recepcion',
                         hojasDeRuta: [],
                         hoja: new Recepcion(),
-                        nota: new Recepcion(),
+                        nota: new Nota(),
                         filtro: '',
                         hojasDeRutaBusqueda: [],
+                        filtroNota: '',
+                        notasBusqueda: [],
                         derivacion: new Derivacion(),
                         derivaciones: [],
                         filtroDerivacion: '',
@@ -771,6 +851,42 @@ and open the template in the editor.
                                 anexo_hojas: o.anexoHojas,
                                 destinatario: o.destinatario,
                                 conclusion: o.conclusion,
+                                t: new Date().getTime()
+                            },
+                            dataType: 'json',
+                            success: function () {
+                            }
+                        }).done(function() {
+                            if (typeof callback==='function') {
+                                callback();
+                            }
+                        });
+                    },
+                    saveNota: function(callback) {
+                        var self = this;
+                        var o = this.nota;
+                        $.ajax({
+                            method: 'get',
+                            url: 'saveNota.php',
+                            data: {
+                                id: o.id ? o.id: '',
+                                hoja_de_ruta: o.hoja_de_ruta,
+                                fecha_emision: o.fecha_emision,
+                                nro_nota: o.nro_nota,
+                                reiterativa: o.reiterativa,
+                                fecha_entrega: o.fecha_entrega,
+                                entidad_empresa: o.entidad_empresa,
+                                nombre_apellidos: o.nombre_apellidos,
+                                cargo: o.cargo,
+                                referencia: o.referencia,
+                                dias: o.dias,
+                                retraso: o.retraso,
+                                hoja_de_ruta_recepcion: o.hoja_de_ruta_recepcion,
+                                fecha_recepcion: o.fecha_recepcion,
+                                nro_nota_recepcion: o.nro_nota_recepcion,
+                                remitente_recepcion: o.remitente_recepcion,
+                                referencia_recepcion: o.referencia_recepcion,
+                                fojas_recepcion: o.fojas_recepcion,
                                 t: new Date().getTime()
                             },
                             dataType: 'json',
@@ -845,7 +961,11 @@ and open the template in the editor.
                         });*/
                     },
                     generarNota: function() {
-
+                        var self = this;
+                        self.saveNota(function () {
+                            self.filtrarNota();
+                        });
+                        window.location.hash="#nota_busqueda";
                     },
                     datepick: function() {
                         var self = this;
@@ -883,7 +1003,7 @@ and open the template in the editor.
                             $('#notaExternaFechaEnvio').datepicker({autoclose:true, format:'yyyy-mm-dd', language: 'es'});
                             $('#notaExternaFechaEnvio').datepicker('show');
                             $("#notaExternaFechaEnvio").on("changeDate", function (e) {
-                                self.nota.fecha = $("#notaExternaFechaEnvio input").val();
+                                self.nota.fecha_emision = $("#notaExternaFechaEnvio input").val();
                             });
                         });
                     },
@@ -893,7 +1013,7 @@ and open the template in the editor.
                             $('#notaExternaFechaEntrega').datepicker({autoclose:true, format:'yyyy-mm-dd', language: 'es'});
                             $('#notaExternaFechaEntrega').datepicker('show');
                             $("#notaExternaFechaEntrega").on("changeDate", function (e) {
-                                self.nota.fecha = $("#notaExternaFechaEntrega input").val();
+                                self.nota.fecha_entrega = $("#notaExternaFechaEntrega input").val();
                             });
                         });
                     },
@@ -903,7 +1023,7 @@ and open the template in the editor.
                             $('#notaExternaFechaRecepcion').datepicker({autoclose:true, format:'yyyy-mm-dd', language: 'es'});
                             $('#notaExternaFechaRecepcion').datepicker('show');
                             $("#notaExternaFechaRecepcion").on("changeDate", function (e) {
-                                self.nota.fecha = $("#notaExternaFechaRecepcion input").val();
+                                self.nota.fecha_recepcion = $("#notaExternaFechaRecepcion input").val();
                             });
                         });
                     },
@@ -940,6 +1060,53 @@ and open the template in the editor.
                     },
                     filtrarDerivacion: function () {
                         this.hoja.selectDerivations(this.derivaciones, this.filtroDerivacion);
+                    },
+                    filtrarNota: function () {
+                        var self = this;
+                        self.notasBusqueda.splice(0);
+                        $.ajax({
+                            method:'GET',
+                            url: 'selectNota.php',
+                            data: {
+                                filter: self.filtro,
+                                t: Math.floor(new Date().getTime()/1000)
+                            },
+                            dataType: 'json',
+                            success: function (res) {
+                                res.forEach(function (o) {
+                                    self.notasBusqueda.push(new Nota({
+                                        hoja_de_ruta: o.hoja_de_ruta,
+                                        fecha_emision: o.fecha_emision,
+                                        nro_nota: o.nro_nota,
+                                        reiterativa: o.reiterativa,
+                                        fecha_entrega: o.fecha_entrega,
+                                        entidad_empresa: o.entidad_empresa,
+                                        nombre_apellidos: o.nombre_apellidos,
+                                        cargo: o.cargo,
+                                        referencia: o.referencia,
+                                        dias: o.dias,
+                                        retraso: o.retraso,
+                                        hoja_de_ruta_recepcion: o.hoja_de_ruta_recepcion,
+                                        fecha_recepcion: o.fecha_recepcion,
+                                        nro_nota_recepcion: o.nro_nota_recepcion,
+                                        remitente_recepcion: o.remitente_recepcion,
+                                        referencia_recepcion: o.referencia_recepcion,
+                                        fojas_recepcion: o.fojas_recepcion,
+                                    }));
+                                });
+                                self.drawNotasPie();
+                            }
+                        });
+                    },
+                    drawNotasPie: function () {
+                        Vue.nextTick(function () {
+                            $("span.diasPasaron").each(function () {
+                                var chart = $(this).attr("chart")=='pieRojo' ? 'pie' : $(this).attr("chart");
+                                $(this).peity(chart, {
+                                    fill: $(this).attr("chart") === 'pie' ? ['#1ab394', '#d7d7d7'] : ['#FB3C40', '#1ab394'],
+                                })
+                            });
+                        });
                     },
                     dia: function (fecha){
                         if (!fecha) return '';
@@ -1029,6 +1196,7 @@ and open the template in the editor.
                     var self = this;
                     //this.loadHojas();
                     this.filtrar();
+                    this.filtrarNota();
                     menu=window.location.hash.substr(1);
                     this.menu=menu?menu:(window.isManager?'busqueda':'recepcion');
                     self.dibujarDashboard();
@@ -1040,6 +1208,9 @@ and open the template in the editor.
                 app.menu=app.menu?app.menu:'busqueda';
                 if (app.menu=='busqueda') {
                     app.dibujarDashboard();
+                }
+                if (app.menu=='nota_busqueda') {
+                    app.drawNotasPie();
                 }
             });
         });

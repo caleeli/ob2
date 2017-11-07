@@ -27,5 +27,25 @@ $connection->exec('CREATE TABLE IF NOT EXISTS `derivacion` (
   `instruccion` char(80) NOT NULL,
   `hoja_ruta_id` int(11) not null
 )');
+$connection->exec("CREATE TABLE `notas` (
+  	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	hoja_de_ruta varchar(80) COLLATE 'utf8_general_ci' NULL,
+	fecha_emision varchar(80) COLLATE 'utf8_general_ci' NULL,
+	nro_nota varchar(80) COLLATE 'utf8_general_ci' NULL,
+	reiterativa varchar(80) COLLATE 'utf8_general_ci' NULL,
+	fecha_entrega varchar(80) COLLATE 'utf8_general_ci' NULL,
+	entidad_empresa varchar(200) COLLATE 'utf8_general_ci' NULL,
+	nombre_apellidos varchar(200) COLLATE 'utf8_general_ci' NULL,
+	cargo varchar(100) COLLATE 'utf8_general_ci' NULL,
+	referencia mediumtext COLLATE 'utf8_general_ci' NULL,
+	dias varchar(80) COLLATE 'utf8_general_ci' NULL,
+	retraso varchar(80) COLLATE 'utf8_general_ci' NULL,
+	hoja_de_ruta_recepcion varchar(80) COLLATE 'utf8_general_ci' NULL,
+	fecha_recepcion varchar(80) COLLATE 'utf8_general_ci' NULL,
+	nro_nota_recepcion varchar(80) COLLATE 'utf8_general_ci' NULL,
+	remitente_recepcion varchar(200) COLLATE 'utf8_general_ci' NULL,
+	referencia_recepcion mediumtext COLLATE 'utf8_general_ci' NULL,
+	fojas_recepcion varchar(80) COLLATE 'utf8_general_ci' NULL
+);");
 
 header("Location: index.php");
