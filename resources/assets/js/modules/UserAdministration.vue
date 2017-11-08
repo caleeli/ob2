@@ -121,21 +121,21 @@ UserAdministration.CuadroFinanciero = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/cuadro_financieros";
     Model.call(this, url, id, "UserAdministration.CuadroFinanciero");
     this.$list = function () {
-        return "fields=titulo,contenido";
+        return "fields=titulo,contenido,grafico";
     };
     this.$name = "CuadroFinanciero";
     this.$pluralName = "CuadroFinancieros";
     this.$title = "Cuadro financiero";
     this.$pluralTitle = "Cuadros financieros";
-    this.$ = {"titulo":{"name":"titulo","label":"Título","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"titulo","isAssociation":false},"contenido":{"name":"contenido","label":"Formula (html)","type":"html","enum":[],"source":undefined,"textField":undefined,"value":"contenido","isAssociation":false}};
+    this.$ = {"titulo":{"name":"titulo","label":"Título","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"titulo","isAssociation":false},"contenido":{"name":"contenido","label":"Formula (html)","type":"html","enum":[],"source":undefined,"textField":undefined,"value":"contenido","isAssociation":false},"grafico":{"name":"grafico","label":"Grafico (json)","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Título","data":"attributes.titulo"},{"title":"Formula (html)","data":"attributes.contenido"}];
+        return [{"title":"Título","data":"attributes.titulo"},{"title":"Formula (html)","data":"attributes.contenido"},{"title":"Grafico (json)","data":"attributes.grafico"}];
     };
     this.$methods = {
-calculate:function(empresaId, gestion, html,methodCallback,childrenAssociation){self.$call("calculate",{"empresaId":empresaId,"gestion":gestion,"html":html}, childrenAssociation, methodCallback)}    };
+calculate:function(empresaId, gestion, html, grafico,methodCallback,childrenAssociation){self.$call("calculate",{"empresaId":empresaId,"gestion":gestion,"html":html,"grafico":grafico}, childrenAssociation, methodCallback)}    };
     this.$initFields();
     if(id) {
         this.$load(id);

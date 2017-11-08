@@ -13,6 +13,7 @@ class CreateAdmCuadroFinancierosTable extends Migration
             $table->increments('id');
             $table->string('titulo')->nullable();
             $table->string('contenido')->nullable();
+            $table->string('grafico')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

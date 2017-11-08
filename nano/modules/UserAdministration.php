@@ -466,6 +466,12 @@
                         "label": "Formula (html)",
                         "ui": "html",
                         "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "grafico",
+                        "type": "string",
+                        "label": "Grafico (json)",
+                        "default": ""
                     })
                 ],
                 "associations": [
@@ -473,10 +479,10 @@
                 "events": {
                 },
                 "methods": {
-                    "calculate(empresaId, gestion, html)": <?php
-                        function ($empresaId, $gestion, $html) {
+                    "calculate(empresaId, gestion, html, grafico)": <?php
+                        function ($empresaId, $gestion, $html, $grafico='{}') {
                             $ev = new \App\Evaluator($empresaId, $gestion);
-                            return $ev->calculate($html);
+                            return [$ev->calculate($html), $ev->calculate($grafico, true)];
                         }
                     ?>
                 }

@@ -84,7 +84,7 @@ class Evaluator
         }
     }
 
-    public function calculate($html)
+    public function calculate($html, $isChart=false)
     {
         $html = str_replace(
             ['&#39;','&quot;','&gt;','&lt;'],
@@ -109,6 +109,11 @@ class Evaluator
             },
             'gestion' => $this->gestion,
         ];
+        if ($isChart) {
+            $args['format'] = function ($value) {
+                return $value;
+            };
+        }
         return $this->bladeCompile($html, $args);
     }
 

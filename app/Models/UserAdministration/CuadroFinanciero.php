@@ -12,20 +12,23 @@ class CuadroFinanciero extends Model
     protected $fillable = array(
       0 => 'titulo',
       1 => 'contenido',
+      2 => 'grafico',
     );
     protected $attributes = array(
       'titulo' => '',
       'contenido' => '',
+      'grafico' => '',
     );
     protected $casts = array(
       'titulo' => 'string',
       'contenido' => 'string',
+      'grafico' => 'string',
     );
     protected $events = array(
     );
-    public function calculate($empresaId, $gestion, $html)
+    public function calculate($empresaId, $gestion, $html, $grafico='{}')
     {
         $ev = new \App\Evaluator($empresaId, $gestion);
-        return $ev->calculate($html);
+        return [$ev->calculate($html), $ev->calculate($grafico, true)];
     }
 }

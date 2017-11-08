@@ -1,8 +1,35 @@
 <template>
-        <div class="chart-box">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>{{title}}</h5><i class="base-chart-aux"></i>
+            <div class="ibox-tools">
+                <a v-on:click="download">
+                    <i class="fa fa-download"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li v-for="param in params">
+                        <label style="
+                               width: 32px;
+                               display: inline-block;
+                               ">{{param.label}}:</label>
+                        <input v-model="param.value"
+                               style="
+                               width: 64px;
+                               display: inline-block;
+                               ">
+                    </li>
+                </ul>
+                <a class="close-link" v-on:click="close">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content chart-box">
             <div class="canvasOwner" style="min-height: 300px;"></div>
-            <i class="base-chart-aux"></i>
-            <div class="pv-data-table" style="display:none">
+            <div class="pv-data-table">
                 <table class="pv-data-table-table table table-striped table-bordered">
                     <thead>
                     <tr v-for="(col,colI) in cols">
@@ -19,6 +46,7 @@
                 </table>
             </div>
         </div>
+    </div>
 </template>
 
 <script>
@@ -33,7 +61,7 @@
                     {label:"de",value:"2003"},
                     {label:"a",value:"2016"},
                 ],
-                /*data: this.mdata ? this.mdata : {
+                data: this.mdata ? this.mdata : {
                     x: ["ene","feb","mar"],
                     series: {
                         "presupuesto": {
@@ -41,7 +69,7 @@
                             "ejecutado": [90,380,850]
                         }
                     }
-                },*/
+                },
                 //internal:
                 "xs":[],
                 "ys":[],
@@ -128,8 +156,7 @@
                     '#3B3EAC',
                 ];
                 var MAX_ROWS=10;
-                var data = self.mdata;
-                if (!data) return;
+                var data = self.data;
                 var countSeries = 0;
                 $(self.$el).find(".canvasOwner").html("");
                 var maxNumCharts = MAX_ROWS;
@@ -345,7 +372,6 @@
                 }
             },
             refresh: function () {
-                console.log("refreshed", this.mdata, this.data);
                 var self = this;
                 $(self.$el).find(".canvasOwner").html('');
                 self.drawChart();
