@@ -871,6 +871,24 @@
                         var canEdit = owner_id == localStorage.user_id;
                         return canEdit ? true : '';
                     }
+                },
+                "events": {
+                    "saving": <?php
+                        function ($event) {
+                            $event->uai->owner_id = 1;
+                            if (empty($event->uai->prefix)) {
+                                $event->estadoFinanciero->prefix = uniqid('tmp_');
+                            }
+                            $ext = @array_pop(explode('.', $event->estadoFinanciero->archivo['name']));
+                            if ($ext === 'xls' || $ext === 'xlsx') {
+                                $file = realpath(storage_path('app/public/'.$event->estadoFinanciero->archivo['path']));
+                                $event->estadoFinanciero->tablas = \App\Xls2Csv2Db::import(
+                                    $event->estadoFinanciero->prefix,
+                                    $file
+                                );
+                            }
+                        }
+                    ?>
                 }
             }),
             /**

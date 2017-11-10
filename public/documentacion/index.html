@@ -753,7 +753,7 @@
                                                     <dl class="dl-horizontal">
                                                         <dt>Asignado a:</dt> <dd>
                                                             <select class="form-control" placeholder="asignado" v-model="tarea.usuario">
-                                                                <option value="1">Angela Choque</option>
+                                                                <option v-for="user in users" v-bind:value="user.id">{{user.attributes.nombres+" "+user.attributes.apellidos}}</option>
                                                             </select>
                                                         </dd>
                                                     </dl>
@@ -1018,6 +1018,8 @@
                     var self = this;
                     return {
                         user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
+                        usertarea: new UserAdministration.User(),
+                        users: [],
                         empresas: [],
                         empresa: new UserAdministration.Empresa(),
                         empresa_estado: new UserAdministration.EmpresaEstado(),
@@ -1068,11 +1070,27 @@
                     listarTareas: function () {
                         var self = this;
                         this.tareasTodas.splice(0);
-                        this.tarea.$select(function (data) {
+                        this.tarea.$select(
+                            function (data) {
+                                data.data.forEach(function (row) {
+                                    self.tareasTodas.push(row);
+                                });
+                                self.pintarTareas();
+                            },
+                            {
+                                filter:[
+                                    'where,usuario_id,=,'+localStorage.user_id,
+                                ]
+                            }
+                        );
+                    },
+                    loadListTo: function (from, to) {
+                        var self = this;
+                        to.splice(0);
+                        from.$select(function (data) {
                             data.data.forEach(function (row) {
-                                self.tareasTodas.push(row);
+                                to.push(row);
                             });
-                            self.pintarTareas();
                         });
                     },
                     listarEmpresas: function () {
@@ -1123,7 +1141,11 @@
                         });
                     },
                     crearAvance: function () {
-                        this.avance.$load(0);
+                        var self = this;
+                        self.avance.$load(0, function () {
+                            self.avance.avance = self.tarea.avance;
+                            console.log(self.avance.avance,  self.tarea.avance);
+                        });
                     },
                     guardarAvance: function () {
                         var self = this;
@@ -1295,6 +1317,7 @@
                     this.listarEmpresas();
                     this.cargarEstadosFinancieros();
                     this.cargarCuadrosFinancieros();
+                    this.loadListTo(this.usertarea, this.users);
                 }
             });
             window.app = app;
