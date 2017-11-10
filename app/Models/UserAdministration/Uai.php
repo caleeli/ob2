@@ -17,6 +17,7 @@ class Uai extends Model
       4 => 'tipo_de_informes',
       5 => 'informes_emitidos_scep',
       6 => 'empresa_id',
+      7 => 'owner_id',
     );
     protected $attributes = array(
       'cod_uai' => '',
@@ -39,5 +40,11 @@ class Uai extends Model
     public function empresa()
     {
         return $this->belongsTo('App\Models\UserAdministration\Empresa', 'empresa_id', 'cod_empresa');
+    }
+
+
+    public function owner()
+    {
+        return $this->belongsTo('App\Models\UserAdministration\User');
     }
 }

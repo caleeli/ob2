@@ -104,7 +104,7 @@ UserAdministration.EstadoFinanciero = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Informes auditoria","data":"attributes.informes_auditoria"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}},{"title":"empresa","render":function (data){return data?data.cod_empresa+' '+data.nombre_empresa:''},"data":"relationships.empresa.attributes"}];
+        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Informes auditoria","data":"attributes.informes_auditoria"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}},{"title":"empresa","visible":true,"render":function (data){return data?data.cod_empresa+' '+data.nombre_empresa:''},"data":"relationships.empresa.attributes"}];
     };
     this.$methods = {
     };
@@ -333,7 +333,7 @@ UserAdministration.Uai = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/uais";
     Model.call(this, url, id, "UserAdministration.Uai");
     this.$list = function () {
-        return "fields=cod_uai,gestion_uai,empresa,estructura_uai,titular_uai,tipo_de_informes,informes_emitidos_scep";
+        return "fields=cod_uai,gestion_uai,empresa,estructura_uai,titular_uai,tipo_de_informes,informes_emitidos_scep,owner";
     };
     this.$name = "Uai";
     this.$pluralName = "Uais";
@@ -349,6 +349,10 @@ UserAdministration.Uai = function (url, id) {
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
+                            var owner = typeof row.relationships.owner==='undefined' || !row.relationships.owner
+                                ? ''
+                                : row.relationships.owner.attributes.nombres + ' '
+                                    + row.relationships.owner.attributes.apellidos;
                             var $a = $('<a></a>');
                             $a.text(data.name);
                             $a.attr('href', data.url);
@@ -356,7 +360,9 @@ UserAdministration.Uai = function (url, id) {
                             $a.prepend('<i class="fa fa-download"></i> ');
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
-                              + time;
+                              + time
+                              + '<br><i class="fa fa-user-o"></i> '
+                              + owner;
                         },"value":"tipo_de_informes","isAssociation":false},"informes_emitidos_scep":{"name":"informes_emitidos_scep","label":"Informes emitidos SCEP","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
                             if (!data) {
                                 return '';
@@ -367,6 +373,10 @@ UserAdministration.Uai = function (url, id) {
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
+                            var owner = typeof row.relationships.owner==='undefined' || !row.relationships.owner
+                                ? ''
+                                : row.relationships.owner.attributes.nombres + ' '
+                                    + row.relationships.owner.attributes.apellidos;
                             var $a = $('<a></a>');
                             $a.text(data.name);
                             $a.attr('href', data.url);
@@ -374,13 +384,15 @@ UserAdministration.Uai = function (url, id) {
                             $a.prepend('<i class="fa fa-download"></i> ');
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
-                              + time;
+                              + time
+                              + '<br><i class="fa fa-user-o"></i> '
+                              + owner;
                         },"value":"informes_emitidos_scep","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_uai"},{"title":"Gestión","data":"attributes.gestion_uai"},{"title":"Empresa","render":function (data, type, full, meta) {
+        return [{"title":"Código","data":"attributes.cod_uai"},{"title":"Gestión","data":"attributes.gestion_uai"},{"title":"Empresa","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
                         },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Estructura UAI","data":"attributes.estructura_uai"},{"title":"Titular UAI","data":"attributes.titular_uai"},{"title":"Tipo de Informes","data":"attributes.tipo_de_informes","render":function (data,type,row){
                             if (!data) {
@@ -392,6 +404,10 @@ UserAdministration.Uai = function (url, id) {
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
+                            var owner = typeof row.relationships.owner==='undefined' || !row.relationships.owner
+                                ? ''
+                                : row.relationships.owner.attributes.nombres + ' '
+                                    + row.relationships.owner.attributes.apellidos;
                             var $a = $('<a></a>');
                             $a.text(data.name);
                             $a.attr('href', data.url);
@@ -399,7 +415,9 @@ UserAdministration.Uai = function (url, id) {
                             $a.prepend('<i class="fa fa-download"></i> ');
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
-                              + time;
+                              + time
+                              + '<br><i class="fa fa-user-o"></i> '
+                              + owner;
                         }},{"title":"Informes emitidos SCEP","data":"attributes.informes_emitidos_scep","render":function (data,type,row){
                             if (!data) {
                                 return '';
@@ -410,6 +428,10 @@ UserAdministration.Uai = function (url, id) {
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
+                            var owner = typeof row.relationships.owner==='undefined' || !row.relationships.owner
+                                ? ''
+                                : row.relationships.owner.attributes.nombres + ' '
+                                    + row.relationships.owner.attributes.apellidos;
                             var $a = $('<a></a>');
                             $a.text(data.name);
                             $a.attr('href', data.url);
@@ -417,8 +439,12 @@ UserAdministration.Uai = function (url, id) {
                             $a.prepend('<i class="fa fa-download"></i> ');
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
-                              + time;
-                        }}];
+                              + time
+                              + '<br><i class="fa fa-user-o"></i> '
+                              + owner;
+                        }},{"title":"Propietario","visible":false,"render":function (data, type, full, meta) {
+                            return data ? data : '';
+                        },"data":"relationships.owner.attributes.null"}];
     };
     this.$methods = {
     };
@@ -446,7 +472,7 @@ UserAdministration.Tarea = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_tarea"},{"title":"Usuario","render":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.usuario.attributes"},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"},{"title":"Estado","data":"attributes.estado"},{"title":"Avance","data":"attributes.avance"},{"title":"Prioridad","data":"attributes.prioridad"}];
+        return [{"title":"Código","data":"attributes.cod_tarea"},{"title":"Usuario","visible":true,"render":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.usuario.attributes"},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"},{"title":"Estado","data":"attributes.estado"},{"title":"Avance","data":"attributes.avance"},{"title":"Prioridad","data":"attributes.prioridad"}];
     };
     this.$methods = {
     };

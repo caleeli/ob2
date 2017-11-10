@@ -18,6 +18,7 @@ class CreateAdmUaisTable extends Migration
             $table->text('tipo_de_informes')->nullable();
             $table->text('informes_emitidos_scep')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();
+            $table->integer('owner_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

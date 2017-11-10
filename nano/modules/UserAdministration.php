@@ -786,6 +786,10 @@
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
+                            var owner = typeof row.relationships.owner==='undefined' || !row.relationships.owner
+                                ? ''
+                                : row.relationships.owner.attributes.nombres + ' '
+                                    + row.relationships.owner.attributes.apellidos;
                             var $a = $('&lt;a&gt;&lt;/a&gt;');
                             $a.text(data.name);
                             $a.attr('href', data.url);
@@ -793,7 +797,9 @@
                             $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
                             return $("&lt;div /&gt;").append($a).html()
                               + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
-                              + time;
+                              + time
+                              + '&lt;br&gt;&lt;i class="fa fa-user-o"&gt;&lt;/i&gt; '
+                              + owner;
                         },
                         "list": true,
                     }),
@@ -812,6 +818,10 @@
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
+                            var owner = typeof row.relationships.owner==='undefined' || !row.relationships.owner
+                                ? ''
+                                : row.relationships.owner.attributes.nombres + ' '
+                                    + row.relationships.owner.attributes.apellidos;
                             var $a = $('&lt;a&gt;&lt;/a&gt;');
                             $a.text(data.name);
                             $a.attr('href', data.url);
@@ -819,7 +829,9 @@
                             $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
                             return $("&lt;div /&gt;").append($a).html()
                               + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
-                              + time;
+                              + time
+                              + '&lt;br&gt;&lt;i class="fa fa-user-o"&gt;&lt;/i&gt; '
+                              + owner;
                         },
                         "list": true,
                     }),
@@ -838,7 +850,20 @@
                         "references": 'empresa_id',
                         "columns": 'cod_empresa',
                         "position": 2,
-                    })
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "owner",
+                        "label": "Propietario",
+                        "model": "user",
+                        "textField": null,
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "nullable": true,
+                        "form": false,
+                        "list": true,
+                        "visible": false
+                    }),
                 ]
             }),
             /**

@@ -61,6 +61,7 @@ VueComponent.generate = function (module, views, data, template) {
                     }
                     var def = {
                         title: typeof field.label === 'undefined' ? field.name : field.label,
+                        visible: typeof field.visible === 'undefined' ? true : field.visible,
                         render: function (data, type, full, meta) {
                             return data ? data : '';
                         }
