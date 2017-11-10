@@ -231,6 +231,9 @@ class NanoBuildCommand extends Command
     {
         $res = [];
         foreach ((array) $methods as $def => $code) {
+            if (!is_string($code)) {
+                continue;
+            }
             $hasName = preg_match('/function\s+(\w+)\s*\(/', $code);
             if ($hasName) {
                 $res[] = $code;

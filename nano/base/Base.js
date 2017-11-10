@@ -1,4 +1,5 @@
 var console = PHP;
+console.log("Iniciando compilacion...");
 
 function array_find(array, ev) {
     var a;
@@ -457,11 +458,6 @@ Module.Model.HasMany = function (base) {
         if (base.where) {
             base.where.forEach(function(w){
                 where.push("->where(");
-                /*var p=[];
-                w.forEach(function(h){
-                    p.push(PHP.var_export(h));
-                });
-                where.push(p.join(", "));*/
                 where.push(w);
                 where.push(")");
             });
@@ -499,9 +495,9 @@ Module.Model.BelongsTo = function (base) {
     this.migration = function (modelName) {
         var foreign = PHP.snake_case(base.name);
         var foreignModule = base.module?Module.instances[base.module]:module;
-        console.log("Schema::table('"+Module.Model.getTableName(module, module.$models(modelName))+"', function (Blueprint $table) {\n            $table->foreign('" + foreign + "_id')->references('id')->on('" +
+        /*console.log("Schema::table('"+Module.Model.getTableName(module, module.$models(modelName))+"', function (Blueprint $table) {\n            $table->foreign('" + foreign + "_id')->references('id')->on('" +
             Module.Model.getTableName(foreignModule, foreignModule.$models(base.model)) +
-            "')->onDelete('" + (base.nullable?'set null':'cascade') + "');\n});");
+            "')->onDelete('" + (base.nullable?'set null':'cascade') + "');\n});");*/
         
         return "            $table->integer('" + foreign + "_id')->unsigned()"+
             (base.nullable?'->nullable()':'') + ";\n" /*+

@@ -447,7 +447,11 @@ UserAdministration.Uai = function (url, id) {
                         },"data":"relationships.owner.attributes.null"}];
     };
     this.$methods = {
-    };
+listEditButton: function (data, type, row, meta){
+                        var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
+                        var canEdit = owner_id == localStorage.user_id;
+                        return canEdit ? true : '';
+                    }    };
     this.$initFields();
     if(id) {
         this.$load(id);

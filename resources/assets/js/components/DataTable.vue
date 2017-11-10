@@ -86,7 +86,14 @@
                 if (self.editable) {
                     columns.push({
                         "data":null,
-                        "defaultContent": "<a class='btn btn-default edit-button'><i class='fa fa-pencil-square-o'></i></a>",
+                        "render": function (data, type, row, meta) {
+                                var defaultButton = "<a class='btn btn-default edit-button'><i class='fa fa-pencil-square-o'></i></a>";
+                                if (typeof self.model.$methods.listEditButton === 'function') {
+                                    var res = self.model.$methods.listEditButton(data, type, row, meta);
+                                    return res===true ? defaultButton : res;
+                                }
+                                return defaultButton;
+                            },
                     });
                 }
                 this.table = $(this.$el).find("table").DataTable({
