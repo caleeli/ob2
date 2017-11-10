@@ -645,7 +645,7 @@ and open the template in the editor.
                 <div class="col-md-10" v-if="menu=='nota_busqueda'">
                     <div class="row justify-content-md-center" v-if="window.isManager">
                     </div>
-                    <input class="form-control" v-model='filtroNota' placeholder="busquedaNota" v-on:keyup='filtrar'>
+                    <input class="form-control" v-model='filtroNota' placeholder="busqueda nota" v-on:keyup='filtrarNota'>
                     <table class="table table-striped table-hover ">
                         <thead>
                             <tr>
@@ -1032,7 +1032,6 @@ and open the template in the editor.
                     },
                     filtrar: function () {
                         var self = this;
-                        self.hojasDeRutaBusqueda.splice(0);
                         $.ajax({
                             method:'GET',
                             url: 'select.php',
@@ -1042,6 +1041,7 @@ and open the template in the editor.
                             },
                             dataType: 'json',
                             success: function (res) {
+                                self.hojasDeRutaBusqueda.splice(0);
                                 res.forEach(function (o) {
                                     self.hojasDeRutaBusqueda.push(new Recepcion({
                                         id: o.id,
@@ -1063,16 +1063,16 @@ and open the template in the editor.
                     },
                     filtrarNota: function () {
                         var self = this;
-                        self.notasBusqueda.splice(0);
                         $.ajax({
                             method:'GET',
                             url: 'selectNota.php',
                             data: {
-                                filter: self.filtro,
+                                filter: self.filtroNota,
                                 t: Math.floor(new Date().getTime()/1000)
                             },
                             dataType: 'json',
                             success: function (res) {
+                                self.notasBusqueda.splice(0);
                                 res.forEach(function (o) {
                                     self.notasBusqueda.push(new Nota({
                                         hoja_de_ruta: o.hoja_de_ruta,
