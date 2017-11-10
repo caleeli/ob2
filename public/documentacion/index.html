@@ -1144,7 +1144,6 @@
                         var self = this;
                         self.avance.$load(0, function () {
                             self.avance.avance = self.tarea.avance;
-                            console.log(self.avance.avance,  self.tarea.avance);
                         });
                     },
                     guardarAvance: function () {
@@ -1156,8 +1155,12 @@
                         });
                     },
                     registrarAvanceTarea: function (tarea) {
-                        this.tarea.$load(tarea.id);
-                        this.avance.$load(0);
+                        var self = this;
+                        self.tarea.$load(tarea.id, function () {
+                            self.avance.$load(0, function () {
+                                self.avance.avance = self.tarea.avance;
+                            });
+                        });
                     },
                     adjuntarArchivo: function () {
                         var self = this;
