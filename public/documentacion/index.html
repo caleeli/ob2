@@ -125,15 +125,15 @@
                     -->
                     <carouselitem id="estadosFinancieros">
                         <div class="row wrapper border-bottom page-heading">
-                            <div class="col-lg-10">
-                                <h2>Estados financieros </h2>
-                            </div>
                             <div class="wrapper wrapper-content">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="ibox float-e-margins">
+                                        <div class="ibox">
+                                            <div class="ibox-title">
+                                                <h5>ESTADOS FINANCIEROS</h5>
+                                            </div>
                                             <div class="ibox-content">
-                                                <div class="table-responsive" style="overflow: hidden;">
+                                                <div style="overflow: hidden;">
                                                     <div class="form-group">
                                                       <div class="col-lg-10">
                                                         <select class="form-control" id="select" v-model='empresaSeleccionada' v-on:change="cargarEstadosFinancieros">
@@ -185,258 +185,11 @@
                                                             <a class="btn btn-primary" v-on:click="addCCFF"><h1><i class="fa fa-plus-circle"></i></h1></a>
                                                         </div>
                                                     </div>
-                                                    <!--
-                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb"?"block":"none"}'>
-                                                        <div class="col-md-5">
-                                                            <basic-chart title="Presupuesto aprobado"
-                                                                         mcols="aprobado"
-                                                                         type="line"
-                                                                         :mdata='{
-                                                                            x: ["ene","feb","mar"],
-                                                                            series: {
-                                                                                "presupuesto2014": {
-                                                                                    "aprobado": [100,400,900],
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                        <div class="col-md-5">
-                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
-                                                                         :mdata='{
-                                                                            x: ["ene","feb","mar"],
-                                                                            series: {
-                                                                                "presupuesto": {
-                                                                                    "aprobado": [100,400,900],
-                                                                                    "ejecutado": [90,380,850]
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                        <div class="col-md-5">
-                                                            <basic-chart title="% Ejecutado" type="pie"
-                                                                         :mdata='{
-                                                                            x: ["pendiente", "ejecutado"],
-                                                                            series: {
-                                                                                "presupuesto": {
-                                                                                    "presupuesto": [400,300],
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb1"?"block":"none"}'>
-                                                        <div class="col-md-4">
-                                                            <basic-chart title="Presupuesto aprobado" mcols="aprobado" type="line"
-                                                                         :mdata='{
-                                                                            x: ["ene","feb","mar"],
-                                                                            series: {
-                                                                                "presupuesto": {
-                                                                                    "aprobado": [40,20,50],
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
-                                                                         :mdata='{
-                                                                            x: ["ene","feb","mar"],
-                                                                            series: {
-                                                                                "presupuesto": {
-                                                                                    "aprobado": [40,20,50],
-                                                                                    "ejecutado": [30,10,20]
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ypfb2"?"block":"none"}'>
-                                                        <div class="col-md-4">
-                                                            <basic-chart title="Presupuesto aprobado" mcols="aprobado" type="line"
-                                                                         :mdata='{
-                                                                            x: ["ene","feb","mar"],
-                                                                            series: {
-                                                                                "presupuesto": {
-                                                                                    "aprobado": [30,50,60],
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
-                                                                         :mdata='{
-                                                                            x: ["ene","feb","mar"],
-                                                                            series: {
-                                                                                "presupuesto": {
-                                                                                    "aprobado": [30,50,60],
-                                                                                    "ejecutado": [30,50,20]
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="ende"?"block":"none"}'>
-                                                        <div class="col-md-4">
-                                                            <basic-chart title="Presupuesto " mcols="aprobado" type="horizontalBar"
-                                                                         :mdata='{
-                                                                            x: ["ene","feb","mar"],
-                                                                            series: {
-                                                                                "presupuesto": {
-                                                                                    "aprobado": [140,120,150],
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <basic-chart title="Aprobado/Ejecutado" type="bar"
-                                                                         :mdata='{
-                                                                            x: ["ene","feb","mar"],
-                                                                            series: {
-                                                                                "presupuesto": {
-                                                                                    "aprobado": [140,120,150],
-                                                                                    "ejecutado": [130,110,100]
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row" v-bind:style='{display:empresaSeleccionada=="easba"?"block":"none"}'>
-                                                        <div class="col-md-6">
-                                                            <basic-chart title="Balance general " mcols="total" type="bar"
-                                                                         :mdata='{
-                                                                            x: ["Activo Corriente","Activo No Corriente","Pasivo Corriente", "Pasivo No Corriente", "Patrimonio"],
-                                                                            series: {
-                                                                                "presupuesto": {
-                                                                                    "total": [16719936,538400912,1546559,1713755979,160181690],
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <basic-chart title="Balance general " mcols="total" type="pie"
-                                                                         :mdata='{
-                                                                            x: ["Activo Corriente","Activo No Corriente","Pasivo Corriente", "Pasivo No Corriente", "Patrimonio"],
-                                                                            series: {
-                                                                                "presupuesto": {
-                                                                                    "total": [16719936,538400912,1546559,1713755979,160181690],
-                                                                                }
-                                                                            }
-                                                                        }'/>
-                                                        </div>
-                                                    </div>
-                                                    -->
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-                                <div class="row" style='display:none'>
-                                    <div id="documentosEstadosFinancieros" class="col-lg-12">
-                                        <!-- FOR (estado  in  estados_financieros)-->
-                                        <div class="row m-b-lg m-t-lg" v-for="estado in estados_financieros">
-                                            <div class="col-md-6">
-
-                                                <div class="profile-image">
-                                                    <h1 style='text-align: center;'><i class="fa fa-file-excel-o"></i></h1>
-                                                </div>
-                                                <div class="profile-info">
-                                                    <div class="">
-                                                        <div>
-                                                            <h2 class="no-margins">
-                                                                {{estado.attributes.archivo?estado.attributes.archivo.name:''}}
-                                                            </h2>
-                                                            <p><a v-bind:href="estado.attributes.archivo?estado.attributes.archivo.url:'#'" class="" target="_blank"><i class="fa fa-download "></i> descargar</a></p>
-                                                            <p>
-                                                                <b>Informes de auditoria:</b>
-                                                                {{estado.attributes.informes_auditoria}}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3" v-if="!!estado.attributes.grafico_valores">
-                                                <table class="table small m-b-xs">
-                                                    <tbody>
-                                                        <tr v-for="(texto,indice) in estado.attributes.grafico_texto.split(',')">
-                                                            <td>
-                                                                <strong>{{texto.split("|")[0]}}</strong>
-                                                            </td>
-                                                            <td>
-                                                                {{addCommas(estado.attributes.grafico_valores.split(',')[indice])}}
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-md-3" v-if="!!estado.attributes.grafico_valores">
-                                                <span class="peityChart" v-bind:chart="estado.attributes.grafico_texto.split('|')[1]" style="width:64px; height: 64px;">{{estado.attributes.grafico_valores}}</span>
-                                            </div>
-                                        </div>                                        
-                                        <div class="col-lg-3" v-if="0<estados_financieros.length">
-                                            <div class="widget lazur-bg no-padding">
-                                                <div class="p-m">
-                                                    <h1 class="m-xs">660</h1>
-
-                                                    <h3 class="font-bold no-margins">
-                                                        IMAE
-                                                    </h3>
-                                                    <small>Índice mensual de actividad económica.</small>
-                                                </div>
-                                                <div class="flot-chart">
-                                                    <div class="flot-chart-content" id="flot-chart2"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3" v-if="0<estados_financieros.length">
-                                            <div class="widget navy-bg no-padding">
-                                                <div class="p-m">
-                                                    <h1 class="m-xs">45</h1>
-
-                                                    <h3 class="font-bold no-margins">
-                                                        IPC
-                                                    </h3>
-                                                    <small>Índice de precio al consumidor.</small>
-                                                </div>
-                                                <div class="flot-chart">
-                                                    <div class="flot-chart-content" id="flot-chart2"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3" v-if="0<estados_financieros.length">
-                                            <div class="widget yellow-bg no-padding">
-                                                <div class="p-m">
-                                                    <h1 class="m-xs">210,660</h1>
-
-                                                    <h3 class="font-bold no-margins">
-                                                        Balanza de pagos
-                                                    </h3>
-                                                    <small>Balanza de pagos I trimestre.</small>
-                                                </div>
-                                                <div class="flot-chart">
-                                                    <div class="flot-chart-content" id="flot-chart2"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3" v-if="0<estados_financieros.length">
-                                            <div class="widget red-bg no-padding">
-                                                <div class="p-m">
-                                                    <h1 class="m-xs">210,456,789</h1>
-
-                                                    <h3 class="font-bold no-margins">
-                                                        PIB trimestral
-                                                    </h3>
-                                                    <small>Cuentas Nacionales.</small>
-                                                </div>
-                                                <div class="flot-chart">
-                                                    <div class="flot-chart-content" id="flot-chart2"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-            
-
-                                </div>
-                                
                             </div>
                         </div>
                     </carouselitem>
@@ -445,15 +198,15 @@
                     -->
                     <carouselitem id="estadosFinancierosAdmin">
                         <div class="row wrapper border-bottom page-heading">
-                            <div class="col-lg-10">
-                                <h2>Estados financieros ADMIN</h2>
-                            </div>
                             <div class="wrapper wrapper-content">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="ibox float-e-margins">
+                                        <div class="ibox">
+                                            <div class="ibox-title">
+                                                <h5>ESTADOS FINANCIEROS ADMIN</h5>
+                                            </div>
                                             <div class="ibox-content">
-                                                <div class="table-responsive" style="overflow-y: scroll;">
+                                                <div style="overflow-y: scroll;">
                                                     <abm v-bind:model="estado_financiero_adm" v-bind:editable="true" buttons='close,save,delete'></abm>
                                                     <abm v-bind:model="carga_estado" v-bind:editable="true" buttons='close,save,delete'></abm>
                                                     <!-- file-viewer /-->
@@ -461,7 +214,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
