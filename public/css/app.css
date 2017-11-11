@@ -9781,6 +9781,15 @@ body.md-skin {
   #page-wrapper {
     padding: 0 0px;
   }
+  .ibox-content {
+    padding: 3px 4px 4px 4px;
+  }
+  .ibox-title {
+    padding: 15px 4px 3px 8px;
+  }
+  .wrapper-content {
+    padding-top: 0px;
+  }
 }
 
 /* Small Devices, Tablets */
@@ -9788,10 +9797,30 @@ body.md-skin {
   #page-wrapper {
     padding: 0 0px;
   }
+  .ibox-content {
+    padding: 15px 4px 3px 8px;
+  }
+  .wrapper-content {
+    padding-top: 0px;
+  }
 }
 
 /* Medium Devices, Desktops */
+@media only screen and (min-width: 1199px) and (min-width: 992px) {
+  .top-header {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+
 /* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+  .top-header {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+
 @media print {
   nav.navbar-static-side {
     display: none;
