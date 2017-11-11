@@ -544,7 +544,7 @@
                                                 <tr v-for='tareaI in tareas'>
                                                     <td class="project-status">
                                                         <span class="label label-primary">
-                                                            <i v-bind:class="{'fa':true,'fa-clock-o':tareaI.attributes.estado!=='Completado','fa-check-circle-o':tareaI.attributes.estado==='Completado'}"></i>
+                                                            <i v-bind:class="{'fa':true,'fa-clock-o':tareaI.attributes.estado!=='Completado','fa-check':tareaI.attributes.estado==='Completado'}"></i>
                                                             <span class="hidden-xs hidden-sm">{{tareaI.attributes.estado}}</span>
                                                         </span>
                                                     </td>
