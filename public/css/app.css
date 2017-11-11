@@ -9776,6 +9776,22 @@ body.md-skin {
   }
 }
 
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 767px) {
+  #page-wrapper {
+    padding: 0 0px;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+  #page-wrapper {
+    padding: 0 0px;
+  }
+}
+
+/* Medium Devices, Desktops */
+/* Large Devices, Wide Screens */
 @media print {
   nav.navbar-static-side {
     display: none;

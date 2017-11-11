@@ -46,6 +46,11 @@
 // Your custom style to override base style
 @import "import/custom";
 
+@import "xs";
+@import "sm";
+@import "md";
+@import "lg";
+
 // Clear layout on print mode
 @media print {
   nav.navbar-static-side {
