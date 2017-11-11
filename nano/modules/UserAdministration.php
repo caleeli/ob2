@@ -964,6 +964,19 @@
                         "list": true
                     }),
                     new Module.Model.BelongsTo({
+                        "name": "creador",
+                        "label": "Creador",
+                        "model": "user",
+                        "textField": function(data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "position": 1,
+                        "nullable": true,
+                        "form": true,
+                        "list": true
+                    }),
+                    new Module.Model.BelongsTo({
                         "name": "revisor1",
                         "label": "Revisor 1",
                         "model": "user",

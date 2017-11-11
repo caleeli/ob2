@@ -43,6 +43,9 @@ class EventServiceProvider extends ServiceProvider
         'App\\Events\\UserAdministration\\CargaEstadoSaving' => [
             'App\\Listeners\\UserAdministration\\CargaEstadoSavingListener',
         ],
+        'App\\Events\\UserAdministration\\UaiSaving' => [
+            'App\\Listeners\\UserAdministration\\UaiSavingListener',
+        ],
     ];
 
     /**

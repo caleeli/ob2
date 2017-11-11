@@ -528,19 +528,16 @@
                                     </div>
                                 </div>
                                 <div class="ibox-content">
-                                    <div class="row m-b-sm m-t-sm">
-                                        <div class="col-md-1">
-                                            <button type="button" id="loading-example-btn" class="btn btn-white btn-sm" v-on:click='listarTareas'><i class="fa fa-refresh"></i> Recargar</button>
-                                        </div>
-                                        <div class="col-md-11">
-                                            <div class="input-group">
-                                                <input type="text" placeholder="Busqueda" class="input-sm form-control" v-model="busquedaTareas">
-                                                <span class="input-group-btn"><button type="button" class="btn btn-sm btn-primary" v-on:click="buscarTarea"> Buscar</button> </span>
-                                            </div>
-                                        </div>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" id="loading-example-btn" class="btn btn-white btn-sm" v-on:click='listarTareas'><i class="fa fa-refresh"></i> <span class="hidden-xs hidden-sm">Recargar</span></button>
+                                        </span>
+                                        <input type="text" placeholder="Busqueda" class="input-sm form-control" v-model="busquedaTareas">
+                                        <span class="input-group-btn">
+                                            <span class="input-group-btn"><button type="button" class="btn btn-sm btn-primary" v-on:click="buscarTarea"> Buscar</button> </span>
+                                        </span>
                                     </div>
-
-                                    <div class="project-list">
+                                    <div class="project-list" style="overflow: auto;">
 
                                         <table class="table table-hover">
                                             <tbody>
@@ -565,7 +562,10 @@
                                                         </div>
                                                     </td>
                                                     <td class="project-user">
-                                                        {{tareaI.relationships.usuario.attributes.nombres+' '+tareaI.relationships.usuario.attributes.apellidos}}
+                                                        <i class="fa fa-user-o"></i> {{tareaI.relationships.usuario.attributes.nombres+' '+tareaI.relationships.usuario.attributes.apellidos}}
+                                                    </td>
+                                                    <td class="project-owner">
+                                                        <i class="fa fa-user-secret"></i> {{tareaI.relationships.creador.attributes.nombres+' '+tareaI.relationships.creador.attributes.apellidos}}
                                                     </td>
                                                     <td class="project-actions">
                                                         <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Ver </a>

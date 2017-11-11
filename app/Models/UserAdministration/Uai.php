@@ -36,6 +36,7 @@ class Uai extends Model
       'informes_emitidos_scep' => 'array',
     );
     protected $events = array(
+      'saving' => 'App\\Events\\UserAdministration\\UaiSaving',
     );
     public function empresa()
     {
