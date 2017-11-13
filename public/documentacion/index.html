@@ -58,6 +58,7 @@
                         <li class="active"><a href="#firmasDeAuditoria" v-on:click="abrirFirmasDeAuditoria"><img class="fa fa-th-large" src="img/firmas.png" style="height:1em"> <span class="nav-label">Firmas de auditoria</span></a></li>
                         <li class="active"><a href="#PEIyPOA"><img class="fa fa-th-large" src="img/calendar.png" style="height:1em"> <span class="nav-label">PEI y POA</span></a></li>
                         <li class="active"><a href="#seguimientoDeTareas"><img class="fa fa-th-large" src="img/tasks.png" style="height:1em"> <span class="nav-label">Seguimiento de tareas</span></a></li>
+                        <li class="active"><a href="#cambio_password"><img class="fa fa-th-large" src="img/candado.png" style="height:1em"> <span class="nav-label">Cambio de contraseña</span></a></li>
                         <li class="active" v-if="user.username==='admin'">
                             <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -774,6 +775,41 @@
                             </div>
                         </div>
                     </carouselitem>
+                    <carouselitem id="cambio_password">
+                        <div class="row wrapper border-bottom page-heading">
+                            <div class="wrapper wrapper-content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox">
+                                            <div class="ibox-title">
+                                                <h5>CAMBIO DE CONTRASEÑA</h5>
+                                                <div class="ibox-tools">
+                                                    <a href="#seguimientoDeTareas" class="btn btn-primary btn-xs" v-on:click='guardarTarea'>Guardar Tarea</a>
+                                                </div>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <div class="row">
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <p class="text-center">Introdusca en los siguientes campos su nueva contraseña:</p>
+                                                        <form method="post" id="passwordForm">
+                                                            <input type="password" class="input-lg form-control" v-model="password1" placeholder="Nueva contraseña" autocomplete="off">
+                                                            <input type="password" class="input-lg form-control" v-model="password2" placeholder="Repetir la contraseña" autocomplete="off">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <span id="pwmatch" v-bind:class="{glyphicon:true, 'glyphicon-remove':password1!=password2 || password2=='', 'glyphicon-ok':password1==password2 && password2!=''}" v-bind:style="{color:password1!=password2 || password2==''?'#FF0004':'rgb(0, 164, 30)'}"></span> Contraseñas coinciden
+                                                                </div>
+                                                            </div>
+                                                            <input type="button" class="col-xs-12 btn btn-primary btn-load btn-lg" data-loading-text="Cambiando contraseña..." value="Cambiar contraseña" v-on:click="cambiarPassword" v-bind:disabled="password1!=password2 || password2==''">
+                                                        </form>
+                                                    </div><!--/col-sm-6-->
+                                                </div><!--/row-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </carouselitem>
                 </carousel>
 
 
@@ -821,6 +857,8 @@
                         cuadros_financieros: [],
                         editingEmpresa: true,
                         carga_estado: new UserAdministration.CargaEstado,
+                        password1: '',
+                        password2: '',
                     };
                 },
                 computed: {
@@ -1069,6 +1107,15 @@
                         var self = this;
                         self.editingEmpresa = false;
                         empresa.$save();
+                    },
+                    /**
+                     * Cambia la contraseña deñ usuario actual.
+                     */
+                    cambiarPassword: function () {
+                        var self = this;
+                        self.user.password=self.password1;
+                        self.user.$save();
+                        window.location.href="login.html";
                     },
                 },
                 mounted: function () {
