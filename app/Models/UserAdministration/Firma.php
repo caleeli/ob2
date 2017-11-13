@@ -18,6 +18,7 @@ class Firma extends Model
       5 => 'vigencia_certificado',
       6 => 'documento_firma',
       7 => 'empresa_id',
+      8 => 'owner_id',
     );
     protected $attributes = array(
       'cod_firma' => '',
@@ -42,5 +43,11 @@ class Firma extends Model
     public function empresa()
     {
         return $this->belongsTo('App\Models\UserAdministration\Empresa');
+    }
+
+
+    public function owner()
+    {
+        return $this->belongsTo('App\Models\UserAdministration\User');
     }
 }

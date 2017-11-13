@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends \Illuminate\Foundation\Auth\User
 {
     use SoftDeletes, Notifiable;
     protected $table = 'adm_users';
@@ -38,7 +38,8 @@ class User extends Model
       25 => 'cod_prov',
       26 => 'cod_zona',
       27 => 'unidad',
-      28 => 'role_id',
+      28 => 'remember_token',
+      29 => 'role_id',
     );
     protected $attributes = array(
       'username' => '',
@@ -69,6 +70,7 @@ class User extends Model
       'cod_prov' => null,
       'cod_zona' => 'Codigo Zona',
       'unidad' => '',
+      'remember_token' => '',
     );
     protected $casts = array(
       'username' => 'string',
@@ -99,6 +101,7 @@ class User extends Model
       'cod_prov' => 'string',
       'cod_zona' => 'string',
       'unidad' => 'string',
+      'remember_token' => 'string',
     );
     protected $events = array(
     );
@@ -111,6 +114,18 @@ class User extends Model
     public function role()
     {
         return $this->belongsTo('App\Models\UserAdministration\Role');
+    }
+
+
+    public function uais()
+    {
+        return $this->hasMany('App\Models\UserAdministration\Uai', 'owner_id', 'id');
+    }
+
+
+    public function firmas()
+    {
+        return $this->hasMany('App\Models\UserAdministration\Firma', 'owner_id', 'id');
     }
 
 

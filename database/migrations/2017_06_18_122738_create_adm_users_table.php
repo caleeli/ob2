@@ -39,6 +39,7 @@ class CreateAdmUsersTable extends Migration
             $table->string('cod_prov')->nullable();
             $table->string('cod_zona')->nullable();
             $table->string('unidad')->nullable();
+            $table->string('remember_token')->nullable();
             $table->integer('role_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

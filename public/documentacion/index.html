@@ -223,21 +223,20 @@
                     -->
                     <carouselitem id="firmasDeAuditoria">
                         <div class="row wrapper border-bottom page-heading">
-                            <div class="col-lg-10">
-                                <h2>Firmas de auditoria</h2>
-                            </div>
                             <div class="wrapper wrapper-content">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="ibox float-e-margins">
+                                        <div class="ibox">
+                                            <div class="ibox-title">
+                                                <h5>FIRMAS DE AUDITORÍA</h5>
+                                            </div>
                                             <div class="ibox-content">
-                                                <div class="table-responsive" style="overflow-y: scroll;">
+                                                <div style="overflow: auto;">
                                                     <abm id="abmFirmasDeAuditoria" v-bind:model="firma_auditoria" v-bind:editable="true" buttons="close,save,delete"></abm>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -247,21 +246,20 @@
                     -->
                     <carouselitem id="UAI">
                         <div class="row wrapper border-bottom page-heading">
-                            <div class="col-lg-10">
-                                <h2>UAI</h2>
-                            </div>
                             <div class="wrapper wrapper-content">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="ibox float-e-margins">
+                                        <div class="ibox">
+                                            <div class="ibox-title">
+                                                <h5>UAI</h5>
+                                            </div>
                                             <div class="ibox-content">
-                                                <div class="table-responsive" style="overflow-y: scroll;">
+                                                <div style="overflow: auto;">
                                                     <abm id="abmUAI" v-bind:model="uai" v-bind:editable="true" toolbar='new,search' buttons="close,save,delete"></abm>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -334,7 +332,7 @@
                                                                 </td>
                                                                 <td class="project-actions">
                                                                     <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Ver </a>
-                                                                    <a href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
+                                                                    <a v-if="tareaI.relationships.usuario.id==user.id" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -360,7 +358,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="m-b-md">
-                                                            <a href="#registrarAvance" class="btn btn-success btn-xs pull-right" v-on:click="crearAvance">Registrar avance</a>
+                                                            <a v-if="tarea.usuario_id==user.id" href="#registrarAvance" class="btn btn-success btn-xs pull-right" v-on:click="crearAvance">Registrar avance</a>
                                                             <h2>{{tarea.cod_tarea}} {{tarea.nombre_tarea}}</h2>
                                                         </div>
                                                         <dl class="dl-horizontal">
@@ -803,8 +801,8 @@
                         empresa_estado: new UserAdministration.EmpresaEstado(),
                         estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
                         estado_financiero_adm: new UserAdministration.EstadoFinanciero(),
-                        firma_auditoria: new UserAdministration.Firma(),
-                        uai: new UserAdministration.Uai(),
+                        firma_auditoria: new UserAdministration.Firma(function(){return "/api/UserAdministration/users/"+localStorage.user_id+"/firmas";}),
+                        uai: new UserAdministration.Uai(function(){return "/api/UserAdministration/users/"+localStorage.user_id+"/uais";}),
                         tarea: new UserAdministration.Tarea(),
                         avance: new UserAdministration.Avance(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/avances") : "/api/UserAdministration/avances"}),
                         estados_financieros: [],
@@ -826,19 +824,6 @@
                     };
                 },
                 computed: {
-                    /*onRefresh: function() {
-                        console.log(this);
-                        var self = this;
-                        var empresaId = self.empresaSeleccionadaId;
-                        console.log('onRefresh', empresaId);
-                        self.graficoModel.$select(function(data) {
-                            self.graficos.splice(0);
-                            data.data.forEach(function (row) {
-                                self.graficos.push(row);
-                            });
-                        });
-                        return self.graficos;
-                    },*/
                 },
                 methods: {
                     seleccionaEmpresa: function () {
@@ -847,9 +832,9 @@
                     },
                     listarTareas: function () {
                         var self = this;
-                        this.tareasTodas.splice(0);
                         this.tarea.$select(
                             function (data) {
+                                self.tareasTodas.splice(0);
                                 data.data.forEach(function (row) {
                                     self.tareasTodas.push(row);
                                 });
@@ -858,6 +843,7 @@
                             {
                                 filter:[
                                     'where,usuario_id,=,'+localStorage.user_id,
+                                    'orWhere,creador_id,=,'+localStorage.user_id,
                                 ]
                             }
                         );
@@ -913,6 +899,7 @@
                     },
                     guardarTarea: function () {
                         var self = this;
+                        self.tarea.creador = {id:localStorage.user_id};
                         this.tarea.$save('', function() {
                             self.listarTareas();
                         });

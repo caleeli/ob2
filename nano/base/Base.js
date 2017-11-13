@@ -153,7 +153,7 @@ Module.Model = function (base) {
                 'Illuminate\\Notifications\\Notifiable',
             ],
             name: PHP.upper_camel_case(base.name),
-            extends: 'Model',
+            extends: base.extends ? base.extends : 'Model',
             traits: ['SoftDeletes','Notifiable'],
             properties: {
                 'protected $table': Module.Model.getTableName(module, base),

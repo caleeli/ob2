@@ -10,6 +10,7 @@
         "models": [
             new Module.Model({
                 "name": "user",
+                "extends": "\\Illuminate\\Foundation\\Auth\\User",
                 "fields": [
                     new Module.Model.Field({
                         "name": "username",
@@ -214,6 +215,14 @@
                         "default": "",
                         "list": false,
                         "required": false
+                    }),
+                    new Module.Model.Field({
+                        "name": "remember_token",
+                        "type": "string",
+                        "label": "remember_token",
+                        "default": "",
+                        "list": false,
+                        "required": false
                     })
                 ],
                 "associations": [
@@ -224,7 +233,19 @@
                     new Module.Model.BelongsTo({
                         "name": "role",
                         "model": "role"
-                    })
+                    }),
+                    new Module.Model.HasMany({
+                        "name": "uais",
+                        "model": "uai",
+                        "foreignKey": "owner_id",
+                        "localKey": "id"
+                    }),
+                    new Module.Model.HasMany({
+                        "name": "firmas",
+                        "model": "firma",
+                        "foreignKey": "owner_id",
+                        "localKey": "id"
+                    }),
                 ],
                 "methods": {
                     "registrar(data)": <?php
@@ -735,8 +756,28 @@
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
                         "form": false
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "owner",
+                        "label": "Propietario",
+                        "model": "user",
+                        "textField": null,
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "nullable": true,
+                        "form": false,
+                        "list": true,
+                        "visible": false
                     })
-                ]
+                ],
+                "methods": {
+                    "listEditButton(data, type, row, meta)": function(data, type, row, meta){
+                        var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
+                        var canEdit = owner_id == localStorage.user_id;
+                        return canEdit ? true : '';
+                    }
+                }
             }),
             /**
              * UAIs
@@ -871,24 +912,6 @@
                         var canEdit = owner_id == localStorage.user_id;
                         return canEdit ? true : '';
                     }
-                },
-                "events": {
-                    "saving": <?php
-                        function ($event) {
-                            $event->uai->owner_id = 1;
-                            if (empty($event->uai->prefix)) {
-                                $event->estadoFinanciero->prefix = uniqid('tmp_');
-                            }
-                            $ext = @array_pop(explode('.', $event->estadoFinanciero->archivo['name']));
-                            if ($ext === 'xls' || $ext === 'xlsx') {
-                                $file = realpath(storage_path('app/public/'.$event->estadoFinanciero->archivo['path']));
-                                $event->estadoFinanciero->tablas = \App\Xls2Csv2Db::import(
-                                    $event->estadoFinanciero->prefix,
-                                    $file
-                                );
-                            }
-                        }
-                    ?>
                 }
             }),
             /**
