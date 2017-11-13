@@ -337,7 +337,8 @@
                         "name": "tipologia",
                         "label": "Tipologia",
                         "type": "string",
-                        "default": ""
+                        "default": "",
+                        "list": false,
                     }),
                     new Module.Model.Field({
                         "name": "detalle_empresa",

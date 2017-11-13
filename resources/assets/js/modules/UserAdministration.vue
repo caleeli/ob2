@@ -65,7 +65,7 @@ UserAdministration.Empresa = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/empresas";
     Model.call(this, url, id, "UserAdministration.Empresa");
     this.$list = function () {
-        return "fields=cod_empresa,nombre_empresa,corporacion,caracter,rubro,tipologia";
+        return "fields=cod_empresa,nombre_empresa,corporacion,caracter,rubro";
     };
     this.$name = "Empresa";
     this.$pluralName = "Empresas";
@@ -76,7 +76,7 @@ UserAdministration.Empresa = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_empresa"},{"title":"Empresa","data":"attributes.nombre_empresa"},{"title":"Corporación","data":"attributes.corporacion"},{"title":"Caracter","data":"attributes.caracter"},{"title":"Rubro","data":"attributes.rubro"},{"title":"Tipologia","data":"attributes.tipologia"}];
+        return [{"title":"Código","data":"attributes.cod_empresa"},{"title":"Empresa","data":"attributes.nombre_empresa"},{"title":"Corporación","data":"attributes.corporacion"},{"title":"Caracter","data":"attributes.caracter"},{"title":"Rubro","data":"attributes.rubro"}];
     };
     this.$methods = {
     };
