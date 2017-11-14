@@ -45,7 +45,7 @@ if (empty($_REQUEST['id'])) {
     error_reporting(E_ALL);
     $stmt = $connection->prepare('update notas set hoja_de_ruta=?, fecha_emision=?, nro_nota=?, reiterativa=?, fecha_entrega=?, entidad_empresa=?, nombre_apellidos=?, cargo=?, referencia=?, dias=?, retraso=?, hoja_de_ruta_recepcion=?, fecha_recepcion=?, nro_nota_recepcion=?, remitente_recepcion=?, referencia_recepcion=?, fojas_recepcion=? '
         .' where id = ?');
-    echo 'update notas set hoja_de_ruta=?, fecha_emision=?, nro_nota=?, reiterativa=?, fecha_entrega=?, entidad_empresa=?, nombre_apellidos=?, cargo=?, referencia=?, dias=?, retraso=?, hoja_de_ruta_recepcion=?, fecha_recepcion=?, nro_nota_recepcion=?, remitente_recepcion=?, referencia_recepcion=?, fojas_recepcion=? '
+    echo 'áéÑ: update notas set hoja_de_ruta=?, fecha_emision=?, nro_nota=?, reiterativa=?, fecha_entrega=?, entidad_empresa=?, nombre_apellidos=?, cargo=?, referencia=?, dias=?, retraso=?, hoja_de_ruta_recepcion=?, fecha_recepcion=?, nro_nota_recepcion=?, remitente_recepcion=?, referencia_recepcion=?, fojas_recepcion=? '
         .' where id = ?';
     var_dump([
         $_REQUEST['hoja_de_ruta'],
