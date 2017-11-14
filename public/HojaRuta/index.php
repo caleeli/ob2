@@ -671,7 +671,7 @@ and open the template in the editor.
                                 <td>{{note.entidad_empresa}}</td>
                                 <td>{{note.nombre_apellidos}}</td>
                                 <td>{{note.cargo}}</td>
-                                <td><span class="diasPasaron" v-bind:chart="note.pasaron()>note.dias?'pieRojo':'pie'">{{note.pasaron()}}/{{note.dias}}</span> {{note.pasaron()}}/{{note.dias}} días</td>
+                                <td><span v-if="note.dias"><span class="diasPasaron" v-bind:chart="note.pasaron()>note.dias?'pieRojo':'pie'">{{note.pasaron()}}/{{note.dias}}</span> {{note.pasaron()}}/{{note.dias}} días</span></td>
                                 <td><a href='#nota_oficio' class='btn btn-default' v-on:click='abrirNota(note)'>Abrir</a></td>
                             </tr>
                         </tbody>
