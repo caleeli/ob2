@@ -658,6 +658,7 @@ and open the template in the editor.
                                 <th>Nombre</th>
                                 <th>Cargo</th>
                                 <th>Días</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -671,6 +672,7 @@ and open the template in the editor.
                                 <td>{{note.nombre_apellidos}}</td>
                                 <td>{{note.cargo}}</td>
                                 <td><span class="diasPasaron" v-bind:chart="note.pasaron()>note.dias?'pieRojo':'pie'">{{note.pasaron()}}/{{note.dias}}</span> {{note.pasaron()}}/{{note.dias}} días</td>
+                                <td><a href='#nota_oficio' class='btn btn-default' v-on:click='abrirNota(note)'>Abrir</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1075,6 +1077,7 @@ and open the template in the editor.
                                 self.notasBusqueda.splice(0);
                                 res.forEach(function (o) {
                                     self.notasBusqueda.push(new Nota({
+                                        id: o.id,
                                         hoja_de_ruta: o.hoja_de_ruta,
                                         fecha_emision: o.fecha_emision,
                                         nro_nota: o.nro_nota,
@@ -1133,6 +1136,10 @@ and open the template in the editor.
                         });
                         self.filtroDerivacion = '';
                         this.hoja.selectDerivations(this.derivaciones, self.filtroDerivacion);
+                    },
+                    abrirNota: function (nota) {
+                        this.nota.load(nota);
+                        self.filtroNota = '';
                     },
                     registrar: function () {
                         
