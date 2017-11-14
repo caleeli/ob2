@@ -1,4 +1,5 @@
 ﻿<?php
+header("Content-Type: application/json;charset=utf-8");
 $connection = require('connection.php');
 if (empty($_REQUEST['id'])) {
     $stmt = $connection->prepare('insert into notas(hoja_de_ruta,
