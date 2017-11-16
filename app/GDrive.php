@@ -29,8 +29,10 @@ class GDrive {
         $config = base_path('client_secret_899025509338-2t5gv4i4o3hdo0uragvihtl3ipp8fnqd.apps.googleusercontent.com.json');
         $this->client = new Google_Client();
         $this->client->setAuthConfig($config);
-        $this->client->addScope(Google_Service_Drive::DRIVE);
         $this->client->setAccessType("offline");
+        $this->client->setIncludeGrantedScopes(true);
+        $this->client->setApprovalPrompt('force');
+        $this->client->addScope(Google_Service_Drive::DRIVE);
         $redirect_uri = env('APP_URL') . '/gdrive_cb';
         $this->client->setRedirectUri($redirect_uri);
         $token = Cache::get('gdrive_token');
