@@ -136,24 +136,33 @@
                                             <div class="ibox-content">
                                                 <div style="overflow: hidden;">
                                                     <div class="form-group">
-                                                      <div class="col-lg-10">
+                                                      <div class="col-lg-6">
                                                         <select class="form-control" id="select" v-model='empresaSeleccionada' v-on:change="cargarEstadosFinancieros">
                                                             <option v-for="emp in empresas" v-bind:value='emp.id'>{{emp.attributes.nombre_empresa}}</option>
                                                         </select>
                                                       </div>
+                                                      <div class="col-lg-4">
+                                                        <select class="form-control" v-model='cuadroSeleccionado' v-on:change="cargarEstadosFinancieros">
+                                                            <option v-for="cua in cuadros_financieros" v-bind:value='cua.id'>{{cua.attributes.titulo}}</option>
+                                                        </select>
+                                                      </div>
                                                       <div class="col-lg-2">
                                                         <select class="form-control" id="gestion" v-model='empresaSeleccionadaGestion' v-on:change="cargarEstadosFinancieros">
-                                                            <option value='2017'>2017</option>
-                                                            <option value='2016'>2016</option>
-                                                            <option value='2015'>2015</option>
-                                                            <option value='2014'>2014</option>
-                                                            <option value='2013'>2013</option>
+                                                            <option v-bind:value='(new Date()).getFullYear()'>{{(new Date()).getFullYear()}}</option>
+                                                            <option v-bind:value='(new Date()).getFullYear()-1'>{{(new Date()).getFullYear()-1}}</option>
+                                                            <option v-bind:value='(new Date()).getFullYear()-2'>{{(new Date()).getFullYear()-2}}</option>
+                                                            <option v-bind:value='(new Date()).getFullYear()-3'>{{(new Date()).getFullYear()-3}}</option>
+                                                            <option v-bind:value='(new Date()).getFullYear()-4'>{{(new Date()).getFullYear()-4}}</option>
+                                                            <option v-bind:value='(new Date()).getFullYear()-5'>{{(new Date()).getFullYear()-5}}</option>
+                                                            <option v-bind:value='(new Date()).getFullYear()-6'>{{(new Date()).getFullYear()-6}}</option>
+                                                            <option v-bind:value='(new Date()).getFullYear()-7'>{{(new Date()).getFullYear()-7}}</option>
+                                                            <option v-bind:value='(new Date()).getFullYear()-8'>{{(new Date()).getFullYear()-8}}</option>
                                                         </select>
                                                       </div>
                                                     </div>
                                                     <hr>
                                                     <div id="cuadros_financieros" class="row">
-                                                        <div v-for="estado in cuadros_financieros" class="col-md-12">
+                                                        <div v-for="estado in cuadros_financieros" class="col-md-12" v-if="estado.id===cuadroSeleccionado">
                                                             <div class="ibox float-e-margins" v-bind:title="empresaSeleccionada">
                                                                 <div class="ibox-title">
                                                                     <h5>{{estado.attributes.titulo}}</h5>
@@ -182,7 +191,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-6" v-if="user.username==='admin'">
                                                             <a class="btn btn-primary" v-on:click="addCCFF"><h1><i class="fa fa-plus-circle"></i></h1></a>
                                                         </div>
                                                     </div>
@@ -859,6 +868,7 @@
                         carga_estado: new UserAdministration.CargaEstado,
                         password1: '',
                         password2: '',
+                        cuadroSeleccionado: '',
                     };
                 },
                 computed: {
