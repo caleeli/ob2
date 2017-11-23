@@ -58,7 +58,7 @@ class Empresa extends Model
 
     public function getDetalleEmpresaAttribute($value)
     {
-        $ev = new \App\Evaluator($this->id, date('Y'));
+        $ev = new \App\Evaluator($this->id, date('Y') - 1);
         return $ev->calculate($value);
     }
 }
