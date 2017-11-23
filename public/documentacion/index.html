@@ -143,7 +143,7 @@
                                                       </div>
                                                       <div class="col-lg-4">
                                                         <select class="form-control" v-model='cuadroSeleccionado' v-on:change="cargarEstadosFinancieros">
-                                                            <option v-for="cua in cuadros_financieros" v-bind:value='cua.id'>{{cua.attributes.titulo}}</option>
+                                                            <option v-for="cua in cuadros_financieros_completo" v-bind:value='cua.id'>{{cua.attributes.titulo}}</option>
                                                         </select>
                                                       </div>
                                                       <div class="col-lg-2">
@@ -162,7 +162,7 @@
                                                     </div>
                                                     <hr>
                                                     <div id="cuadros_financieros" class="row">
-                                                        <div v-for="estado in cuadros_financieros" class="col-md-12" v-if="estado.id===cuadroSeleccionado">
+                                                        <div v-for="estado in cuadros_financieros" class="col-md-12">
                                                             <div class="ibox float-e-margins" v-bind:title="empresaSeleccionada">
                                                                 <div class="ibox-title">
                                                                     <h5>{{estado.attributes.titulo}}</h5>
@@ -864,6 +864,7 @@
                         eeffEditable: [],
                         cuadro_financiero: new UserAdministration.CuadroFinanciero(),
                         cuadros_financieros: [],
+                        cuadros_financieros_completo: [],
                         editingEmpresa: true,
                         carga_estado: new UserAdministration.CargaEstado,
                         password1: '',
@@ -1063,6 +1064,26 @@
                             });
                         },
                         {
+                            sort: "titulo",
+                            'filter':[
+                                'where,id,=,'+self.cuadroSeleccionado,
+                            ]
+                        });
+                    },
+                    /**
+                     * Carga los cuadros de estados financieros.
+                     *
+                     */
+                    cargarCuadrosFinancierosCompleto: function () {
+                        var self = this;
+                        var model = self.cuadro_financiero;
+                        model.$select(function (resultado) {
+                            app.cuadros_financieros_completo.splice(0);
+                            resultado.data.forEach(function (row) {
+                                app.cuadros_financieros_completo.push(row);
+                            });
+                        },
+                        {
                             sort: "titulo"
                         });
                     },
@@ -1140,6 +1161,7 @@
                     this.listarEmpresas();
                     this.cargarEstadosFinancieros();
                     this.cargarCuadrosFinancieros();
+                    this.cargarCuadrosFinancierosCompleto();
                     this.loadListTo(this.usertarea, this.users);
                 }
             });
