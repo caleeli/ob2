@@ -197,7 +197,6 @@ h3, h4, h5 {
 }
 
 .pace-done .nav-header {
-  -webkit-transition: all 0.4s;
   transition: all 0.4s;
 }
 
@@ -374,13 +373,11 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 
 .pace-done .navbar-static-side, .pace-done .nav-header, .pace-done li.active, .pace-done #page-wrapper, .pace-done .footer {
-  -webkit-transition: all 0.4s;
   transition: all 0.4s;
 }
 
 .navbar-fixed-top {
   background: #fff;
-  -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   border-bottom: 1px solid #e7eaec !important;
   z-index: 2030;
@@ -946,7 +943,6 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 .btn-outline {
   color: inherit;
   background-color: transparent;
-  -webkit-transition: all .5s;
   transition: all .5s;
 }
 
@@ -1138,7 +1134,6 @@ button.dim:active:before {
 .onoffswitch-inner {
   width: 200%;
   margin-left: -100%;
-  -webkit-transition: margin 0.3s ease-in 0s;
   transition: margin 0.3s ease-in 0s;
 }
 
@@ -1180,7 +1175,6 @@ button.dim:active:before {
   top: 0;
   bottom: 0;
   right: 44px;
-  -webkit-transition: all 0.3s ease-in 0s;
   transition: all 0.3s ease-in 0s;
 }
 
@@ -1567,7 +1561,6 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
 }
 
 .elements-list li.active {
-  -webkit-transition: none;
   transition: none;
 }
 
@@ -1990,7 +1983,6 @@ div.dt-button-info {
   color: inherit;
   display: block;
   padding: 6px 12px;
-  -webkit-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
   transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
   width: 100%;
 }
@@ -2093,7 +2085,6 @@ div.dt-button-info {
   display: block;
   width: 200%;
   margin-left: -100%;
-  -webkit-transition: margin 0.3s ease-in 0s;
   transition: margin 0.3s ease-in 0s;
 }
 
@@ -2137,7 +2128,6 @@ div.dt-button-info {
   top: 0;
   bottom: 0;
   right: 36px;
-  -webkit-transition: all 0.3s ease-in 0s;
   transition: all 0.3s ease-in 0s;
 }
 
@@ -2476,7 +2466,6 @@ div.dt-button-info {
   border: 1px dashed #bbb;
   min-height: 100px;
   background-color: #e5e5e5;
-  background-image: -webkit-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), -webkit-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
   background-image: linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
   background-size: 60px 60px;
   background-position: 0 0, 30px 30px;
@@ -6709,11 +6698,8 @@ body.body-small .vote-icon {
   position: relative;
   height: 0;
   overflow: hidden;
-  -webkit-transition-timing-function: ease;
   transition-timing-function: ease;
-  -webkit-transition-duration: .35s;
   transition-duration: .35s;
-  -webkit-transition-property: height, visibility;
   transition-property: height, visibility;
 }
 
@@ -7721,7 +7707,6 @@ body.body-small .vote-icon {
   top: 0;
   left: 0;
   height: 2px;
-  -webkit-transition: width 1s;
   transition: width 1s;
 }
 
@@ -7824,7 +7809,6 @@ body.landing-page {
 .landing-page .navbar-default {
   background-color: transparent;
   border-color: transparent;
-  -webkit-transition: all 0.3s ease-in-out 0s;
   transition: all 0.3s ease-in-out 0s;
 }
 
@@ -7885,7 +7869,6 @@ body.landing-page {
   padding: 15px 20px 15px 20px;
   border-radius: 0 0 5px 5px;
   font-weight: 700;
-  -webkit-transition: all 0.3s ease-in-out 0s;
   transition: all 0.3s ease-in-out 0s;
 }
 
@@ -7974,7 +7957,6 @@ body.landing-page {
 
 .landing-page .carousel-fade .carousel-inner .item {
   opacity: 0;
-  -webkit-transition-property: opacity;
   transition-property: opacity;
 }
 
@@ -8714,7 +8696,6 @@ body.rtls .top-navigation .footer.fixed, body.rtls.top-navigation .footer.fixed 
   margin-right: -220px;
   position: relative;
   z-index: 2000;
-  -webkit-transition-duration: 0.8s;
   transition-duration: 0.8s;
 }
 
@@ -9081,8 +9062,6 @@ body.skin-2 #wrapper {
 
 .skin-2 #page-wrapper {
   background: #f6f6f6;
-  background: -webkit-radial-gradient(center, ellipse cover, #f6f6f6 20%, #d5d5d5 100%);
-  background: -webkit-radial-gradient(center ellipse, #f6f6f6 20%, #d5d5d5 100%);
   background: radial-gradient(ellipse at center, #f6f6f6 20%, #d5d5d5 100%);
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f6f6f6, endColorstr=#d5d5d5)";
 }
@@ -9402,7 +9381,6 @@ body.md-skin {
 }
 
 .md-skin .pace-done .nav-header {
-  -webkit-transition: all 0.4s;
   transition: all 0.4s;
 }
 
@@ -9461,13 +9439,11 @@ body.md-skin {
 }
 
 .md-skin .pace-done .navbar-static-side, .md-skin .pace-done .nav-header, .md-skin .pace-done li.active, .md-skin .pace-done #page-wrapper, .md-skin .pace-done .footer {
-  -webkit-transition: all 0.4s;
   transition: all 0.4s;
 }
 
 .md-skin .navbar-fixed-top {
   background: #fff;
-  -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   z-index: 2030;
   border-bottom: none !important;
@@ -9551,7 +9527,6 @@ body.md-skin {
 .md-skin.landing-page .navbar-default {
   background-color: transparent !important;
   border-color: transparent;
-  -webkit-transition: all 0.3s ease-in-out 0s;
   transition: all 0.3s ease-in-out 0s;
   box-shadow: none;
 }
@@ -9730,7 +9705,6 @@ body.md-skin {
     display: none;
   }
   body:not(.mini-navbar) {
-    -webkit-transition: background-color 500ms linear;
     transition: background-color 500ms linear;
     background-color: #f3f3f4;
   }

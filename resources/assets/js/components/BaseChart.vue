@@ -345,7 +345,6 @@
                 }
             },
             refresh: function () {
-                console.log("refreshed", this.mdata, this.data);
                 var self = this;
                 $(self.$el).find(".canvasOwner").html('');
                 self.drawChart();

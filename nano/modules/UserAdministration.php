@@ -368,7 +368,16 @@
                         "name": "graficos",
                         "model": "empresa_grafico"
                     }),
-                ]
+                ],
+                "methods": {
+                    "-getDetalleEmpresaAttribute()": <?php
+                        function($value)
+                        {
+                            $ev = new \App\Evaluator($this->id, date('Y'));
+                            return $ev->calculate($value);
+                        }
+                    ?>
+                }
             }),
             /**
              * estado_financiero

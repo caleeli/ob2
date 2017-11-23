@@ -54,4 +54,11 @@ class Empresa extends Model
     {
         return $this->hasMany('App\Models\UserAdministration\EmpresaGrafico');
     }
+
+
+    public function getDetalleEmpresaAttribute($value)
+    {
+        $ev = new \App\Evaluator($this->id, date('Y'));
+        return $ev->calculate($value);
+    }
 }
