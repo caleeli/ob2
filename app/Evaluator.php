@@ -20,12 +20,15 @@ class Evaluator
 
     private $tablas = [];
     private $tablasPre = [];
+    private $eeffs = [];
     private $gestion = '';
+    private $empresaId = '';
 
     public function __construct($empresaId, $gestion)
     {
         /* @var $ef EstadoFinanciero */
         $this->gestion = $gestion;
+        $this->empresaId = $empresaId;
         $estados_financieros = EstadoFinanciero
             ::where('gestion', '=', $gestion)
             ->where('empresa_id', '=', $empresaId)
@@ -52,14 +55,40 @@ class Evaluator
         }
     }
 
+    private function loadEEFFs($gestion)
+    {
+        if (!empty($this->eeffs[$gestion])) {
+            return $this->eeffs[$gestion];
+        }
+        $table = [];
+        $estados_financieros_pre = EstadoFinanciero
+            ::where('gestion', '=', $gestion)
+            ->where('empresa_id', '=', $this->empresaId)
+            ->get();
+        foreach ($estados_financieros_pre as $ef) {
+            if (empty($ef->tablas) || !is_array($ef->tablas)) {
+                continue;
+            }
+            foreach ($ef->tablas as $tabla) {
+                $table[] = $tabla;
+            }
+        }
+        $this->eeffs[$gestion] = $table;
+        return $table;
+    }
+
     private function uc($codigo)
     {
         return $this->getValue($codigo, $this->tablas);
     }
 
-    private function ucp($codigo)
+    private function ucp($codigo, $prev)
     {
-        return $this->getValue($codigo, $this->tablasPre);
+        if ($prev<-1) {
+            return $this->getValue($codigo, $this->loadEEFFs($this->gestion + $prev ));
+        } else {
+            return $this->getValue($codigo, $this->tablasPre);
+        }
     }
 
     private function getValue($codigo, $from)
@@ -101,8 +130,8 @@ class Evaluator
             /**
              * Valor de la (U)ltima (C)olumna con código $codigo
              */
-            'ucp' => function ($codigo) {
-                return $this->ucp($codigo);
+            'ucp' => function ($codigo, $prev=-1) {
+                return $this->ucp($codigo, $prev);
             },
             'format' => function ($value) {
                 return is_numeric($value) ? number_format($value, 2, '.', ',') : $value;
