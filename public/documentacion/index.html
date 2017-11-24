@@ -23,7 +23,13 @@
         <link rel="stylesheet" type="text/css" href="/css/buttons.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
-
+        <script>
+            if (typeof localStorage.user_id === 'undefined'
+                || localStorage.user_id === null
+                || localStorage.user_id === "null"
+                || !localStorage.user_id
+            ) location.href = 'login.html';
+        </script>
     </head>
 
     <body>
