@@ -1,5 +1,5 @@
 <template>
-    <div class="class" :id="id">
+    <div v-bind:class="classbase" :id="id">
         <slot></slot>
     </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
     export default {
         props:[
-            "class",
+            "classbase",
             "activate",
             "map",
             "id",

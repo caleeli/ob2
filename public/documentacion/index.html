@@ -76,7 +76,7 @@
                     <!--
                         EMPRESAS PUBLICAS
                     -->
-                    <carouselitem id="empresasPublicas" class="active">
+                    <carouselitem id="empresasPublicas" classbase="active">
                         <div class="row wrapper border-bottom page-heading">
                             <div class="wrapper wrapper-content">
                                 <div class="row">
@@ -131,7 +131,7 @@
                                                     <div class="form-group">
                                                       <div class="col-lg-6">
                                                         <select class="form-control" id="select" v-model='empresaSeleccionada' v-on:change="cargarEstadosFinancieros">
-                                                            <option v-for="emp in empresas" v-bind:value='emp.id'>{{emp.attributes.nombre_empresa}}</option>
+                                                            <option v-for="emp in empresas" v-bind:value='emp.id'>{{emp.attributes.cod_empresa}} - {{emp.attributes.nombre_empresa}}</option>
                                                         </select>
                                                       </div>
                                                       <div class="col-lg-4">
@@ -141,15 +141,7 @@
                                                       </div>
                                                       <div class="col-lg-2">
                                                         <select class="form-control" id="gestion" v-model='empresaSeleccionadaGestion' v-on:change="cargarEstadosFinancieros">
-                                                            <option v-bind:value='(new Date()).getFullYear()'>{{(new Date()).getFullYear()}}</option>
-                                                            <option v-bind:value='(new Date()).getFullYear()-1'>{{(new Date()).getFullYear()-1}}</option>
-                                                            <option v-bind:value='(new Date()).getFullYear()-2'>{{(new Date()).getFullYear()-2}}</option>
-                                                            <option v-bind:value='(new Date()).getFullYear()-3'>{{(new Date()).getFullYear()-3}}</option>
-                                                            <option v-bind:value='(new Date()).getFullYear()-4'>{{(new Date()).getFullYear()-4}}</option>
-                                                            <option v-bind:value='(new Date()).getFullYear()-5'>{{(new Date()).getFullYear()-5}}</option>
-                                                            <option v-bind:value='(new Date()).getFullYear()-6'>{{(new Date()).getFullYear()-6}}</option>
-                                                            <option v-bind:value='(new Date()).getFullYear()-7'>{{(new Date()).getFullYear()-7}}</option>
-                                                            <option v-bind:value='(new Date()).getFullYear()-8'>{{(new Date()).getFullYear()-8}}</option>
+                                                            <option v-for="year in gestiones" v-bind:value='year'>{{year}}</option>
                                                         </select>
                                                       </div>
                                                     </div>
@@ -820,7 +812,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.62"></script>
+        <script src="../js/server.js?v0.63"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -830,6 +822,10 @@
                 tareaAvance: 0,
                 data: function () {
                     var self = this;
+                    var gestiones = [];
+                    for (var y=(new Date()).getFullYear(); y>=2014; y--) {
+                        gestiones.push(y);
+                    }
                     return {
                         user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
                         usertarea: new UserAdministration.User(),
@@ -862,7 +858,8 @@
                         carga_estado: new UserAdministration.CargaEstado,
                         password1: '',
                         password2: '',
-                        cuadroSeleccionado: '',
+                        cuadroSeleccionado: 1,
+                        gestiones: gestiones,
                     };
                 },
                 computed: {
@@ -906,6 +903,8 @@
                             data.data.forEach(function (row) {
                                 self.empresas.push(row);
                             });
+                        },{
+                            sort: "cod_empresa"
                         });
                     },
                     pintarTareas: function () {
