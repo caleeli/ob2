@@ -172,12 +172,12 @@
                                                                         <div v-if='eeffEditable.indexOf(estado.id)==-1' v-html="estado.html"></div>
                                                                         <htmleditor v-if='eeffEditable.indexOf(estado.id)>-1' v-bind:model="estado.attributes" v-bind:property="'contenido'" />
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <div v-for="data in estado.calculatedChart" class="col-md-6">
                                                                         <basic-chart title="Presupuesto aprobado"
                                                                              refreshWith="select,gestion"
                                                                              mcols="aprobado"
-                                                                             type="bar"
-                                                                             v-bind:mdata='estado.calculatedChart' />
+                                                                             v-bind:type="data.type"
+                                                                             v-bind:mdata='data' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1049,6 +1049,9 @@
                                     function (html) {
                                         row.html = html[0];
                                         row.calculatedChart = JSON.parse(html[1]);
+                                        if (typeof row.calculatedChart.forEach!=='function') {
+                                            row.calculatedChart=[];
+                                        }
                                         Vue.nextTick(function () {
                                             document.getElementById('estadosFinancieros').__vue__.$children.forEach(function(comp) {
                                                 try {
