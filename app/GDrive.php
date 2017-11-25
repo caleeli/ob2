@@ -43,7 +43,8 @@ class GDrive {
                 Cache::forget('gdrive_token');
             }
             if ($this->client->isAccessTokenExpired()) {
-                Cache::forget('gdrive_token');
+                $token = $this->client->fetchAccessTokenWithRefreshToken();
+                Cache::forever('gdrive_token', $token);
             }
             $this->service = new Google_Service_Drive($this->client);
         }
