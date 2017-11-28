@@ -113,11 +113,37 @@ window.PathItem=function(base, self) {
         this[a] = base[a];
     }
 }
-$(window).on('hashchange', function() {
-    var $parent = $(window.location.hash).parent();
-    if ($parent.hasClass("carousel")) {
-        $parent.slider(window.location.hash);
+window.HashRoute = {
+    routes: [],
+    run: function (hash) {
+        this.routes.forEach(function(route) {
+            var match = hash.match(route[0]);
+            if (match) {
+                var path = [];
+                for (var i = 1, l = match.length; i < l; i++) {
+                    path.push(match[i]);
+                }
+                route[1].apply(window, path);
+            }
+        });
+    },
+    route: function (route, callback) {
+        var regexp = new RegExp('^'+route.replace(/\{[^}]+\}/g,'?')
+            .replace(/[.?+*^$|({[\\]/g, '\\$&')
+            .replace(/\\\?/g, '([^/]+)')+'$');
+        this.routes.push([regexp, callback]);
     }
+}
+$(window).on('hashchange', function() {
+    try {
+        var $parent = $(window.location.hash).parent();
+        if ($parent.hasClass("carousel")) {
+            $parent.slider(window.location.hash);
+        }
+    } catch(e) {
+
+    }
+    window.HashRoute.run(window.location.hash);
 });
 /**
  * Auxiliar function to identify object instances.

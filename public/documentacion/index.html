@@ -818,7 +818,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.63"></script>
+        <script src="../js/server.js?v0.64"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1169,6 +1169,11 @@
             window.app = app;
             $(window).on('hashchange', function() {
                 $("body").removeClass("mini-navbar");
+            });
+            HashRoute.route('#estadosFinancieros/{empresa}', function (empresa) {
+                window.app.empresaSeleccionada = empresa;
+                var $parent = $('#estadosFinancieros').parent();
+                $parent.slider('#estadosFinancieros');
             });
         });
         </script>
