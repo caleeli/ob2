@@ -318,7 +318,7 @@
                                     row.attributes.grafico,
                                     function (html) {
                                         row.html = html[0];
-                                        throw('JSON:'+JSON.stringify(html[1]));
+                                        throw('JSON:'+JSON.stringify([self.empresaSeleccionada,self.empresaSeleccionadaGestion, row.attributes.grafico]));
                                         row.calculatedChart = JSON.parse(html[1]);
                                         if (typeof row.calculatedChart.forEach!=='function') {
                                             row.calculatedChart=[];
