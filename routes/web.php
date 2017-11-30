@@ -43,3 +43,6 @@ Route::get(
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/report', 'ReportController@report')->name('report');
+Route::get('/pdf', 'ReportController@pdf')->name('pdf');
