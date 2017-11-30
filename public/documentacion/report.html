@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>SCEP</title>
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+        <!-- Toastr style -->
+        <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+        <!-- Gritter -->
+        <link href="js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+        <link href="css/animate.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/css/buttons.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
+        <style>
+            html, body
+            {
+                background-color: white!important;
+            } 
+            body
+            {
+                margin: 25mm 25mm 25mm 25mm;
+            } 
+        </style>
+    </head>
+
+    <body>
+        <div id="wrapper">
+                        <div class="row">
+                            <div class="">
+                                <div  v-for="emp in empresas" class="row">
+                                    <div class="col-lg-12">
+                                        <div>
+                                            <div>
+                                                <div>
+                                                    <div class="form-group">
+                                                      <div class="col-lg-12">
+                                                            <h1>{{emp.attributes.nombre_empresa}}</h1>
+                                                            <hr />
+                                                            <h2>Gestión: {{empresaSeleccionadaGestion}}</h2>
+                                                      </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div id="cuadros_financieros" class="row">
+                                                        <div v-for="estado in cuadros_financieros" class="col-md-12">
+                                                            <div class="ibox float-e-margins" v-bind:title="empresaSeleccionada">
+                                                                <div class="ibox-title">
+                                                                    <h2>{{estado.attributes.titulo}}</h2>
+                                                                </div>
+                                                                <div class="ibox-content indicador">
+                                                                    <!-- a v-bind:href="estado.attributes.archivo?estado.attributes.archivo.url:'#'">{{estado.attributes.archivo?estado.attributes.archivo.name:''}}</a -->
+                                                                    <div class="col-md-6">
+                                                                        <div v-if='eeffEditable.indexOf(estado.id)==-1' v-html="estado.html"></div>
+                                                                        <htmleditor v-if='eeffEditable.indexOf(estado.id)>-1' v-bind:model="estado.attributes" v-bind:property="'contenido'" />
+                                                                    </div>
+                                                                    <div v-for="data in estado.calculatedChart" class="col-md-6">
+                                                                        <basic-chart title="Presupuesto aprobado"
+                                                                             refreshWith="select,gestion"
+                                                                             mcols="aprobado"
+                                                                             v-bind:type="data.type"
+                                                                             v-bind:mdata='data' />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+
+        <!-- Mainly scripts -->
+        <script src="../js/server.js?v0.63"></script>
+        <script>
+        $(document).ready(function () {
+            var app;
+            app = new Vue({
+                el: '#wrapper',
+                carousel: {},
+                tareaAvance: 0,
+                data: function () {
+                    var self = this;
+                    var gestiones = [];
+                    for (var y=(new Date()).getFullYear(); y>=2014; y--) {
+                        gestiones.push(y);
+                    }
+                    return {
+                        user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
+                        usertarea: new UserAdministration.User(),
+                        users: [],
+                        empresas: [],
+                        empresa: new UserAdministration.Empresa(),
+                        empresa_estado: new UserAdministration.EmpresaEstado(),
+                        estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
+                        estado_financiero_adm: new UserAdministration.EstadoFinanciero(),
+                        firma_auditoria: new UserAdministration.Firma(function(){return "/api/UserAdministration/users/"+localStorage.user_id+"/firmas";}),
+                        uai: new UserAdministration.Uai(function(){return "/api/UserAdministration/users/"+localStorage.user_id+"/uais";}),
+                        tarea: new UserAdministration.Tarea(),
+                        avance: new UserAdministration.Avance(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/avances") : "/api/UserAdministration/avances"}),
+                        estados_financieros: [],
+                        Adjunto: new UserAdministration.Adjunto(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/adjuntos") : "/api/UserAdministration/adjuntos"}),
+                        PathItem: [],
+                        busquedaTareas: '',
+                        tareasTodas: [],
+                        tareas: [],
+                        empresaSeleccionada: "1",
+                        empresaSeleccionadaId: "",
+                        graficos:[],
+                        graficoModel: new UserAdministration.EmpresaGrafico(function(){return self.empresaSeleccionadaId? ("/api/UserAdministration/empresas/"+self.empresaSeleccionadaId+"/graficos") : "/api/UserAdministration/EmpresaGraficos"}),
+                        empresaSeleccionadaGestion: '2017',
+                        eeffEditable: [],
+                        cuadro_financiero: new UserAdministration.CuadroFinanciero(),
+                        cuadros_financieros: [],
+                        cuadros_financieros_completo: [],
+                        editingEmpresa: true,
+                        carga_estado: new UserAdministration.CargaEstado,
+                        password1: '',
+                        password2: '',
+                        cuadroSeleccionado: 1,
+                        gestiones: gestiones,
+                    };
+                },
+                computed: {
+                },
+                methods: {
+                    seleccionaEmpresa: function () {
+                        window.location.hash = '#descripcionEmpresa';
+                        $('#descripcionEmpresa')[0].scrollIntoView(true);
+                    },
+                    listarTareas: function () {
+                        var self = this;
+                        this.tarea.$select(
+                            function (data) {
+                                self.tareasTodas.splice(0);
+                                data.data.forEach(function (row) {
+                                    self.tareasTodas.push(row);
+                                });
+                                self.pintarTareas();
+                            },
+                            {
+                                filter:[
+                                    'where,usuario_id,=,'+localStorage.user_id,
+                                    'orWhere,creador_id,=,'+localStorage.user_id,
+                                ]
+                            }
+                        );
+                    },
+                    loadListTo: function (from, to) {
+                        var self = this;
+                        to.splice(0);
+                        from.$select(function (data) {
+                            data.data.forEach(function (row) {
+                                to.push(row);
+                            });
+                        });
+                    },
+                    listarEmpresas: function (id) {
+                        var self = this;
+                        self.empresas.splice(0);
+                        self.empresa.$select(function (data) {
+                            data.data.forEach(function (row) {
+                                self.empresas.push(row);
+                            });
+                        },{
+                            sort: "cod_empresa",
+                            filter: [
+                                'where,id,=,'+id
+                            ]
+                        });
+                    },
+                    pintarTareas: function () {
+                        var self = this;
+                        self.tareas.splice(0);
+                        var limit = 50;
+                        self.tareasTodas.forEach(function (row) {
+                            if (self.tareas.length>=limit) {
+                                return;
+                            }
+                            if (self.busquedaTareas) {
+                                for(var att in row.attributes) {
+                                    var val = row.attributes[att];
+                                    if (
+                                        (val && typeof val.indexOf==='function' &&
+                                        val.indexOf(self.busquedaTareas)!==-1) ||
+                                        val==self.busquedaTareas
+                                    ) {
+                                        self.tareas.push(row);
+                                        break;
+                                    }
+                                }
+                            } else {
+                                self.tareas.push(row);
+                            }
+                        });
+                    },
+                    seleccionaTarea: function (tarea) {
+                        this.tarea.$load(tarea.id);
+                    },
+                    crearTarea: function () {
+                        this.tarea.$load(0);
+                    },
+                    guardarTarea: function () {
+                        var self = this;
+                        self.tarea.creador = {id:localStorage.user_id};
+                        this.tarea.$save('', function() {
+                            self.listarTareas();
+                        });
+                    },
+                    crearAvance: function () {
+                        var self = this;
+                        self.avance.$load(0, function () {
+                            self.avance.avance = self.tarea.avance;
+                        });
+                    },
+                    guardarAvance: function () {
+                        var self = this;
+                        this.avance.tarea_id = this.tarea.id;
+                        this.avance.$save('', function() {
+                            self.listarTareas();
+                            self.tarea.$load(self.tarea.id);
+                        });
+                    },
+                    registrarAvanceTarea: function (tarea) {
+                        var self = this;
+                        self.tarea.$load(tarea.id, function () {
+                            self.avance.$load(0, function () {
+                                self.avance.avance = self.tarea.avance;
+                            });
+                        });
+                    },
+                    adjuntarArchivo: function () {
+                        var self = this;
+                        this.Adjunto.$save('', function () {
+                            self.Adjunto.$load(0);
+                            self.tarea.$load(self.tarea.id);
+                        });
+                    },
+                    abrirUAI: function () {
+                        $("#abmUAI").get(0).__vue__.goto(0);
+                    },
+                    abrirFirmasDeAuditoria: function () {
+                        $("#abmFirmasDeAuditoria").get(0).__vue__.goto(0);
+                    },
+                    buscarTarea: function () {
+                        this.pintarTareas();
+                    },
+                    cargarEstadosFinancieros: function () {
+                        var self = this;
+                        //indicators:
+                        self.cargarCuadrosFinancieros();
+                        //charts:
+                        var model = new UserAdministration.EstadoFinanciero("/api/UserAdministration/estado_financieros");
+                        model.$select(function (resultado) {
+                            self.estados_financieros.splice(0);
+                            resultado.data.forEach(function (row) {
+                                self.estados_financieros.push(row);
+                            });
+                            Vue.nextTick(function () {
+                                $("span.peityChart").each(function () {
+                                    var chart = $(this).attr("chart") ? $(this).attr("chart") : 'pie';
+                                    $(this).peity(chart, {
+                                        fill: chart === 'pie' || chart === 'bar' ? ['#1ab394', '#d7d7d7', '#8CD9C9'] : '#1ab394',
+                                        width: 80,
+                                        height: 80
+                                    })
+                                });
+                            });
+                        },
+                        {
+                            'filter':[
+                                'where,empresa_id,=,'+self.empresaSeleccionada,
+                                'where,gestion,=,'+self.empresaSeleccionadaGestion,
+                            ]
+                        });
+                    },
+                    addCommas: function (nStr)
+                    {
+                        nStr += '';
+                        x = nStr.split('.');
+                        x1 = x[0];
+                        x2 = x.length > 1 ? '.' + x[1] : '';
+                        var rgx = /(\d+)(\d{3})/;
+                        while (rgx.test(x1)) {
+                            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                        }
+                        return x1 + x2;
+                    },
+                    /**
+                     * Carga los cuadros de estados financieros.
+                     *
+                     */
+                    cargarCuadrosFinancieros: function () {
+                        var self = this;
+                        var model = self.cuadro_financiero;
+                        model.$select(function (resultado) {
+                            self.cuadros_financieros.splice(0);
+                            resultado.data.forEach(function (row) {
+                                row.html = '';
+                                self.cuadro_financiero.$methods.calculate(
+                                    self.empresaSeleccionada,
+                                    self.empresaSeleccionadaGestion,
+                                    row.attributes.contenido,
+                                    row.attributes.grafico,
+                                    function (html) {
+                                        row.html = html[0];
+                                        row.calculatedChart = JSON.parse(html[1]);
+                                        if (typeof row.calculatedChart.forEach!=='function') {
+                                            row.calculatedChart=[];
+                                        }
+                                        Vue.nextTick(function () {
+                                            self.$children.forEach(function(comp) {
+                                                try {
+                                                    comp.refresh();
+                                                } catch(ee){}
+                                            });
+                                        });
+                                    }
+                                );
+                                self.cuadros_financieros.push(row);
+                            });
+                        },
+                        {
+                            sort: "titulo"
+                        });
+                    },
+                    /**
+                     * Carga los cuadros de estados financieros.
+                     *
+                     */
+                    cargarCuadrosFinancierosCompleto: function () {
+                        var self = this;
+                        var model = self.cuadro_financiero;
+                        model.$select(function (resultado) {
+                            self.cuadros_financieros_completo.splice(0);
+                            resultado.data.forEach(function (row) {
+                                self.cuadros_financieros_completo.push(row);
+                            });
+                        },
+                        {
+                            sort: "titulo"
+                        });
+                    },
+                    /**
+                     * Habilita el modo edición de un estado financiero.
+                     *
+                     */
+                    editEEFF: function (estado) {
+                        var self=this;
+                        self.eeffEditable.push(estado.id);
+                    },
+                    saveEEFF: function (estado) {
+                        var self=this;
+                        self.cuadro_financiero.$load(estado.id, function () {
+                            self.cuadro_financiero.contenido = estado.attributes.contenido;
+                            self.cuadro_financiero.$save();
+                            estado.html = '';
+                            self.cuadro_financiero.$methods.calculate(
+                                self.empresaSeleccionada,
+                                self.empresaSeleccionadaGestion,
+                                estado.attributes.contenido,
+                                function (html) {
+                                    estado.html = html;
+                                }
+                            );
+                            var i = self.eeffEditable.indexOf(estado.id);
+                            self.eeffEditable.splice(i,1);
+                        });
+                    },
+                    editableEEFF: function (estado) {
+                        var self=this;
+                        return self.eeffEditable.indexOf(estado.id)>-1;
+                    },
+                    /**
+                     * Agrega un cuadro de estado financiero.
+                     */
+                    addCCFF: function () {
+                        var self=this;
+                        self.cuadro_financiero.$create(function(estado) {
+                            estado.titulo = prompt('Nombre del cuadro');
+                            estado.contenido = '<table width="100%"><tbody><tr><td style="background-color: #a4a5d5; color: white;" rowspan="2"><h1 style="text-align: center;">{{$uc(\'1\')}}</h1><p style="text-align: center;">ACTIVO</p></td><td style="background-color: #d14550; color: white;"><h2 style="text-align: center;">{{$uc(\'2\')}}</h2><p style="text-align: center;">PASIVO</p></td></tr><tr><td style="background-color: #19a3ab; color: white;"><h2 style="text-align: center;">{{$uc(\'3\')}}</h2><p style="text-align: center;">PATRIMONIO</p></td></tr></tbody></table>';
+                            estado.$save('', function() {
+                                self.cargarCuadrosFinancieros();
+                            });
+                        });
+                    },
+                    editEmpresa: function () {
+                        var self = this;
+                        self.editingEmpresa = true;
+                    },
+                    saveEmpresa: function (empresa) {
+                        var self = this;
+                        self.editingEmpresa = false;
+                        empresa.$save();
+                    },
+                    /**
+                     * Cambia la contraseña deñ usuario actual.
+                     */
+                    cambiarPassword: function () {
+                        var self = this;
+                        self.user.password=self.password1;
+                        self.user.$save();
+                        window.location.href="login.html";
+                    }
+                },
+                mounted: function () {
+                    var self = this;
+                    window.app = this;
+                    $.ajaxSetup({
+                        async: false
+                    });
+                    this.listarTareas();
+                    this.cargarEstadosFinancieros();
+                    this.cargarCuadrosFinancieros();
+                    this.cargarCuadrosFinancierosCompleto();
+                    this.loadListTo(this.usertarea, this.users);
+                    HashRoute.route('#reporte/{empresa}/{gestion}', function (empresa, gestion) {
+                        self.listarEmpresas(empresa);
+                        self.empresaSeleccionada = empresa;
+                        self.empresaSeleccionadaGestion = gestion;
+                        Vue.nextTick(function () {
+                            preparePage();
+                        });
+                    });
+                    var hash0 = location.hash;
+                    location.hash = '';
+                    location.hash = hash0;
+                }
+            });
+        });
+        function preparePage() {
+            var mh=window.innerWidth*11/8.5,mt=1/8.5*window.innerWidth;
+            $("#cuadros_financieros").children().each(function(){
+                var $e=$(this),offset=$e.offset(),h=$e.height(),
+                    p1=Math.ceil(offset.top/mh),p2=Math.ceil((offset.top+h)/mh),
+                    delta=p1*mh-offset.top;
+                if (p1!=p2) {
+                    $e.css(
+                        'marginTop',
+                        (delta+mt+$e.css('marginTop').replace('px','')*1)+'px'
+                    );
+                }
+            });
+        }
+        </script>
+        <!-- Peity -->
+        <script src="js/plugins/peity/jquery.peity.min.js"></script>
+
+        <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="js/inspinia.js"></script>
+    </body>
+</html>
