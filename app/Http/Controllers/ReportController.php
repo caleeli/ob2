@@ -29,11 +29,11 @@ class ReportController extends Controller
     {
         $url1 = escapeshellarg($url);
         $rasterize = escapeshellarg(base_path('bin/rasterize.js'));
-        $target0 = storage_path(uniqid('rep') . '.pdf');
+        $target0 = storage_path('app/public/' . uniqid('rep') . '.pdf');
         $target = escapeshellarg($target0);
         $format = self::FORMAT;
         $cmd = env('PHANTOMJS') . " $rasterize $url1 $target $format";
         exec($cmd);
-        return response()->file($target0);
+        return redirect()->route('/storage/' . basename($target0));
     }
 }
