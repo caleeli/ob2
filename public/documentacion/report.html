@@ -85,7 +85,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.63"></script>
+        <script src="../js/server.js?v0.65"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -423,10 +423,8 @@
                     $.ajaxSetup({
                         async: false
                     });
-                    this.listarTareas();
                     this.cargarEstadosFinancieros();
                     this.cargarCuadrosFinancieros();
-                    this.cargarCuadrosFinancierosCompleto();
                     this.loadListTo(this.usertarea, this.users);
                     HashRoute.route('#reporte/{empresa}/{gestion}', function (empresa, gestion) {
                         self.listarEmpresas(empresa);
@@ -436,9 +434,7 @@
                             preparePage();
                         });
                     });
-                    var hash0 = location.hash;
-                    location.hash = '';
-                    location.hash = hash0;
+                    HashRoute.run(window.location.hash);
                 }
             });
         });
