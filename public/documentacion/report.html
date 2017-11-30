@@ -318,6 +318,7 @@
                                     row.attributes.grafico,
                                     function (html) {
                                         row.html = html[0];
+                                        console.log(html);
                                         row.calculatedChart = JSON.parse(html[1]);
                                         if (typeof row.calculatedChart.forEach!=='function') {
                                             row.calculatedChart=[];
