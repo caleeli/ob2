@@ -318,7 +318,7 @@
                                     row.attributes.grafico,
                                     function (html) {
                                         row.html = html[0];
-                                        throw(html);
+                                        throw('JSON:'+json.stringify(html[1]));
                                         row.calculatedChart = JSON.parse(html[1]);
                                         if (typeof row.calculatedChart.forEach!=='function') {
                                             row.calculatedChart=[];
