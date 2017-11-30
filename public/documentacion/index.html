@@ -131,6 +131,12 @@
                                         <div class="ibox">
                                             <div class="ibox-title">
                                                 <h5>ESTADOS FINANCIEROS</h5>
+                                                <div class="ibox-tools">
+                                                    <a v-bind:href="'/report?path=/documentacion/report.html%23reporte/'+empresaSeleccionada+'/'+empresaSeleccionadaGestion"
+                                                       target='_blank'>
+                                                        <i class="fa fa-file-pdf-o"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: hidden;">
@@ -1048,7 +1054,11 @@
                                     row.attributes.grafico,
                                     function (html) {
                                         row.html = html[0];
-                                        row.calculatedChart = JSON.parse(html[1]);
+                                        if (!html[1]) {
+                                            row.calculatedChart=[];
+                                        } else {
+                                            row.calculatedChart = JSON.parse(html[1]);
+                                        }
                                         if (typeof row.calculatedChart.forEach!=='function') {
                                             row.calculatedChart=[];
                                         }
