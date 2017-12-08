@@ -59,7 +59,7 @@
                             <td>{{empresa.nombre_empresa}}</td>
                         </tr>
                         <tr>
-                            <td style="width:10%;">Rubrp</td>
+                            <td style="width:10%;">Rubro</td>
                             <td>{{empresa.rubro}}</td>
                         </tr>
                         <tr>
@@ -678,19 +678,28 @@
         "series": {\
             "erg": {\
                 "{{$gestion}}": [{{$uc("5")*1}},{{$uc("6")*1}},{{$uc("5")-$uc("6")}}],\
-                "{{$gestion-1}}": [{{$ucp("5")*1}},{{$ucp("6")*1}},{{$ucp("5")-$ucp("6")}}],\
-                "{{$gestion-2}}": [{{$ucp("5",-2)*1}},{{$ucp("6",-2)*1}},{{$ucp("5",-2)-$ucp("6",-2)}}]\
+                "{{$gestion-1}}": [{{$ucp("5")*1}},{{$ucp("6")*1}},{{$ucp("5")-$ucp("6")}}]\
+                @if($gestion-2>2014),"{{$gestion-2}}": [{{$ucp("5",-2)*1}},{{$ucp("6",-2)*1}},{{$ucp("5",-2)-$ucp("6",-2)}}]\\n\
+                @endif\
             }\
         }\
     },\
     {\
         "type": "bar",\
-        "x": ["{{$gestion-2}}","{{$gestion-1}}","{{$gestion}}"],\
+        "x": [@if($gestion-2>2014) "{{$gestion-2}}",\\n\
+        @endif\n\
+        "{{$gestion-1}}","{{$gestion}}"],\
         "series": {\
             "erg": {\
-                "ingresos": [{{$ucp("5",-2)*1}},{{$ucp("5")*1}},{{$uc("5")*1}}],\
-                "gastos": [{{$ucp("6",-2)*1}},{{$ucp("6")*1}},{{$uc("6")*1}}],\
-                "utilidad": [{{$ucp("5",-2)-$ucp("6",-2)}},{{$ucp("5")-$ucp("6")}},{{$uc("5")-$uc("6")}}]\
+                "ingresos": [@if($gestion-2>2014) {{$ucp("5",-2)*1}},\n\
+                @endif\\n\
+                {{$ucp("5")*1}},{{$uc("5")*1}}],\
+                "gastos": [@if($gestion-2>2014) {{$ucp("6",-2)*1}},\n\
+                @endif\n\
+                {{$ucp("6")*1}},{{$uc("6")*1}}],\
+                "utilidad": [@if($gestion-2>2014) {{$ucp("5",-2)-$ucp("6",-2)}},\n\
+                @endif\n\
+                {{$ucp("5")-$ucp("6")}},{{$uc("5")-$uc("6")}}]\
             }\
         }\
     }]'
