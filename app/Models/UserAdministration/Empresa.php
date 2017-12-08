@@ -67,10 +67,12 @@ class Empresa extends Model
         $ev = new \App\Evaluator($this->id, $gestion);
         $res = [];
         foreach ($eeff as $key => $val) {
-            try {
-                $res[$key] = @$ev->calculate($val);
-            } catch (\Exception $ee) {
-                
+            $isChart = substr($key, 0, 5) === 'chart';
+            $cal = @$ev->calculate($val, $isChart);
+            if ($isChart) {
+                $res[$key] = json_decode($cal);
+            } else {
+                $res[$key] = $cal;
             }
         }
         return $res;

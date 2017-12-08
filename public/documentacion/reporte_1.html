@@ -11,11 +11,27 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
-        <!-- Morris -->
-        <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+        <!-- Toastr style -->
+        <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+        <!-- Gritter -->
+        <link href="js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
 
         <link href="css/animate.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/css/buttons.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
+        <style>
+            html, body
+            {
+                background-color: white!important;
+            } 
+            body
+            {
+                margin: 20mm 10mm 10mm 10mm;
+            } 
+        </style>
 
     </head>
 
@@ -90,7 +106,12 @@
                                 QUE QUEDE ALINEADO A Balance
                                 LO MISMO PARA ESTADO DE RESULTADOS
                                 -->
-
+                                <div v-for="data in empresa.chart1" class="col-xs-6">
+                                    <basic-chart title="Balance general"
+                                         mcols="aprobado"
+                                         v-bind:type="data.type"
+                                         v-bind:mdata='data' />
+                                </div>
 
 
 
@@ -118,6 +139,13 @@
                                     <div class="stat-percent font-bold text-warning">{{empresa.utilidad_c}}% <i v-bind:class="{'fa fa-level-up': empresa.utilidad_c>0 , 'fa fa-level-down': empresa.utilidad_c<0}"></i></div>
                                     <small class="stats-label">Utilidad</small>
                                     <h4>Bs. {{empresa.utilidad}}</h4>
+                                </div>
+
+                                <div v-for="data in empresa.chart2" class="col-xs-6">
+                                    <basic-chart title="Estado de resultados"
+                                         mcols="aprobado"
+                                         v-bind:type="data.type"
+                                         v-bind:mdata='data' />
                                 </div>
                             </div>
                         </div>
@@ -620,6 +648,54 @@
                                     'endeudamiento_financiero' : "{{$uc('2.1.2.3')/$uc('2')}}",
                                     'rotacion_activos_totales' : "{{$uc('5.2')/$uc('1')}}",
                                     'rotacion_activos_fijos' : "{{$uc('5.2')/$uc('1.2.3')}}",
+                                    //grafico
+                                    'chart1': '[\
+{\
+    "type":"bar",\
+    "x": ["activo","pasivo","patrimonio"],\
+    "series": {\
+        "eeff": {\
+            "{{$gestion}}": [{{$uc("1")}},{{$uc("2")}},{{$uc("3")}}],\
+            "{{$gestion-1}}": [{{$ucp("1")*1}},{{$ucp("2")*1}},{{$ucp("3")*1}}],\
+            "{{$gestion-2}}": [{{$ucp("1",-2)*1}},{{$ucp("2",-2)*1}},{{$ucp("3",-2)*1}}]\
+        }\
+    }\
+},\
+{\
+    "type":"line",\
+    "x": ["{{$gestion-2}}","{{$gestion-1}}","{{$gestion}}"],\
+    "series": {\
+        "eeff": {\
+            "activo": [{{$ucp("1",-2)*1}},{{$ucp("1")*1}},{{$uc("1")*1}}],\
+            "pasivo": [{{$ucp("2",-2)*1}},{{$ucp("2")*1}},{{$uc("2")*1}}],\
+            "patrimonio": [{{$ucp("3",-2)*1}},{{$ucp("3")*1}},{{$uc("3")*1}}]\
+        }\
+    }\
+}\
+\
+]',
+                                    'chart2': '[{\
+    "type": "bar",\
+    "x": ["ingresos","gastos","utilidad"],\
+    "series": {\
+        "erg": {\
+            "{{$gestion}}": [{{$uc("5")*1}},{{$uc("6")*1}},{{$uc("5")-$uc("6")}}],\
+            "{{$gestion-1}}": [{{$ucp("1")*1}},{{$ucp("2")*1}},{{$ucp("5")-$ucp("6")}}],\
+            "{{$gestion-2}}": [{{$ucp("1",-2)*1}},{{$ucp("2",-2)*1}},{{$ucp("5",-2)-$ucp("6",-2)}}]\
+        }\
+    }\
+},\
+{\
+    "type": "bar",\
+    "x": ["{{$gestion-2}}","{{$gestion-1}}","{{$gestion}}"],\
+    "series": {\
+        "erg": {\
+            "ingresos": [{{$ucp("5",-2)*1}},{{$ucp("5")*1}},{{$uc("5")*1}}],\
+            "gastos": [{{$ucp("6",-2)*1}},{{$ucp("6")*1}},{{$uc("6")*1}}],\
+            "utilidad": [{{$ucp("5",-2)-$ucp("6",-2)}},{{$ucp("5")-$ucp("6")}},{{$uc("5")-$uc("6")}}]\
+        }\
+    }\
+}]'
                                 },
                                 function (res) {
                                     for(var a in res) {

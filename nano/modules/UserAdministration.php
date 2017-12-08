@@ -383,7 +383,13 @@
                             $ev = new \App\Evaluator($this->id, $gestion);
                             $res = [];
                             foreach ($eeff as $key => $val) {
-                                $res[$key] = @$ev->calculate($val);
+                                $isChart = substr($key, 0, 5) === 'chart';
+                                $cal = @$ev->calculate($val, $isChart);
+                                if ($isChart) {
+                                    $res[$key] = json_decode($cal);
+                                } else {
+                                    $res[$key] = $cal;
+                                }
                             }
                             return $res;
                         }
