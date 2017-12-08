@@ -258,7 +258,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.66"></script>
+        <script src="../js/server.js?v0.67"></script>
         <script>
             $(document).ready(function () {
                 var app;
@@ -615,96 +615,97 @@
                         //this.cargarCuadrosFinancieros();
                         //this.loadListTo(this.usertarea, this.users);
                         HashRoute.route('#reporte/{empresa}/{gestion}', function (empresa, gestion) {
-                            self.empresa.$load(empresa);
+                            self.empresa.$load(empresa, function() {
+                                self.empresa.$methods.eeff(
+                                    gestion,
+                                    {
+                                        //estados
+                                        'activo' : "{{$uc('1')}}",
+                                        'pasivo' : "{{$uc('2')}}",
+                                        'patrimonio' : "{{$uc('3')}}",
+                                        'ingresos' : "{{$uc('5')}}",
+                                        'gastos' : "{{$uc('6')}}",
+                                        'utilidad' : "{{$uc('5')-$uc('6')}}",
+                                        //%
+                                        'activo_c' : "{{($uc('1')-$ucp('1'))/abs($ucp('1'))*100}}",
+                                        'pasivo_c' : "{{($uc('2')-$ucp('2'))/abs($ucp('2'))*100}}",
+                                        'patrimonio_c' : "{{($uc('3')-$ucp('3'))/abs($ucp('3'))*100}}",
+                                        'ingresos_c' : "{{($uc('5')-$ucp('5'))/abs($ucp('5'))*100}}",
+                                        'gastos_c' : "{{($uc('6')-$ucp('6'))/abs($ucp('6'))*100}}",
+                                        'utilidad_c' : "{{(($uc('5')-$uc('6'))-($ucp('5')-$ucp('6')))/abs($ucp('5')-$ucp('6'))*100}}",
+                                        //ratios
+                                        'liquidez' : "{{$uc('1.1')/$uc('2.1')}}",
+                                        'p_acida' : "{{($uc('1.1')-$uc('1.1.5') )/ $uc('2.1')}}",
+                                        'p_defensiva' : " {{($uc('1.1')-$uc('1.2')) / $uc(2.1)}}",
+                                        'capital_trabajo' : "{{$uc('1.1')-$uc('2.1')}}",
+                                        'promedio_pago' : "{{$uc('1.1.3.1')*360 / $uc('5.2')}}",
+                                        'rotacion_cuentas_por_cobrar' : "{{$uc('5.2')/$uc('1.1.3.1')}}",
+                                        'rotacion_cartera' : "{{$uc('1.1.3.1')*$ucp('1.1.3.1')/2*360/$uc('5.2')}}",
+                                        'pago_proveedores' : "{{$uc('2.1.1.1')*$ucp('2.1.1.1')/2*360/$uc('1.1.5.2')}}",
+                                        'nivel_endeudamiento' : "{{$uc('2')/$uc('1')}}",
+                                        'endeudamiento_financiero' : "{{$uc('2.1.2.3')/$uc('2')}}",
+                                        'rotacion_activos_totales' : "{{$uc('5.2')/$uc('1')}}",
+                                        'rotacion_activos_fijos' : "{{$uc('5.2')/$uc('1.2.3')}}",
+                                        //grafico
+                                        'chart1': '[\
+    {\
+        "type":"bar",\
+        "x": ["activo","pasivo","patrimonio"],\
+        "series": {\
+            "eeff": {\
+                "{{$gestion}}": [{{$uc("1")}},{{$uc("2")}},{{$uc("3")}}],\
+                "{{$gestion-1}}": [{{$ucp("1")*1}},{{$ucp("2")*1}},{{$ucp("3")*1}}],\
+                "{{$gestion-2}}": [{{$ucp("1",-2)*1}},{{$ucp("2",-2)*1}},{{$ucp("3",-2)*1}}]\
+            }\
+        }\
+    },\
+    {\
+        "type":"line",\
+        "x": ["{{$gestion-2}}","{{$gestion-1}}","{{$gestion}}"],\
+        "series": {\
+            "eeff": {\
+                "activo": [{{$ucp("1",-2)*1}},{{$ucp("1")*1}},{{$uc("1")*1}}],\
+                "pasivo": [{{$ucp("2",-2)*1}},{{$ucp("2")*1}},{{$uc("2")*1}}],\
+                "patrimonio": [{{$ucp("3",-2)*1}},{{$ucp("3")*1}},{{$uc("3")*1}}]\
+            }\
+        }\
+    }\
+    \
+    ]',
+                                        'chart2': '[{\
+        "type": "bar",\
+        "x": ["ingresos","gastos","utilidad"],\
+        "series": {\
+            "erg": {\
+                "{{$gestion}}": [{{$uc("5")*1}},{{$uc("6")*1}},{{$uc("5")-$uc("6")}}],\
+                "{{$gestion-1}}": [{{$ucp("5")*1}},{{$ucp("6")*1}},{{$ucp("5")-$ucp("6")}}],\
+                "{{$gestion-2}}": [{{$ucp("5",-2)*1}},{{$ucp("6",-2)*1}},{{$ucp("5",-2)-$ucp("6",-2)}}]\
+            }\
+        }\
+    },\
+    {\
+        "type": "bar",\
+        "x": ["{{$gestion-2}}","{{$gestion-1}}","{{$gestion}}"],\
+        "series": {\
+            "erg": {\
+                "ingresos": [{{$ucp("5",-2)*1}},{{$ucp("5")*1}},{{$uc("5")*1}}],\
+                "gastos": [{{$ucp("6",-2)*1}},{{$ucp("6")*1}},{{$uc("6")*1}}],\
+                "utilidad": [{{$ucp("5",-2)-$ucp("6",-2)}},{{$ucp("5")-$ucp("6")}},{{$uc("5")-$uc("6")}}]\
+            }\
+        }\
+    }]'
+                                    },
+                                    function (res) {
+                                        for(var a in res) {
+                                            self.empresa[a] = res[a];
+                                        }
+                                    }
+                                );
+                            });
                             self.empresaSeleccionada = empresa;
                             self.empresaSeleccionadaGestion = gestion;
-                            self.empresa.$methods.eeff(
-                                gestion,
-                                {
-                                    //estados
-                                    'activo' : "{{$uc('1')}}",
-                                    'pasivo' : "{{$uc('2')}}",
-                                    'patrimonio' : "{{$uc('3')}}",
-                                    'ingresos' : "{{$uc('5')}}",
-                                    'gastos' : "{{$uc('6')}}",
-                                    'utilidad' : "{{$uc('5')-$uc('6')}}",
-                                    //%
-                                    'activo_c' : "{{($uc('1')-$ucp('1'))/abs($ucp('1'))*100}}",
-                                    'pasivo_c' : "{{($uc('2')-$ucp('2'))/abs($ucp('2'))*100}}",
-                                    'patrimonio_c' : "{{($uc('3')-$ucp('3'))/abs($ucp('3'))*100}}",
-                                    'ingresos_c' : "{{($uc('5')-$ucp('5'))/abs($ucp('5'))*100}}",
-                                    'gastos_c' : "{{($uc('6')-$ucp('6'))/abs($ucp('6'))*100}}",
-                                    'utilidad_c' : "{{(($uc('5')-$uc('6'))-($ucp('5')-$ucp('6')))/abs($ucp('5')-$ucp('6'))*100}}",
-                                    //ratios
-                                    'liquidez' : "{{$uc('1.1')/$uc('2.1')}}",
-                                    'p_acida' : "{{($uc('1.1')-$uc('1.1.5') )/ $uc('2.1')}}",
-                                    'p_defensiva' : " {{($uc('1.1')-$uc('1.2')) / $uc(2.1)}}",
-                                    'capital_trabajo' : "{{$uc('1.1')-$uc('2.1')}}",
-                                    'promedio_pago' : "{{$uc('1.1.3.1')*360 / $uc('5.2')}}",
-                                    'rotacion_cuentas_por_cobrar' : "{{$uc('5.2')/$uc('1.1.3.1')}}",
-                                    'rotacion_cartera' : "{{$uc('1.1.3.1')*$ucp('1.1.3.1')/2*360/$uc('5.2')}}",
-                                    'pago_proveedores' : "{{$uc('2.1.1.1')*$ucp('2.1.1.1')/2*360/$uc('1.1.5.2')}}",
-                                    'nivel_endeudamiento' : "{{$uc('2')/$uc('1')}}",
-                                    'endeudamiento_financiero' : "{{$uc('2.1.2.3')/$uc('2')}}",
-                                    'rotacion_activos_totales' : "{{$uc('5.2')/$uc('1')}}",
-                                    'rotacion_activos_fijos' : "{{$uc('5.2')/$uc('1.2.3')}}",
-                                    //grafico
-                                    'chart1': '[\
-{\
-    "type":"bar",\
-    "x": ["activo","pasivo","patrimonio"],\
-    "series": {\
-        "eeff": {\
-            "{{$gestion}}": [{{$uc("1")}},{{$uc("2")}},{{$uc("3")}}],\
-            "{{$gestion-1}}": [{{$ucp("1")*1}},{{$ucp("2")*1}},{{$ucp("3")*1}}],\
-            "{{$gestion-2}}": [{{$ucp("1",-2)*1}},{{$ucp("2",-2)*1}},{{$ucp("3",-2)*1}}]\
-        }\
-    }\
-},\
-{\
-    "type":"line",\
-    "x": ["{{$gestion-2}}","{{$gestion-1}}","{{$gestion}}"],\
-    "series": {\
-        "eeff": {\
-            "activo": [{{$ucp("1",-2)*1}},{{$ucp("1")*1}},{{$uc("1")*1}}],\
-            "pasivo": [{{$ucp("2",-2)*1}},{{$ucp("2")*1}},{{$uc("2")*1}}],\
-            "patrimonio": [{{$ucp("3",-2)*1}},{{$ucp("3")*1}},{{$uc("3")*1}}]\
-        }\
-    }\
-}\
-\
-]',
-                                    'chart2': '[{\
-    "type": "bar",\
-    "x": ["ingresos","gastos","utilidad"],\
-    "series": {\
-        "erg": {\
-            "{{$gestion}}": [{{$uc("5")*1}},{{$uc("6")*1}},{{$uc("5")-$uc("6")}}],\
-            "{{$gestion-1}}": [{{$ucp("5")*1}},{{$ucp("6")*1}},{{$ucp("5")-$ucp("6")}}],\
-            "{{$gestion-2}}": [{{$ucp("5",-2)*1}},{{$ucp("6",-2)*1}},{{$ucp("5",-2)-$ucp("6",-2)}}]\
-        }\
-    }\
-},\
-{\
-    "type": "bar",\
-    "x": ["{{$gestion-2}}","{{$gestion-1}}","{{$gestion}}"],\
-    "series": {\
-        "erg": {\
-            "ingresos": [{{$ucp("5",-2)*1}},{{$ucp("5")*1}},{{$uc("5")*1}}],\
-            "gastos": [{{$ucp("6",-2)*1}},{{$ucp("6")*1}},{{$uc("6")*1}}],\
-            "utilidad": [{{$ucp("5",-2)-$ucp("6",-2)}},{{$ucp("5")-$ucp("6")}},{{$uc("5")-$uc("6")}}]\
-        }\
-    }\
-}]'
-                                },
-                                function (res) {
-                                    for(var a in res) {
-                                        self.empresa[a] = res[a];
-                                    }
-                                }
-                            );
                             Vue.nextTick(function () {
-                                preparePage();
+                                //preparePage();
                             });
                         });
                         HashRoute.run(window.location.hash);
