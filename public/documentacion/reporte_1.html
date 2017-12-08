@@ -629,12 +629,12 @@
                                     'gastos' : "{{$uc('6')}}",
                                     'utilidad' : "{{$uc('5')-$uc('6')}}",
                                     //%
-                                    'activo_c' : "{{($uc('1')-$ucp('1'))/$ucp('1')*100}}",
-                                    'pasivo_c' : "{{($uc('2')-$ucp('2'))/$ucp('2')*100}}",
-                                    'patrimonio_c' : "{{($uc('3')-$ucp('3'))/$ucp('3')*100}}",
-                                    'ingresos_c' : "{{($uc('5')-$ucp('5'))/$ucp('5')*100}}",
-                                    'gastos_c' : "{{($uc('6')-$ucp('6'))/$ucp('6')*100}}",
-                                    'utilidad_c' : "{{(($uc('5')-$uc('6'))-($ucp('5')-$ucp('6')))/($ucp('5')-$ucp('6'))*100}}",
+                                    'activo_c' : "{{($uc('1')-$ucp('1'))/abs($ucp('1'))*100}}",
+                                    'pasivo_c' : "{{($uc('2')-$ucp('2'))/abs($ucp('2'))*100}}",
+                                    'patrimonio_c' : "{{($uc('3')-$ucp('3'))/abs($ucp('3'))*100}}",
+                                    'ingresos_c' : "{{($uc('5')-$ucp('5'))/abs($ucp('5'))*100}}",
+                                    'gastos_c' : "{{($uc('6')-$ucp('6'))/abs($ucp('6'))*100}}",
+                                    'utilidad_c' : "{{(($uc('5')-$uc('6'))-($ucp('5')-$ucp('6')))/abs($ucp('5')-$ucp('6'))*100}}",
                                     //ratios
                                     'liquidez' : "{{$uc('1.1')/$uc('2.1')}}",
                                     'p_acida' : "{{($uc('1.1')-$uc('1.1.5') )/ $uc('2.1')}}",
