@@ -376,6 +376,17 @@
                             $ev = new \App\Evaluator($this->id, date('Y') - 1);
                             return $ev->calculate($value);
                         }
+                    ?>,
+                    "eeff(gestion, eeff)": <?php
+                        function eeff($gestion, $eeff)
+                        {
+                            $ev = new \App\Evaluator($this->id, $gestion);
+                            $res = [];
+                            foreach ($eeff as $key => $val) {
+                                $res[$key] = @$ev->calculate($val);
+                            }
+                            return $res;
+                        }
                     ?>
                 }
             }),

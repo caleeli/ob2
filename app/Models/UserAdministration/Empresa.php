@@ -61,4 +61,18 @@ class Empresa extends Model
         $ev = new \App\Evaluator($this->id, date('Y') - 1);
         return $ev->calculate($value);
     }
+
+    public function eeff($gestion, $eeff)
+    {
+        $ev = new \App\Evaluator($this->id, $gestion);
+        $res = [];
+        foreach ($eeff as $key => $val) {
+            try {
+                $res[$key] = @$ev->calculate($val);
+            } catch (\Exception $ee) {
+                
+            }
+        }
+        return $res;
+    }
 }
