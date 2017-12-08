@@ -262,6 +262,9 @@
         <script>
             $(document).ready(function () {
                 var app;
+                $.ajaxSetup({
+                    async: true
+                });
                 app = new Vue({
                     el: '#wrapper',
                     carousel: {},
@@ -608,9 +611,6 @@
                     mounted: function () {
                         var self = this;
                         window.app = this;
-                        $.ajaxSetup({
-                            async: false
-                        });
                         //this.cargarEstadosFinancieros();
                         //this.cargarCuadrosFinancieros();
                         //this.loadListTo(this.usertarea, this.users);
@@ -699,6 +699,7 @@
                                         for(var a in res) {
                                             self.empresa[a] = res[a];
                                         }
+                                        app.$forceUpdate();
                                     }
                                 );
                             });
