@@ -661,7 +661,8 @@
     },\
     {\
         "type":"line",\
-        "x": ["{{$gestion-2}}","{{$gestion-1}}","{{$gestion}}"],\
+        "x": [@if($gestion-2>2014) "{{$gestion-2}}",\n\
+        @endif"{{$gestion-1}}","{{$gestion}}"],\
         "series": {\
             "eeff": {\
                 "activo": [{{$ucp("1",-2)*1}},{{$ucp("1")*1}},{{$uc("1")*1}}],\
