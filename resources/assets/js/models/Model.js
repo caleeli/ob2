@@ -38,7 +38,9 @@ export default function(uri0, id, type) {
 	};
     function loadFromData(data) {
         originalData = data.data;
-        Object.assign(self, originalData.attributes);
+        for (var a in originalData.attributes) {
+            self[a] = originalData.attributes[a];
+        }
         id = originalData.id;
         self.id = originalData.id;
         if(typeof originalData.relationships==="object") {

@@ -29,7 +29,7 @@
             } 
             body
             {
-                margin: 20mm 10mm 10mm 10mm;
+                padding: 20mm 10mm 10mm 10mm;
             } 
         </style>
 
@@ -102,11 +102,8 @@
                                     <h4>Bs. {{empresa.patrimonio}}</h4>
                                 </div>
 
-                                <!--INSERTAR GRAFICO
-                                QUE QUEDE ALINEADO A Balance
-                                LO MISMO PARA ESTADO DE RESULTADOS
-                                -->
                                 <div v-for="data in empresa.chart1" class="col-xs-6">
+                                    <br>
                                     <basic-chart title="Balance general"
                                          mcols="aprobado"
                                          v-bind:type="data.type"
@@ -140,8 +137,8 @@
                                     <small class="stats-label">Utilidad</small>
                                     <h4>Bs. {{empresa.utilidad}}</h4>
                                 </div>
-
                                 <div v-for="data in empresa.chart2" class="col-xs-6">
+                                    <br>
                                     <basic-chart title="Estado de resultados"
                                          mcols="aprobado"
                                          v-bind:type="data.type"
@@ -258,7 +255,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.67"></script>
+        <script src="../js/server.js?v0.68"></script>
         <script>
             $(document).ready(function () {
                 var app;
@@ -717,6 +714,7 @@
                             self.empresaSeleccionadaGestion = gestion;
                             Vue.nextTick(function () {
                                 //preparePage();
+                                window.printPDF = true;
                             });
                         });
                         HashRoute.run(window.location.hash);
