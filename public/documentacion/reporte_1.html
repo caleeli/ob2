@@ -713,8 +713,10 @@
                             self.empresaSeleccionada = empresa;
                             self.empresaSeleccionadaGestion = gestion;
                             Vue.nextTick(function () {
-                                //preparePage();
-                                window.printPDF = true;
+                                setTimeout(function () {
+                                    //preparePage();
+                                    window.printPDF = true;
+                                }, 0);
                             });
                         });
                         HashRoute.run(window.location.hash);
