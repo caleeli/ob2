@@ -105,6 +105,7 @@
                                 <div v-for="data in empresa.chart1" class="col-xs-6">
                                     <br>
                                     <basic-chart title="Balance general"
+                                         v-bind:options="{animation:false}"
                                          mcols="aprobado"
                                          v-bind:type="data.type"
                                          v-bind:mdata='data' />
@@ -141,6 +142,7 @@
                                     <br>
                                     <basic-chart title="Estado de resultados"
                                          mcols="aprobado"
+                                         v-bind:options="{animation:false}"
                                          v-bind:type="data.type"
                                          v-bind:mdata='data' />
                                 </div>
@@ -255,7 +257,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.68"></script>
+        <script src="../js/server.js?v0.69"></script>
         <script>
             $(document).ready(function () {
                 var app;

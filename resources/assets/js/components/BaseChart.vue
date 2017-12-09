@@ -58,6 +58,7 @@
             "mcols",
             "mdata",
             "title",
+            "options",
         ],
         computed: {
         },
@@ -236,6 +237,12 @@
                             }],
                         }
                     };
+                    if (typeof self.options === 'object' && self.options) {
+                        for(var o in self.options) {
+                            if (o === 'scales') continue;
+                            options[o] = self.options[o];
+                        }
+                    }
                     switch (self.chartType) {
                         case 'bar':
                         case 'line':
