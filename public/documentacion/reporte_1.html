@@ -86,18 +86,18 @@
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <div class="stat-percent font-bold text-success">{{empresa.activo_c}}% <i v-bind:class="{'fa fa-level-up': empresa.activo_c>0 , 'fa fa-level-down': empresa.activo_c<0}"></i></div>
+                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-success">{{empresa.activo_c}}% <i v-bind:class="{'fa fa-level-up': empresa.activo_c>0 , 'fa fa-level-down': empresa.activo_c<0}"></i></div>
                                     <small class="stats-label">Activo</small>
                                     <h4>Bs. {{empresa.activo}}</h4>
                                 </div>
 
                                 <div class="col-xs-4">
-                                    <div class="stat-percent font-bold text-info">{{empresa.pasivo_c}}% <i v-bind:class="{'fa fa-level-up': empresa.pasivo_c>0 , 'fa fa-level-down': empresa.pasivo_c<0}"></i></div>
+                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-info">{{empresa.pasivo_c}}% <i v-bind:class="{'fa fa-level-up': empresa.pasivo_c>0 , 'fa fa-level-down': empresa.pasivo_c<0}"></i></div>
                                     <small class="stats-label">Pasivo</small>
                                     <h4>Bs. {{empresa.pasivo}}</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <div class="stat-percent font-bold text-warning">{{empresa.patrimonio_c}}% <i v-bind:class="{'fa fa-level-up': empresa.patrimonio_c>0 , 'fa fa-level-down': empresa.patrimonio_c<0}"></i></div>
+                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-warning">{{empresa.patrimonio_c}}% <i v-bind:class="{'fa fa-level-up': empresa.patrimonio_c>0 , 'fa fa-level-down': empresa.patrimonio_c<0}"></i></div>
                                     <small class="stats-label">Patrimonio</small>
                                     <h4>Bs. {{empresa.patrimonio}}</h4>
                                 </div>
@@ -623,15 +623,15 @@
                                         'pasivo' : "{{$uc('2')}}",
                                         'patrimonio' : "{{$uc('3')}}",
                                         'ingresos' : "{{$uc('5')}}",
-                                        'gastos' : "{{$uc('6')}}",
-                                        'utilidad' : "{{$uc('5')-$uc('6')+$uc('4')*1}}",
+                                        'gastos' : "{{$uca('6')}}",
+                                        'utilidad' : "{{$uc('5')-$uca('6')+$uc('4')*1}}",
                                         //%
                                         'activo_c' : "{{($uc('1')-$ucp('1'))/abs($ucp('1'))*100}}",
                                         'pasivo_c' : "{{($uc('2')-$ucp('2'))/abs($ucp('2'))*100}}",
                                         'patrimonio_c' : "{{($uc('3')-$ucp('3'))/abs($ucp('3'))*100}}",
                                         'ingresos_c' : "{{($uc('5')-$ucp('5'))/abs($ucp('5'))*100}}",
-                                        'gastos_c' : "{{($uc('6')-$ucp('6'))/abs($ucp('6'))*100}}",
-                                        'utilidad_c' : "{{(($uc('5')-$uc('6')+$uc('4')*1)-($ucp('5')-$ucp('6')+$ucp('4')*1))/abs($ucp('5')-$ucp('6')+$ucp('4')*1)*100}}",
+                                        'gastos_c' : "{{($uca('6')-$ucpa('6'))/abs($ucpa('6'))*100}}",
+                                        'utilidad_c' : "{{(($uc('5')-$uca('6')+$uc('4')*1)-($ucp('5')-$ucpa('6')+$ucp('4')*1))/abs($ucp('5')-$ucpa('6')+$ucp('4')*1)*100}}",
                                         //ratios
                                         'liquidez' : "{{$uc('1.1')/$uc('2.1')}}",
                                         'p_acida' : "{{($uc('1.1')-$uc('1.1.5') )/ $uc('2.1')}}",
@@ -718,7 +718,7 @@
                                 setTimeout(function () {
                                     //preparePage();
                                     window.printPDF = true;
-                                }, 500);
+                                }, 300);
                             });
                         });
                         HashRoute.run(window.location.hash);
