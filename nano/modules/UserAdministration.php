@@ -318,6 +318,7 @@
                     new Module.Model.Field({
                         "name": "corporacion",
                         "label": "Corporación",
+                        "list": false,
                         "type": "string",
                         "default": ""
                     }),

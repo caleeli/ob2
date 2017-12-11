@@ -65,7 +65,7 @@ UserAdministration.Empresa = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/empresas";
     Model.call(this, url, id, "UserAdministration.Empresa");
     this.$list = function () {
-        return "fields=cod_empresa,nombre_empresa,corporacion,caracter,rubro";
+        return "fields=cod_empresa,nombre_empresa,caracter,rubro";
     };
     this.$name = "Empresa";
     this.$pluralName = "Empresas";
@@ -76,7 +76,7 @@ UserAdministration.Empresa = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_empresa"},{"title":"Empresa","data":"attributes.nombre_empresa"},{"title":"Corporación","data":"attributes.corporacion"},{"title":"Caracter","data":"attributes.caracter"},{"title":"Rubro","data":"attributes.rubro"}];
+        return [{"title":"Código","data":"attributes.cod_empresa"},{"title":"Empresa","data":"attributes.nombre_empresa"},{"title":"Caracter","data":"attributes.caracter"},{"title":"Rubro","data":"attributes.rubro"}];
     };
     this.$methods = {
 eeff:function(gestion, eeff,methodCallback,childrenAssociation){self.$call("eeff",{"gestion":gestion,"eeff":eeff}, childrenAssociation, methodCallback)}    };
