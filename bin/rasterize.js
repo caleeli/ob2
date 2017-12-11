@@ -84,7 +84,7 @@ if (system.args.length < 3 || system.args.length > 5) {
                     return page.evaluate(function() {
                         console.log(window.printPDF);
                         return typeof window.printPDF !== 'undefined'
-                            ? window.printPDF : false;
+                            ? window.printPDF===true : false;
                     });
                 },
                 function () {
