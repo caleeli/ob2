@@ -107,9 +107,9 @@
             drawChart: function() {
                 var self = this;
                 var pieColors = [
-                    '#22AA99',
-                    'darkgray',
-                    '#DC3912',
+                    '#237CB7',
+                    '#2FB9BA',
+                    '#F5A454',
                     '#FF9900',
                     '#109618',
                     '#990099',
