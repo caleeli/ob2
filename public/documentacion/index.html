@@ -180,23 +180,28 @@
                                                                 </div>
                                                                 <div class="ibox-content indicador">
                                                                     <!-- a v-bind:href="estado.attributes.archivo?estado.attributes.archivo.url:'#'">{{estado.attributes.archivo?estado.attributes.archivo.name:''}}</a -->
-                                                                    <div class="col-md-6">
-                                                                        <div v-if='eeffEditable.indexOf(estado.id)==-1' v-html="estado.html"></div>
-                                                                        <htmleditor v-if='eeffEditable.indexOf(estado.id)>-1' v-bind:model="estado.attributes" v-bind:property="'contenido'" />
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div v-if='eeffEditable.indexOf(estado.id)==-1' v-html="estado.html"></div>
+                                                                            <htmleditor v-if='eeffEditable.indexOf(estado.id)>-1' v-bind:model="estado.attributes" v-bind:property="'contenido'" />
+                                                                        </div>
                                                                     </div>
-                                                                    <div v-for="data in estado.calculatedChart" class="col-md-6">
-                                                                        <basic-chart title="Presupuesto aprobado"
-                                                                             refreshWith="select,gestion"
-                                                                             mcols="aprobado"
-                                                                             v-bind:type="data.type"
-                                                                             v-bind:mdata='data' />
+                                                                    <div class="row">
+                                                                        <div v-for="data in estado.calculatedChart" class="col-md-6">
+                                                                            <br>
+                                                                            <basic-chart title="Presupuesto aprobado"
+                                                                                 refreshWith="select,gestion"
+                                                                                 mcols="aprobado"
+                                                                                 v-bind:type="data.type"
+                                                                                 v-bind:mdata='data' />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6" v-if="user.username==='admin'">
+                                                        <!-- div class="col-md-6" v-if="user.username==='admin'">
                                                             <a class="btn btn-primary" v-on:click="addCCFF"><h1><i class="fa fa-plus-circle"></i></h1></a>
-                                                        </div>
+                                                        </div -->
                                                     </div>
                                                 </div>
                                             </div>
