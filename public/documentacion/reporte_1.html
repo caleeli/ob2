@@ -697,7 +697,7 @@
                 "ingresos": [@if($gestion-2>2014) {{$ucp("5",-2)*1}},\n\
                 @endif{{$ucp("5")*1}},{{$uc("5")*1}}],\
                 "gastos": [@if($gestion-2>2014) {{$ucpa("6",-2)*1}},\n\
-                @endif{{$ucpa("6")*1}},{{$uc("6")a*1}}],\
+                @endif{{$ucpa("6")*1}},{{$uca("6")*1}}],\
                 "utilidad": [@if($gestion-2>2014) {{$ucp("5",-2)-$ucpa("6",-2)+$ucp("4",-2)*1}},\n\
                 @endif{{$ucp("5")-$ucpa("6")+$ucp("4")*1}},{{$uc("5")-$uca("6")+$uc("4")*1}}]\
             }\
