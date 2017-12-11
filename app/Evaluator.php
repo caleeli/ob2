@@ -91,6 +91,16 @@ class Evaluator
         }
     }
 
+    private function uca($codigo)
+    {
+        return abs($this->uc($codigo));
+    }
+
+    private function ucpa($codigo, $prev)
+    {
+        return abs($this->ucp($codigo, $prev));
+    }
+
     private function getValue($codigo, $from)
     {
         foreach ($from as $t) {
@@ -111,6 +121,7 @@ class Evaluator
                 }
             }
         }
+        return 0;
     }
 
     public function calculate($html, $isChart=false)
@@ -132,6 +143,18 @@ class Evaluator
              */
             'ucp' => function ($codigo, $prev=-1) {
                 return $this->ucp($codigo, $prev);
+            },
+            /**
+             * Valor de la (U)ltima (C)olumna con código $codigo
+             */
+            'uca' => function ($codigo) {
+                return $this->uca($codigo);
+            },
+            /**
+             * Valor de la (U)ltima (C)olumna con código $codigo
+             */
+            'ucpa' => function ($codigo, $prev=-1) {
+                return $this->ucpa($codigo, $prev);
             },
             'format' => function ($value) {
                 return is_numeric($value) ? number_format($value, 2, '.', ',') : $value;
