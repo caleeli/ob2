@@ -35,7 +35,7 @@ function waitFor(testFx, onReady, timeOutMillis) {
                     clearInterval(interval); //< Stop this interval
                 }
             }
-        }, 250); //< repeat check every 250ms
+        }, 600); //< repeat check every 250ms
 };
 
 if (system.args.length < 3 || system.args.length > 5) {
