@@ -185,6 +185,12 @@
                                                                             <div v-if='eeffEditable.indexOf(estado.id)==-1' v-html="estado.html"></div>
                                                                             <htmleditor v-if='eeffEditable.indexOf(estado.id)>-1' v-bind:model="estado.attributes" v-bind:property="'contenido'" />
                                                                         </div>
+                                                                        <div v-if="empresaSeleccionada==3 && empresaSeleccionadaGestion==2015" class="col-md-6">
+                                                                            <img src="img/boa_cuentas.png" style="width:90%">
+                                                                        </div>
+                                                                        <div v-if="empresaSeleccionada==22 && empresaSeleccionadaGestion==2016" class="col-md-6">
+                                                                            <img src="img/quipus_cuentas.png" style="width:90%">
+                                                                        </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div v-for="data in estado.calculatedChart" class="col-md-6">
