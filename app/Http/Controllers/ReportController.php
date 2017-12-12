@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
  */
 class ReportController extends Controller
 {
-    const FORMAT = '"1200*1552"';
+    const FORMAT = '"1400*1811"';
 
     public function report(Request $request)
     {
