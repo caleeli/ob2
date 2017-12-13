@@ -451,7 +451,7 @@ and open the template in the editor.
                                 <div class="col-lg-10">
                                     <div class="form-group">
                                         <div class='input-group date'>
-                                            <input type='text' disabled="disabled" v-model="hoja.fecha" class="form-control" />
+                                            <input type='text' disabled1="disabled" v-model="hoja.fecha" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -459,31 +459,36 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="textArea" disabled="disabled" class="col-lg-2 control-label">Referencia</label>
                                 <div class="col-lg-10">
-                                    <textarea class="form-control" disabled="disabled" v-model="hoja.referencia" rows="3" id="textArea"></textarea>
+                                    <textarea class="form-control" disabled1="disabled" v-model="hoja.referencia" rows="3" id="textArea"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Procedencia</label>
                                 <div class="col-lg-10">
-                                    <input type="text" disabled="disabled" v-model="hoja.procedencia" class="form-control" placeholder="">
+                                    <input type="text" disabled1="disabled" v-model="hoja.procedencia" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Nº de control</label>
                                 <div class="col-lg-10">
-                                    <input type="text" disabled="disabled" v-model="hoja.nroDeControl" class="form-control" placeholder="">
+                                    <input type="text" disabled1="disabled" v-model="hoja.nroDeControl" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Anexo hojas</label>
                                 <div class="col-lg-10">
-                                    <input type="text" disabled="disabled" v-model="hoja.anexoHojas" class="form-control" placeholder="">
+                                    <input type="text" disabled1="disabled" v-model="hoja.anexoHojas" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Destinatario</label>
                                 <div class="col-lg-10">
-                                    <input type="text" disabled="disabled" v-model="hoja.destinatario" class="form-control" placeholder="">
+                                    <input type="text" disabled1="disabled" v-model="hoja.destinatario" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <button type="button" v-on:click="generar" class="btn btn-primary">Guardar cambios</button>
                                 </div>
                             </div>
                             <div v-if="!concluido()">
