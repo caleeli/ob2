@@ -616,7 +616,10 @@ and open the template in the editor.
                             <canvas id="pendientes" width="400" height="200"></canvas>
                         </div>
                     </div>
-                    <input class="form-control" v-model='filtro' placeholder="busqueda" v-on:keyup='filtrar'>
+                    <div class="input-group">
+                        <input class="form-control" v-model='filtro' placeholder="busqueda">
+                        <a href="javascript:void(0)" class="btn input-group-addon" v-on:click='filtrar'>Buscar</a>
+                    </div>
                     <table class="table table-striped table-hover ">
                         <thead>
                             <tr>
@@ -1034,41 +1037,31 @@ and open the template in the editor.
                     },
                     filtrar: function () {
                         var self = this;
-                        var self = this;
-                        if (!self.runningFiltrar) {
-                            self.runningFiltrar = true;
-                            setTimeout(
-                                function () {
-                                    $.ajax({
-                                        method:'GET',
-                                        url: 'select.php',
-                                        data: {
-                                            filter: self.filtro,
-                                            t: Math.floor(new Date().getTime()/1000)
-                                        },
-                                        dataType: 'json',
-                                        success: function (res) {
-                                            self.hojasDeRutaBusqueda.splice(0);
-                                            res.forEach(function (o) {
-                                                self.hojasDeRutaBusqueda.push(new Recepcion({
-                                                    id: o.id,
-                                                    tipo: o.tipo,
-                                                    fecha: o.fecha,
-                                                    referencia: o.referencia,
-                                                    procedencia: o.procedencia,
-                                                    nroDeControl: o.nro_de_control,
-                                                    anexoHojas: o.anexo_hojas,
-                                                    destinatario: o.destinatario,
-                                                    conclusion: o.conclusion,
-                                                }));
-                                            });
-                                        }
-                                    });
-                                    self.runningFiltrar = false;
-                                },
-                                600
-                            );
-                        }
+                        $.ajax({
+                            method:'GET',
+                            url: 'select.php',
+                            data: {
+                                filter: self.filtro,
+                                t: Math.floor(new Date().getTime()/1000)
+                            },
+                            dataType: 'json',
+                            success: function (res) {
+                                self.hojasDeRutaBusqueda.splice(0);
+                                res.forEach(function (o) {
+                                    self.hojasDeRutaBusqueda.push(new Recepcion({
+                                        id: o.id,
+                                        tipo: o.tipo,
+                                        fecha: o.fecha,
+                                        referencia: o.referencia,
+                                        procedencia: o.procedencia,
+                                        nroDeControl: o.nro_de_control,
+                                        anexoHojas: o.anexo_hojas,
+                                        destinatario: o.destinatario,
+                                        conclusion: o.conclusion,
+                                    }));
+                                });
+                            }
+                        });
                     },
                     filtrarDerivacion: function () {
                         var self = this;
