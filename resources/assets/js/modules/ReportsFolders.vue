@@ -130,15 +130,15 @@ ReportsFolders.Variable = function (url, id) {
     this.$pluralName = "Variables";
     this.$title = "variable";
     this.$pluralTitle = "variables";
-    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"description":{"name":"description","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"description","isAssociation":false},"image":{"name":"image","label":"Imagen","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"image","isAssociation":false},"aggregator":{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator","isAssociation":false},"dimensions":{"name":"dimensions","label":"dimensions","type":"tags","enum":[],"source":function (){
+    this.$ = {"name":{"name":"name","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"description":{"name":"description","label":"Descripción","type":"textarea","enum":[],"source":undefined,"textField":undefined,"value":"description","isAssociation":false},"image2":{"name":"image2","label":"Imagen","type":"file","enum":[],"source":undefined,"textField":undefined,"value":"image2","isAssociation":false},"aggregator":{"name":"aggregator","label":"Agregación","type":"select","enum":["sum","max","min","avg"],"source":undefined,"textField":undefined,"value":"aggregator","isAssociation":false},"dimensions":{"name":"dimensions","label":"dimensions","type":"tags","enum":[],"source":function (){
                             return module.dimension;
                         },"textField":"name","value":"dimensions","isAssociation":true,"isMultiple":true},"rows":{"name":"rows","label":"Filas","type":"tags","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:self.id,domains:false});
                         },"textField":"name","value":"rows","isAssociation":false},"cols":{"name":"cols","label":"Columnas","type":"tags","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:self.id,domains:false});
-                        },"textField":"name","value":"cols","isAssociation":false},"filter":{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":function (){
+                        },"textField":"name","value":"cols","isAssociation":false},"estado":{"name":"estado","label":"Estado","type":"select","enum":["Pública","Deshabilitada"],"source":undefined,"textField":undefined,"value":"estado","isAssociation":false},"filter":{"name":"filter","label":"Filtro","type":"filter","enum":[],"source":function (){
                             return module.report.$selectFrom('dimensiones', {variables:self.id,domains:true});
-                        },"textField":"name","value":"filter","isAssociation":false},"information_source":{"name":"information_source","label":"Fuente de información","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"information_source","isAssociation":false},"file":{"name":"file","label":"Archivo fuente","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"file","isAssociation":false},"periodicity":{"name":"periodicity","label":"Periodicidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"periodicity","isAssociation":false},"chart_type":{"name":"chart_type","label":"Tipo de gráfico","type":"select","enum":["bar","bar2","horizontalBar","area","line","pie","polarArea","pivot"],"source":undefined,"textField":undefined,"value":"chart_type","isAssociation":false},"variableTags":{"name":"variableTags","label":"Tags","type":"tags","enum":[],"source":function (){
+                        },"textField":"name","value":"filter","isAssociation":false},"information_source":{"name":"information_source","label":"Fuente de información","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"information_source","isAssociation":false},"file":{"name":"file","label":"Archivo fuente","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"file","isAssociation":false},"periodicity":{"name":"periodicity","label":"Periodicidad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"periodicity","isAssociation":false},"chart_type":{"name":"chart_type","label":"Tipo de gráfico","type":"select","enum":["bar","bar2","horizontalBar","area","line","pie","polarArea","pivot"],"source":undefined,"textField":undefined,"value":"chart_type","isAssociation":false},"r_code":{"name":"r_code","label":"R","type":"textarea","enum":[],"source":undefined,"textField":undefined,"value":"r_code","isAssociation":false},"variableTags":{"name":"variableTags","label":"Tags","type":"tags","enum":[],"source":function (){
                             return module.variableTags;
                         },"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {
@@ -184,6 +184,36 @@ ReportsFolders.Unit = function (url, id) {
 }
 ReportsFolders.Unit.prototype = Object.create(Model.prototype);
 ReportsFolders.Unit.prototype.constructor = Model;
+
+ReportsFolders.Rchart = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/ReportsFolders/rcharts";
+    Model.call(this, url, id, "ReportsFolders.Rchart");
+    this.$list = function () {
+        return "fields=name";
+    };
+    this.$name = "Rchart";
+    this.$pluralName = "Rcharts";
+    this.$title = "rchart";
+    this.$pluralTitle = "rcharts";
+    this.$ = {"name":{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"description":{"name":"description","label":"Descripción","type":"textarea","enum":[],"source":undefined,"textField":undefined,"value":"description","isAssociation":false},"image2":{"name":"image2","label":"Imagen","type":"file","enum":[],"source":undefined,"textField":undefined,"value":"image2","isAssociation":false},"variableTags":{"name":"variableTags","label":"Clasificación","type":"tags","enum":[],"source":function (){
+                            return module.variableTags;
+                        },"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"name","data":"attributes.name"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+ReportsFolders.Rchart.prototype = Object.create(Model.prototype);
+ReportsFolders.Rchart.prototype.constructor = Model;
 
 ReportsFolders.Family = function (url, id) {
     var self = this;

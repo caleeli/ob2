@@ -119,6 +119,14 @@
                         "textField": "name",
                         "ui": "filter",
                     }),
+                    new Module.Model.Field({
+                        "name": "r_code",
+                        "label": "R",
+                        "form": false,
+                        "list": false,
+                        "type": "string",
+                        "ui": "textarea",
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
@@ -309,6 +317,10 @@
                         "name": "reports",
                         "model": "report",
                     }),
+                    new Module.Model.BelongsToMany({
+                        "name": "rcharts",
+                        "model": "rchart",
+                    }),
                 ],
                 methods:{
                     "tagsList()": <?php
@@ -342,12 +354,22 @@
                         "label": "Descripción",
                         "list": false,
                         "type": "string",
+                        "ui": "textarea",
                     }),
                     new Module.Model.Field({
                         "name": "image",
                         "label": "Imagen",
                         "list": false,
+                        "form": false,
                         "type": "string",
+                    }),
+                    new Module.Model.Field({
+                        "name": "image2",
+                        "label": "Imagen",
+                        "type": "array",
+                        "ui": "file",
+                        "list": false,
+                        "form": true,
                     }),
                     new Module.Model.Field({
                         "name": "aggregator",
@@ -378,6 +400,15 @@
                         },
                         "textField": "name",
                         "ui": "tags",
+                    }),
+                    new Module.Model.Field({
+                        "name": "estado",
+                        "type": "string",
+                        "list": false,
+                        "ui": "select",
+                        "label": "Estado",
+                        "default": "Pública",
+                        "enum": ["Pública", "Deshabilitada"],
                     }),
                     new Module.Model.Field({
                         "name": "filter",
@@ -437,6 +468,13 @@
                         ],
                         "ui": "select",
                     }),
+                    new Module.Model.Field({
+                        "name": "r_code",
+                        "label": "R",
+                        "list": false,
+                        "type": "string",
+                        "ui": "textarea",
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsToMany({
@@ -475,6 +513,43 @@
                     new Module.Model.BelongsTo({
                         "name": "family",
                         "model": "family"
+                    }),
+                ]
+            }),
+            new Module.Model({
+                "name": "rchart",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "name",
+                        "type": "string"
+                    }),
+                    new Module.Model.Field({
+                        "name": "description",
+                        "label": "Descripción",
+                        "list": false,
+                        "type": "string",
+                        "ui": "textarea",
+                    }),
+                    new Module.Model.Field({
+                        "name": "image2",
+                        "label": "Imagen",
+                        "type": "array",
+                        "ui": "file",
+                        "list": false,
+                        "form": true,
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsToMany({
+                        "name": "variableTags",
+                        "model": "variable_tag",
+                        "label": "Clasificación",
+                        "form": true,
+                        "ui": "tags",
+                        "source": function(){
+                            return module.variableTags;
+                        },
+                        "textField": "name",
                     }),
                 ]
             }),

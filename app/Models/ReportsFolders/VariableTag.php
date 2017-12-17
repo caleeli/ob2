@@ -32,6 +32,12 @@ class VariableTag extends Model
     }
 
 
+    public function rcharts()
+    {
+        return $this->belongsToMany('App\Models\ReportsFolders\Rchart');
+    }
+
+
     public function tagsList()
     {
         $collection = [];

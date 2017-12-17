@@ -3,6 +3,7 @@
         <div class="form-group" v-for="field in fields">
             <label>{{field.label}}</label>
             <input  v-if="field.type==='text'" type="text" class="form-control" :placeholder="field.label" v-model="values[field.value]" v-on:change="change">
+            <textarea v-if="field.type==='textarea'" class="form-control" :placeholder="field.label" v-model="values[field.value]" v-on:change="change"></textarea>
             <input  v-if="field.type==='password'" type="password" class="form-control" :placeholder="field.label" v-model="values[field.value]" v-on:change="change">
             <input  v-if="field.type==='email'" type="email" class="form-control" :placeholder="field.label" v-model="values[field.value]" v-on:change="change">
             <div v-if="field.type==='file'" class="input-group">

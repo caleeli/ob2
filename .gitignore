@@ -11,3 +11,4 @@ dump.php
 .php_cs.cache
 /config/connections.php
 
+/nbproject/private/
