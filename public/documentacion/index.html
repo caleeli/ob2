@@ -872,7 +872,7 @@
                         empresa_estado: new UserAdministration.EmpresaEstado(),
                         estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
                         estado_financiero_adm: new UserAdministration.EstadoFinanciero(),
-                        firma_auditoria: new UserAdministration.Firma(function(){return "/api/UserAdministration/users/"+localStorage.user_id+"/firmas";}),
+                        firma_auditoria: new UserAdministration.Firma(function(){return "/api/UserAdministration/firmas";}),
                         uai: new UserAdministration.Uai(function(){return "/api/UserAdministration/users/"+localStorage.user_id+"/uais";}),
                         tarea: new UserAdministration.Tarea(),
                         avance: new UserAdministration.Avance(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/avances") : "/api/UserAdministration/avances"}),
