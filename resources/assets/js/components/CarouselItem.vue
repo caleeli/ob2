@@ -1,5 +1,5 @@
 <template>
-    <div class="class" :id="id">
+    <div :id="id">
         <slot></slot>
     </div>
 </template>
@@ -7,7 +7,6 @@
 <script>
     export default {
         props:[
-            "class",
             "activate",
             "map",
             "id",

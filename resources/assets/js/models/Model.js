@@ -152,14 +152,14 @@ export default function(uri0, id, type) {
                         methodCallback.success(response.response);
                     }
                 } else {
-                    throw new Exception(response.error);
+                    throw (response.error);
                 }
             },
             error: function (response) {
                 if(typeof methodCallback==='object' && typeof methodCallback.error==='function') {
                     methodCallback.error(response);
                 } else {
-                    throw new Exception(response);
+                    console.log (response);
                 }
             },
         });

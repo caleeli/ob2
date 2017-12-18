@@ -538,6 +538,14 @@
                         "list": false,
                         "form": true,
                     }),
+                    new Module.Model.Field({
+                        "name": "r_code",
+                        "label": "R",
+                        "form": true,
+                        "list": false,
+                        "type": "string",
+                        "ui": "textarea",
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsToMany({
@@ -547,7 +555,7 @@
                         "form": true,
                         "ui": "tags",
                         "source": function(){
-                            return module.variableTags;
+                            return new ReportsFolders.VariableTag();
                         },
                         "textField": "name",
                     }),

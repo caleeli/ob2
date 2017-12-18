@@ -1,5 +1,5 @@
 <template>
-    <imageviewer :model="variableTags" children="variables,reports" v-on:clickImage="clickImage"></imageviewer>
+    <imageviewer :model="variableTags" children="variables,reports,rcharts" v-on:clickImage="clickImage"></imageviewer>
 </template>
 <script>
     var module;
@@ -57,7 +57,7 @@
             module = this;
             return {
                 path: [],
-                variableTags: new ReportsFolders.VariableTag(function(){try{var url="/api/ReportsFolders/VariableTag?include=variables,reports";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
+                variableTags: new ReportsFolders.VariableTag(function(){try{var url="/api/ReportsFolders/VariableTag?include=variables,reports,rcharts";return API_SERVER+(url.indexOf("¡@!")===-1?url:this.$defaultUrl);}catch(err){return API_SERVER+this.$defaultUrl;}}),
             }
         },
         mounted: function() {

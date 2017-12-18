@@ -52,6 +52,7 @@
             fields.forEach(function(f){
                 domains[f.name] = self.model.$domain(f, function(domain) {});
             });
+            console.log(this.model, fields);
             return {
                 fields: fields,
                 values: this.model,

@@ -196,8 +196,8 @@ ReportsFolders.Rchart = function (url, id) {
     this.$pluralName = "Rcharts";
     this.$title = "rchart";
     this.$pluralTitle = "rcharts";
-    this.$ = {"name":{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"description":{"name":"description","label":"Descripción","type":"textarea","enum":[],"source":undefined,"textField":undefined,"value":"description","isAssociation":false},"image2":{"name":"image2","label":"Imagen","type":"file","enum":[],"source":undefined,"textField":undefined,"value":"image2","isAssociation":false},"variableTags":{"name":"variableTags","label":"Clasificación","type":"tags","enum":[],"source":function (){
-                            return module.variableTags;
+    this.$ = {"name":{"name":"name","label":"name","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"name","isAssociation":false},"description":{"name":"description","label":"Descripción","type":"textarea","enum":[],"source":undefined,"textField":undefined,"value":"description","isAssociation":false},"image2":{"name":"image2","label":"Imagen","type":"file","enum":[],"source":undefined,"textField":undefined,"value":"image2","isAssociation":false},"r_code":{"name":"r_code","label":"R","type":"textarea","enum":[],"source":undefined,"textField":undefined,"value":"r_code","isAssociation":false},"variableTags":{"name":"variableTags","label":"Clasificación","type":"tags","enum":[],"source":function (){
+                            return new ReportsFolders.VariableTag();
                         },"textField":"name","value":"variableTags","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {
         return this.object2array(this.$, "item");

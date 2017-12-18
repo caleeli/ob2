@@ -18,7 +18,7 @@
         "views": {
         },
         "data": {
-            variableTags: new Module.View.ModelInstance("ReportsFolders.VariableTag", "ReportsFolders/VariableTag?include=variables,reports"),
+            variableTags: new Module.View.ModelInstance("ReportsFolders.VariableTag", "ReportsFolders/VariableTag?include=variables,reports,rcharts"),
         },
         "methods": {
             "clickImage": function (item) {

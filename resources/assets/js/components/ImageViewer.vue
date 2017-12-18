@@ -20,7 +20,16 @@
             </div>
         </div>
         <div v-if="viewR">
-            <img v-bind:src="'/r/'+itemR">
+            <div class='col-md-4 col-sm-12'>
+                <div class="form-group">
+                    <label>Nombre</label> <input type="text" placeholder="Nombre" disabled='disabled' class="form-control" v-model='itemRName'> 
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label> <div v-html='itemRDescription'></div>
+                </div>
+                <button type="button" class="btn btn-warning" v-on:click='closeR'>Cerrar</button>
+            </div>
+            <div class='col-md-7 col-sm-12'><img v-bind:src="'/r/'+itemR"></div>
         </div>
     </div>
 </template>
@@ -34,6 +43,8 @@ import BaseComponent from './BaseComponent.js';
                 "search": "",
                 "viewR": false,
                 "itemR": 0,
+                "itemRName": "",
+                "itemRDescription": "",
             };
         },
         props:[
@@ -77,12 +88,18 @@ import BaseComponent from './BaseComponent.js';
             clickImage: function (item) {
                 var self = this;
                 if (item.attributes.r_code) {
-                    self.itemR = item.attributes.id
+                    self.itemR = item.attributes.id;
+                    self.itemRName = item.attributes.name;
+                    self.itemRDescription = item.attributes.description;
                     self.viewR = true;
                 } else {
                     self.viewR = false;
                     this.$emit('clickImage', item);
                 }
+            },
+            closeR : function () {
+                var self = this;
+                self.viewR = false;
             },
             isVisible : function (item) {
                 return !(item && typeof item.attributes.estado === 'string' && item.attributes.estado === 'Deshabilitada');

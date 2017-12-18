@@ -30,3 +30,5 @@ Route::get('/basic', function () {
 Route::get('/report', function () {
     return view('chart', ['template'=>'flatly']);
 });
+
+Route::get('/r/{id}', 'RController@chart');
