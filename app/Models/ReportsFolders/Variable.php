@@ -24,7 +24,6 @@ class Variable extends Model
       11 => 'periodicity',
       12 => 'source_link',
       13 => 'chart_type',
-      14 => 'r_code',
     );
     protected $attributes = array(
       'name' => null,
@@ -41,7 +40,6 @@ class Variable extends Model
       'periodicity' => null,
       'source_link' => null,
       'chart_type' => 'line',
-      'r_code' => null,
     );
     protected $casts = array(
       'name' => 'string',
@@ -58,7 +56,6 @@ class Variable extends Model
       'periodicity' => 'string',
       'source_link' => 'string',
       'chart_type' => 'string',
-      'r_code' => 'string',
     );
     protected $events = array(
     );

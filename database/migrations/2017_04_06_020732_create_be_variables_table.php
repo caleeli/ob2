@@ -25,7 +25,6 @@ class CreateBeVariablesTable extends Migration
             $table->string('periodicity')->nullable();
             $table->string('source_link')->nullable();
             $table->string('chart_type')->nullable();
-            $table->string('r_code')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -119,14 +119,6 @@
                         "textField": "name",
                         "ui": "filter",
                     }),
-                    new Module.Model.Field({
-                        "name": "r_code",
-                        "label": "R",
-                        "form": false,
-                        "list": false,
-                        "type": "string",
-                        "ui": "textarea",
-                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
@@ -467,13 +459,6 @@
                             "pivot",
                         ],
                         "ui": "select",
-                    }),
-                    new Module.Model.Field({
-                        "name": "r_code",
-                        "label": "R",
-                        "list": false,
-                        "type": "string",
-                        "ui": "textarea",
                     }),
                 ],
                 "associations": [

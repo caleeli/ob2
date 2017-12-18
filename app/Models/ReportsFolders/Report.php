@@ -17,8 +17,7 @@ class Report extends Model
       4 => 'cols',
       5 => 'chart_type',
       6 => 'filter',
-      7 => 'r_code',
-      8 => 'folder_id',
+      7 => 'folder_id',
     );
     protected $attributes = array(
       'name' => null,
@@ -28,7 +27,6 @@ class Report extends Model
       'cols' => null,
       'chart_type' => 'line',
       'filter' => null,
-      'r_code' => null,
     );
     protected $casts = array(
       'name' => 'string',
@@ -38,7 +36,6 @@ class Report extends Model
       'cols' => 'string',
       'chart_type' => 'string',
       'filter' => 'string',
-      'r_code' => 'string',
     );
     protected $events = array(
     );
