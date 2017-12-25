@@ -526,7 +526,7 @@ and open the template in the editor.
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="button" :disabled="concluido()" v-on:click="saveDerivation" class="btn btn-primary">Registrar</button>
+                                    <button type="button" :disabled="concluido()" v-on:click="saveDerivation(derivacion)" class="btn btn-primary">Registrar</button>
                                     <button type="button" :disabled="concluido()" v-on:click="terminarHoja" class="btn btn-warning">Terminar</button>
                                 </div>
                             </div>
@@ -545,10 +545,18 @@ and open the template in the editor.
                         </thead>
                         <tbody>
                             <tr v-for='derivacion in derivaciones'>
-                                <td>{{derivacion.fecha}}</td>
-                                <td>{{derivacion.destinatario}}</td>
-                                <td>{{derivacion.comentarios}}</td>
-                                <td>{{derivacion.instruccion}}</td>
+                                <td v-if="!derivacion.editable">{{derivacion.fecha}}</td>
+                                <td v-if="!derivacion.editable">{{derivacion.destinatario}}</td>
+                                <td v-if="!derivacion.editable">{{derivacion.comentarios}}</td>
+                                <td v-if="!derivacion.editable">{{derivacion.instruccion}}</td>
+                                <td v-if="derivacion.editable"><input type="text" v-model="derivacion.fecha" class="form-control"></td>
+                                <td v-if="derivacion.editable"><input type="text" v-model="derivacion.destinatario" class="form-control"></td>
+                                <td v-if="derivacion.editable"><textarea class="form-control" v-model="derivacion.comentarios" class="form-control"></textarea></td>
+                                <td v-if="derivacion.editable"><input type="text" v-model="derivacion.instruccion" class="form-control"></td>
+                                <td>
+                                    <a v-if="!derivacion.editable" href='javascript:void(0)' class='btn btn-default glyphicon glyphicon-pencil' v-on:click='derivacion.editable=true;'></a>
+                                    <a v-if="derivacion.editable" href='javascript:void(0)' class='btn btn-primary glyphicon glyphicon-floppy-disk' v-on:click='derivacion.editable=false;saveDerivation(null, derivacion);'></a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -786,6 +794,7 @@ and open the template in the editor.
             this.comentarios = '',
             this.instruccion = '';
             this.load(values);
+            this.editable = false;
         }
         Derivacion.prototype.load = function (values){
             if (typeof values==='object' && values) {
@@ -911,9 +920,9 @@ and open the template in the editor.
                     nuevaNota: function() {
                         
                     },
-                    saveDerivation: function(callback) {
+                    saveDerivation: function(callback, o) {
                         var self = this;
-                        var o = this.derivacion;
+                        if (typeof o==='undefined') o = this.derivacion;
                         $.ajax({
                             method: 'get',
                             url: 'saveDerivacion.php',
