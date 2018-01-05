@@ -46,8 +46,19 @@ and open the template in the editor.
                   Botones principales
                 -->
                 <div class="col-md-11" style="padding-top: 8px;padding-bottom: 8px;">
-                    <a href='#recepcion' class='btn btn-primary' v-on:click='nueva' v-if="!window.isManager">Recepción</a>
-                    <a href='#busqueda' class='btn btn-info' v-if="!window.isManager">Búsqueda</a>
+                    <div class="btn-group">
+                        <a href="#recepcion" class="btn btn-primary" v-on:click='nueva' v-if="!window.isManager">Hoja de ruta</a>
+
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span> <!-- caret -->
+                            <span class="sr-only">Hoja de ruta</span>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
+                            <li><a href="#recepcion" v-on:click='nueva' v-if="!window.isManager">Registrar</a></li>
+                            <li><a href="#busqueda">Búsqueda</a></li>
+                        </ul>
+                    </div>
                     <a href='#busqueda' class='btn btn-info' v-if="window.isManager">Dashboard</a>
                     <div class="btn-group">
                         <a href="#nota_oficio" class="btn btn-success" v-on:click='nuevaNota' v-if="!window.isManager">Notas oficio</a>
@@ -133,7 +144,12 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Destinatario</label>
                                 <div class="col-lg-10">
-                                    <input type="text" v-model="hoja.destinatario" class="form-control" placeholder="">
+                                    <div class="btn-group btn-block">
+                                        <input type="text" v-model="hoja.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
+                                        <ul class="dropdown-menu">
+                                            <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -839,6 +855,7 @@ and open the template in the editor.
                         derivacion: new Derivacion(),
                         derivaciones: [],
                         filtroDerivacion: '',
+                        destinatarios : [],
                     };
                 },
                 methods: {
@@ -1228,6 +1245,22 @@ and open the template in the editor.
                             });
                         });
                     },
+                    cargarDestinatarios : function () {
+                        var self = this;
+                        $.ajax({
+                            url:'/api/UserAdministration/users?fields=nombres,apellidos',
+                            method:'get',
+                            data: {
+                                t: Math.floor(new Date().getTime()/1000)
+                            },
+                            dataType:'json'
+                        }).then(function (data) {
+                            self.destinatarios.splice(0);
+                            data.data.forEach(function (row) {
+                                self.destinatarios.push(row);
+                            });
+                        });
+                    },
                 },
                 mounted: function () {
                     var self = this;
@@ -1237,6 +1270,7 @@ and open the template in the editor.
                     menu=window.location.hash.substr(1);
                     this.menu=menu?menu:(window.isManager?'busqueda':'recepcion');
                     self.dibujarDashboard();
+                    self.cargarDestinatarios();
                 }
             });
             window.app = app;
