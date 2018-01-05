@@ -3,8 +3,8 @@
 $connection = require('connection.php');
 
 if (empty($_REQUEST['id'])) {
-    $stmt = $connection->prepare('insert into hoja_ruta(tipo, fecha, referencia, procedencia, nro_de_control, anexo_hojas, destinatario, conclusion)'
-        .' values (?,?,?,?,?,?,?,?)');
+    $stmt = $connection->prepare('insert into hoja_ruta(tipo, fecha, referencia, procedencia, nro_de_control, anexo_hojas, destinatario, conclusion, numero)'
+        .' values (?,?,?,?,?,?,?,?,?)');
 
     $stmt->execute([
         $_REQUEST['tipo'],
@@ -15,6 +15,7 @@ if (empty($_REQUEST['id'])) {
         $_REQUEST['anexo_hojas'],
         $_REQUEST['destinatario'],
         empty($_REQUEST['conclusion']) ? '0000-00-00' : $_REQUEST['conclusion'],
+        $_REQUEST['numero'],
     ]);
     //save derivation
     $stmt = $connection->prepare('insert into derivacion(fecha, comentarios, destinatario, instruccion, hoja_ruta_id)'

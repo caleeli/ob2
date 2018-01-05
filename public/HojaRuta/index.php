@@ -891,6 +891,7 @@ and open the template in the editor.
                                 anexo_hojas: o.anexoHojas,
                                 destinatario: o.destinatario,
                                 conclusion: o.conclusion,
+                                numero: o.numero,
                                 t: new Date().getTime()
                             },
                             dataType: 'json',
