@@ -95,7 +95,7 @@ and open the template in the editor.
                             <legend>Hoja de ruta - SCEP</legend>
                             <div class="form-group">
                                 <label for="textArea" class="col-lg-2 control-label">Tipo</label>
-                                <div class="col-lg-10">
+                                <div class="col-lg-8">
                                     <div class="radio">
                                       <label><input type="radio" name="optradio" value="interna" v-model="hoja.tipo">Interna</label>
                                     </div>
@@ -103,18 +103,19 @@ and open the template in the editor.
                                       <label><input type="radio" name="optradio" value="externa" v-model="hoja.tipo">Externa</label>
                                     </div>
                                 </div>
+                                <div class="col-lg-2 text-right">
+                                    <h1>{{hoja.numero}}</h1>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail" class="col-lg-2 control-label">Fecha de recepción</label>
                                 <div class="col-lg-10">
-                                    <div class="form-group">
                                         <div class='input-group date' id='datetimepicker1'>
                                             <input type='text' v-model="hoja.fecha" class="form-control" />
                                             <span class="input-group-addon" v-on:click='datepick'>
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -132,7 +133,7 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Nº de control</label>
                                 <div class="col-lg-10">
-                                    <input type="text" v-model="hoja.nroDeControl" class="form-control" placeholder="">
+                                    <input type="number" v-model="hoja.nroDeControl" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -856,6 +857,7 @@ and open the template in the editor.
                         derivaciones: [],
                         filtroDerivacion: '',
                         destinatarios : [],
+                        reservedNumber : '',
                     };
                 },
                 methods: {
@@ -870,6 +872,8 @@ and open the template in the editor.
                         this.hoja.fechaAuditor = '';
                         this.hoja.conclusion = '';
                         this.hoja.tipo = 'interna';
+                        this.hoja.numero = '';
+                        this.reservarNumero();
                     },
                     save: function(callback) {
                         var self = this;
@@ -1261,6 +1265,19 @@ and open the template in the editor.
                             });
                         });
                     },
+                    reservarNumero : function () {
+                        var self = this;
+                        $.ajax({
+                            url:'reservarNumero.php',
+                            method:'get',
+                            data: {
+                                t: Math.floor(new Date().getTime()/1000)
+                            },
+                            dataType:'json'
+                        }).then(function (data) {
+                            self.hoja.numero = data.reservedNumber;
+                        });
+                    }
                 },
                 mounted: function () {
                     var self = this;
@@ -1271,6 +1288,7 @@ and open the template in the editor.
                     this.menu=menu?menu:(window.isManager?'busqueda':'recepcion');
                     self.dibujarDashboard();
                     self.cargarDestinatarios();
+                    self.nueva();
                 }
             });
             window.app = app;

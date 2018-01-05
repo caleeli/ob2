@@ -18,4 +18,8 @@ if (empty($_REQUEST['filter'])) {
     $res =  $stmt->fetchAll();
 }
 
+$stmt = $connection->prepare('select max(numero), gestion from hoja_ruta where gestion=YEAR(CURDATE()) group by gestion');
+$stmt->execute();
+$res =  $stmt->fetchAll();
+
 echo json_encode($res);
