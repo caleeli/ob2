@@ -734,6 +734,7 @@ and open the template in the editor.
             this.fechaAuditor= '';
             this.conclusion= '';
             this.tipo= 'interna';
+            this.numero= '';
             this.load(values);
         }
         Recepcion.prototype.load = function (values){
