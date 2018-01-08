@@ -500,7 +500,12 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Destinatario</label>
                                 <div class="col-lg-10">
-                                    <input type="text" disabled1="disabled" v-model="hoja.destinatario" class="form-control" placeholder="">
+                                    <div class="btn-group btn-block">
+                                        <input type="text" v-model="hoja.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
+                                        <ul class="dropdown-menu">
+                                            <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -532,7 +537,12 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Destinatario</label>
                                 <div class="col-lg-10">
-                                    <input type="text" :disabled="concluido()" v-model="derivacion.destinatario" class="form-control" placeholder="">
+                                    <div class="btn-group btn-block">
+                                        <input type="text" :disabled="concluido()" v-model="derivacion.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
+                                        <ul class="dropdown-menu">
+                                            <li v-for="dest in destinatarios" v-on:click="derivacion.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(derivacion.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
