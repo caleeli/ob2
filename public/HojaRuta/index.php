@@ -1312,6 +1312,7 @@ and open the template in the editor.
                             url:'reservarNumero.php',
                             method:'get',
                             data: {
+                                tipo: self.hoja.tipo,
                                 t: Math.floor(new Date().getTime()/1000)
                             },
                             dataType:'json'

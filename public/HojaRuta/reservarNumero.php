@@ -17,10 +17,12 @@ $stmt->execute([
 
 ]);*/
 $gestion = date('Y');
+$tipo = $_REQUEST['tipo'];
 $stmt = $connection->prepare('select ifnull(max(numero),0) + 1 as reservedNumber from hoja_ruta where '
-    . 'gestion=?');
+    . 'gestion=? and tipo=?');
 $stmt->execute([
-    $gestion
+    $gestion,
+    $tipo
 ]);
 $res = $stmt->fetch();
 
