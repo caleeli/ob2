@@ -30,6 +30,11 @@ and open the template in the editor.
             color:white;
             border-color: rgb(76, 174, 76);
         }
+        .btn-pink{
+            background-color: #de5f5b;
+            color:white;
+            border-color: #ac3b37;
+        }
         .btn-success{
             background-color: #428442;
         }
@@ -46,17 +51,30 @@ and open the template in the editor.
                   Botones principales
                 -->
                 <div class="col-md-11" style="padding-top: 8px;padding-bottom: 8px;">
-                    <div class="btn-group">
-                        <a href="#recepcion" class="btn btn-primary" v-on:click='nueva' v-if="!window.isManager">Hoja de ruta</a>
+                    <div class="btn-group" v-if="!window.isManager">
+                        <a href="#recepcion" class="btn btn-primary" v-on:click='nuevaExterna'>Hoja de ruta externa</a>
 
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span> <!-- caret -->
-                            <span class="sr-only">Hoja de ruta</span>
+                            <span class="sr-only">Hoja de ruta externa</span>
                         </button>
 
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
-                            <li><a href="#recepcion" v-on:click='nueva' v-if="!window.isManager">Registrar</a></li>
-                            <li><a href="#busqueda">Búsqueda</a></li>
+                            <li><a href="#recepcion" v-on:click='nuevaExterna' v-if="!window.isManager">Registrar</a></li>
+                            <li><a href="#busqueda" v-on:click='filtroTipo="externa";filtrar()'>Búsqueda</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group" v-if="!window.isManager">
+                        <a href="#recepcion" class="btn btn-danger btn-pink" v-on:click='nuevaInterna'>Hoja de ruta interna</a>
+
+                        <button type="button" class="btn btn-danger btn-pink dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span> <!-- caret -->
+                            <span class="sr-only">Hoja de ruta interna</span>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
+                            <li><a href="#recepcion" v-on:click='nuevaInterna' v-if="!window.isManager">Registrar</a></li>
+                            <li><a href="#busqueda" v-on:click='filtroTipo="interna";filtrar()'>Búsqueda</a></li>
                         </ul>
                     </div>
                     <a href='#busqueda' class='btn btn-info' v-if="window.isManager">Dashboard</a>
@@ -92,19 +110,21 @@ and open the template in the editor.
                 <div class="col-md-10" v-if="menu=='recepcion'">
                     <form class="form-horizontal">
                         <fieldset>
-                            <legend>Hoja de ruta - SCEP</legend>
+                            <legend>Hoja de ruta - SCEP <b># {{hoja.numero}}</b></legend>
                             <div class="form-group">
                                 <label for="textArea" class="col-lg-2 control-label">Tipo</label>
-                                <div class="col-lg-8">
+                                <!--div class="col-lg-8">
                                     <div class="radio">
                                       <label><input type="radio" name="optradio" value="interna" v-model="hoja.tipo">Interna</label>
                                     </div>
                                     <div class="radio">
                                       <label><input type="radio" name="optradio" value="externa" v-model="hoja.tipo">Externa</label>
                                     </div>
-                                </div>
-                                <div class="col-lg-2 text-right">
-                                    <h1>{{hoja.numero}}</h1>
+                                </div-->
+                                <div class="col-lg-10">
+                                    <div class="radio" style="text-transform: uppercase">
+                                      <label>{{hoja.tipo}}</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -648,6 +668,7 @@ and open the template in the editor.
                     <p></p>
                 </div>
                 <div class="col-md-10" v-if="menu=='busqueda'">
+                    <h4>{{filtroTipo}}</h4>
                     <div class="row justify-content-md-center" v-if="window.isManager">
                         <div class="col-md-5">
                             <canvas id="seguimientoMes" width="400" height="200"></canvas>
@@ -869,10 +890,17 @@ and open the template in the editor.
                         filtroDerivacion: '',
                         destinatarios : [],
                         reservedNumber : '',
+                        filtroTipo : 'externa',
                     };
                 },
                 methods: {
-                    nueva: function () {
+                    nuevaExterna : function () {
+                        this.nueva('externa');
+                    },
+                    nuevaInterna : function () {
+                        this.nueva('interna');
+                    },
+                    nueva: function (tipo) {
                         this.hoja.id = null;
                         this.hoja.fecha = '';
                         this.hoja.referencia = '';
@@ -882,7 +910,7 @@ and open the template in the editor.
                         this.hoja.destinatario = '';
                         this.hoja.fechaAuditor = '';
                         this.hoja.conclusion = '';
-                        this.hoja.tipo = 'interna';
+                        this.hoja.tipo = !tipo ? 'interna' : tipo;
                         this.hoja.numero = '';
                         this.reservarNumero();
                     },
@@ -1089,6 +1117,7 @@ and open the template in the editor.
                             url: 'select.php',
                             data: {
                                 filter: self.filtro,
+                                tipo: self.filtroTipo,
                                 t: Math.floor(new Date().getTime()/1000)
                             },
                             dataType: 'json',
