@@ -1257,7 +1257,60 @@
                         }
                     ?>
                 }
-            })
+            }),
+            /**
+             * Documento subido al sistema.
+             */
+            new Module.Model({
+                "name": "documento",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "nombre",
+                        "type": "string",
+                        "label": "Nombre",
+                        "required": true
+                    }),
+                    new Module.Model.Field({
+                        "name": "archivo",
+                        "type": "array",
+                        "ui": "file",
+                        "label": "Archivo",
+                        "required": true
+                    }),
+                ],
+                "associations": [],
+                "methods": {
+                }
+            }),
+            /**
+             * hoja_trabajo
+             */
+            new Module.Model({
+                "name": "hoja_trabajo",
+                "title": "Hoja de trabajo",
+                "pluralTitle": "Hojas de trabajo",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "titulo",
+                        "type": "string",
+                        "label": "Título",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "contenido",
+                        "type": "string",
+                        "label": "Formula (html)",
+                        "ui": "html",
+                        "default": ""
+                    }),
+                ],
+                "associations": [
+                ],
+                "events": {
+                },
+                "methods": {
+                }
+            }),
         ]
     });
 </script>

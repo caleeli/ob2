@@ -606,4 +606,60 @@ sendEmail:function(account,methodCallback,childrenAssociation){self.$call("sendE
 UserAdministration.Recover.prototype = Object.create(Model.prototype);
 UserAdministration.Recover.prototype.constructor = Model;
 
+UserAdministration.Documento = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/documentos";
+    Model.call(this, url, id, "UserAdministration.Documento");
+    this.$list = function () {
+        return "fields=nombre,archivo";
+    };
+    this.$name = "Documento";
+    this.$pluralName = "Documentos";
+    this.$title = "documento";
+    this.$pluralTitle = "documentos";
+    this.$ = {"nombre":{"name":"nombre","label":"Nombre","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombre","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":undefined,"value":"archivo","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Nombre","data":"attributes.nombre"},{"title":"Archivo","data":"attributes.archivo"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Documento.prototype = Object.create(Model.prototype);
+UserAdministration.Documento.prototype.constructor = Model;
+
+UserAdministration.HojaTrabajo = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/hoja_trabajos";
+    Model.call(this, url, id, "UserAdministration.HojaTrabajo");
+    this.$list = function () {
+        return "fields=titulo,contenido";
+    };
+    this.$name = "HojaTrabajo";
+    this.$pluralName = "HojaTrabajos";
+    this.$title = "Hoja de trabajo";
+    this.$pluralTitle = "Hojas de trabajo";
+    this.$ = {"titulo":{"name":"titulo","label":"Título","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"titulo","isAssociation":false},"contenido":{"name":"contenido","label":"Formula (html)","type":"html","enum":[],"source":undefined,"textField":undefined,"value":"contenido","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Título","data":"attributes.titulo"},{"title":"Formula (html)","data":"attributes.contenido"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.HojaTrabajo.prototype = Object.create(Model.prototype);
+UserAdministration.HojaTrabajo.prototype.constructor = Model;
+
 </script>

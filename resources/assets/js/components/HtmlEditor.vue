@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="height:100%">
     </div>
 </template>
 
@@ -16,6 +16,7 @@
             "refreshWith",
             "model",
             "property",
+            "noinline"
         ],
         computed: {
         },
@@ -23,11 +24,11 @@
             initialize: function () {
                 var self = this;
                 self.editorPromise=tinymce.init({
-                    plugins: "table textcolor colorpicker contextmenu lists",
+                    plugins: "textcolor colorpicker contextmenu lists link autoresize",
                     menubar: 'edit insert format table tools',
-                    toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright | numlist bullist outdent indent",
+                    toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright | numlist bullist outdent indent | link",
                     target: self.$el,
-                    inline: true,
+                    inline: !self.noinline,
                     setup : function(editor) {
                         editor.on('change', function(e) {
                             var html = e.target.getContent();
