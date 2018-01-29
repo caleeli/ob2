@@ -7,7 +7,8 @@
     export default {
         props:[
             "url",
-            "page"
+            "page",
+            //"numPages",
         ],
         data() {
             return {
@@ -91,6 +92,7 @@
                     self.numPages = self.pdfDoc.numPages;
                     // Initial/first page rendering
                     self.renderPage(self.page);
+                    self.$emit('load', self.numPages);
                 });
             }
             

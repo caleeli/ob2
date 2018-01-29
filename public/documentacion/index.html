@@ -31,7 +31,20 @@
             ) location.href = 'login.html';
         </script>
 <style type="text/css">
-	@page {  }
+    .user-editable {
+        background-color: yellow;
+    }
+    .document-preview {
+        width: 8.5in;
+        border: 1px solid black;
+        padding-left: 1.5cm;
+        padding-right: 0.5cm;
+        padding-top: 1cm;
+        padding-bottom: 1cm;
+        box-shadow: 4px 4px 8px -2px rgb(60,60,60);
+        margin-bottom: 8px;
+    }
+    @page {  }
 	table { border-collapse:collapse; border-spacing:0; empty-cells:show }
 	td, th { vertical-align:top; font-size:12pt;}
 	h1, h2, h3, h4, h5, h6 { clear:both }
@@ -132,9 +145,8 @@
 	.Table1 { width:6.0646in; margin-top:0in; margin-bottom:0in; 
 				margin-left:auto;margin-right:auto;
 			writing-mode:lr-tb; }
-	.Table2 { width:6.1785in; margin-left:-0.0785in; margin-top:0in; margin-bottom:0in; margin-right:auto;writing-mode:lr-tb; }
-	.Table3 { width:7.2264in; margin-top:0in; margin-bottom:0in; 
-				margin-left:auto;margin-right:auto;
+	.Table2 { width:100%; margin-top:0in; margin-bottom:0in; margin-right:auto;writing-mode:lr-tb; }
+	.Table3 { width:100%; margin-top:0in; margin-bottom:0in; 
 			writing-mode:lr-tb; }
 	.Table4 { width:6.2993in; margin-top:0in; margin-bottom:0in; 
 				margin-left:auto;margin-right:auto;
@@ -281,7 +293,7 @@
 	    font: inherit;
 	    left: 0px;
 	    top: 0px;
-	    background: transparent;
+	    background: yellow;
 	    padding: inherit;
 	    margin: inherit;
 	    font-weight: inherit;
@@ -1112,64 +1124,12 @@
                         </div>
                     </carouselitem>
                 </carousel>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                Launch demo modal
-                            </button>
-
-                <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content animated bounceInRight">
-                            <div class="modal-header">
-                                <b>Documento</b>
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div style="position: relative;
-                                            width: 100%;
-                                            margin-bottom: 10px;">
-                                            <div style="padding-bottom: 129%;
-                                                position: relative;">
-                                                <pdf
-                                                    url="//cdn.mozilla.net/pdfjs/tracemonkey.pdf"
-                                                    style="position: absolute;  
-                                                    top: 0; height: 100%;
-                                                    left: 0; width: 100%;"
-                                                    v-bind:page="documento.pagina"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label>Documento:</label>
-                                        <select name="document" class="form-control">
-                                            <option>Seleccione el documento</option>
-                                            <option>&#x1F4C1; Carpeta</option>
-                                            <option>&#x1F4C4; Documento 2</option>
-                                        </select>
-                                        <label>Texto:</label>
-                                        <input name="texto" placeholder="texto" class="form-control" />
-                                        <label>Página:</label>
-                                        <input name="pagina" v-model="documento.pagina" placeholder="página" class="form-control" type="number" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>         
-
+            </div>
         </div>
 
         <!-- Mainly scripts -->
         <script src="/js/pdf.js"></script>
-        <script src="../js/server.js?v0.71"></script>
+        <script src="../js/server.js?v0.72"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1184,10 +1144,16 @@
                         gestiones.push(y);
                     }
                     return {
-                        documento : {pagina:1},
+                        documento : {
+                            pagina:1, numPages:0,
+                            onload: function (numPages) {
+                                self.documento.numPages = numPages;
+                            }
+                        },
                         trabajo : {
                             check : [],
                             check1 : 0,
+                            //enlace1 : {texto:'', url:''},
                         },
                         user: new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id),
                         usertarea: new UserAdministration.User(),

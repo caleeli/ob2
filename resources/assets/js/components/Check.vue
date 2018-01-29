@@ -1,5 +1,5 @@
 <template>
-    <span style="cursor: pointer" v-on:click="toggle">
+    <span class="user-editable" style="cursor: pointer" v-on:click="toggle">
         {{["\u2716", "\u2714", "N/A"][value]}}
     </span>
 </template>
@@ -8,7 +8,6 @@
     export default {
         data: function () {
             var model = this.$parent.$attrs.model;
-            window.asd = model;
             return {
                 value: 0
             };
