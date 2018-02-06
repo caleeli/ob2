@@ -16,22 +16,26 @@ class ReportController extends Controller
     public function report(Request $request)
     {
         $path = $request->input('path');
-        return $this->toPDF(env('APP_URL') . $path);
+        $width = $request->input('width', null);
+        return $this->toPDF(env('APP_URL') . $path, $width);
     }
 
     public function pdf(Request $request)
     {
         $url = $request->input('url');
-        return $this->toPDF($url);
+        $width = $request->input('width', null);
+        return $this->toPDF($url, $width);
     }
 
-    private function toPDF($url)
+    private function toPDF($url, $width=null)
     {
         $url1 = escapeshellarg($url);
         $rasterize = escapeshellarg(base_path('bin/rasterize.js'));
         $target0 = storage_path('app/public/report/' . uniqid('rep') . '.pdf');
         $target = escapeshellarg($target0);
-        $format = self::FORMAT;
+        $format = $width
+            ? '"'.$width.'*'. ceil($width/8.5*11).'"'
+            : self::FORMAT;
         $cmd = env('PHANTOMJS') . " $rasterize $url1 $target $format";
         exec($cmd);
         return redirect('/storage/report/' . basename($target0));

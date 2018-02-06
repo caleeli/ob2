@@ -23,6 +23,7 @@
         <link rel="stylesheet" type="text/css" href="/css/buttons.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
+        <!-- link rel="stylesheet" type="text/css" href="/css/viewer.css" -->
         <script>
             if (typeof localStorage.user_id === 'undefined'
                 || localStorage.user_id === null
@@ -45,13 +46,13 @@
         margin-bottom: 8px;
     }
     @page {  }
-	table { border-collapse:collapse; border-spacing:0; empty-cells:show }
+	/*table { border-collapse:collapse; border-spacing:0; empty-cells:show }
 	td, th { vertical-align:top; font-size:12pt;}
 	h1, h2, h3, h4, h5, h6 { clear:both }
 	ol, ul { margin:0; padding:0;}
 	li { list-style: none; margin:0; padding:0;}
 	<!-- "li span.odfLiEnd" - IE 7 issue-->
-	li span. { clear: both; line-height:0; width:0; height:0; margin:0; padding:0; }
+	li span. { clear: both; line-height:0; width:0; height:0; margin:0; padding:0; }*/
 	span.footnodeNumber { padding-right:1em; }
 	span.annotation_style_by_filter { font-size:95%; font-family:Arial; background-color:#fff000;  margin:0; border:0; padding:0;  }
 	* { margin:0;}
@@ -279,8 +280,8 @@
 	.T6 { font-family:Times New Roman; font-size:10pt; }
 	.T7 { font-family:Times New Roman; font-size:10pt; font-style:italic; }
 	.T9 { font-family:Times New Roman; font-size:10pt; letter-spacing:-0.002in; }
-	<!-- ODF styles with no properties representable as CSS -->
-	.Table1.1 .Table2.1 .Table3.1 .Table3.10 .Table3.11 .Table3.12 .Table3.13 .Table3.14 .Table3.15 .Table3.16 .Table3.17 .Table3.18 .Table3.19 .Table3.2 .Table3.20 .Table3.21 .Table3.3 .Table3.4 .Table3.5 .Table3.6 .Table3.7 .Table3.8 .Table3.9 .Table4.1 .Table4.2 .ListLabel_20_10 .ListLabel_20_11 .ListLabel_20_12 .ListLabel_20_13 .ListLabel_20_14 .ListLabel_20_15 .ListLabel_20_16 .ListLabel_20_17 .ListLabel_20_18 .ListLabel_20_19 .ListLabel_20_20 .ListLabel_20_21 .ListLabel_20_22 .ListLabel_20_23 .ListLabel_20_24 .ListLabel_20_25 .ListLabel_20_26 .ListLabel_20_27 .ListLabel_20_28 .ListLabel_20_29 .ListLabel_20_30 .ListLabel_20_31 .ListLabel_20_32 .ListLabel_20_33 .ListLabel_20_34 .ListLabel_20_35 .ListLabel_20_36 .ListLabel_20_37 .ListLabel_20_38 .ListLabel_20_39 .ListLabel_20_4 .ListLabel_20_40 .ListLabel_20_43 .ListLabel_20_44 .ListLabel_20_45 .ListLabel_20_46 .ListLabel_20_47 .ListLabel_20_48 .ListLabel_20_49 .ListLabel_20_5 .ListLabel_20_51 .ListLabel_20_52 .ListLabel_20_53 .ListLabel_20_54 .ListLabel_20_55 .ListLabel_20_56 .ListLabel_20_57 .ListLabel_20_58 .ListLabel_20_59 .ListLabel_20_6 .ListLabel_20_60 .ListLabel_20_61 .ListLabel_20_62 .ListLabel_20_8 .ListLabel_20_9  { }
+
+    /*.Table1.1 .Table2.1 .Table3.1 .Table3.10 .Table3.11 .Table3.12 .Table3.13 .Table3.14 .Table3.15 .Table3.16 .Table3.17 .Table3.18 .Table3.19 .Table3.2 .Table3.20 .Table3.21 .Table3.3 .Table3.4 .Table3.5 .Table3.6 .Table3.7 .Table3.8 .Table3.9 .Table4.1 .Table4.2 .ListLabel_20_10 .ListLabel_20_11 .ListLabel_20_12 .ListLabel_20_13 .ListLabel_20_14 .ListLabel_20_15 .ListLabel_20_16 .ListLabel_20_17 .ListLabel_20_18 .ListLabel_20_19 .ListLabel_20_20 .ListLabel_20_21 .ListLabel_20_22 .ListLabel_20_23 .ListLabel_20_24 .ListLabel_20_25 .ListLabel_20_26 .ListLabel_20_27 .ListLabel_20_28 .ListLabel_20_29 .ListLabel_20_30 .ListLabel_20_31 .ListLabel_20_32 .ListLabel_20_33 .ListLabel_20_34 .ListLabel_20_35 .ListLabel_20_36 .ListLabel_20_37 .ListLabel_20_38 .ListLabel_20_39 .ListLabel_20_4 .ListLabel_20_40 .ListLabel_20_43 .ListLabel_20_44 .ListLabel_20_45 .ListLabel_20_46 .ListLabel_20_47 .ListLabel_20_48 .ListLabel_20_49 .ListLabel_20_5 .ListLabel_20_51 .ListLabel_20_52 .ListLabel_20_53 .ListLabel_20_54 .ListLabel_20_55 .ListLabel_20_56 .ListLabel_20_57 .ListLabel_20_58 .ListLabel_20_59 .ListLabel_20_6 .ListLabel_20_60 .ListLabel_20_61 .ListLabel_20_62 .ListLabel_20_8 .ListLabel_20_9  { }*/
 	.inherit {
 		position: relative;
 		display: inline-block;
@@ -582,7 +583,7 @@
                                         <div class="ibox">
                                             <div class="ibox-title">
                                                 <h5>TAREAS</h5>
-                                                <div class="ibox-tools">
+                                                <div class="ibox-tools" v-if="esUsuarioGerente">
                                                     <a href="#asignarTarea" class="btn btn-primary btn-xs" v-on:click='crearTarea'>Asignar tarea</a>
                                                 </div>
                                             </div>
@@ -1128,7 +1129,9 @@
         </div>
 
         <!-- Mainly scripts -->
+        <!--script src="/js/pdf.worker.js"></script-->
         <script src="/js/pdf.js"></script>
+        <script src="/js/viewer.js"></script>
         <script src="../js/server.js?v0.72"></script>
         <script>
         $(document).ready(function () {
