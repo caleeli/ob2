@@ -705,9 +705,9 @@ and open the template in the editor.
                                 <td><label :class="hoja.color()">{{hoja.concluido()?hoja.conclusion:'PENDIENTE'}}</label></td>
                                 <td><a href='#editar' class='btn btn-default' v-on:click='abrir(hoja)'>Abrir</a>
                                     <div class="btn-group" style="width: 6em;">
-                                        <a v-bind:href='imprimirHoja(hoja, 1)' target="_blank" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
-                                        <a v-bind:href='imprimirHoja(hoja, 2)' target="_blank" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
-                                        <a v-bind:href='imprimirHoja(hoja, 3)' target="_blank" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
+                                        <a v-bind:href='imprimirHoja(hoja, 1)' target="_blank" v-on:click="clickImprimir(event, imprimirHoja(hoja, 1))" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
+                                        <a v-bind:href='imprimirHoja(hoja, 2)' target="_blank" v-on:click="clickImprimir(event, imprimirHoja(hoja, 1))" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
+                                        <a v-bind:href='imprimirHoja(hoja, 3)' target="_blank" v-on:click="clickImprimir(event, imprimirHoja(hoja, 1))" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
                                     </div>
                                     </td>
                             </tr>
@@ -1485,6 +1485,10 @@ and open the template in the editor.
                     },
                     imprimirHoja : function (hoja, posicion) {
                         return '/report?width=844&path=/HojaRuta/imprimeHoja.php%3Fid='+hoja.id+'%26pos='+posicion;
+                    },
+                    clickImprimir : function (e, href) {
+                        window.open(href);
+                        e.preventDefault();
                     }
                 },
                 mounted: function () {
