@@ -19,7 +19,7 @@ $hoja = $stmt->fetch();
     </head>
     <body class="c13">
         <p class="c17">
-            <span class="c19">EXTERNA</span>
+            <span class="c19"><?= strtoupper($hoja['tipo']) ?></span>
         </p>
         <a id="t.acfd86ec113933823c828b52ca3f63e538fc11a2">
         </a>
