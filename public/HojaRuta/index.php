@@ -684,7 +684,8 @@ and open the template in the editor.
                     <table class="table table-striped table-hover ">
                         <thead>
                             <tr>
-                                <th># Control</th>
+                                <th>#</th>
+                                <th>Nº Control</th>
                                 <th>Referencia</th>
                                 <th>Procedencia</th>
                                 <th>Destinatario</th>
@@ -695,6 +696,7 @@ and open the template in the editor.
                         </thead>
                         <tbody>
                             <tr v-for='hoja in hojasDeRutaBusqueda'>
+                                <td>{{hoja.numero}}</td>
                                 <td>{{hoja.nroDeControl}}</td>
                                 <td>{{hoja.referencia}}</td>
                                 <td>{{hoja.procedencia}}</td>
