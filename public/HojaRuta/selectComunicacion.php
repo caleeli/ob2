@@ -4,12 +4,12 @@ $connection = require('connection.php');
 const LIMIT = 50;
 
 if (empty($_REQUEST['filter'])) {
-    $stmt = $connection->prepare('select * from notas_oficio order by fecha_entrega desc limit '.LIMIT);
+    $stmt = $connection->prepare('select * from comunicaciones_internas order by fecha_entrega desc limit '.LIMIT);
     $stmt->execute();
     $res =  $stmt->fetchAll();
 
 } else {
-    $stmt = $connection->prepare('select * from notas_oficio where '
+    $stmt = $connection->prepare('select * from comunicaciones_internas where '
         . 'hoja_de_ruta like :filter or nro_nota like :filter or entidad_empresa like :filter or '
         . 'nombre_apellidos like :filter or cargo like :filter or '
         . 'referencia like :filter or hoja_de_ruta_recepcion like :filter or '

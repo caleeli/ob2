@@ -100,8 +100,8 @@ and open the template in the editor.
                         </button>
 
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
-                            <li><a href="#nota_oficio" v-on:click='nuevaNota' v-if="!window.isManager">Registrar</a></li>
-                            <li><a href="#nota_busqueda">Búsqueda</a></li>
+                            <li><a href="#com_interna" v-on:click='nuevaComunicacion' v-if="!window.isManager">Registrar</a></li>
+                            <li><a href="#com_busqueda">Búsqueda</a></li>
                         </ul>
                     </div>
                 </div>
@@ -194,7 +194,7 @@ and open the template in the editor.
                 <div class="col-md-10" v-if="menu=='nota_oficio'">
                     <form class="form-horizontal">
                         <fieldset>
-                            <legend>Nota Expedida</legend>
+                            <legend>Oficio</legend>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Nº Hoja de Ruta</label>
                                 <div class="col-lg-10">
@@ -337,7 +337,7 @@ and open the template in the editor.
                 <div class="col-md-10" v-if="menu=='com_interna'">
                     <form class="form-horizontal">
                         <fieldset>
-                            <legend>Nota Expedida</legend>
+                            <legend>Comunicación Interna</legend>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Nº Hoja de Ruta</label>
                                 <div class="col-lg-10">
@@ -467,7 +467,7 @@ and open the template in the editor.
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="button" disabled v-on:click="generarNota" class="btn btn-primary">Guardar</button>
+                                    <button type="button" v-on:click="generarComunicacion" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
                         </fieldset>
@@ -741,6 +741,41 @@ and open the template in the editor.
                         </tbody>
                     </table>
                 </div>
+                <div class="col-md-10" v-if="menu=='com_busqueda'">
+                    <div class="row justify-content-md-center" v-if="window.isManager">
+                    </div>
+                    <input class="form-control" v-model='filtroComunicacion' placeholder="busqueda comunicación interna" v-on:keyup='filtrarComunicacion'>
+                    <table class="table table-striped table-hover ">
+                        <thead>
+                            <tr>
+                                <th>Hoja de Ruta</th>
+                                <th>Fecha Emision</th>
+                                <th>Nro Nota</th>
+                                <th>Reiterativa</th>
+                                <th>Fecha Entrega</th>
+                                <th>Entidad/Empresa</th>
+                                <th>Nombre</th>
+                                <th>Cargo</th>
+                                <th>Días</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for='note in comunicacionesBusqueda'>
+                                <td>{{note.hoja_de_ruta}}</td>
+                                <td>{{note.fecha_emision}}</td>
+                                <td>{{note.nro_nota}}</td>
+                                <td>{{note.reiterativa}}</td>
+                                <td>{{note.fecha_entrega}}</td>
+                                <td>{{note.entidad_empresa}}</td>
+                                <td>{{note.nombre_apellidos}}</td>
+                                <td>{{note.cargo}}</td>
+                                <td><span v-if="note.dias"><span class="diasPasaron" v-bind:chart="note.pasaron()>note.dias?'pieRojo':'pie'">{{note.pasaron()}}/{{note.dias}}</span> {{note.pasaron()}}/{{note.dias}} días</span></td>
+                                <td><a href='#com_interna' class='btn btn-default' v-on:click='abrirComunicacion(note)'>Abrir</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <script>
@@ -884,7 +919,9 @@ and open the template in the editor.
                         filtro: '',
                         hojasDeRutaBusqueda: [],
                         filtroNota: '',
+                        filtroComunicacion: '',
                         notasBusqueda: [],
+                        comunicacionesBusqueda: [],
                         derivacion: new Derivacion(),
                         derivaciones: [],
                         filtroDerivacion: '',
@@ -978,8 +1015,65 @@ and open the template in the editor.
                             }
                         });
                     },
+                    saveComunicacion: function(callback) {
+                        var self = this;
+                        var o = this.nota;
+                        $.ajax({
+                            method: 'get',
+                            url: 'saveComunicacion.php',
+                            data: {
+                                id: o.id ? o.id: '',
+                                hoja_de_ruta: o.hoja_de_ruta,
+                                fecha_emision: o.fecha_emision,
+                                nro_nota: o.nro_nota,
+                                reiterativa: o.reiterativa,
+                                fecha_entrega: o.fecha_entrega,
+                                entidad_empresa: o.entidad_empresa,
+                                nombre_apellidos: o.nombre_apellidos,
+                                cargo: o.cargo,
+                                referencia: o.referencia,
+                                dias: o.dias,
+                                retraso: o.retraso,
+                                hoja_de_ruta_recepcion: o.hoja_de_ruta_recepcion,
+                                fecha_recepcion: o.fecha_recepcion,
+                                nro_nota_recepcion: o.nro_nota_recepcion,
+                                remitente_recepcion: o.remitente_recepcion,
+                                referencia_recepcion: o.referencia_recepcion,
+                                fojas_recepcion: o.fojas_recepcion,
+                                t: new Date().getTime()
+                            },
+                            dataType: 'json',
+                            success: function () {
+                            }
+                        }).done(function() {
+                            if (typeof callback==='function') {
+                                callback();
+                            }
+                        });
+                    },
                     nuevaNota: function() {
-                        
+                        var self = this;
+                        self.nota.id = '';
+                        self.nota.hoja_de_ruta = '';
+                        self.nota.fecha_emision = '';
+                        self.nota.nro_nota = '';
+                        self.nota.reiterativa = '';
+                        self.nota.fecha_entrega = '';
+                        self.nota.entidad_empresa = '';
+                        self.nota.nombre_apellidos = '';
+                        self.nota.cargo = '';
+                        self.nota.referencia = '';
+                        self.nota.dias = '';
+                        self.nota.retraso = '';
+                        self.nota.hoja_de_ruta_recepcion = '';
+                        self.nota.fecha_recepcion = '';
+                        self.nota.nro_nota_recepcion = '';
+                        self.nota.remitente_recepcion = '';
+                        self.nota.referencia_recepcion = '';
+                        self.nota.fojas_recepcion = '';
+                    },
+                    nuevaComunicacion: function () {
+                        this.nuevaNota();
                     },
                     saveDerivation: function(callback, o) {
                         var self = this;
@@ -1046,6 +1140,13 @@ and open the template in the editor.
                             self.filtrarNota();
                         });
                         window.location.hash="#nota_busqueda";
+                    },
+                    generarComunicacion: function() {
+                        var self = this;
+                        self.saveComunicacion(function () {
+                            self.filtrarComunicacion();
+                        });
+                        window.location.hash="#com_busqueda";
                     },
                     datepick: function() {
                         var self = this;
@@ -1193,7 +1294,55 @@ and open the template in the editor.
                             }
                         });
                     },
+                    filtrarComunicacion: function () {
+                        var self = this;
+                        $.ajax({
+                            method:'GET',
+                            url: 'selectComunicacion.php',
+                            data: {
+                                filter: self.filtroComunicacion,
+                                t: Math.floor(new Date().getTime()/1000)
+                            },
+                            dataType: 'json',
+                            success: function (res) {
+                                self.comunicacionesBusqueda.splice(0);
+                                res.forEach(function (o) {
+                                    self.comunicacionesBusqueda.push(new Nota({
+                                        id: o.id,
+                                        hoja_de_ruta: o.hoja_de_ruta,
+                                        fecha_emision: o.fecha_emision,
+                                        nro_nota: o.nro_nota,
+                                        reiterativa: o.reiterativa,
+                                        fecha_entrega: o.fecha_entrega,
+                                        entidad_empresa: o.entidad_empresa,
+                                        nombre_apellidos: o.nombre_apellidos,
+                                        cargo: o.cargo,
+                                        referencia: o.referencia,
+                                        dias: o.dias,
+                                        retraso: o.retraso,
+                                        hoja_de_ruta_recepcion: o.hoja_de_ruta_recepcion,
+                                        fecha_recepcion: o.fecha_recepcion,
+                                        nro_nota_recepcion: o.nro_nota_recepcion,
+                                        remitente_recepcion: o.remitente_recepcion,
+                                        referencia_recepcion: o.referencia_recepcion,
+                                        fojas_recepcion: o.fojas_recepcion,
+                                    }));
+                                });
+                                self.drawComunicacionPie();
+                            }
+                        });
+                    },
                     drawNotasPie: function () {
+                        Vue.nextTick(function () {
+                            $("span.diasPasaron").each(function () {
+                                var chart = $(this).attr("chart")=='pieRojo' ? 'pie' : $(this).attr("chart");
+                                $(this).peity(chart, {
+                                    fill: $(this).attr("chart") === 'pie' ? ['#1ab394', '#d7d7d7'] : ['#FB3C40', '#1ab394'],
+                                })
+                            });
+                        });
+                    },
+                    drawComunicacionPie: function () {
                         Vue.nextTick(function () {
                             $("span.diasPasaron").each(function () {
                                 var chart = $(this).attr("chart")=='pieRojo' ? 'pie' : $(this).attr("chart");
@@ -1232,6 +1381,10 @@ and open the template in the editor.
                     abrirNota: function (nota) {
                         this.nota.load(nota);
                         self.filtroNota = '';
+                    },
+                    abrirComunicacion: function (nota) {
+                        this.nota.load(nota);
+                        self.filtroComunicacion = '';
                     },
                     registrar: function () {
                         
@@ -1326,6 +1479,7 @@ and open the template in the editor.
                     //this.loadHojas();
                     this.filtrar();
                     this.filtrarNota();
+                    this.filtrarComunicacion();
                     menu=window.location.hash.substr(1);
                     this.menu=menu?menu:(window.isManager?'busqueda':'recepcion');
                     self.dibujarDashboard();

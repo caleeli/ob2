@@ -2,7 +2,7 @@
 header("Content-Type: application/json;charset=utf-8");
 $connection = require('connection.php');
 if (empty($_REQUEST['id'])) {
-    $stmt = $connection->prepare('insert into notas_oficio(hoja_de_ruta,
+    $stmt = $connection->prepare('insert into comunicaciones_internas(hoja_de_ruta,
         fecha_emision,
         nro_nota,
         reiterativa,
@@ -44,7 +44,7 @@ if (empty($_REQUEST['id'])) {
 } else {
     ini_set("display_errors", "on");
     error_reporting(E_ALL);
-    $stmt = $connection->prepare('update notas_oficio set hoja_de_ruta=?, fecha_emision=?, nro_nota=?, reiterativa=?, fecha_entrega=?, entidad_empresa=?, nombre_apellidos=?, cargo=?, referencia=?, dias=?, retraso=?, hoja_de_ruta_recepcion=?, fecha_recepcion=?, nro_nota_recepcion=?, remitente_recepcion=?, referencia_recepcion=?, fojas_recepcion=? '
+    $stmt = $connection->prepare('update comunicaciones_internas set hoja_de_ruta=?, fecha_emision=?, nro_nota=?, reiterativa=?, fecha_entrega=?, entidad_empresa=?, nombre_apellidos=?, cargo=?, referencia=?, dias=?, retraso=?, hoja_de_ruta_recepcion=?, fecha_recepcion=?, nro_nota_recepcion=?, remitente_recepcion=?, referencia_recepcion=?, fojas_recepcion=? '
         .' where id = ?');
     $stmt->execute([
         $_REQUEST['hoja_de_ruta'],
