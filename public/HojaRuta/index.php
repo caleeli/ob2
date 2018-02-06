@@ -476,7 +476,7 @@ and open the template in the editor.
                 <div class="col-md-10" v-if="menu=='editar'">
                     <form class="form-horizontal" v-if="!window.isManager">
                         <fieldset>
-                            <legend>Hoja de ruta - SCEP </legend>
+                            <legend>Hoja de ruta - SCEP <b># {{hoja.numero}}</b></legend>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Tipo</label>
                                 <div class="col-lg-10">
@@ -864,6 +864,7 @@ and open the template in the editor.
 			this.remitente_recepcion = '';
 			this.referencia_recepcion = '';
 			this.fojas_recepcion = '';
+			this.numero = '';
             this.load(values);
         }
         Nota.prototype.load = function (values){
@@ -1243,6 +1244,7 @@ and open the template in the editor.
                                         anexoHojas: o.anexo_hojas,
                                         destinatario: o.destinatario,
                                         conclusion: o.conclusion,
+                                        numero: o.numero,
                                     }));
                                 });
                             }
