@@ -706,8 +706,8 @@ and open the template in the editor.
                                 <td><a href='#editar' class='btn btn-default' v-on:click='abrir(hoja)'>Abrir</a>
                                     <div class="btn-group" style="width: 6em;">
                                         <a v-bind:href='imprimirHoja(hoja, 1)' target="_blank" v-on:click="clickImprimir(event, imprimirHoja(hoja, 1))" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
-                                        <a v-bind:href='imprimirHoja(hoja, 2)' target="_blank" v-on:click="clickImprimir(event, imprimirHoja(hoja, 1))" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
-                                        <a v-bind:href='imprimirHoja(hoja, 3)' target="_blank" v-on:click="clickImprimir(event, imprimirHoja(hoja, 1))" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
+                                        <a v-bind:href='imprimirHoja(hoja, 2)' target="_blank" v-on:click="clickImprimir(event, imprimirHoja(hoja, 2))" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
+                                        <a v-bind:href='imprimirHoja(hoja, 3)' target="_blank" v-on:click="clickImprimir(event, imprimirHoja(hoja, 3))" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
                                     </div>
                                     </td>
                             </tr>
