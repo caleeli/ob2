@@ -702,11 +702,11 @@ and open the template in the editor.
                                 <td>{{hoja.fecha}}</td>
                                 <td><label :class="hoja.color()">{{hoja.concluido()?hoja.conclusion:'PENDIENTE'}}</label></td>
                                 <td><a href='#editar' class='btn btn-default' v-on:click='abrir(hoja)'>Abrir</a>
-                                    <span class="btn-group">
-                                        <a v-bind:href='imprimirHoja(hoja, 1)' target="_blank" class='btn btn-default'><i class="glyphicon glyphicon-print"></i></a>
-                                        <a v-bind:href='imprimirHoja(hoja, 2)' target="_blank" class='btn btn-default'><i class="glyphicon glyphicon-print"></i></a>
-                                        <a v-bind:href='imprimirHoja(hoja, 3)' target="_blank" class='btn btn-default'><i class="glyphicon glyphicon-print"></i></a>
-                                    </span>
+                                    <div class="btn-group" style="width: 6em;">
+                                        <a v-bind:href='imprimirHoja(hoja, 1)' target="_blank" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
+                                        <a v-bind:href='imprimirHoja(hoja, 2)' target="_blank" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
+                                        <a v-bind:href='imprimirHoja(hoja, 3)' target="_blank" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-print"></i></a>
+                                    </div>
                                     </td>
                             </tr>
                         </tbody>
