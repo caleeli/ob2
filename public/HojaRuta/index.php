@@ -1484,8 +1484,8 @@ and open the template in the editor.
                         });
                     },
                     imprimirHoja : function (hoja, posicion) {
-                        //body=800*1220
-                        return '/report?format=800*1224&path=/HojaRuta/imprimeHoja.php%3Fid='+hoja.id+'%26pos='+posicion;
+                        //body=774*1179
+                        return '/report?format=774*1184&path=/HojaRuta/imprimeHoja.php%3Fid='+hoja.id+'%26pos='+posicion;
                     },
                     clickImprimir : function (e, href) {
                         window.open(href);
