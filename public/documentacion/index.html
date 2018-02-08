@@ -1478,6 +1478,9 @@
                         self.user.password=self.password1;
                         self.user.$save();
                         window.location.href="login.html";
+                    },
+                    esUsuarioGerente: function () {
+                        return app.user.role_id==1 || app.user.role_id==3;
                     }
                 },
                 mounted: function () {
