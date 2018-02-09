@@ -24,3 +24,5 @@ window.registerMenu({
 require('./modules');
 
 require('./app');
+//require('./ui_utils');
+//require('./text_layer_builder');

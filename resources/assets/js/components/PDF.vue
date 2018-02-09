@@ -1,5 +1,8 @@
 <template>
-    <canvas></canvas>
+    <div>
+        <canvas></canvas>
+        <div class="textLayer"></div>
+    </div>
 </template>
 
 <script>
@@ -35,6 +38,14 @@
                         canvasContext: self.ctx,
                         viewport: viewport
                     };
+                    var canvasOffset = $(self.canvas).offset();
+                    self.textLayer.css({
+                        height : viewport.height+'px',
+                        width : viewport.width+'px',
+                        top : canvasOffset.top,
+                        left : canvasOffset.left
+                    });
+
                     var renderTask = page.render(renderContext);
 
                     // Wait for rendering to finish
@@ -45,6 +56,15 @@
                             self.renderPage(self.pageNumPending);
                             self.pageNumPending = null;
                         }
+                    });
+                    page.getTextContent().then(function(textContent){
+                        var textLayer = PDFJS.renderTextLayer({
+                            textContent: textContent,
+                            textLayerDiv : self.textLayer.get(0),
+                            pageIndex : 1,
+                            viewport : viewport
+                        });
+                        textLayer.render();
                     });
                 });
             },
@@ -84,6 +104,7 @@
             },
             refresh : function () {
                 var self = this;
+                return;
                 /**
                  * Asynchronously downloads PDF.
                  */
@@ -113,7 +134,8 @@
             self.pageRendering = false;
             self.pageNumPending = null;
             self.scale = 0.8;
-            self.canvas = this.$el;
+            self.canvas = $(this.$el).find('canvas')[0];
+            self.textLayer = $(this.$el).find('.textLayer');
             self.ctx = self.canvas.getContext('2d');
             Vue.nextTick(function () {
                 self.refresh();

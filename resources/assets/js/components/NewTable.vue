@@ -55,6 +55,8 @@
                 var self = this;
                 var clone = [];
                 var filter = self.filterText.toLowerCase();
+                var lastParent = null;
+                var lastParentOk = true;
                 for(var i=self.page*self.rows,
                     l=Math.min(self.page*self.rows+self.rows, self.data.length);
                     i<l;
@@ -72,6 +74,17 @@
                             if (text.toLowerCase().indexOf(filter)>-1) {
                                 ok = true;
                                 break;
+                            }
+                        }
+                        if (self.isParent(self.data[i])) {
+                            lastParent = self.data[i];
+                            lastParentOk = ok;
+                        }
+                        if (ok && self.isChildOf(self.data[i], lastParent) && !lastParentOk) {
+                            clone.push(lastParent);
+                            lastParentOk = true;
+                            if (!self.isOpened(lastParent)) {
+                                self.openCloseRow(lastParent)
                             }
                         }
                     }
@@ -123,6 +136,12 @@
                 var self = this;
                 var key = [row.attributes[self.id_field]];
                 return self.findOpened(key) !== undefined;
+            },
+            isChildOf: function (row, parent) {
+                var self = this;
+                var parentKey = [parent.attributes[self.id_field]].join(",");
+                var key = self.getGroupKey(row).join(",");
+                return parentKey === key;
             },
             isVisible: function (row) {
                 var self = this;

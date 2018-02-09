@@ -33,15 +33,6 @@
                     {label:"de",value:"2003"},
                     {label:"a",value:"2016"},
                 ],
-                /*data: this.mdata ? this.mdata : {
-                    x: ["ene","feb","mar"],
-                    series: {
-                        "presupuesto": {
-                            "aprobado": [100,400,900],
-                            "ejecutado": [90,380,850]
-                        }
-                    }
-                },*/
                 //internal:
                 "xs":[],
                 "ys":[],
@@ -341,6 +332,7 @@
                             chartType = self.chartType;
                     }
                     try {
+                        console.log(ctx, ctx.parentNode);
                         self.chart = new Chart(ctx, {
                             type: chartType,
                             data: chartData,
