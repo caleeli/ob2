@@ -404,9 +404,14 @@
                                             <div class="ibox-title">
                                                 <h5>ESTADOS FINANCIEROS</h5>
                                                 <div class="ibox-tools">
+                                                    <a v-for="link in estadosAdjuntos(estados_financieros, cuadroSeleccionado)" v-bind:href="link.href"
+                                                       target='_blank' v-bind:style='{color:link.color}'>
+                                                        <i v-bind:class="link.icon"></i>
+                                                        {{link.name}}
+                                                    </a>
                                                     <a v-bind:href="'/report?path=/documentacion/reporte_1.html%23reporte/'+empresaSeleccionada+'/'+empresaSeleccionadaGestion"
-                                                       target='_blank' style='color:#E21F34'>
-                                                        <i class="fa fa-file-pdf-o"></i>
+                                                       target='_blank' style='color:#222222'>
+                                                        <i class="fa fa-print"></i>
                                                     </a>
                                                 </div>
                                             </div>
@@ -1125,7 +1130,7 @@
         <!--script src="/js/pdf.worker.js"></script-->
         <script src="/js/pdf.js"></script>
         <script src="/js/viewer.js"></script>
-        <script src="../js/server.js?v0.73"></script>
+        <script src="../js/server.js?v0.74"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1319,16 +1324,6 @@
                             resultado.data.forEach(function (row) {
                                 app.estados_financieros.push(row);
                             });
-                            Vue.nextTick(function () {
-                                $("span.peityChart").each(function () {
-                                    var chart = $(this).attr("chart") ? $(this).attr("chart") : 'pie';
-                                    $(this).peity(chart, {
-                                        fill: chart === 'pie' || chart === 'bar' ? ['#1ab394', '#d7d7d7', '#8CD9C9'] : '#1ab394',
-                                        width: 80,
-                                        height: 80
-                                    })
-                                });
-                            });
                         },
                         {
                             'filter':[
@@ -1474,6 +1469,36 @@
                     },
                     esUsuarioGerente: function () {
                         return app.user.role_id==1 || app.user.role_id==3;
+                    },
+                    estadosAdjuntos: function (estadosFinancieros, cuadroSeleccionado) {
+                        var self = this;
+                        var links = [];
+                        var cuadro = self.cuadros_financieros_completo.find(function (cf) {
+                            return cf.id === cuadroSeleccionado;
+                        });
+                        estadosFinancieros.forEach(function (estado) {
+                            var color, icon;
+                            switch (estado.attributes.archivo.mime) {
+                                case 'application/vnd.ms-excel':
+                                    icon = 'fa fa-file-excel-o';
+                                    color = 'rgb(0, 177, 15)';
+                                    break;
+                                case 'application/pdf':
+                                    icon = 'fa fa-file-pdf-o';
+                                    color = 'rgb(226, 31, 52)';
+                                    break;
+                                default:
+                                    icon = 'fa fa-download';
+                                    color = 'rgb(34, 34, 34)';
+                            }
+                            links.push({
+                                href: estado.attributes.archivo.url,
+                                color: color,
+                                icon: icon,
+                                name: estado.attributes.tipo_estado_financiero
+                            });
+                        });
+                        return links;
                     }
                 },
                 mounted: function () {

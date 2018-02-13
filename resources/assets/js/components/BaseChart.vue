@@ -332,7 +332,6 @@
                             chartType = self.chartType;
                     }
                     try {
-                        console.log(ctx, ctx.parentNode);
                         self.chart = new Chart(ctx, {
                             type: chartType,
                             data: chartData,
