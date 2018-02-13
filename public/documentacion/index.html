@@ -405,12 +405,12 @@
                                                 <h5>ESTADOS FINANCIEROS</h5>
                                                 <div class="ibox-tools">
                                                     <a v-for="link in estadosAdjuntos(estados_financieros, empresaSeleccionada, empresaSeleccionadaGestion)" v-bind:href="link.href"
-                                                       target='_blank' v-bind:style='{color:link.color}' class="eeff-text-button">
+                                                       target='_blank' v-bind:style='{color:link.color}' class="eeff-text-button" v-bind:title="link.name">
                                                         <i v-bind:class="link.icon"></i>
                                                         {{link.name}}
                                                     </a>
                                                     <a v-bind:href="'/report?path=/documentacion/reporte_1.html%23reporte/'+empresaSeleccionada+'/'+empresaSeleccionadaGestion"
-                                                       target='_blank' style='color:#222222' class="eeff-text-button">
+                                                       target='_blank' style='color:#222222' class="eeff-text-button" title="imprimir">
                                                         <i class="fa fa-print"></i>
                                                     </a>
                                                 </div>
@@ -1355,9 +1355,11 @@
                             app.cuadros_financieros.splice(0);
                             resultado.data.forEach(function (row) {
                                 row.html = '';
+                                var gestion = self.empresaSeleccionadaGestion;
+                                gestion = Math.max(gestion, 2017);
                                 self.cuadro_financiero.$methods.calculate(
                                     self.empresaSeleccionada,
-                                    self.empresaSeleccionadaGestion,
+                                    gestion,
                                     row.attributes.contenido,
                                     row.attributes.grafico,
                                     function (html) {
