@@ -9763,6 +9763,9 @@ body.md-skin {
   .wrapper-content {
     padding-top: 0px;
   }
+  .eeff-text-button {
+    max-width: 5em;
+  }
 }
 
 /* Small Devices, Tablets */
@@ -9776,13 +9779,19 @@ body.md-skin {
   .wrapper-content {
     padding-top: 0px;
   }
+  .eeff-text-button {
+    max-width: 8em;
+  }
 }
 
 /* Medium Devices, Desktops */
-@media only screen and (min-width: 1199px) and (min-width: 992px) {
+@media only screen and (max-width: 1199px) and (min-width: 992px) {
   .top-header {
     margin-left: -15px;
     margin-right: -15px;
+  }
+  .eeff-text-button {
+    max-width: 24em;
   }
 }
 
@@ -9791,6 +9800,9 @@ body.md-skin {
   .top-header {
     margin-left: -15px;
     margin-right: -15px;
+  }
+  .eeff-text-button {
+    max-width: 32em;
   }
 }
 
@@ -9849,6 +9861,13 @@ body.md-skin {
   .indicador h2 {
     font-size: 1.8vw;
   }
+}
+
+.eeff-text-button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
 }
 
 /*# sourceMappingURL=app.css.map */

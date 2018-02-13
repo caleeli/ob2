@@ -103,3 +103,10 @@
         font-size: 1.8vw;
     }
 }
+
+.eeff-text-button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
