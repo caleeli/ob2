@@ -404,7 +404,7 @@
                                             <div class="ibox-title">
                                                 <h5>ESTADOS FINANCIEROS</h5>
                                                 <div class="ibox-tools">
-                                                    <a v-for="link in estadosAdjuntos(estados_financieros, cuadroSeleccionado)" v-bind:href="link.href"
+                                                    <a v-for="link in estadosAdjuntos(estados_financieros, empresaSeleccionada, empresaSeleccionadaGestion)" v-bind:href="link.href"
                                                        target='_blank' v-bind:style='{color:link.color}'>
                                                         <i v-bind:class="link.icon"></i>
                                                         {{link.name}}
