@@ -360,7 +360,7 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Nº NOTA CGE/SCEP</label>
                                 <div class="col-lg-10">
-                                    <input type="text" v-model="nota.hoja_de_ruta" class="form-control" placeholder="">
+                                    <input type="text" v-model="nota.nro_nota" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
