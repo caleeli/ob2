@@ -456,7 +456,7 @@
                                                                 <div class="ibox-content indicador">
                                                                     <!-- a v-bind:href="estado.attributes.archivo?estado.attributes.archivo.url:'#'">{{estado.attributes.archivo?estado.attributes.archivo.name:''}}</a -->
                                                                     <div class="row">
-                                                                        <div class="col-md-6">
+                                                                        <div v-bind:class="{'col-md-6':estado.id!=1, 'col-md-12':estado.id==1}">
                                                                             <div v-if='eeffEditable.indexOf(estado.id)==-1' v-html="estado.html"></div>
                                                                             <htmleditor v-if='eeffEditable.indexOf(estado.id)>-1' v-bind:model="estado.attributes" v-bind:property="'contenido'" />
                                                                         </div>
