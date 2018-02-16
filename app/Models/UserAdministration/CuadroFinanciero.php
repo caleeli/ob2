@@ -34,7 +34,7 @@ class CuadroFinanciero extends Model
 		<tbody>
 		<tr>
 		<td style="color: white; width: 236px;" rowspan="2">
-		<div class="widget" style="text-align: center; background-color: #32C6C7; margin: 0px 12px 0px 0px; padding: 62px 0;">
+		<div class="widget" style="text-align: center; background-color: #29B294; margin: 0px 12px 0px 0px; padding: 62px 0;">
 		<h2>Bs. {{$uf("Presup%Vig%")}}</h2>
 		<p>&nbsp;</p>
 		<p>PRESUPUESTO&nbsp;</p>
