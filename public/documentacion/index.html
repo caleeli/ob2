@@ -404,12 +404,17 @@
                                             <div class="ibox-title">
                                                 <h5>ESTADOS FINANCIEROS</h5>
                                                 <div class="ibox-tools">
-                                                    <a v-for="link in estadosAdjuntos(estados_financieros, empresaSeleccionada, empresaSeleccionadaGestion)" v-bind:href="link.href"
-                                                       target='_blank' v-bind:style='{color:link.color}' class="eeff-text-button" v-bind:title="link.name">
-                                                        <i v-bind:class="link.icon"></i>
-                                                        {{link.name}}
+                                                    <a v-show="eeffModo=='graficos'" v-on:click="eeffModo='descargas'"
+                                                       target='_blank' style='color:#222222' class="eeff-text-button" title="Descargas">
+                                                        <i class="fa fa-download"></i>
+                                                        DESCARGAS
                                                     </a>
-                                                    <a v-bind:href="'/report?path=/documentacion/reporte_1.html%23reporte/'+empresaSeleccionada+'/'+empresaSeleccionadaGestion"
+                                                    <a v-show="eeffModo=='descargas'" v-on:click="eeffModo='graficos'"
+                                                       target='_blank' style='color:#222222' class="eeff-text-button" title="Gráficos">
+                                                        <i class="fa fa-arrow-circle-left"></i>
+                                                        VOLVER
+                                                    </a>
+                                                    <a v-show="eeffModo=='graficos'" v-bind:href="'/report?path=/documentacion/reporte_1.html%23reporte/'+empresaSeleccionada+'/'+empresaSeleccionadaGestion"
                                                        target='_blank' style='color:#222222' class="eeff-text-button" title="imprimir">
                                                         <i class="fa fa-print"></i>
                                                     </a>
@@ -417,15 +422,10 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: hidden;">
-                                                    <div class="form-group">
+                                                    <div class="row">
                                                       <div class="col-lg-6">
                                                         <select class="form-control" id="select" v-model='empresaSeleccionada' v-on:change="cargarEstadosFinancieros">
                                                             <option v-for="emp in empresas" v-bind:value='emp.id'>{{emp.attributes.cod_empresa}} - {{emp.attributes.nombre_empresa}}</option>
-                                                        </select>
-                                                      </div>
-                                                      <div class="col-lg-4">
-                                                        <select class="form-control" v-model='cuadroSeleccionado' v-on:change="cargarEstadosFinancieros">
-                                                            <option v-for="cua in cuadros_financieros_completo" v-bind:value='cua.id'>{{cua.attributes.titulo}}</option>
                                                         </select>
                                                       </div>
                                                       <div class="col-lg-2">
@@ -433,9 +433,13 @@
                                                             <option v-for="year in gestiones" v-bind:value='year'>{{year}}</option>
                                                         </select>
                                                       </div>
+                                                      <div class="col-lg-4" v-show="eeffModo=='graficos'">
+                                                        <select class="form-control" v-model='cuadroSeleccionado' v-on:change="cargarEstadosFinancieros">
+                                                            <option v-for="cua in cuadros_financieros_completo" v-bind:value='cua.id'>{{cua.attributes.titulo}}</option>
+                                                        </select>
+                                                      </div>
                                                     </div>
-                                                    <hr>
-                                                    <div id="cuadros_financieros" class="row">
+                                                    <div id="cuadros_financieros" class="row" v-show="eeffModo=='graficos'">
                                                         <div v-for="estado in cuadros_financieros" class="col-md-12">
                                                             <div class="ibox float-e-margins" v-bind:title="empresaSeleccionada">
                                                                 <div class="ibox-title">
@@ -490,6 +494,33 @@
                                                         <!-- div class="col-md-6" v-if="user.username==='admin'">
                                                             <a class="btn btn-primary" v-on:click="addCCFF"><h1><i class="fa fa-plus-circle"></i></h1></a>
                                                         </div -->
+                                                    </div>
+                                                    <div class="row" v-show="eeffModo=='descargas'">
+                                                        <div class="ibox float-e-margins" v-bind:title="empresaSeleccionada">
+                                                            <div class="ibox-title">
+                                                                <h5>DESCARGAS</h5>
+                                                            </div>
+                                                            <div class="ibox-content indicador">
+                                                                    <table width="100%" border="1">
+                                                                        <tr v-for="link in estadosAdjuntos(estados_financieros, empresaSeleccionada, empresaSeleccionadaGestion)">
+                                                                            <td style="padding: 4pt 8pt">
+                                                                                <a v-bind:href="link.pdf.href" style='color:black;'
+                                                                                   target='_blank' class="eeff-text-button" v-bind:title="link.pdf.name">
+                                                                                    <i v-bind:class="link.pdf.icon" v-bind:style='{color:link.pdf.color}'></i>
+                                                                                    {{link.pdf.name}}
+                                                                                </a>
+                                                                            </td>
+                                                                            <td style="padding: 4pt 8pt">
+                                                                                <a v-bind:href="link.excel.href" style='color:black;'
+                                                                                   target='_blank' class="eeff-text-button" v-bind:title="link.excel.name">
+                                                                                    <i v-bind:class="link.excel.icon" v-bind:style='{color:link.excel.color}'></i>
+                                                                                    {{link.excel.name}}
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1190,6 +1221,7 @@
                         cuadroSeleccionado: 1,
                         gestiones: gestiones,
                         hoja_trabajo : new UserAdministration.HojaTrabajo(),
+                        eeffModo: 'graficos',
                     };
                 },
                 computed: {
@@ -1474,33 +1506,39 @@
                     },
                     estadosAdjuntos: function (estadosFinancieros, cuadroSeleccionado) {
                         var self = this;
-                        var links = [];
+                        var docs = {};
                         var cuadro = self.cuadros_financieros_completo.find(function (cf) {
                             return cf.id === cuadroSeleccionado;
                         });
                         estadosFinancieros.forEach(function (estado) {
-                            var color, icon;
+                            var color, icon, type;
                             switch (estado.attributes.archivo.mime) {
-                                case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-                                case 'application/vnd.ms-excel':
-                                    icon = 'fa fa-file-excel-o';
-                                    color = 'rgb(0, 177, 15)';
-                                    break;
                                 case 'application/pdf':
                                     icon = 'fa fa-file-pdf-o';
                                     color = 'rgb(226, 31, 52)';
+                                    type = 'pdf';
                                     break;
+                                case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+                                case 'application/vnd.ms-excel':
                                 default:
-                                    icon = 'fa fa-download';
-                                    color = 'rgb(34, 34, 34)';
+                                    type = 'excel';
+                                    icon = 'fa fa-file-excel-o';
+                                    color = 'rgb(0, 177, 15)';
                             }
-                            links.push({
+                            if (docs[estado.attributes.tipo_estado_financiero]===undefined) {
+                                docs[estado.attributes.tipo_estado_financiero]={};
+                            }
+                            docs[estado.attributes.tipo_estado_financiero][type] = {
                                 href: estado.attributes.archivo.url,
                                 color: color,
                                 icon: icon,
                                 name: estado.attributes.tipo_estado_financiero
-                            });
+                            };
                         });
+                        var links = [];
+                        for(var name in docs) {
+                            links.push({pdf:docs[name].pdf,excel:docs[name].excel});
+                        }
                         return links;
                     }
                 },
