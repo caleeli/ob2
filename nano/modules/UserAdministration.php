@@ -653,7 +653,7 @@
                         $files = $event->cargaEstado->files;
                         foreach($files as $file) {
                             list($name, $ext) = explode('.', strtolower($file['name']));
-                            list($cod, $emp, $gestion, $estado) = explode('_', $name);
+                            list($cod, $emp, $gestion, $estado) = explode('_', $name, 4);
                             $em = \App\Models\UserAdministration\Empresa
                                 ::where('cod_empresa', '=', $cod)
                                 ->first();
@@ -661,6 +661,8 @@
                             $estadoF = [
                                 'bg'=>'Balance General',
                                 'erg'=>'Estado de Resultados y Gastos',
+                                'ppto'=>'Estado de Ejecución Presupuestaria de Gastos',////todo
+                                'ppto_ingreso' => 'Estado de Ejecución de Presupuesto de Recursos',
                             ][$estado];
                             $eeff = \App\Models\UserAdministration\EstadoFinanciero
                                 ::where('empresa_id', '=', $em->id)
