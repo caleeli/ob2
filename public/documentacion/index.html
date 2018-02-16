@@ -505,14 +505,14 @@
                                                                     <table width="100%" border="1">
                                                                         <tr v-for="link in estadosAdjuntos(estados_financieros, empresaSeleccionada, empresaSeleccionadaGestion)">
                                                                             <td style="padding: 4pt 8pt">
-                                                                                <a v-bind:href="link.pdf.href" style='color:black;'
+                                                                                <a v-if="link.pdf" v-bind:href="link.pdf.href" style='color:black;'
                                                                                    target='_blank' class="" v-bind:title="link.pdf.name">
                                                                                     <i v-bind:class="link.pdf.icon" v-bind:style='{color:link.pdf.color}'></i>
                                                                                     {{link.pdf.name}}
                                                                                 </a>
                                                                             </td>
                                                                             <td style="padding: 4pt 8pt">
-                                                                                <a v-bind:href="link.excel.href" style='color:black;'
+                                                                                <a v-if="link.excel" v-bind:href="link.excel.href" style='color:black;'
                                                                                    target='_blank' class="" v-bind:title="link.excel.name">
                                                                                     <i v-bind:class="link.excel.icon" v-bind:style='{color:link.excel.color}'></i>
                                                                                     {{link.excel.name}}

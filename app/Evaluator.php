@@ -82,6 +82,11 @@ class Evaluator
         return $this->getValue($codigo, $this->tablas);
     }
 
+    private function uf($codigo)
+    {
+        return $this->getValueLastRow($codigo, $this->tablas);
+    }
+
     private function ucp($codigo, $prev)
     {
         if ($prev<-1) {
@@ -101,18 +106,56 @@ class Evaluator
         return abs($this->ucp($codigo, $prev));
     }
 
+    /**
+     * Ultima Columna de $codigo.
+     *
+     * @param type $codigo
+     * @param type $from
+     * @return int
+     */
     private function getValue($codigo, $from)
     {
         foreach ($from as $t) {
             foreach ($t['columns'] as $col) {
                 $query = DB::table($t['table_name']);
-                $query->where($col, $codigo);
+                $query->where($col, 'like', $codigo);
                 $row = $query->first();
                 if ($row) {
                     $cols = (array) $row;
                     unset($cols['id']);
                     $cols = array_reverse($cols);
                     foreach ($cols as $col => $val) {
+                        $num = $this->toNumber($val);
+                        if ($num !== '') {
+                            return $num;
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Ultima fila de la columna $codigo.
+     *
+     * @param type $codigo
+     * @param type $from
+     * @return int
+     */
+    private function getValueLastRow($codigo, $from)
+    {
+        foreach ($from as $t) {
+            foreach ($t['columns'] as $col) {
+                $query = DB::table($t['table_name']);
+                $query->where($col, 'like', $codigo);
+                $row = $query->first();
+                if ($row) {
+                    $rows = DB::table($t['table_name'])->select($col)
+                        ->where('id','>',$row->id)->get()->toArray();
+                    $rows = array_reverse($rows);
+                    foreach ($rows as $rowVal) {
+                        $val = $rowVal->$col;
                         $num = $this->toNumber($val);
                         if ($num !== '') {
                             return $num;
@@ -155,6 +198,12 @@ class Evaluator
              */
             'ucpa' => function ($codigo, $prev=-1) {
                 return $this->ucpa($codigo, $prev);
+            },
+            /**
+             * Valor de la (U)ltima (F)ila con cabecera $codigo
+             */
+            'uf' => function ($codigo) {
+                return $this->uf($codigo);
             },
             'format' => function ($value) {
                 return is_numeric($value) ? number_format($value, 2, '.', ',') : $value;
