@@ -496,12 +496,12 @@
                                                         </div -->
                                                     </div>
                                                     <div class="row" v-show="eeffModo=='descargas'">
-                                                        <div class="ibox float-e-margins" v-bind:title="empresaSeleccionada">
-                                                            <div class="ibox-title">
-                                                                <h5>DESCARGAS</h5>
-                                                            </div>
-                                                            <div class="ibox-content indicador">
-                                                                <div class="col-sd-12">
+                                                        <div class="col-sd-12">
+                                                            <div class="ibox float-e-margins" v-bind:title="empresaSeleccionada">
+                                                                <div class="ibox-title">
+                                                                    <h5>DESCARGAS</h5>
+                                                                </div>
+                                                                <div class="ibox-content indicador">
                                                                     <table width="100%" border="1">
                                                                         <tr v-for="link in estadosAdjuntos(estados_financieros, empresaSeleccionada, empresaSeleccionadaGestion)">
                                                                             <td style="padding: 4pt 8pt">
