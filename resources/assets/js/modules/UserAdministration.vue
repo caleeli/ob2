@@ -135,7 +135,7 @@ UserAdministration.CuadroFinanciero = function (url, id) {
         return [{"title":"Título","data":"attributes.titulo"},{"title":"Formula (html)","data":"attributes.contenido"},{"title":"Grafico (json)","data":"attributes.grafico"}];
     };
     this.$methods = {
-calculate:function(empresaId, gestion, html, grafico,methodCallback,childrenAssociation){self.$call("calculate",{"empresaId":empresaId,"gestion":gestion,"html":html,"grafico":grafico}, childrenAssociation, methodCallback)}    };
+calculate:function(empresaId, gestion, html, grafico, ppto,methodCallback,childrenAssociation){self.$call("calculate",{"empresaId":empresaId,"gestion":gestion,"html":html,"grafico":grafico,"ppto":ppto}, childrenAssociation, methodCallback)}    };
     this.$initFields();
     if(id) {
         this.$load(id);

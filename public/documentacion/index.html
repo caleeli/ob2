@@ -456,9 +456,12 @@
                                                                 <div class="ibox-content indicador">
                                                                     <!-- a v-bind:href="estado.attributes.archivo?estado.attributes.archivo.url:'#'">{{estado.attributes.archivo?estado.attributes.archivo.name:''}}</a -->
                                                                     <div class="row">
-                                                                        <div v-bind:class="{'col-md-6':estado.id!=1, 'col-md-12':estado.id==1}">
+                                                                        <div class="col-md-6">
                                                                             <div v-if='eeffEditable.indexOf(estado.id)==-1' v-html="estado.html"></div>
                                                                             <htmleditor v-if='eeffEditable.indexOf(estado.id)>-1' v-bind:model="estado.attributes" v-bind:property="'contenido'" />
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div v-html="estado.presupuesto"></div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -1163,7 +1166,7 @@
         <!--script src="/js/pdf.worker.js"></script-->
         <script src="/js/pdf.js"></script>
         <script src="/js/viewer.js"></script>
-        <script src="../js/server.js?v0.74"></script>
+        <script src="../js/server.js?v0.75"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1223,7 +1226,7 @@
                         cuadroSeleccionado: 1,
                         gestiones: gestiones,
                         hoja_trabajo : new UserAdministration.HojaTrabajo(),
-                        eeffModo: 'graficos',
+                        eeffModo: 'graficos'
                     };
                 },
                 computed: {
@@ -1398,10 +1401,11 @@
                                     row.attributes.grafico,
                                     function (html) {
                                         row.html = html[0];
-                                        if (!html[1]) {
+                                        row.presupuesto = html[1];
+                                        if (!html[2]) {
                                             row.calculatedChart=[];
                                         } else {
-                                            row.calculatedChart = JSON.parse(html[1]);
+                                            row.calculatedChart = JSON.parse(html[2]);
                                         }
                                         if (typeof row.calculatedChart.forEach!=='function') {
                                             row.calculatedChart=[];
