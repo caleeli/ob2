@@ -35,7 +35,7 @@ function waitFor(testFx, onReady, timeOutMillis) {
                     clearInterval(interval); //< Stop this interval
                 }
             }
-        }, 600); //< repeat check every 250ms
+        }, 200); //< repeat check every 250ms
 };
 
 if (system.args.length < 3 || system.args.length > 5) {
@@ -90,7 +90,8 @@ if (system.args.length < 3 || system.args.length > 5) {
                 function () {
                     page.render(output);
                     phantom.exit();
-                }
+                },
+                10000
             );
         }
     });

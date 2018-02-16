@@ -67,6 +67,10 @@
                             <td style="padding-left: 1em;">Bs. {{empresa.patrimonio}}</td>
                         </tr>
                         <tr>
+                            <td style="width:10%; color: white!important; background-color: #22977E!important; padding: 0em 1em;">Presupuesto</td>
+                            <td style="padding-left: 1em;">Bs. {{empresa.presupuesto}}</td>
+                        </tr>
+                        <tr>
                             <td style="width:10%; color: white!important; background-color: #22977E!important; padding: 0em 1em;">Gestión</td>
                             <td style="padding-left: 1em;">{{empresaSeleccionadaGestion}}</td>
                         </tr>
@@ -622,6 +626,7 @@
                                         'activo' : "{{$uc('1')}}",
                                         'pasivo' : "{{$uc('2')}}",
                                         'patrimonio' : "{{$uc('3')}}",
+                                        'presupuesto': '{{$uf("Presup%Vig%")}}',
                                         'ingresos' : "{{$uc('5')}}",
                                         'gastos' : "{{$uca('6')}}",
                                         'utilidad' : "{{$uc('5')-$uca('6')+$uc('4')*1}}",
@@ -709,17 +714,17 @@
                                             self.empresa[a] = res[a];
                                         }
                                         app.$forceUpdate();
+                                        Vue.nextTick(function () {
+                                            setTimeout(function () {
+                                                //preparePage();
+                                                window.printPDF = true;
+                                            }, 200);
+                                        });
                                     }
                                 );
                             });
                             self.empresaSeleccionada = empresa;
                             self.empresaSeleccionadaGestion = gestion;
-                            Vue.nextTick(function () {
-                                setTimeout(function () {
-                                    //preparePage();
-                                    window.printPDF = true;
-                                }, 300);
-                            });
                         });
                         HashRoute.run(window.location.hash);
                     }
