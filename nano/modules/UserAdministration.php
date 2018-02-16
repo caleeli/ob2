@@ -528,7 +528,7 @@
                 "events": {
                 },
                 "methods": {
-                    "calculate(empresaId, gestion, html, grafico, ppto)": <?php
+                    "calculate(empresaId, gestion, html, grafico)": <?php
                         function ($empresaId, $gestion, $html, $grafico='{}') {
                             $ev = new \App\Evaluator($empresaId, $gestion);
                             $ppto = '<p>La empresa cuenta con un presupuesto de Bs. {{$uf("Presup%Vig%")}}</p>

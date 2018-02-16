@@ -1166,7 +1166,7 @@
         <!--script src="/js/pdf.worker.js"></script-->
         <script src="/js/pdf.js"></script>
         <script src="/js/viewer.js"></script>
-        <script src="../js/server.js?v0.75"></script>
+        <script src="../js/server.js?v0.76"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1400,6 +1400,7 @@
                                     row.attributes.contenido,
                                     row.attributes.grafico,
                                     function (html) {
+                                        console.log(html);
                                         row.html = html[0];
                                         row.presupuesto = html[1];
                                         if (!html[2]) {
