@@ -23,6 +23,7 @@
         <link rel="stylesheet" type="text/css" href="/css/buttons.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
+        <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
         <!-- link rel="stylesheet" type="text/css" href="/css/viewer.css" -->
         <script>
             if (typeof localStorage.user_id === 'undefined'
@@ -1153,8 +1154,43 @@
                     </carouselitem>
                     <carouselitem id="hojas_de_trabajo">
                         <div class="row">
-                            <div class="col-md-12" style="background: white;">
-                                <htmldynamic v-bind:template="hoja_trabajo.contenido" v-bind:model="trabajo" />
+                            <div class="col-md-12" style="background: white;" v-show="!auditoriaAbierta">
+                                <!-- htmldynamic v-bind:template="hoja_trabajo.contenido" v-bind:model="trabajo" / -->
+                                <h2>Seleccione el tipo de Auditoria </h2>
+                                
+                                <div style="padding-left:2em">
+                                    <div v-for="tipo in tiposAuditoria" ><label> <input type="radio" v-bind:value="tipo.id" name="tipoAuditoria" v-model="tipoAuditoria"> &nbsp; {{tipo.name}}</label></div>
+                                </div>
+
+                                <div class="form-group"><label class="col-sm-2 control-label">Gestión:</label>
+
+                                              <div class="col-sm-4"><select class="form-control m-b" name="account">
+                                                  <option>2018</option>
+                                                  <!-- la gestion debe ir con el calendario es decir el 1 de enero debe habilitarse 2019 y asi de aca en adelante
+                                                  y que se guarde en un registro por cada gestion  en una pantalla aparte.
+                                                  El boton de CREAR es para un registro nuevo
+                                                  El boton de ABRIR es para buscar un tipo deauditoria por gestion, la pantalla siguiente se habilita un buscador.
+                                                  -->	
+
+                                                  </select>
+                                              </div>
+                                          <div class="form-group">
+                                              <div class="col-sm-4 col-sm-offset-2">
+                                                  <button class="btn btn-primary" type="button" v-on:click="crearAuditoria">Crear</button>
+                                                  <button class="btn btn-white" type="button" v-on:click="abrirAuditoria">Abrir</button>
+                                              </div>
+                                          </div>		
+
+                               </div>
+                            </div>
+                            <div class="col-md-12" style="background: white;" v-show="auditoriaAbierta">
+                                <iframe v-bind:src="auditoriaUrl" style="width:100%;height:70vh;border:1px solid black;"></iframe>
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-primary" type="button" v-on:click="auditoriaAbierta=false">Guardar</button>
+                                        <button class="btn btn-white" type="button" v-on:click="auditoriaAbierta=false">Cerrar</button>
+                                    </div>
+                                </div>		
                             </div>
                         </div>
                     </carouselitem>
@@ -1226,7 +1262,11 @@
                         cuadroSeleccionado: 1,
                         gestiones: gestiones,
                         hoja_trabajo : new UserAdministration.HojaTrabajo(),
-                        eeffModo: 'graficos'
+                        eeffModo: 'graficos',
+                        tiposAuditoria: [],
+                        tipoAuditoria: '',
+                        auditoriaUrl: 'about:blank',
+                        auditoriaAbierta: false,
                     };
                 },
                 computed: {
@@ -1400,7 +1440,6 @@
                                     row.attributes.contenido,
                                     row.attributes.grafico,
                                     function (html) {
-                                        console.log(html);
                                         row.html = html[0];
                                         row.presupuesto = html[1];
                                         if (!html[2]) {
@@ -1547,6 +1586,33 @@
                             links.push({pdf:docs[name].pdf,excel:docs[name].excel});
                         }
                         return links;
+                    },
+                    /**
+                     * 
+                     * @param {type} url
+                     * @param {type} text
+                     * @param {type} bind
+                     * @returns {undefined}Carga una lista de forma generica
+                     */
+                    loadList: function (url, bind) {
+                        $.ajax({
+                            url: url,
+                            method: 'get',
+                            dataType: 'json',
+                            success: function (res) {
+                                bind.splice(0);
+                                res.forEach(function (row) {
+                                    bind.push(row);
+                                });
+                            }
+                        });
+                    },
+                    crearAuditoria: function () {
+                        this.auditoriaUrl = '/vue-editor/' + this.tipoAuditoria;
+                        this.auditoriaAbierta = true;
+                    },
+                    abrirAuditoria: function () {
+                        
                     }
                 },
                 mounted: function () {
@@ -1564,6 +1630,7 @@
                     this.cargarCuadrosFinancierosCompleto();
                     this.loadListTo(this.usertarea, this.users);
                     this.hoja_trabajo.$load(1);
+                    this.loadList('/vue-editor/list/Hojas%20de%20Trabajo', this.tiposAuditoria);
                 }
             });
             window.app = app;
@@ -1583,5 +1650,7 @@
         <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
         <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
         <script src="js/inspinia.js"></script>
+        <!-- iCheck -->
+        <script src="js/plugins/iCheck/icheck.min.js"></script>
     </body>
 </html>

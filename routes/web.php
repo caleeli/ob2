@@ -31,18 +31,19 @@ Route::get('gdrive_cb', function (Request $request) {
 });
 
 Route::get(
-    '/gdrive/{path1}/{path2?}/{path3?}/{path4?}/{path5?}',
-    function (...$path) {
+    '/gdrive/vuedit/{id}',
+    function ($id) {
         $drive = new GDrive;
-        $file = $drive->findPath(implode('/', $path));
-        $url  = $drive->downloadLink($file);
-        return redirect($url);
+        $gTemplate = new \App\GTemplate($drive, $id);
+        return view('hoja_trabajo', ['document' => $gTemplate->parse()]);
     }
 );
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/vue-editor/{id}', 'VueEditorController@edit')->name('vue-editor');
+Route::get('/vue-editor/list/{path}', 'VueEditorController@index')->name('vue-editor-list');
 
 Route::get('/report', 'ReportController@report')->name('report');
 Route::get('/pdf', 'ReportController@pdf')->name('pdf');

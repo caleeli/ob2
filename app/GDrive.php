@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Cache;
  * @author davidcallizaya
  */
 class GDrive {
+
+    const MIME_FOLDER = 'application/vnd.google-apps.folder';
+
     /**
      *
      * @var Google_Client $client
@@ -99,6 +102,13 @@ class GDrive {
         $token = $this->client->getAccessToken()['access_token'];
         return "https://www.googleapis.com/drive/v3/files/$id?alt=media&access_token=$token";
     }
+    public function getContent($fileId)
+    {
+        /* @var $response \GuzzleHttp\Psr7\Response */
+        $response = $this->service->files->export($fileId, 'text/html');
+        return ($response->getBody()->__toString());
+    }
+
     /**
      *
      * @param type $value
@@ -118,5 +128,25 @@ class GDrive {
             case 'boolean':
                 return $value ? 'true' : 'false';
         }
+    }
+
+    public function files($path)
+    {
+        if ($path === 'root') {
+            $id = $path;
+        } else {
+            $gpath = $this->findPath($path);
+            $id = $gpath->id;
+        }
+        $list = [];
+        foreach ($this->listIn($id) as $file) {
+            if ($file->mimeType === self::MIME_FOLDER) continue;
+            $list[] = [
+                "id"   => $file->id,
+                "name" => $file->name,
+                "path" => "$path/" . $file->name,
+            ];
+        }
+        return $list;
     }
 }
