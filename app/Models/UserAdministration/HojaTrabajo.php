@@ -11,15 +11,21 @@ class HojaTrabajo extends Model
     protected $table = 'adm_hoja_trabajos';
     protected $fillable = array(
       0 => 'titulo',
-      1 => 'contenido',
+      1 => 'templeta',
+      2 => 'gestion',
+      3 => 'valores',
     );
     protected $attributes = array(
       'titulo' => '',
-      'contenido' => '',
+      'templeta' => '',
+      'gestion' => '',
+      'valores' => '{}',
     );
     protected $casts = array(
       'titulo' => 'string',
-      'contenido' => 'string',
+      'templeta' => 'string',
+      'gestion' => 'string',
+      'valores' => 'array',
     );
     protected $events = array(
     );

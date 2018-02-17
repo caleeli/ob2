@@ -49,4 +49,4 @@ div.editable textarea {
 </script>
 <script src="/bower_components/vue/dist/vue.js"></script>
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/js/hoja_trabajo.js"></script>
+<script src="/js/hoja_trabajo.js?{{filemtime(public_path('/js/hoja_trabajo.js'))}}"></script>

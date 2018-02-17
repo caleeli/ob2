@@ -128,10 +128,12 @@ Vue.component('check', {
 
 var app = new Vue({
     el: '#app',
-    data: Object.assign(window.variables, {
-        message: 'Hello Vue2!',
-        empresas: [],
-    }),
+    data: function () {
+        return Object.assign({
+            message: 'Hello Vue2!',
+            empresas: []
+        }, window.variables);
+    },
     methods: {
         loadList: function (url, text, bind) {
             $.ajax({
@@ -150,6 +152,11 @@ var app = new Vue({
     mounted: function () {
         var self = this;
         self.loadList('/api/UserAdministration/empresas', 'nombre_empresa', self.empresas);
-        //self.loadList('/api/UserAdministration/users', 'nombre_completo', self.usuarios);
     }
 });
+window.guardarHoja = function (callback) {
+    for(var a in variables) {
+        variables[a] = app[a];
+    }
+    callback(variables);
+}

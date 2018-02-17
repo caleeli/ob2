@@ -639,18 +639,18 @@ UserAdministration.HojaTrabajo = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/hoja_trabajos";
     Model.call(this, url, id, "UserAdministration.HojaTrabajo");
     this.$list = function () {
-        return "fields=titulo,contenido";
+        return "fields=titulo,templeta,gestion,valores";
     };
     this.$name = "HojaTrabajo";
     this.$pluralName = "HojaTrabajos";
     this.$title = "Hoja de trabajo";
     this.$pluralTitle = "Hojas de trabajo";
-    this.$ = {"titulo":{"name":"titulo","label":"Título","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"titulo","isAssociation":false},"contenido":{"name":"contenido","label":"Formula (html)","type":"html","enum":[],"source":undefined,"textField":undefined,"value":"contenido","isAssociation":false}};
+    this.$ = {"titulo":{"name":"titulo","label":"Título de la hoja de trabajo","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"titulo","isAssociation":false},"templeta":{"name":"templeta","label":"ID de templeta","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"templeta","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"valores":{"name":"valores","label":"Valores llenados","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"valores","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Título","data":"attributes.titulo"},{"title":"Formula (html)","data":"attributes.contenido"}];
+        return [{"title":"Título de la hoja de trabajo","data":"attributes.titulo"},{"title":"ID de templeta","data":"attributes.templeta"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Valores llenados","data":"attributes.valores"}];
     };
     this.$methods = {
     };

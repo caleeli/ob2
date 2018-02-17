@@ -24,7 +24,9 @@ class ApiController extends Controller
     const PER_PAGE = 500;
 
     /**
-     * /api/users?page=2&filter[]=where,username,=,david&fields=username,firstname&include=roles,phone&sort=username
+     * /api/users?page=2&filter[]=where,username,=,"david"&fields=username,firstname&include=roles,phone&sort=username
+     * Note que el valor del filtro debe estar en codificacion json.
+     *
      */
     public function index(Request $request, ...$route)
     {

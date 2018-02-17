@@ -1309,15 +1309,26 @@
                     new Module.Model.Field({
                         "name": "titulo",
                         "type": "string",
-                        "label": "Título",
+                        "label": "Título de la hoja de trabajo",
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "contenido",
+                        "name": "templeta",
                         "type": "string",
-                        "label": "Formula (html)",
-                        "ui": "html",
+                        "label": "ID de templeta",
                         "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "gestion",
+                        "type": "string",
+                        "label": "Gestión",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "valores",
+                        "type": "array",
+                        "label": "Valores llenados",
+                        "default": "{}"
                     }),
                 ],
                 "associations": [

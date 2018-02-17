@@ -12,7 +12,9 @@ class CreateAdmHojaTrabajosTable extends Migration
         Schema::create('adm_hoja_trabajos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('titulo')->nullable();
-            $table->string('contenido')->nullable();
+            $table->string('templeta')->nullable();
+            $table->string('gestion')->nullable();
+            $table->text('valores')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

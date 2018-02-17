@@ -42,7 +42,7 @@ Route::get(
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/vue-editor/{id}', 'VueEditorController@edit')->name('vue-editor');
+Route::get('/vue-editor/file/{templeta}/{hojaTrabajo?}', 'VueEditorController@edit')->name('vue-editor');
 Route::get('/vue-editor/list/{path}', 'VueEditorController@index')->name('vue-editor-list');
 
 Route::get('/report', 'ReportController@report')->name('report');
