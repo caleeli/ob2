@@ -393,8 +393,17 @@
                                                         <tbody>
                                                             <tr v-for='tareaI in tareas'>
                                                                 <td class="project-status">
-                                                                    <span class="label label-primary">
-                                                                        <i v-bind:class="{'fa':true,'fa-clock-o':tareaI.attributes.estado!=='Completado','fa-check':tareaI.attributes.estado==='Completado'}"></i>
+                                                                    <span class="label label-primary"v-bind:class="{
+                                                                            'label': true,
+                                                                            'label-danger': tareaI.attributes.avance*1 <= 30,
+                                                                            'label-warning': 30 < tareaI.attributes.avance*1 && tareaI.attributes.avance*1 < 70,
+                                                                            'label-primary': 70 <= tareaI.attributes.avance*1
+                                                                        }">
+                                                                        <i v-bind:class="{
+                                                                           'fa':true,
+                                                                           'fa-clock-o':tareaI.attributes.estado!=='Completado',
+                                                                           'fa-check':tareaI.attributes.estado==='Completado'
+                                                                        }"></i>
                                                                         <span class="hidden-xs hidden-sm">{{tareaI.attributes.estado}}</span>
                                                                     </span>
                                                                 </td>
