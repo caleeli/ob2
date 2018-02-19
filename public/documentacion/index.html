@@ -422,7 +422,7 @@
                                                                 </td>
                                                                 <td class="project-actions">
                                                                     <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Ver </a>
-                                                                    <a v-if="tareaI.relationships.usuario.id==user.id" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
+                                                                    <a v-if="tareaI.relationships.usuario.id==user.id && tareaI.attributes.avance<100" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
