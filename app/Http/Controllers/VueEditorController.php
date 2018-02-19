@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GDrive;
 use App\Models\UserAdministration\HojaTrabajo;
+use Illuminate\Support\Facades\Storage;
 
 class VueEditorController extends Controller
 {
@@ -19,5 +20,16 @@ class VueEditorController extends Controller
     {
         $drive = new GDrive;
         return response()->json($drive->files($path));
+    }
+
+    public function listPDFs()
+    {
+        $res = [];
+        $files = Storage::disk('referencias')->files('/');
+        foreach ($files as $file) {
+            if (strtolower(substr($file, -4)) != '.pdf') continue;
+            $res[] = ['url' => env('APP_URL') . '/documentacion/referencias/' . $file, 'name' => basename($file)];
+        }
+        return $res;
     }
 }

@@ -62,6 +62,7 @@ and open the template in the editor.
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
                             <li><a href="#recepcion" v-on:click='nuevaExterna' v-if="!window.isManager">Registrar</a></li>
                             <li><a href="#busqueda" v-on:click='filtroTipo="externa";filtrar()'>Búsqueda</a></li>
+                            <li><a href="#reporte_externa">Reporte</a></li>
                         </ul>
                     </div>
                     <div class="btn-group" v-if="!window.isManager">
@@ -75,6 +76,7 @@ and open the template in the editor.
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
                             <li><a href="#recepcion" v-on:click='nuevaInterna' v-if="!window.isManager">Registrar</a></li>
                             <li><a href="#busqueda" v-on:click='filtroTipo="interna";filtrar()'>Búsqueda</a></li>
+                            <li><a href="#reporte_interna">Reporte</a></li>
                         </ul>
                     </div>
                     <a href='#busqueda' class='btn btn-info' v-if="window.isManager">Dashboard</a>
@@ -89,6 +91,7 @@ and open the template in the editor.
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
                             <li><a href="#nota_oficio" v-on:click='nuevaNota' v-if="!window.isManager">Registrar</a></li>
                             <li><a href="#nota_busqueda">Búsqueda</a></li>
+                            <li><a href="#nota_reporte">Reporte</a></li>
                         </ul>
                     </div>
                     <div class="btn-group">
@@ -102,6 +105,7 @@ and open the template in the editor.
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
                             <li><a href="#com_interna" v-on:click='nuevaComunicacion' v-if="!window.isManager">Registrar</a></li>
                             <li><a href="#com_busqueda">Búsqueda</a></li>
+                            <li><a href="#reporte_com">Reporte</a></li>
                         </ul>
                     </div>
                 </div>
@@ -784,7 +788,74 @@ and open the template in the editor.
                         </tbody>
                     </table>
                 </div>
-            </div>
+                 <div class="col-md-10" v-if="menu=='reporte_externa'">
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <!-- TODO: REPORTE!!! -->
+                            <legend>Hoja de ruta - SCEP <b># {{hoja.numero}}</b></legend>
+                            <div class="form-group">
+                                <label for="textArea" class="col-lg-2 control-label">Tipo</label>
+                                <div class="col-lg-10">
+                                    <div class="radio" style="text-transform: uppercase">
+                                      <label>{{hoja.tipo}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-lg-2 control-label">Fecha de recepción</label>
+                                <div class="col-lg-10">
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            <input type='text' v-model="hoja.fecha" class="form-control" />
+                                            <span class="input-group-addon" v-on:click='datepick'>
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="textArea" class="col-lg-2 control-label">Referencia</label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" v-model="hoja.referencia" rows="3" id="textArea"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Procedencia</label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="hoja.procedencia" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Nº de control</label>
+                                <div class="col-lg-10">
+                                    <input type="number" v-model="hoja.nroDeControl" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Anexo hojas</label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="hoja.anexoHojas" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Destinatario</label>
+                                <div class="col-lg-10">
+                                    <div class="btn-group btn-block">
+                                        <input type="text" v-model="hoja.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
+                                        <ul class="dropdown-menu">
+                                            <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <button type="button" v-on:click="generar" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+           </div>
         </div>
         <script>
         function Recepcion(values) {

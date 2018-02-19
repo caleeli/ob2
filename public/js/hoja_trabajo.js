@@ -126,12 +126,92 @@ Vue.component('check', {
     }
 });
 
+Vue.component('enlace', {
+    template: '#enlace',
+    props: {
+        "value": String,
+        "data": {}
+    },
+    watch: {
+        'value': {
+            handler: function (str) {
+                if (!str) return;
+                var value = JSON.parse(str);
+                var self = this;
+                self.innerValue.text = value.text;
+                self.innerValue.file = value.file;
+                self.innerValue.marks.splice(0);
+                value.marks.forEach(function (mark) {
+                    self.innerValue.marks.push(mark);
+                });
+            },
+            deep: true
+        },
+        'innerValue': {
+            handler: function (value) {
+                this.$emit('input', JSON.stringify(value));
+            },
+            deep: true
+        }
+    },
+    data: function () {
+        var value = this.value ? JSON.parse(this.value) : {
+            text: '',
+            file: '',
+            marks: []
+        };
+        return {
+            innerValue: value
+        };
+    },
+    methods: {
+        abrirEnlace: function () {
+            var self = this;
+            this.$parent.pdfEditMode = false;
+            this.$parent.loadPDF(this.innerValue.file);
+            this.$parent.selectedLinkName = this.innerValue.text;
+            this.$parent.marks.splice(0);
+            this.innerValue.marks.forEach(function (mark) {
+                self.$parent.marks.push(mark);
+            });
+            this.$parent.selectedLink = this;
+            this.$parent.showPDF = true;
+            
+        },
+        editarEnlace: function () {
+            this.abrirEnlace();
+            this.$parent.pdfEditMode = true;
+        },
+        setFile: function (file) {
+            this.innerValue.file = file;
+        },
+        setMarks: function (marks) {
+            var self = this;
+            self.innerValue.marks.splice(0);
+            marks.forEach(function (mark) {
+                self.innerValue.marks.push(mark);
+            });
+        },
+        setText: function (text) {
+            this.innerValue.text = text;
+        }
+    }
+});
+
 var app = new Vue({
     el: '#app',
     data: function () {
         return Object.assign({
             message: 'Hello Vue2!',
-            empresas: []
+            empresas: [],
+            files: [],
+            selectedFile: '',
+            selectedLink: '',
+            marks: [],
+            showPDF: false,
+            pdfEditMode: true,
+            highlightMode: false,
+            selectedLinkName: ''
         }, window.variables);
     },
     methods: {
@@ -147,16 +227,241 @@ var app = new Vue({
                     });
                 }
             });
+        },
+        loadPDFList: function () {
+            var self = this;
+            $.ajax({
+                url: '/vue-editor/references',
+                method: 'get',
+                dataType: 'json',
+                success: function (res) {
+                    self.files.splice(0);
+                    res.forEach(function (row) {
+                        self.files.push(row);
+                    });
+                }
+            });
+        },
+        loadPDF: function (url) {
+            var self = this;
+            self.selectedFile = url;
+            document.getElementById("container").innerHTML = '';
+            if (!url) {
+                return;
+            }
+            // Asynchronous download PDF
+            PDFJS.getDocument(url)
+                .then(function (pdf) {
+
+                    // Get div#container and cache it for later use
+                    var container = document.getElementById("container");
+                    var firstMark = true;
+
+                    // Loop from 1 to total_number_of_pages in PDF document
+                    for (var i = 1; i <= pdf.numPages; i++) {
+
+                        // Get desired page
+                        pdf.getPage(i).then(function (page) {
+
+                            var scale = 1;
+                            var viewport = page.getViewport(scale);
+                            var div = document.createElement("div");
+
+                            // Set id attribute with page-#{pdf_page_number} format
+                            div.setAttribute("id", "page-" + (page.pageIndex + 1));
+
+                            // This will keep positions of child elements as per our needs
+                            div.setAttribute("style", "position: relative");
+
+                            // Append div within div#container
+                            container.appendChild(div);
+
+                            // Create a new Canvas element
+                            var canvas = document.createElement("canvas");
+
+                            // Append Canvas within div#page-#{pdf_page_number}
+                            div.appendChild(canvas);
+
+                            var context = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+
+                            var renderContext = {
+                                canvasContext: context,
+                                viewport: viewport
+                            };
+
+                            // Render PDF page
+                            page.render(renderContext)
+                                .then(function () {
+                                    // Get text-fragments
+                                    return page.getTextContent();
+                                })
+                                .then(function (textContent) {
+                                    // Create div which will hold text-fragments
+                                    var textLayerDiv = document.createElement("div");
+
+                                    // Set it's class to textLayer which have required CSS styles
+                                    textLayerDiv.setAttribute("class", "textLayer");
+
+                                    // Append newly created div in `div#page-#{pdf_page_number}`
+                                    div.appendChild(textLayerDiv);
+
+                                    // Create new instance of TextLayerBuilder class
+                                    var textLayer = new TextLayerBuilder({
+                                        textLayerDiv: textLayerDiv,
+                                        pageIndex: page.pageIndex,
+                                        viewport: viewport
+                                    });
+
+                                    // Set text-fragments
+                                    textLayer.setTextContent(textContent);
+
+                                    // Render text-fragments
+                                    textLayer.render();
+                                    // Highligth saved marks
+                                    setTimeout(function () {
+                                        self.marks.forEach(function (mark) {
+                                            if (firstMark) {
+                                                $(mark)[0].scrollIntoView();
+                                                firstMark = false;
+                                            }
+                                            $(mark).addClass('pdfselect');
+                                        });
+                                    }, 1);
+                                });
+                        });
+                    }
+                });
+        },
+        modoResaltar: function () {
+            $("#container").toggleClass('highlight');
+            this.highlightMode = $("#container").hasClass('highlight');
+        },
+        marcarSeleccion2: function () {
+            var self = this;
+            var range = window.getSelection().getRangeAt(0);
+            var newNode = document.createElement("div");
+            newNode.setAttribute(
+               "class",
+               "pdfmark"
+            );
+            range.surroundContents(newNode);
+            $(".pdfmark").each(function() {
+                this.parentNode.className = 'pdfselect';
+                this.parentNode.insertBefore(this.firstChild, this);
+            });
+            $(".pdfmark").remove();
+            var baseLength = $("#container").getPath().length;
+            $(".pdfselect").each(function() {
+                self.marks.push('#container' + $(this).getPath().substr(baseLength));
+            });
+        },
+        completarSeleccion: function () {
+            var self = this;
+            self.selectedLink.setFile(self.selectedFile);
+            self.selectedLink.setMarks(self.marks);
+            self.selectedLink.setText(self.selectedLinkName);
+            self.cerrarPDF();
+        },
+        cerrarPDF: function () {
+            this.showPDF = false;
+            if (this.highlightMode) {
+                this.modoResaltar();
+            }
+        },
+        marcarDiv: function (div) {
+            var self = this;
+            if (self.markActive && $(div.parentNode).hasClass('textLayer') && !$(div).hasClass('endOfContent')) {
+                if (self.unmarkMode) {
+                    $(div).removeClass('pdfselect');
+                } else {
+                    $(div).addClass('pdfselect');
+                }
+            }
+        },
+        iniMarcarDiv: function (div) {
+            var self = this;
+            if ($("#container").hasClass('highlight') && $(div.parentNode).hasClass('textLayer') && !$(div).hasClass('endOfContent')) {
+                self.markActive = true;
+                self.unmarkMode = $(div).hasClass('pdfselect');
+                $(div).toggleClass('pdfselect');
+            }
+        },
+        endMarcarDiv: function (div) {
+            var self = this;
+            if (!self.markActive) return;
+            if ($("#container").hasClass('highlight') && $(div.parentNode).hasClass('textLayer') && !$(div).hasClass('endOfContent')) {
+                if (self.unmarkMode) {
+                    $(div).removeClass('pdfselect');
+                } else {
+                    $(div).addClass('pdfselect');
+                }
+            }
+            self.markActive = false;
+            var baseLength = $("#container").getPath().length;
+            self.marks.splice(0);
+            $("#container .pdfselect").each(function () {
+                self.marks.push('#container' + $(this).getPath().substr(baseLength));
+            });
         }
+    },
+    watch: {
     },
     mounted: function () {
         var self = this;
         self.loadList('/api/UserAdministration/empresas', 'nombre_empresa', self.empresas);
+        self.loadPDFList();
+        $("#container").mousedown(function (event) {
+            self.iniMarcarDiv(event.target);
+        });
+        $("#container").mouseup(function (event) {
+            self.endMarcarDiv(event.target);
+        });
+        $("#container").mousemove(function (event) {
+            self.marcarDiv(event.target);
+        });
     }
 });
 window.guardarHoja = function (callback) {
-    for(var a in variables) {
+    for (var a in variables) {
         variables[a] = app[a];
     }
     callback(variables);
 }
+PDFJS.workerSrc = "/js/pdf.worker.js";
+
+jQuery.fn.extend({
+    getPath: function() {
+        var pathes = [];
+
+        this.each(function(index, element) {
+            var path, $node = jQuery(element);
+
+            while ($node.length) {
+                var realNode = $node.get(0), name = realNode.localName;
+                if (!name) { break; }
+
+                name = name.toLowerCase();
+                var parent = $node.parent();
+                var sameTagSiblings = parent.children(name);
+
+                if (sameTagSiblings.length > 1)
+                {
+                    allSiblings = parent.children();
+                    var index = allSiblings.index(realNode) +1;
+                    if (index > 0) {
+                        name += ':nth-child(' + index + ')';
+                    }
+                }
+
+                path = name + (path ? ' > ' + path : '');
+                $node = parent;
+            }
+
+            pathes.push(path);
+        });
+
+        return pathes.join(',');
+    }
+});

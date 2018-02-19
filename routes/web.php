@@ -44,6 +44,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/vue-editor/file/{templeta}/{hojaTrabajo?}', 'VueEditorController@edit')->name('vue-editor');
 Route::get('/vue-editor/list/{path}', 'VueEditorController@index')->name('vue-editor-list');
+Route::get('/vue-editor/references', 'VueEditorController@listPDFs')->name('vue-editor-references');
 
 Route::get('/report', 'ReportController@report')->name('report');
 Route::get('/pdf', 'ReportController@pdf')->name('pdf');

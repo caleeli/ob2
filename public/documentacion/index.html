@@ -901,7 +901,7 @@
                     </carouselitem>
                     <carouselitem id="hojas_de_trabajo">
                         <div class="row">
-                            <div class="col-md-4" style="background: white;" v-show="!auditoriaAbierta">
+                            <div class="col-md-4" style="background: white; min-height: 100vh;" v-show="!auditoriaAbierta">
                                 <h2>Seleccione el tipo de Auditoria </h2>
                                 
                                 <div style="padding-left:2em">
@@ -923,7 +923,7 @@
                                         <button class="btn btn-primary" type="button" v-on:click="crearAuditoria">Crear</button>
                                         <button class="btn btn-white" type="button" v-on:click="abrirAuditoria">Abrir</button>
                                     </div>
-                               </div>
+                                </div>
                             </div>
                             <div class="col-md-8" v-show="!auditoriaAbierta" id="archivosAuditoria">
                                 <div v-for="file in archivosAuditoria" class="file-box">
@@ -961,9 +961,8 @@
 
         <!-- Mainly scripts -->
         <!--script src="/js/pdf.worker.js"></script-->
-        <script src="/js/pdf.js"></script>
         <script src="/js/viewer.js"></script>
-        <script src="../js/server.js?v0.77"></script>
+        <script src="../js/server.js?v0.78"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1447,6 +1446,11 @@
                                 self.cerrarFileAuditoria();
                             });
                         });
+                    }
+                },
+                watch: {
+                    tipoAuditoria: function () {
+                        this.abrirAuditoria();
                     }
                 },
                 mounted: function () {
