@@ -208,6 +208,8 @@ Vue.component('upload', {
     },
     data() {
         return {
+            uploading: false,
+            progress: 0
         };
     },
     methods: {
@@ -217,6 +219,8 @@ Vue.component('upload', {
             for (var i = 0, l = event.target.files.length; i < l; i++) {
                 data.append('file' + (multiple ? '[]' : ''), event.target.files[i]);
             }
+            self.uploading = true;
+            self.progress = 0;
             $.ajax({
                 url: API_SERVER + "/api/uploaddocument/" + self.disk,
                 type: 'POST',
@@ -225,19 +229,19 @@ Vue.component('upload', {
                 success: function (json) {
                     self.$emit('input', JSON.stringify(json));
                     self.$emit('uploaded', json);
+                    self.uploading = false;
+                },
+                error: function () {
+                    self.uploading = false;
                 },
                 cache: false,
                 contentType: false,
                 processData: false
-            })/*.uploadProgress(function (data) {
+            }).uploadProgress(function (data) {
                 if (data.lengthComputable) {
-                    var progress = parseInt(((data.loaded / data.total) * 100), 10);
-                    $(event.target)
-                        .closest(".input-group")
-                        .find(".form-file-progress")
-                        .css("cssText", "background-size: " + progress + "% 100%!important");
+                    self.progress = parseInt(((data.loaded / data.total) * 100), 10);
                 }
-            })*/;
+            });
         },
         file: function (json, multiple) {
             var name = '', url = false, mime = '';

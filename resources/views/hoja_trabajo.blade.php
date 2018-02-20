@@ -152,7 +152,7 @@
         </span>
         <input v-show="!small" type="text" readonly="readonly" v-bind:value="file(value, type==='multiplefile').name" class="form-control form-file-progress">
         <span class="input-group-btn">
-            <span class="btn btn-default" type="button">
+            <span class="btn btn-default" type="button" v-bind:style="{opacity:uploading?'0.2':'1'}">
                 &#8682;
                 <input type="file" style="
                                         width: 100%;
@@ -161,9 +161,11 @@
                                         left: 0px;
                                         top: 0px;
                                         opacity: 0;"
+                                        accept="application/pdf"
                                         v-on:change="changeFile($event, type==='multiplefile')"
                                         v-bind:multiple="type==='multiplefile'">
             </span>
+            <span v-show="uploading" style="position: absolute;top: 0px;left: 0px;transform: scale(0.5);color: black;width: 100%;text-align: center;">@{{progress}}%</span>
         </span>
     </div>
 </script>
@@ -172,3 +174,4 @@
 <script src="/js/pdf.js"></script>
 <script src="/js/hoja_trabajo.js?{{filemtime(public_path('/js/hoja_trabajo.js'))}}"></script>
 <script type="text/javascript" src="/js/text_layer_builder.js"></script>
+<script type="text/javascript" charset="utf8" src="/bower_components/jq-ajax-progress/src/jq-ajax-progress.min.js"></script>
