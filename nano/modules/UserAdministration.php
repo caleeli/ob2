@@ -418,6 +418,8 @@
                         "name": "informes_auditoria",
                         "label": "Informes auditoria",
                         "type": "string",
+                        "form": false,
+                        "list": false,
                         "default": ""
                     }),
                     new Module.Model.Field({
@@ -439,6 +441,8 @@
                         "type": "string",
                         "list": false,
                         "ui": "html",
+                        "form": false,
+                        "list": false,
                         "default": "activo,pasivo"
                     }),
                     new Module.Model.Field({
@@ -461,6 +465,7 @@
                         "name": "grafico_valores",
                         "label": "Gráfico valores",
                         "type": "string",
+                        "form": false,
                         "list": false,
                         "default": "4500,4000"
                     })
@@ -469,9 +474,10 @@
                     new Module.Model.BelongsTo({
                         "name": "empresa",
                         "model": "empresa",
+                        "label": "Empresa",
                         "nullable": true,
                         "list": true,
-                        "textField": function(data){return data?data.cod_empresa+' '+data.nombre_empresa:''},
+                        "textField": function(data){return data?(data.cod_empresa?data.cod_empresa:'   ')+' '+data.nombre_empresa:''},
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
                         "form": true
@@ -643,7 +649,12 @@
                         "name": "files",
                         "type": "array",
                         "label": "Archivos",
-                        "ui": "multiplefile"
+                        "ui": "multiplefile",
+                        "textField": function(data,type,row){
+                            var res = [];
+                            data.forEach(function (item) {res.push(item.name)});
+                            return res.join(", ");
+                        }
                     }),
                 ],
                 "associations": [],

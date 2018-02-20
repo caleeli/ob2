@@ -155,7 +155,7 @@
                 return val;
             },
             getInitialTextOf: function (value, textField, field) {
-                var val = typeof value==='object' && value && typeof value.attributes!=='undefined' ? value.attributes[textField] : value;
+                var val = typeof value==='object' && value && typeof value.attributes!=='undefined' ? (typeof textField === 'function' ? textField(value.attributes) : value.attributes[textField]) : value;
                 return val;
             },
             getTextField: function (data, textField) {

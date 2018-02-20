@@ -294,11 +294,12 @@
                                     <div class="col-lg-12">
                                         <div class="ibox">
                                             <div class="ibox-title">
-                                                <h5>ESTADOS FINANCIEROS ADMIN</h5>
+                                                <h5>ESTADOS FINANCIEROS - ARCHIVOS CARGADOS</h5>
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow-y: scroll;">
                                                     <abm v-bind:model="estado_financiero_adm" v-bind:editable="true" buttons='close,save,delete'></abm>
+                                                    <h5>CARGA MASIVA</h5>
                                                     <abm v-bind:model="carga_estado" v-bind:editable="true" buttons='close,save,delete'></abm>
                                                     <!-- file-viewer /-->
                                                 </div>
@@ -989,7 +990,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.81"></script>
+        <script src="../js/server.js?v0.85"></script>
         <script>
         $(document).ready(function () {
             var app;

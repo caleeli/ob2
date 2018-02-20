@@ -93,18 +93,18 @@ UserAdministration.EstadoFinanciero = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/estado_financieros";
     Model.call(this, url, id, "UserAdministration.EstadoFinanciero");
     this.$list = function () {
-        return "fields=tipo_estado_financiero,informes_auditoria,gestion,archivo,empresa";
+        return "fields=tipo_estado_financiero,gestion,archivo,empresa";
     };
     this.$name = "EstadoFinanciero";
     this.$pluralName = "EstadoFinancieros";
     this.$title = "Estado financiero";
     this.$pluralTitle = "Estados financieros";
-    this.$ = {"tipo_estado_financiero":{"name":"tipo_estado_financiero","label":"Tipo estado financiero","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_estado_financiero","isAssociation":false},"informes_auditoria":{"name":"informes_auditoria","label":"Informes auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"informes_auditoria","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false},"grafico_texto":{"name":"grafico_texto","label":"Gráfico texto","type":"html","enum":[],"source":undefined,"textField":undefined,"value":"grafico_texto","isAssociation":false},"grafico_valores":{"name":"grafico_valores","label":"Gráfico valores","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"grafico_valores","isAssociation":false},"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":function (data){return data?data.cod_empresa+' '+data.nombre_empresa:''},"value":"empresa","isAssociation":true,"isMultiple":false}};
+    this.$ = {"tipo_estado_financiero":{"name":"tipo_estado_financiero","label":"Tipo estado financiero","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_estado_financiero","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":function (data){return data?(data.cod_empresa?data.cod_empresa:'   ')+' '+data.nombre_empresa:''},"value":"empresa","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Informes auditoria","data":"attributes.informes_auditoria"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}},{"title":"empresa","visible":true,"render":function (data){return data?data.cod_empresa+' '+data.nombre_empresa:''},"data":"relationships.empresa.attributes"}];
+        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}},{"title":"Empresa","visible":true,"render":function (data){return data?(data.cod_empresa?data.cod_empresa:'   ')+' '+data.nombre_empresa:''},"data":"relationships.empresa.attributes"}];
     };
     this.$methods = {
     };
@@ -211,12 +211,20 @@ UserAdministration.CargaEstado = function (url, id) {
     this.$pluralName = "CargaEstados";
     this.$title = "Carga de estados financieros";
     this.$pluralTitle = "Cargas de estados financieros";
-    this.$ = {"files":{"name":"files","label":"Archivos","type":"multiplefile","enum":[],"source":undefined,"textField":undefined,"value":"files","isAssociation":false}};
+    this.$ = {"files":{"name":"files","label":"Archivos","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                            var res = [];
+                            data.forEach(function (item) {res.push(item.name)});
+                            return res.join(", ");
+                        },"value":"files","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Archivos","data":"attributes.files"}];
+        return [{"title":"Archivos","data":"attributes.files","render":function (data,type,row){
+                            var res = [];
+                            data.forEach(function (item) {res.push(item.name)});
+                            return res.join(", ");
+                        }}];
     };
     this.$methods = {
     };
