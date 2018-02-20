@@ -1,7 +1,10 @@
 /* Small Devices, Tablets */
 @media only screen and (max-width : 991px) and (min-width : 768px) {
     #page-wrapper {
-      padding: 0 0px;
+        padding: 0 0px;
+    }
+    .mini-navbar #page-wrapper {
+        padding-left: 15px;
     }
     .ibox-content {
         padding: 15px 4px 3px 8px;
