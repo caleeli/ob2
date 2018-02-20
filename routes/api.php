@@ -33,8 +33,8 @@ Route::get('/lang/datatable', function () {
 
     return $response;
 });
-Route::post('/uploadfile',
-            array('as' => 'api', 'uses' => 'UploadFileController@upload'));
+Route::post('/uploadfile', array('as' => 'api', 'uses' => 'UploadFileController@upload'));
+Route::post('/uploaddocument/{disk}', array('as' => 'api', 'uses' => 'UploadFileController@uploadDocument'));
 Route::get('/ping', array('as' => 'api', 'uses' => 'PingController@ping'));
 Route::get('/empty', array('as' => 'api', 'uses' => 'PingController@data'));
 

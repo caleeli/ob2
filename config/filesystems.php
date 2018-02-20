@@ -51,6 +51,7 @@ return [
         'referencias' => [
             'driver' => 'local',
             'root' => public_path('documentacion/referencias'),
+            'urlBase' => 'documentacion/referencias/',
         ],
 
         'public' => [

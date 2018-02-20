@@ -198,6 +198,65 @@ Vue.component('enlace', {
     }
 });
 
+Vue.component('upload', {
+    template: '#upload',
+    props: {
+        "value": String,
+        "type": String,
+        "small": Boolean,
+        "disk": String
+    },
+    data() {
+        return {
+        };
+    },
+    methods: {
+        changeFile: function (event, multiple) {
+            var self = this;
+            var data = new FormData();
+            for (var i = 0, l = event.target.files.length; i < l; i++) {
+                data.append('file' + (multiple ? '[]' : ''), event.target.files[i]);
+            }
+            $.ajax({
+                url: API_SERVER + "/api/uploaddocument/" + self.disk,
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (json) {
+                    self.$emit('input', JSON.stringify(json));
+                    self.$emit('uploaded', json);
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            })/*.uploadProgress(function (data) {
+                if (data.lengthComputable) {
+                    var progress = parseInt(((data.loaded / data.total) * 100), 10);
+                    $(event.target)
+                        .closest(".input-group")
+                        .find(".form-file-progress")
+                        .css("cssText", "background-size: " + progress + "% 100%!important");
+                }
+            })*/;
+        },
+        file: function (json, multiple) {
+            var name = '', url = false, mime = '';
+            json = typeof json === 'string' && json ? JSON.parse(json) : json;
+            url = json && typeof json.url !== 'undefined' ? json.url : false;
+            mime = json && typeof json.mime !== 'undefined' ? json.mime : '';
+            if (multiple && json && typeof json.forEach === 'function') {
+                json.forEach(function (j) {
+                    name += j.name + ' | ';
+                });
+            } else {
+                name = json && typeof json.name !== 'undefined' ? json.name : '';
+            }
+            return {name: name, url: url, mime: mime};
+        }
+    }
+});
+
+var API_SERVER = '';
 var app = new Vue({
     el: '#app',
     data: function () {
@@ -211,7 +270,8 @@ var app = new Vue({
             showPDF: false,
             pdfEditMode: true,
             highlightMode: false,
-            selectedLinkName: ''
+            selectedLinkName: '',
+            uploadAux: ''
         }, window.variables);
     },
     methods: {
@@ -228,7 +288,7 @@ var app = new Vue({
                 }
             });
         },
-        loadPDFList: function () {
+        loadPDFList: function (callback) {
             var self = this;
             $.ajax({
                 url: '/vue-editor/references',
@@ -239,6 +299,9 @@ var app = new Vue({
                     res.forEach(function (row) {
                         self.files.push(row);
                     });
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
                 }
             });
         },
@@ -403,6 +466,13 @@ var app = new Vue({
             self.marks.splice(0);
             $("#container .pdfselect").each(function () {
                 self.marks.push('#container' + $(this).getPath().substr(baseLength));
+            });
+        },
+        fileUploaded: function (file) {
+            var self = this;
+            self.loadPDFList(function () {
+                self.selectedFile = file.url;
+                self.loadPDF(self.selectedFile);
             });
         }
     },

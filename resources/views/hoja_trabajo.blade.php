@@ -3,6 +3,7 @@
 <div class="popup" v-show="showPDF">
     <div class="header" v-show="pdfEditMode">
         <input placeholder="Ingrese el texto del enlace" size="30" v-model="selectedLinkName"/>
+        <upload v-model="uploadAux" type="singlefile" v-bind:small="true" disk="referencias" v-on:uploaded="fileUploaded"></upload>
         <select v-model="selectedFile" v-on:change="loadPDF(selectedFile)">
             <option value=""></option>
             <option v-for="file in files" v-bind:value="file.url">@{{file.name}}</option>
@@ -134,6 +135,36 @@
     <div class="editable link-button">
         <span v-on:click="abrirEnlace">@{{innerValue.text}}</span>
         <button type="button" v-on:click="editarEnlace">&#128279;</button>
+    </div>
+</script>
+<script type='text/x-template' id='upload'>
+    <div style="
+    display: inline-block;
+    position: relative;
+    border: 1px solid lightgray;
+    background-color: ButtonHighlight;
+    color: ButtonText;
+    overflow: hidden;
+    line-height: 17px;
+    margin-bottom: -5px;">
+        <span v-if="type!=='multiplefile' && !small" class="input-group-btn">
+            <a class="btn btn-default" v-bind:href="file(value).url" v-bind:download="file(value).name"><i class="fa fa-download"></i></a>
+        </span>
+        <input v-show="!small" type="text" readonly="readonly" v-bind:value="file(value, type==='multiplefile').name" class="form-control form-file-progress">
+        <span class="input-group-btn">
+            <span class="btn btn-default" type="button">
+                &#8682;
+                <input type="file" style="
+                                        width: 100%;
+                                        height: 100%;
+                                        position: absolute;
+                                        left: 0px;
+                                        top: 0px;
+                                        opacity: 0;"
+                                        v-on:change="changeFile($event, type==='multiplefile')"
+                                        v-bind:multiple="type==='multiplefile'">
+            </span>
+        </span>
     </div>
 </script>
 <script src="/bower_components/vue/dist/vue.js"></script>
