@@ -393,7 +393,8 @@
                                                         <tbody>
                                                             <tr v-for='tareaI in tareas'>
                                                                 <td class="project-status">
-                                                                    <span class="label label-primary"v-bind:class="{
+                                                                    <small>Estado</small><br>
+                                                                    <span v-bind:class="{
                                                                             'label': true,
                                                                             'label-danger': tareaI.attributes.avance*1 <= 30,
                                                                             'label-warning': 30 < tareaI.attributes.avance*1 && tareaI.attributes.avance*1 < 70,
@@ -424,14 +425,25 @@
                                                                     </div>
                                                                 </td>
                                                                 <td class="project-user">
-                                                                    <i class="fa fa-user-o"></i> {{tareaI.relationships.usuario.attributes.nombres+' '+tareaI.relationships.usuario.attributes.apellidos}}
+                                                                    <i class="fa fa-user-o"></i> {{!tareaI.relationships.usuario ? '': tareaI.relationships.usuario.attributes.nombres+' '+tareaI.relationships.usuario.attributes.apellidos}}
                                                                 </td>
-                                                                <td class="project-owner">
+                                                                <!-- td class="project-owner">
                                                                     <i class="fa fa-user-secret"></i> {{tareaI.relationships.creador.attributes.nombres+' '+tareaI.relationships.creador.attributes.apellidos}}
+                                                                </td -->
+                                                                <td class="project-priority">
+                                                                    <small>Prioridad</small><br>
+                                                                    <span v-bind:class="{
+                                                                            'label': true,
+                                                                            'label-danger': tareaI.attributes.prioridad=='Alta',
+                                                                            'label-warning': tareaI.attributes.prioridad=='Media',
+                                                                            'label-primary': tareaI.attributes.prioridad=='Baja'
+                                                                        }">{{tareaI.attributes.prioridad}}</span>
                                                                 </td>
                                                                 <td class="project-actions">
+                                                                    <a v-if="tareaI.relationships.creador.id==user.id" v-if="esUsuarioGerente()" href="javascript:void(0)" class="btn btn-white btn-sm" v-on:click='calcelarTarea(tareaI)'><i class="fa fa-times"></i> Cancelar </a>
+                                                                    <a v-if="tareaI.relationships.creador.id==user.id" href="#asignarTarea" class="btn btn-white btn-sm" v-on:click='modificarTarea(tareaI)'><i class="fa fa-pencil"></i> Modificar </a>
                                                                     <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Ver </a>
-                                                                    <a v-if="tareaI.relationships.usuario.id==user.id && tareaI.attributes.avance<100" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
+                                                                    <a v-if="tareaI.relationships.usuario && tareaI.relationships.usuario.id==user.id && tareaI.attributes.avance<100" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -458,6 +470,7 @@
                                                     <div class="col-lg-12">
                                                         <div class="m-b-md">
                                                             <a v-if="tarea.usuario_id==user.id" href="#registrarAvance" class="btn btn-success btn-xs pull-right" v-on:click="crearAvance">Registrar avance</a>
+                                                            <a href="#seguimientoDeTareas" class="btn btn-default btn-xs pull-right">Volver</a>
                                                             <h2>{{tarea.cod_tarea}} {{tarea.nombre_tarea}}</h2>
                                                         </div>
                                                         <dl class="dl-horizontal">
@@ -587,13 +600,15 @@
                                                 <h5>Tarea</h5>
                                                 <div class="ibox-tools">
                                                     <a href="#seguimientoDeTareas" class="btn btn-primary btn-xs" v-on:click='guardarTarea'>Guardar Tarea</a>
+                                                    <a href="#seguimientoDeTareas" class="btn btn-default btn-xs pull-right">Volver</a>
                                                 </div>
                                             </div>
                                             <div class="ibox-content">
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <dl class="dl-horizontal">
-                                                            <dt>Código:</dt> <dd>(se generará al asignar la tarea)</dd>
+                                                            <dt>Código:</dt> <dd v-show='!tarea.cod_tarea'>(se generará al guardar la tarea o al adjuntar un archivo)</dd>
+                                                            <dd v-show='tarea.cod_tarea'>{{tarea.cod_tarea}}</dd>
                                                         </dl>
                                                         <dl class="dl-horizontal">
                                                             <dt>Tarea:</dt> <dd><input type="text" class="form-control" placeholder="tarea" v-model="tarea.nombre_tarea"></dd>
@@ -634,7 +649,7 @@
                                                         </dl>
                                                     </div>
                                                 </div>
-                                                <div class="row">
+                                                <div class="row" v-show="tarea.avance>0">
                                                     <div class="col-lg-12">
                                                         <dl class="dl-horizontal">
                                                             <dt>Avance:</dt>
@@ -672,9 +687,7 @@
                                                                         <ul class="list-unstyled project-files">
                                                                             <li v-for="adjunto in tarea.adjuntos" v-if='adjunto.attributes.archivo'><a :href="adjunto.attributes.archivo?adjunto.attributes.archivo.url:''" target="_blank"><i class="fa fa-file"></i> {{adjunto.attributes.archivo?adjunto.attributes.archivo.name:''}}</a></li>
                                                                         </ul>
-                                                                        <div class="text-center m-t-md">
-
-                                                                        </div>
+                                                                        <dv-form :model="Adjunto" v-on:custom="adjuntarArchivoNuevaTarea" buttons="Adjuntar"></dv-form>
 
                                                                     </div>
                                                                     <div class="tab-pane" id="tab-2a">
@@ -733,6 +746,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="m-b-md">
                                                         <a href="javascript:history.back()" class="btn btn-success btn-xs pull-right" v-on:click="guardarAvance">Guardar avance</a>
+                                                        <a href="#seguimientoDeTareas" class="btn btn-default btn-xs pull-right">Volver</a>
                                                         <h2>{{tarea.cod_tarea}} {{tarea.nombre_tarea}}</h2>
                                                     </div>
                                                     <dl class="dl-horizontal">
@@ -969,8 +983,6 @@
         </div>
 
         <!-- Mainly scripts -->
-        <!--script src="/js/pdf.worker.js"></script-->
-        <script src="/js/viewer.js"></script>
         <script src="../js/server.js?v0.78"></script>
         <script>
         $(document).ready(function () {
@@ -1115,14 +1127,23 @@
                     seleccionaTarea: function (tarea) {
                         this.tarea.$load(tarea.id);
                     },
+                    modificarTarea: function (tarea) {
+                        var self = this;
+                        this.tarea.$load(tarea.id, function () {
+                            self.tarea.usuario = self.tarea.usuario.id;
+                        });
+                    },
                     crearTarea: function () {
                         this.tarea.$load(0);
                     },
-                    guardarTarea: function () {
+                    guardarTarea: function (event, callback) {
                         var self = this;
                         self.tarea.creador = {id:localStorage.user_id};
                         this.tarea.$save('', function() {
                             self.listarTareas();
+                            if (typeof callback==='function') {
+                                callback(self.tarea);
+                            }
                         });
                     },
                     crearAvance: function () {
@@ -1152,6 +1173,15 @@
                         this.Adjunto.$save('', function () {
                             self.Adjunto.$load(0);
                             self.tarea.$load(self.tarea.id);
+                        });
+                    },
+                    adjuntarArchivoNuevaTarea: function () {
+                        var self = this;
+                        self.guardarTarea(null, function () {
+                            self.Adjunto.$save('', function () {
+                                self.Adjunto.$load(0);
+                                self.tarea.$load(self.tarea.id);
+                            });
                         });
                     },
                     abrirUAI: function () {
