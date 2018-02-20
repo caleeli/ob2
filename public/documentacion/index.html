@@ -446,7 +446,7 @@
                                                                         }">{{tareaI.attributes.prioridad}}</span>
                                                                 </div>
                                                                 <div class="col-md-3 col-xs-12 project-actions" style="padding-top: 0.5em">
-                                                                    <a v-if="tareaI.relationships.creador.id==user.id" v-if="esUsuarioGerente()" href="javascript:void(0)" class="btn btn-white btn-sm" v-on:click='calcelarTarea(tareaI)'><i class="fa fa-times"></i> Cancelar </a>
+                                                                    <a v-if="tareaI.relationships.creador.id==user.id" v-if="esUsuarioGerente()" href="javascript:void(0)" class="btn btn-white btn-sm" v-on:click='cancelarTarea(tareaI)'><i class="fa fa-times"></i> Cancelar </a>
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" href="#asignarTarea" class="btn btn-white btn-sm" v-on:click='modificarTarea(tareaI)'><i class="fa fa-pencil"></i> Modificar </a>
                                                                     <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Ver </a>
                                                                     <a v-if="tareaI.relationships.usuario && tareaI.relationships.usuario.id==user.id && tareaI.attributes.avance<100" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
@@ -990,7 +990,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.86"></script>
+        <script src="../js/server.js?v0.87"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1139,6 +1139,21 @@
                         this.tarea.$load(tarea.id, function () {
                             self.tarea.usuario = self.tarea.usuario.id;
                         });
+                    },
+                    cancelarTarea: function (tarea) {
+                        var self = this;
+                        var confirmacion = confirm(
+                            '¿Confirma que desea cancelar la tarea: '
+                            + tarea.attributes.cod_tarea + ', '
+                            + tarea.attributes.nombre_tarea
+                        );
+                        if (confirmacion) {
+                            self.tarea.$load(tarea.id, function () {
+                                self.tarea.$delete('', function () {
+                                    self.listarTareas();
+                                });
+                            });
+                        }
                     },
                     crearTarea: function () {
                         this.tarea.$load(0);

@@ -139,6 +139,7 @@
             },
             isChildOf: function (row, parent) {
                 var self = this;
+                if (!parent) return false;
                 var parentKey = [parent.attributes[self.id_field]].join(",");
                 var key = self.getGroupKey(row).join(",");
                 return parentKey === key;
