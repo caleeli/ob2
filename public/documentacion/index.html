@@ -387,33 +387,37 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div class="project-list" style="overflow: auto;">
+                                                <div>
 
-                                                    <table class="table table-hover">
-                                                        <tbody>
-                                                            <tr v-for='tareaI in tareas'>
-                                                                <td class="project-status">
-                                                                    <small>Estado</small><br>
-                                                                    <span v-bind:class="{
-                                                                            'label': true,
-                                                                            'label-danger': tareaI.attributes.avance*1 <= 30,
-                                                                            'label-warning': 30 < tareaI.attributes.avance*1 && tareaI.attributes.avance*1 < 70,
-                                                                            'label-primary': 70 <= tareaI.attributes.avance*1
-                                                                        }">
-                                                                        <i v-bind:class="{
-                                                                           'fa':true,
-                                                                           'fa-clock-o':tareaI.attributes.estado!=='Completado',
-                                                                           'fa-check':tareaI.attributes.estado==='Completado'
-                                                                        }"></i>
-                                                                        <span class="hidden-xs hidden-sm">{{tareaI.attributes.estado}}</span>
-                                                                    </span>
-                                                                </td>
-                                                                <td class="project-title">
-                                                                    <a href="#detalleTarea" v-on:click='seleccionaTarea(tareaI)'>{{tareaI.attributes.cod_tarea}} {{tareaI.attributes.nombre_tarea}}</a>
-                                                                    <br>
-                                                                    <small>{{tareaI.attributes.created_at}}</small>
-                                                                </td>
-                                                                <td class="project-completion">
+                                                    <div class="row" v-for='tareaI in tareas'>
+                                                                <div class="col-md-4 col-xs-12">
+                                                                    <table width="100%">
+                                                                        <tr>
+                                                                            <td class="project-status" width="35%">
+                                                                                <small>Estado</small><br>
+                                                                                <span v-bind:class="{
+                                                                                        'label': true,
+                                                                                        'label-danger': tareaI.attributes.avance*1 <= 30,
+                                                                                        'label-warning': 30 < tareaI.attributes.avance*1 && tareaI.attributes.avance*1 < 70,
+                                                                                        'label-primary': 70 <= tareaI.attributes.avance*1
+                                                                                    }">
+                                                                                    <i v-bind:class="{
+                                                                                       'fa':true,
+                                                                                       'fa-clock-o':tareaI.attributes.estado!=='Completado',
+                                                                                       'fa-check':tareaI.attributes.estado==='Completado'
+                                                                                    }"></i>
+                                                                                    <span class="hidden-xs hidden-sm hidden-md">{{tareaI.attributes.estado}}</span>
+                                                                                </span>
+                                                                            </td>
+                                                                            <td class="project-title" width="65%">
+                                                                                <a href="#detalleTarea" v-on:click='seleccionaTarea(tareaI)'>{{tareaI.attributes.cod_tarea}} {{tareaI.attributes.nombre_tarea}}</a>
+                                                                                <br>
+                                                                                <small class="block-with-text">{{tareaI.attributes.descripcion}}</small>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-md-2 col-xs-4 project-completion">
                                                                     <small>Avance: {{tareaI.attributes.avance}}%</small>
                                                                     <div class="progress progress-mini">
                                                                         <div v-bind:style="{width: tareaI.attributes.avance+'%'}" v-bind:class="{
@@ -423,14 +427,14 @@
                                                                             'progress-bar-primary': 70 <= tareaI.attributes.avance*1
                                                                         }"></div>
                                                                     </div>
-                                                                </td>
-                                                                <td class="project-user">
+                                                                </div>
+                                                                <div class="col-md-2 col-xs-5 project-user">
                                                                     <i class="fa fa-user-o"></i> {{!tareaI.relationships.usuario ? '': tareaI.relationships.usuario.attributes.nombres+' '+tareaI.relationships.usuario.attributes.apellidos}}
-                                                                </td>
+                                                                </div>
                                                                 <!-- td class="project-owner">
                                                                     <i class="fa fa-user-secret"></i> {{tareaI.relationships.creador.attributes.nombres+' '+tareaI.relationships.creador.attributes.apellidos}}
                                                                 </td -->
-                                                                <td class="project-priority">
+                                                                <div class="col-md-1 col-xs-3 text-right project-priority">
                                                                     <small>Prioridad</small><br>
                                                                     <span v-bind:class="{
                                                                             'label': true,
@@ -438,16 +442,17 @@
                                                                             'label-warning': tareaI.attributes.prioridad=='Media',
                                                                             'label-primary': tareaI.attributes.prioridad=='Baja'
                                                                         }">{{tareaI.attributes.prioridad}}</span>
-                                                                </td>
-                                                                <td class="project-actions">
+                                                                </div>
+                                                                <div class="col-md-3 col-xs-12 project-actions" style="padding-top: 0.5em">
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" v-if="esUsuarioGerente()" href="javascript:void(0)" class="btn btn-white btn-sm" v-on:click='calcelarTarea(tareaI)'><i class="fa fa-times"></i> Cancelar </a>
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" href="#asignarTarea" class="btn btn-white btn-sm" v-on:click='modificarTarea(tareaI)'><i class="fa fa-pencil"></i> Modificar </a>
                                                                     <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Ver </a>
                                                                     <a v-if="tareaI.relationships.usuario && tareaI.relationships.usuario.id==user.id && tareaI.attributes.avance<100" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                                </div>
+                                                                <div class="col-xs-12">
+                                                                    <hr>
+                                                                </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -983,7 +988,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.78"></script>
+        <script src="../js/server.js?v0.79"></script>
         <script>
         $(document).ready(function () {
             var app;
