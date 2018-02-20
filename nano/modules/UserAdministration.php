@@ -537,7 +537,7 @@
                     "calculate(empresaId, gestion, html, grafico)": <?php
                         function ($empresaId, $gestion, $html, $grafico='{}') {
                             $ev = new \App\Evaluator($empresaId, $gestion);
-                            $ppto = '<p>La empresa cuenta con un presupuesto de Bs. {{$uf("Presup%Vig%")}}</p>
+                            $ppto = '<p class="desc-ind">La empresa cuenta con un presupuesto de Bs. {{$uf("Presup%Vig%")}}</p>
         <table style="height: 223px;" width="100%">
 		<tbody>
 		<tr>
