@@ -1154,7 +1154,7 @@ and open the template in the editor.
             var from = moment(this.fecha_entrega+' 00:00:00', 'YYYY-MM-DD HH:mm:ss');
             var to = moment();
             var pasaron = Math.floor(workday_count(from, to));
-            return isNaA(pasaron) ? '' : pasaron;
+            return isNaN(pasaron) ? '' : pasaron;
         }
         function Derivacion(values) {
             this.id = null,
