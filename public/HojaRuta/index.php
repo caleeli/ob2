@@ -882,7 +882,7 @@ and open the template in the editor.
                             </tr>
                         </thead>
                         <tbody v-for='(rep, r) in reporteExterna'>
-                            <tr>
+                            <tr v-if="reporte.forma!='SoloDerivaciones'">
                                 <td>{{r+1}}</td>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td>{{rep.gestion}}</td>
@@ -892,8 +892,8 @@ and open the template in the editor.
                                 <td style="white-space: pre;">{{rep.conclusion}}</td>
                             </tr>
                             <tr v-if="reporte.forma!='SoloHojas'">
-                                <th></th>
-                                <th>#</th>
+                                <th>{{reporte.forma==='SoloDerivaciones' ? '#': ''}}</th>
+                                <th>{{reporte.forma==='SoloDerivaciones' ? 'Hoja de ruta': '#'}}</th>
                                 <th>Fecha Derivación</th>
                                 <th style="vertical-align: bottom;">Destinatario</th>
                                 <th></th>
@@ -901,8 +901,8 @@ and open the template in the editor.
                                 <th></th>
                             </tr>
                             <tr v-if="reporte.forma!='SoloHojas'" v-for='(derivacion, d) in rep.derivaciones'>
-                                <td></td>
-                                <td>{{d+1}}</td>
+                                <th>{{reporte.forma==='SoloDerivaciones' ? d+1: ''}}</th>
+                                <th>{{reporte.forma==='SoloDerivaciones' ? rep.nro_de_control: d+1}}</th>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
                                 <td>{{derivacion.destinatario}}</td>
                                 <td></td>
