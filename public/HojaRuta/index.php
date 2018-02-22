@@ -1060,7 +1060,7 @@ and open the template in the editor.
                             nroDeControl: '',
                             fecha_conclusion1: '',
                             fecha_conclusion2: '',
-                            gestion: '',
+                            gestion: String(new Date().getFullYear()),
                             fecha_derivacion1: '',
                             fecha_derivacion2: '',
                             destinatario: ''
