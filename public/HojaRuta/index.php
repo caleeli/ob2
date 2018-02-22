@@ -882,9 +882,9 @@ and open the template in the editor.
                                 <td>{{reporte.gestion}}</td>
                                 <td>{{reporte.referencia}}</td>
                                 <td>{{reporte.procedencia}}</td>
-                                <td>{{reporte.fecha}}</td>
-                                <td>{{reporte.conclusion}}</td>
-                                <td>{{reporte.derivacion_fecha}}</td>
+                                <td style="white-space: pre;">{{reporte.fecha}}</td>
+                                <td style="white-space: pre;">{{reporte.conclusion}}</td>
+                                <td style="white-space: pre;">{{reporte.derivacion_fecha}}</td>
                                 <td>{{reporte.derivacion_destinatario}}</td>
                             </tr>
                         </tbody>
