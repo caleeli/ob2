@@ -791,56 +791,63 @@ and open the template in the editor.
                  <div class="col-md-10" v-if="menu=='reporte_externa'">
                     <form class="form-horizontal">
                         <fieldset>
-                            <!-- TODO: REPORTE!!! -->
-                            <legend>Hoja de ruta - SCEP <b># {{hoja.numero}}</b></legend>
+                            <legend>Reporte - Hojas de Ruta Externas</legend>
                             <div class="form-group">
-                                <label for="textArea" class="col-lg-2 control-label">Tipo</label>
-                                <div class="col-lg-10">
-                                    <div class="radio" style="text-transform: uppercase">
-                                      <label>{{hoja.tipo}}</label>
-                                    </div>
+                                <label class="col-md-2 control-label">Fecha recepción</label>
+                                <div class="col-md-5">
+                                    <fecha v-model="reporte.fecha_recepcion1"></fecha>
+                                </div>
+                                <div class="col-md-5">
+                                    <fecha v-model="reporte.fecha_recepcion2"></fecha>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputEmail" class="col-lg-2 control-label">Fecha de recepción</label>
-                                <div class="col-lg-10">
-                                        <div class='input-group date' id='datetimepicker1'>
-                                            <input type='text' v-model="hoja.fecha" class="form-control" />
-                                            <span class="input-group-addon" v-on:click='datepick'>
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
+                                <label for="textArea" class="col-md-2 control-label">Referencia</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" v-model="reporte.referencia" rows="3" id="textArea"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="textArea" class="col-lg-2 control-label">Referencia</label>
-                                <div class="col-lg-10">
-                                    <textarea class="form-control" v-model="hoja.referencia" rows="3" id="textArea"></textarea>
+                                <label class="col-md-2 control-label">Procedencia</label>
+                                <div class="col-md-10">
+                                    <input type="text" v-model="reporte.procedencia" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">Procedencia</label>
-                                <div class="col-lg-10">
-                                    <input type="text" v-model="hoja.procedencia" class="form-control" placeholder="">
+                                <label class="col-md-2 control-label">Nº de control</label>
+                                <div class="col-md-10">
+                                    <input v-model="reporte.nroDeControl" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">Nº de control</label>
-                                <div class="col-lg-10">
-                                    <input type="number" v-model="hoja.nroDeControl" class="form-control" placeholder="">
+                                <label class="col-md-2 control-label">Fecha de Conclusión</label>
+                                <div class="col-md-5">
+                                    <fecha v-model="reporte.fecha_conclusion1"></fecha>
+                                </div>
+                                <div class="col-md-5">
+                                    <fecha v-model="reporte.fecha_conclusion2"></fecha>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">Anexo hojas</label>
-                                <div class="col-lg-10">
-                                    <input type="text" v-model="hoja.anexoHojas" class="form-control" placeholder="">
+                                <label class="col-md-2 control-label">Gestión</label>
+                                <div class="col-md-10">
+                                    <input v-model="reporte.gestion" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">Destinatario</label>
-                                <div class="col-lg-10">
+                                <label class="col-md-2 control-label">Fecha derivación</label>
+                                <div class="col-md-5">
+                                    <fecha v-model="reporte.fecha_derivacion1"></fecha>
+                                </div>
+                                <div class="col-md-5">
+                                    <fecha v-model="reporte.fecha_derivacion2"></fecha>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Destinatario</label>
+                                <div class="col-md-10">
                                     <div class="btn-group btn-block">
-                                        <input type="text" v-model="hoja.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
+                                        <input type="text" v-model="reporte.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
                                         <ul class="dropdown-menu">
                                             <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
                                         </ul>
@@ -848,15 +855,52 @@ and open the template in the editor.
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="button" v-on:click="generar" class="btn btn-primary">Guardar</button>
+                                <div class="col-md-10 col-lg-offset-2">
+                                    <button type="button" v-on:click="generarReporteExterna" class="btn btn-primary">Buscar</button>
                                 </div>
                             </div>
                         </fieldset>
                     </form>
+                    <table class="table table-striped table-hover ">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nº Control</th>
+                                <th>Gestión</th>
+                                <th>Referencia</th>
+                                <th>Procedencia</th>
+                                <th>Fecha Recepción</th>
+                                <th>Conclusión</th>
+                                <th>Fecha Derivación</th>
+                                <th>Destinatario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for='(reporte, r) in reporteExterna'>
+                                <td>{{r+1}}</td>
+                                <td>{{reporte.nro_de_control}}</td>
+                                <td>{{reporte.gestion}}</td>
+                                <td>{{reporte.referencia}}</td>
+                                <td>{{reporte.procedencia}}</td>
+                                <td>{{reporte.fecha}}</td>
+                                <td>{{reporte.conclusion}}</td>
+                                <td>{{reporte.derivacion_fecha}}</td>
+                                <td>{{reporte.derivacion_destinatario}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
            </div>
         </div>
+        <script type='text/x-template' id='template-fecha'>
+            <div class='input-group date'>
+                <input type='text' v-model="innerValue" class="form-control" />
+                <span class="input-group-addon" v-on:click="datepick">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </script>
         <script>
         function Recepcion(values) {
             this.id = null,
@@ -1008,6 +1052,20 @@ and open the template in the editor.
                         destinatarios : [],
                         reservedNumber : '',
                         filtroTipo : 'externa',
+                        reporte: {
+                            fecha_recepcion1: '',
+                            fecha_recepcion2: '',
+                            referencia: '',
+                            procedencia: '',
+                            nroDeControl: '',
+                            fecha_conclusion1: '',
+                            fecha_conclusion2: '',
+                            gestion: '',
+                            fecha_derivacion1: '',
+                            fecha_derivacion2: '',
+                            destinatario: ''
+                        },
+                        reporteExterna: []
                     };
                 },
                 methods: {
@@ -1227,6 +1285,21 @@ and open the template in the editor.
                             self.filtrarComunicacion();
                         });
                         window.location.hash="#com_busqueda";
+                    },
+                    generarReporteExterna: function () {
+                        var self = this;
+                        $.ajax({
+                            method: 'get',
+                            url: 'reporteExterna.php',
+                            data: self.reporte,
+                            dataType: 'json',
+                            success: function (res) {
+                                self.reporteExterna.splice(0);
+                                res.forEach(function (row) {
+                                    self.reporteExterna.push(row);
+                                })
+                            }
+                        })
                     },
                     datepick: function() {
                         var self = this;
@@ -1587,6 +1660,47 @@ and open the template in the editor.
                     app.drawNotasPie();
                 }
             });
+        });
+        Vue.component('fecha', {
+            template: '#template-fecha',
+            props: {
+                value: String
+            },
+            data: function () {
+                return {
+                    innerValue: this.value
+                };
+            },
+            methods: {
+                datepick: function() {
+                    var self = this;
+                    Vue.nextTick(function () {
+                        $(self.$el).datepicker({autoclose:true, format:'yyyy-mm-dd', language: 'es'});
+                        $(self.$el).datepicker('show');
+                        $(self.$el).on("changeDate", function (e) {
+                            self.innerValue = $(self.$el).find("input").val();
+                        });
+                    });
+                },
+            },
+            watch: {
+                'innerValue': function (value) {
+                    this.$emit('input', value);
+                },
+                'value': function (value) {
+                    this.innerValue = value;
+                }
+            },
+            updated: function () {
+                var self = this;
+                self.$nextTick(function () {
+                    $(self.$el).datepicker({autoclose:true, format:'yyyy-mm-dd', language: 'es'});
+                    $(self.$el).datepicker('show');
+                    $(self.$el).on("changeDate", function (e) {
+                        self.innerValue = $(self.$el).find("input").val();
+                    });
+                });
+            }
         });
         </script>
     </body>
