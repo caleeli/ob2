@@ -62,7 +62,7 @@ and open the template in the editor.
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
                             <li><a href="#recepcion" v-on:click='nuevaExterna' v-if="!window.isManager">Registrar</a></li>
                             <li><a href="#busqueda" v-on:click='filtroTipo="externa";filtrar()'>Búsqueda</a></li>
-                            <li><a href="#reporte_externa">Reporte</a></li>
+                            <li><a href="#reporte_hoja_ruta" v-on:click="initReporte('externa')">Reporte</a></li>
                         </ul>
                     </div>
                     <div class="btn-group" v-if="!window.isManager">
@@ -76,7 +76,7 @@ and open the template in the editor.
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
                             <li><a href="#recepcion" v-on:click='nuevaInterna' v-if="!window.isManager">Registrar</a></li>
                             <li><a href="#busqueda" v-on:click='filtroTipo="interna";filtrar()'>Búsqueda</a></li>
-                            <li><a href="#reporte_interna">Reporte</a></li>
+                            <li><a href="#reporte_hoja_ruta" v-on:click="initReporte('interna')">Reporte</a></li>
                         </ul>
                     </div>
                     <a href='#busqueda' class='btn btn-info' v-if="window.isManager">Dashboard</a>
@@ -788,10 +788,10 @@ and open the template in the editor.
                         </tbody>
                     </table>
                 </div>
-                 <div class="col-md-12" v-if="menu=='reporte_externa'">
+                 <div class="col-md-12" v-if="menu=='reporte_hoja_ruta'">
                     <form class="form-horizontal">
                         <fieldset>
-                            <legend>Reporte - Hojas de Ruta Externas</legend>
+                            <legend>Reporte - Hojas de Ruta ({{reporte.tipo}})</legend>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Fecha recepción</label>
                                 <div class="col-md-5">
@@ -1053,6 +1053,7 @@ and open the template in the editor.
                         reservedNumber : '',
                         filtroTipo : 'externa',
                         reporte: {
+                            tipo: 'externa',
                             fecha_recepcion1: '',
                             fecha_recepcion2: '',
                             referencia: '',
@@ -1290,7 +1291,7 @@ and open the template in the editor.
                         var self = this;
                         $.ajax({
                             method: 'get',
-                            url: 'reporteExterna.php',
+                            url: 'reporteHojaRuta.php',
                             data: self.reporte,
                             dataType: 'json',
                             success: function (res) {
@@ -1634,6 +1635,21 @@ and open the template in the editor.
                     clickImprimir : function (e, href) {
                         window.open(href);
                         e.preventDefault();
+                    },
+                    initReporte: function (tipo) {
+                        this.reporte.tipo = tipo;
+                        this.reporte.fecha_recepcion1 = '';
+                        this.reporte.fecha_recepcion2 = '';
+                        this.reporte.referencia = '';
+                        this.reporte.procedencia = '';
+                        this.reporte.nroDeControl = '';
+                        this.reporte.fecha_conclusion1 = '';
+                        this.reporte.fecha_conclusion2 = '';
+                        this.reporte.gestion = String(new Date().getFullYear());
+                        this.reporte.fecha_derivacion1 = '';
+                        this.reporte.fecha_derivacion2 = '';
+                        this.reporte.destinatario = '';
+                        this.reporteExterna.splice(0);
                     }
                 },
                 mounted: function () {
