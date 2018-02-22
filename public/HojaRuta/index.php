@@ -856,7 +856,7 @@ and open the template in the editor.
                             </div>
                             <div class="form-group">
                                 <div class="col-md-10 col-lg-offset-2">
-                                    <button type="button" v-on:click="generarReporteExterna" class="btn btn-primary">Buscar</button>
+                                    <button type="button" v-on:click="generarReporteExterna" class="btn btn-primary">Generar Reporte</button>
                                 </div>
                             </div>
                         </fieldset>
@@ -890,6 +890,144 @@ and open the template in the editor.
                         </tbody>
                     </table>
 
+                </div>
+                <div class="col-md-10" v-if="menu=='nota_reporte'">
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <legend>Reporte - Oficio</legend>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nº Hoja de Ruta</label>
+                                <div class="col-md-10">
+                                    <input type="text" v-model="notaReporte.hoja_de_ruta" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-md-2 control-label">Fecha de emisión</label>
+                                <div class="col-md-5">
+                                    <fecha v-model="notaReporte.fecha_emision1">
+                                </div>
+                                <div class="col-md-5">
+                                    <fecha v-model="notaReporte.fecha_emision2">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nº NOTA CGE/SCEP</label>
+                                <div class="col-md-10">
+                                    <input type="text" v-model="notaReporte.nro_nota" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Reiterativa</label>
+                                <div class="col-md-10">
+                                    <select class="form-control" v-model="notaReporte.reiterativa">
+                                        <option value="SI">SI</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-md-2 control-label">Fecha de entrega</label>
+                                <div class="col-md-5">
+                                    <fecha v-model="notaReporte.fecha_entrega1" />
+                                </div>
+                                <div class="col-md-5">
+                                    <fecha v-model="notaReporte.fecha_entrega2" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Entidad o Empresa</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="entidad_empresa" v-model="notaReporte.entidad_empresa" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nombre y apellidos</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="nombre_apellidos" v-model="notaReporte.nombre_apellidos" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Cargo</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="cargo" v-model="notaReporte.cargo" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="textArea" class="col-md-2 control-label">Referencia</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" v-model="notaReporte.referencia" rows="3" id="textArea"></textarea>
+                                </div>
+                            </div>
+                            <legend>Reporte - Nota Recibida</legend>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nº Hoja de Ruta</label>
+                                <div class="col-md-10">
+                                    <input type="text" v-model="notaReporte.hoja_de_ruta_recepcion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-md-2 control-label">Fecha de recepción</label>
+                                <div class="col-md-5">
+                                    <fecha v-model="notaReporte.fecha_recepcion1" />
+                                </div>
+                                <div class="col-md-5">
+                                    <fecha v-model="notaReporte.fecha_recepcion2" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nº NOTA</label>
+                                <div class="col-md-10">
+                                    <input type="text" v-model="notaReporte.nro_nota_recepcion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Remitente</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="remitente" v-model="notaReporte.remitente_recepcion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="textArea" class="col-md-2 control-label">Asunto o Referencia</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" v-model="notaReporte.referencia_recepcion" rows="3" id="textArea"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10 col-md-offset-2">
+                                    <button type="button" v-on:click="generarNotaReporte" class="btn btn-primary">Generar Reporte</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <table class="table table-striped table-hover ">
+                        <thead>
+                            <tr>
+                                <th>Hoja de Ruta</th>
+                                <th>Fecha Emision</th>
+                                <th>Nro Nota</th>
+                                <th>Reiterativa</th>
+                                <th>Fecha Entrega</th>
+                                <th>Entidad/Empresa</th>
+                                <th>Nombre</th>
+                                <th>Cargo</th>
+                                <th>Días</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for='note in reporteNotas'>
+                                <td>{{note.hoja_de_ruta}}</td>
+                                <td>{{note.fecha_emision}}</td>
+                                <td>{{note.nro_nota}}</td>
+                                <td>{{note.reiterativa}}</td>
+                                <td>{{note.fecha_entrega}}</td>
+                                <td>{{note.entidad_empresa}}</td>
+                                <td>{{note.nombre_apellidos}}</td>
+                                <td>{{note.cargo}}</td>
+                                <td><span v-if="note.dias">{{note.pasaron()}}/{{note.dias}} días</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
            </div>
         </div>
@@ -982,6 +1120,29 @@ and open the template in the editor.
 			this.numero = '';
             this.load(values);
         }
+        function NotaReporte(values) {
+			this.hoja_de_ruta = '';
+			this.fecha_emision1 = '';
+			this.fecha_emision2 = '';
+			this.nro_nota = '';
+			this.reiterativa = '';
+			this.fecha_entrega1 = '';
+			this.fecha_entrega2 = '';
+			this.entidad_empresa = '';
+			this.nombre_apellidos = '';
+			this.cargo = '';
+			this.referencia = '';
+			//this.dias = '';
+			//this.retraso = '';
+			this.hoja_de_ruta_recepcion = '';
+			this.fecha_recepcion1 = '';
+			this.fecha_recepcion2 = '';
+			this.nro_nota_recepcion = '';
+			this.remitente_recepcion = '';
+			this.referencia_recepcion = '';
+			//this.fojas_recepcion = '';
+			//this.numero = '';
+        }
         Nota.prototype.load = function (values){
             if (typeof values==='object' && values) {
                 for(var a in values) if (typeof values[a]!='function') {
@@ -1066,7 +1227,9 @@ and open the template in the editor.
                             fecha_derivacion2: '',
                             destinatario: ''
                         },
-                        reporteExterna: []
+                        reporteExterna: [],
+                        notaReporte: new NotaReporte(),
+                        reporteNotas: [],
                     };
                 },
                 methods: {
@@ -1298,9 +1461,24 @@ and open the template in the editor.
                                 self.reporteExterna.splice(0);
                                 res.forEach(function (row) {
                                     self.reporteExterna.push(row);
-                                })
+                                });
                             }
-                        })
+                        });
+                    },
+                    generarNotaReporte: function () {
+                        var self = this;
+                        $.ajax({
+                            method: 'get',
+                            url: 'reporteNota.php',
+                            data: self.notaReporte,
+                            dataType: 'json',
+                            success: function (res) {
+                                self.reporteNotas.splice(0);
+                                res.forEach(function (row) {
+                                    self.reporteNotas.push(new Nota(row));
+                                });
+                            }
+                        });
                     },
                     datepick: function() {
                         var self = this;
