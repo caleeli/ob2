@@ -1153,7 +1153,8 @@ and open the template in the editor.
         Nota.prototype.pasaron = function () {
             var from = moment(this.fecha_entrega+' 00:00:00', 'YYYY-MM-DD HH:mm:ss');
             var to = moment();
-            return Math.floor(workday_count(from, to));
+            var pasaron = Math.floor(workday_count(from, to));
+            return isNaA(pasaron) ? '' : pasaron;
         }
         function Derivacion(values) {
             this.id = null,
