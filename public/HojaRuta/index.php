@@ -788,7 +788,7 @@ and open the template in the editor.
                         </tbody>
                     </table>
                 </div>
-                 <div class="col-md-10" v-if="menu=='reporte_externa'">
+                 <div class="col-md-12" v-if="menu=='reporte_externa'">
                     <form class="form-horizontal">
                         <fieldset>
                             <legend>Reporte - Hojas de Ruta Externas</legend>
