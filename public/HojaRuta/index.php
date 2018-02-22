@@ -881,26 +881,26 @@ and open the template in the editor.
                                 <th>Conclusión</th>
                             </tr>
                         </thead>
-                        <tbody v-for='(reporte, r) in reporteExterna'>
+                        <tbody v-for='(rep, r) in reporteExterna'>
                             <tr>
                                 <td>{{r+1}}</td>
-                                <td>{{reporte.nro_de_control}}</td>
-                                <td>{{reporte.gestion}}</td>
-                                <td>{{reporte.referencia}}</td>
-                                <td>{{reporte.procedencia}}</td>
-                                <td style="white-space: pre;">{{reporte.fecha}}</td>
-                                <td style="white-space: pre;">{{reporte.conclusion}}</td>
+                                <td>{{rep.nro_de_control}}</td>
+                                <td>{{rep.gestion}}</td>
+                                <td>{{rep.referencia}}</td>
+                                <td>{{rep.procedencia}}</td>
+                                <td style="white-space: pre;">{{rep.fecha}}</td>
+                                <td style="white-space: pre;">{{rep.conclusion}}</td>
                             </tr>
-                            <tr>
+                            <tr v-if="reporte.forma!='SoloHojas'">
                                 <th></th>
                                 <th>#</th>
                                 <th>Fecha Derivación</th>
-                                <th>Destinatario</th>
+                                <th style="vertical-align: bottom;">Destinatario</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>
-                            <tr v-for='(derivacion, d) in reporte.derivaciones'>
+                            <tr v-if="reporte.forma!='SoloHojas'" v-for='(derivacion, d) in rep.derivaciones'>
                                 <td></td>
                                 <td>{{d+1}}</td>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
