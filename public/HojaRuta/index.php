@@ -849,7 +849,7 @@ and open the template in the editor.
                                     <div class="btn-group btn-block">
                                         <input type="text" v-model="reporte.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
                                         <ul class="dropdown-menu">
-                                            <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
+                                            <li v-for="dest in destinatarios" v-on:click="reporte.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
                                         </ul>
                                     </div>
                                 </div>
