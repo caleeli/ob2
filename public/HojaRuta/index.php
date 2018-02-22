@@ -855,6 +855,14 @@ and open the template in the editor.
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-10">
+                                    <input type="radio" name="reporteForma" value="Combinado" v-model="reporte.forma" /> Combinado
+                                    <input type="radio" name="reporteForma" value="SoloHojas" v-model="reporte.forma" /> Solo hojas de ruta
+                                    <input type="radio" name="reporteForma" value="SoloDerivaciones" v-model="reporte.forma" /> Solo derivaciones
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-md-10 col-lg-offset-2">
                                     <button type="button" v-on:click="generarReporteExterna" class="btn btn-primary">Generar Reporte</button>
                                 </div>
@@ -871,12 +879,10 @@ and open the template in the editor.
                                 <th>Procedencia</th>
                                 <th>Fecha Recepción</th>
                                 <th>Conclusión</th>
-                                <th>Fecha Derivación</th>
-                                <th>Destinatario</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr v-for='(reporte, r) in reporteExterna'>
+                        <tbody v-for='(reporte, r) in reporteExterna'>
+                            <tr>
                                 <td>{{r+1}}</td>
                                 <td>{{reporte.nro_de_control}}</td>
                                 <td>{{reporte.gestion}}</td>
@@ -884,8 +890,24 @@ and open the template in the editor.
                                 <td>{{reporte.procedencia}}</td>
                                 <td style="white-space: pre;">{{reporte.fecha}}</td>
                                 <td style="white-space: pre;">{{reporte.conclusion}}</td>
-                                <td style="white-space: pre;">{{reporte.derivacion_fecha}}</td>
-                                <td>{{reporte.derivacion_destinatario}}</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>#</th>
+                                <th>Fecha Derivación</th>
+                                <th>Destinatario</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tr v-for='(derivacion, d) in reporte.derivaciones'>
+                                <td></td>
+                                <td>{{d+1}}</td>
+                                <td style="white-space: pre;">{{derivacion.fecha}}</td>
+                                <td>{{derivacion.destinatario}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1226,7 +1248,8 @@ and open the template in the editor.
                             gestion: String(new Date().getFullYear()),
                             fecha_derivacion1: '',
                             fecha_derivacion2: '',
-                            destinatario: ''
+                            destinatario: '',
+                            forma: 'Combinado'
                         },
                         reporteExterna: [],
                         notaReporte: new NotaReporte(),

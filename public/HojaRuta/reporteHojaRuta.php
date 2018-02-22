@@ -76,6 +76,13 @@ foreach($params as $p) {
     }
 }
 $stmt->execute($params);
-$res = $stmt->fetchAll();
-
-echo json_encode($res);
+$res = [];
+while($row = $stmt->fetch()) {
+    $id = $row['id'];
+    if (!isset($res[$id])) {
+        $res[$id] = $row;
+        $res[$id]['derivaciones'] = [];
+    }
+    $res[$id]['derivaciones'][] = ["fecha" => $row['derivacion_fecha'], "destinatario" => $row['derivacion_destinatario']];
+}
+echo json_encode(array_values($res));
