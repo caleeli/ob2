@@ -141,12 +141,16 @@ class GDrive {
         $list = [];
         foreach ($this->listIn($id) as $file) {
             if ($file->mimeType === self::MIME_FOLDER) continue;
-            $list[] = [
+            if ($file->id=='1a4xoTiEzNrtCnjoLKxcO0mE7hzYgPkJySRkxe9b-WIc') {
+                continue;
+            }
+            $list[$file->name] =[
                 "id"   => $file->id,
                 "name" => $file->name,
                 "path" => "$path/" . $file->name,
             ];
         }
-        return $list;
+        ksort($list);
+        return array_values($list);
     }
 }
