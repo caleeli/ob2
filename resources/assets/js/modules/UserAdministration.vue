@@ -241,7 +241,7 @@ UserAdministration.Firma = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/firmas";
     Model.call(this, url, id, "UserAdministration.Firma");
     this.$list = function () {
-        return "fields=cod_firma,gestion,detalle,representante_legal,informe_dictamen,documento_firma,owner";
+        return "fields=cod_firma,gestion,representante_legal,informe_dictamen,documento_firma,owner";
     };
     this.$name = "Firma";
     this.$pluralName = "Firmas";
@@ -288,7 +288,7 @@ UserAdministration.Firma = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Detalle","data":"attributes.detalle"},{"title":"Representante legal","data":"attributes.representante_legal"},{"title":"Informe o Dictamen","data":"attributes.informe_dictamen","render":function (data,type,row){
+        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Representante legal","data":"attributes.representante_legal"},{"title":"Informe o Dictamen","data":"attributes.informe_dictamen","render":function (data,type,row){
                             if (!data) {
                                 return '';
                             }

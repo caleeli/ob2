@@ -734,7 +734,8 @@
                         "name": "detalle",
                         "label": "Detalle",
                         "type": "string",
-                        "default": ""
+                        "default": "",
+                        "list": false
                     }),
                     new Module.Model.Field({
                         "name": "representante_legal",
