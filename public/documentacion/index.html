@@ -1083,7 +1083,8 @@
                                 filter:[
                                     'where,usuario_id,=,'+localStorage.user_id,
                                     'orWhere,creador_id,=,'+localStorage.user_id,
-                                ]
+                                ],
+                                sort: '-updated_at'
                             }
                         );
                     },
