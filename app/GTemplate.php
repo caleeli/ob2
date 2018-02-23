@@ -13,6 +13,7 @@ class GTemplate
     const SHORT_CUTS = [
         '✔/✕' => '[check*=check(✔|✕|N/A)]',
         '&#10004;/&#10005;' => '[check*=check(✔|✕|N/A)]',
+        '[texto()]' => '[texto*=texto()]',
     ];
     const REGEXP_VARIABLE = '/\[([\w\*]+)=(\w+)\s*\(([^\]]*)\)\]/';
 
