@@ -18,6 +18,7 @@ class CreateAdmFirmasTable extends Migration
             $table->text('informe_dictamen')->nullable();
             $table->string('vigencia_certificado')->nullable();
             $table->text('documento_firma')->nullable();
+            $table->text('informes')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();
             $table->integer('owner_id')->unsigned()->nullable();
             $table->timestamps();

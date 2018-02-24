@@ -17,8 +17,9 @@ class Firma extends Model
       4 => 'informe_dictamen',
       5 => 'vigencia_certificado',
       6 => 'documento_firma',
-      7 => 'empresa_id',
-      8 => 'owner_id',
+      7 => 'informes',
+      8 => 'empresa_id',
+      9 => 'owner_id',
     );
     protected $attributes = array(
       'cod_firma' => '',
@@ -28,6 +29,7 @@ class Firma extends Model
       'informe_dictamen' => null,
       'vigencia_certificado' => '',
       'documento_firma' => null,
+      'informes' => null,
     );
     protected $casts = array(
       'cod_firma' => 'string',
@@ -37,6 +39,7 @@ class Firma extends Model
       'informe_dictamen' => 'array',
       'vigencia_certificado' => 'string',
       'documento_firma' => 'array',
+      'informes' => 'array',
     );
     protected $events = array(
     );

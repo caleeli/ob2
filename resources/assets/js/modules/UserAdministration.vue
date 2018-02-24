@@ -241,7 +241,7 @@ UserAdministration.Firma = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/firmas";
     Model.call(this, url, id, "UserAdministration.Firma");
     this.$list = function () {
-        return "fields=cod_firma,gestion,representante_legal,informe_dictamen,documento_firma,owner";
+        return "fields=cod_firma,gestion,representante_legal,informe_dictamen,documento_firma,informes,owner";
     };
     this.$name = "Firma";
     this.$pluralName = "Firmas";
@@ -283,7 +283,15 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"documento_firma","isAssociation":false}};
+                        },"value":"documento_firma","isAssociation":false},"informes":{"name":"informes","label":"Informes","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
+                        },"value":"informes","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -324,6 +332,14 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
+                        }},{"title":"Informes","data":"attributes.informes","render":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
                         }},{"title":"Propietario","visible":false,"render":function (data, type, full, meta) {
                             return data ? data : '';
                         },"data":"relationships.owner.attributes.null"}];
