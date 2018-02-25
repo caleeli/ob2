@@ -186,7 +186,7 @@
                                 <div class="col-xs-12">
                                     <h5>Prueba Defensiva</h5>
                                     <small>
-                                        Se cuenta con el <strong> {{empresa.p_defensiva}}% </strong> de liquidez para operar sin recurir a flujos de ventas.
+                                        Por cada Bs. 1 de deuda, tenemos en bancos <b>Bs. {{empresa.p_defensiva}}</b> para pagarla.
                                     </small>	
                                     <br>
                                     <br>
@@ -195,15 +195,15 @@
                                 <div class="col-xs-12">
                                     <h5>Capital de Trabajo </h5>
                                     <small>
-                                        El valor del capital de trabajo en la empresa en la gestión actual es  <strong> Bs. {{empresa.capital_trabajo}} </strong> 
+                                        La empresa en cuanto a recursos cuenta con <b>Bs. {{empresa.capital_trabajo}}</b> para poder operar en el <b>corto plazo</b>.
                                     </small>
                                     <br>
                                     <br>
                                 </div>
                                 <div class="col-xs-12">
-                                    <h5>Período promedio de pago</h5>
+                                    <h5>Período promedio de cobranza</h5>
                                     <small>
-                                        Las Cuentas por Cobrar están Circulando en <strong> {{empresa.promedio_pago}} días </strong> que tardan en convertirse en efectivo.
+                                        Se establece que cada <b>{{empresa.promedio_pago}}</b> días la empresa estima recuperar o cobrar las ventas al crédito.
                                     </small>
                                     <br>
                                     <br>
@@ -211,7 +211,7 @@
                                 <div class="col-xs-12">
                                     <h5>Rotación de Cuentas por Cobrar</h5>
                                     <small>
-                                        Las Cuentas por Cobrar están Circulando en <strong> {{empresa.rotacion_cuentas_por_cobrar}} días </strong> que tardan en convertirse en efectivo.
+                                        Durante la gestión anual las ventas x cobrar rotan <b>{{empresa.rotacion_cuentas_por_cobrar}} veces</b>.
                                     </small>
                                     <br>
                                     <br>
@@ -219,7 +219,7 @@
                                 <div class="col-xs-12">
                                     <h5>Rotación de Activos Totales</h5>
                                     <small>
-                                        La empresa está colocando entre sus clientes <strong> {{empresa.rotacion_activos_totales}} </strong> veces el valor de la inversión efectuada.
+                                        Cada Bs. 1 de activo permite obtener <b>Bs. {{empresa.rotacion_activos_totales}}</b> en ventas.
                                     </small>
                                     <br>
                                     <br>
@@ -227,7 +227,7 @@
                                 <div class="col-xs-12">
                                     <h5>Rotación de Activos Fijos</h5>
                                     <small>
-                                        La empresa está colocando en el mercado  <strong> {{empresa.rotacion_activos_fijos}} </strong> veces el valor de lo invertido en el activo fijo.
+                                        Durante la gestión, el activo fijo rota <b>{{empresa.rotacion_activos_fijos}} veces</b>.
                                     </small>
                                     <br>
                                     <br>
@@ -236,16 +236,16 @@
                                 <div class="col-xs-12">
                                     <h5>Nivel de Endeudamiento</h5>
                                     <small>
-                                        La participación de los acreedores es del <strong> {{empresa.nivel_endeudamiento}}% </strong> sobre el total de los activos de la empresa.
+                                        De todos los recursos obtenidos, el <b> {{empresa.nivel_endeudamiento}}% </b> provienen de los acreedores.
                                     </small>
                                     <br>
                                     <br>
                                 </div>
 
                                 <div class="col-xs-12">
-                                    <h5>Endeudamiento Financiero</h5>
+                                    <h5>Endeudamiento a corto plazo</h5>
                                     <small>
-                                        La deuda financiera de la empresa al 31 de diciembre asciende al <strong> {{empresa.endeudamiento_financiero}}% </strong> del total de pasivo y es a largo plazo.
+                                        Las deudas a corto plazo representan el <b> {{empresa.endeudamiento_a_corto_plazo}}% </b> del total pasivo.
                                     </small>
                                     <br>
                                     <br>
@@ -646,7 +646,8 @@
                                         'rotacion_cuentas_por_cobrar' : "{{$uc('5.2')/$uc('1.1.3.1')}}",
                                         'rotacion_cartera' : "{{$uc('1.1.3.1')*$ucp('1.1.3.1')/2*360/$uc('5.2')}}",
                                         'pago_proveedores' : "{{$uc('2.1.1.1')*$ucp('2.1.1.1')/2*360/$uc('1.1.5.2')}}",
-                                        'nivel_endeudamiento' : "{{$uc('2')/$uc('1')}}",
+                                        'nivel_endeudamiento' : "{{$uc('2')/$uc('1')*100}}",
+                                        'endeudamiento_a_corto_plazo' : "{{$uc('2.1')/$uc('2')*100}}",
                                         'endeudamiento_financiero' : "{{$uc('2.1.2.3')/$uc('2')}}",
                                         'rotacion_activos_totales' : "{{$uc('5.2')/$uc('1')}}",
                                         'rotacion_activos_fijos' : "{{$uc('5.2')/$uc('1.2.3')}}",
