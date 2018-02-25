@@ -374,8 +374,27 @@
                     "-getDetalleEmpresaAttribute()": <?php
                         function($value)
                         {
+                            $value = str_replace('{{$uc(\'3\')}}', '<span class="calculado" title="patrimonio">{{$uc(\'3\')}}</span>', $value);
                             $ev = new \App\Evaluator($this->id, date('Y') - 1);
                             return $ev->calculate($value);
+                        }
+                    ?>,
+                    "-setDetalleEmpresaAttribute()": <?php
+                        function($value)
+                        {
+                            $dom = new \DOMDocument;
+                            $dom->loadHTML($value);
+                            $htmlWithTag = $value;
+                            foreach($dom->getElementsByTagName('span') as $span) {
+                                if ($span->getAttribute('class')==='calculado' &&
+                                    $span->getAttribute('title')==='patrimonio'
+                                ) {
+                                    //$htmlWithTag = str_replace($dom->saveXML($span), '<span class="calculado" title="patrimonio">{{$uc(\'3\')}}</span>' , $htmlWithTag);
+                                    $htmlWithTag = str_replace($dom->saveXML($span), '{{$uc(\'3\')}}' , $htmlWithTag);
+                                }
+                            }
+
+                            $this->attributes['detalle_empresa'] = $htmlWithTag;
                         }
                     ?>,
                     "eeff(gestion, eeff)": <?php

@@ -58,8 +58,26 @@ class Empresa extends Model
 
     public function getDetalleEmpresaAttribute($value)
     {
+        $value = str_replace('{{$uc(\'3\')}}', '<span class="calculado" title="patrimonio">{{$uc(\'3\')}}</span>', $value);
         $ev = new \App\Evaluator($this->id, date('Y') - 1);
         return $ev->calculate($value);
+    }
+
+    public function setDetalleEmpresaAttribute($value)
+    {
+        $dom = new \DOMDocument;
+        $dom->loadHTML($value);
+        $htmlWithTag = $value;
+        foreach ($dom->getElementsByTagName('span') as $span) {
+            if ($span->getAttribute('class')==='calculado' &&
+                                    $span->getAttribute('title')==='patrimonio'
+                                ) {
+                //$htmlWithTag = str_replace($dom->saveXML($span), '<span class="calculado" title="patrimonio">{{$uc(\'3\')}}</span>' , $htmlWithTag);
+                                    $htmlWithTag = str_replace($dom->saveXML($span), '{{$uc(\'3\')}}', $htmlWithTag);
+            }
+        }
+
+        $this->attributes['detalle_empresa'] = $htmlWithTag;
     }
 
     public function eeff($gestion, $eeff)

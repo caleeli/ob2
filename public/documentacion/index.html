@@ -128,8 +128,21 @@
                                                 <div class="ibox">
                                                     <div class="ibox-title">
                                                         <h5> {{empresa.nombre_empresa}}</h5>
+                                                        <div class="ibox-tools" v-if='esUsuarioAuxiliar'>
+                                                            <a v-show="!editingEmpresa" v-on:click="editEmpresa" title='Editar contenido'>
+                                                                <i class="fa fa-pencil-square-o"></i>
+                                                            </a>
+                                                            <a v-show="editingEmpresa" v-on:click="cancelEmpresa(empresa)" title='Editar contenido'>
+                                                                <i class="fa fa-arrow-left"></i>
+                                                            </a>
+                                                            <a v-show="editingEmpresa" v-on:click="saveEmpresa(empresa)" title='Editar contenido'>
+                                                                <i class="fa fa-save"></i>
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                    <div class="ibox-content" v-html="empresa.detalle_empresa">
+                                                    <div v-show="!editingEmpresa" class="ibox-content" v-html="empresa.detalle_empresa"></div>
+                                                    <div v-show="editingEmpresa" class="ibox-content">
+                                                        <tinymce v-model="empresa.detalle_empresa" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -991,7 +1004,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.92"></script>
+        <script src="../js/server.js?v0.93"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1044,7 +1057,7 @@
                         cuadro_financiero: new UserAdministration.CuadroFinanciero(),
                         cuadros_financieros: [],
                         cuadros_financieros_completo: [],
-                        editingEmpresa: true,
+                        editingEmpresa: false,
                         carga_estado: new UserAdministration.CargaEstado,
                         password1: '',
                         password2: '',
@@ -1365,6 +1378,11 @@
                         self.editingEmpresa = false;
                         empresa.$save();
                     },
+                    cancelEmpresa: function (empresa) {
+                        var self = this;
+                        self.editingEmpresa = false;
+                        empresa.$load(empresa.id);
+                    },
                     /**
                      * Cambia la contraseña deñ usuario actual.
                      */
@@ -1376,6 +1394,9 @@
                     },
                     esUsuarioGerente: function () {
                         return app.user.role_id==1 || app.user.role_id==3;
+                    },
+                    esUsuarioAuxiliar: function () {
+                        return app.user.role_id==1 || app.user.role_id==4;
                     },
                     estadosAdjuntos: function (estadosFinancieros, cuadroSeleccionado) {
                         var self = this;

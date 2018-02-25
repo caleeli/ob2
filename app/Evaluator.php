@@ -167,7 +167,7 @@ class Evaluator
         return 0;
     }
 
-    public function calculate($html, $isChart=false)
+    public function calculate($html, $formatFn=false)
     {
         $html = str_replace(
             ['&#39;','&quot;','&gt;','&lt;'],
@@ -210,10 +210,12 @@ class Evaluator
             },
             'gestion' => $this->gestion,
         ];
-        if ($isChart) {
+        if ($formatFn && !is_callable($formatFn)) {
             $args['format'] = function ($value) {
                 return $value;
             };
+        } elseif ($formatFn && is_callable($formatFn)) {
+            $args['format'] = $formatFn;
         }
         return $this->bladeCompile($html, $args);
     }
