@@ -19,7 +19,7 @@ class Fideicomiso extends Model
       'financiador' => '',
     );
     protected $casts = array(
-      'decreto' => 'string',
+      'decreto' => 'array',
       'financiador' => 'string',
     );
     protected $events = array(

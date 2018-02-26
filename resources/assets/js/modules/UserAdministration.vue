@@ -697,14 +697,50 @@ UserAdministration.Fideicomiso = function (url, id) {
     this.$pluralName = "Fideicomisos";
     this.$title = "FIDEICOMISOS";
     this.$pluralTitle = "Empresas con asignación de Recursos Económicos";
-    this.$ = {"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"decreto":{"name":"decreto","label":"Decreto","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"decreto","isAssociation":false},"financiador":{"name":"financiador","label":"Financiador","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"financiador","isAssociation":false}};
+    this.$ = {"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"decreto":{"name":"decreto","label":"Decreto","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        },"value":"decreto","isAssociation":false},"financiador":{"name":"financiador","label":"Financiador","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"financiador","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"empresa","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Decreto","data":"attributes.decreto"},{"title":"Financiador","data":"attributes.financiador"}];
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Decreto","data":"attributes.decreto","render":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        }},{"title":"Financiador","data":"attributes.financiador"}];
     };
     this.$methods = {
     };

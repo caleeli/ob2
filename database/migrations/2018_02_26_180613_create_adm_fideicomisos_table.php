@@ -11,7 +11,7 @@ class CreateAdmFideicomisosTable extends Migration
     {
         Schema::create('adm_fideicomisos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('decreto')->nullable();
+            $table->text('decreto')->nullable();
             $table->string('financiador')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();
             $table->timestamps();

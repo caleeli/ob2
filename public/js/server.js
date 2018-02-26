@@ -1,6 +1,6 @@
 var API_SERVER='';
-document.writeln('\n<link href="/css/app.css?v0.97" rel="stylesheet">\n');
-document.writeln('\n<script src="/js/admin.js?v0.97"></script>\n');
+document.writeln('\n<link href="/css/app.css?v0.98" rel="stylesheet">\n');
+document.writeln('\n<script src="/js/admin.js?v0.98"></script>\n');
 document.writeln('\n<script type="text/javascript" charset="utf8" src="/bower_components/jq-ajax-progress/src/jq-ajax-progress.min.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net/js/jquery.dataTables.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>\n');
