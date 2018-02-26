@@ -1392,7 +1392,7 @@
                 }
             }),
             /**
-             * Firmas.
+             * Fideicomisos.
              *
              */
             new Module.Model({
@@ -1426,7 +1426,41 @@
                         "position": 0
                     })
                 ]
-            })
+            }),
+            /**
+             * Clasificacion de empresas
+             */
+            new Module.ViewModel({
+                "name": "empresa_clasificacion",
+                "title": "Clasificacion de empresas",
+                "pluralTitle": "Clasificacion de empresas",
+                "sql": "select clasificacion, count(*) conteo from adm_empresas group by clasificacion",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "clasificacion",
+                        "type": "string",
+                        "label": "Clasificación",
+                        "default": "",
+                        "ui": "select",
+                        "enum": [
+                            "Sin clasificar",
+                            "Empresas Departamentales",
+                            "Empresa Nacional",
+                            "Empresa Regional",
+                            "Empresa Municipal",
+                            "Empresa Productiva"
+                        ]
+                    }),
+                    new Module.Model.Field({
+                        "name": "conteo",
+                        "label": "Conteo",
+                        "type": "string",
+                        "default": ""
+                    }),
+                ],
+                "associations": [
+                ]
+            }),
         ]
     });
 </script>

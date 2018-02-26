@@ -716,4 +716,32 @@ UserAdministration.Fideicomiso = function (url, id) {
 UserAdministration.Fideicomiso.prototype = Object.create(Model.prototype);
 UserAdministration.Fideicomiso.prototype.constructor = Model;
 
+UserAdministration.EmpresaClasificacion = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/empresa_clasificacions";
+    Model.call(this, url, id, "UserAdministration.EmpresaClasificacion");
+    this.$list = function () {
+        return "fields=clasificacion,conteo";
+    };
+    this.$name = "EmpresaClasificacion";
+    this.$pluralName = "EmpresaClasificacions";
+    this.$title = "Clasificacion de empresas";
+    this.$pluralTitle = "Clasificacion de empresas";
+    this.$ = {"clasificacion":{"name":"clasificacion","label":"Clasificación","type":"select","enum":["Sin clasificar","Empresas Departamentales","Empresa Nacional","Empresa Regional","Empresa Municipal","Empresa Productiva"],"source":undefined,"textField":undefined,"value":"clasificacion","isAssociation":false},"conteo":{"name":"conteo","label":"Conteo","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"conteo","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Clasificación","data":"attributes.clasificacion"},{"title":"Conteo","data":"attributes.conteo"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.EmpresaClasificacion.prototype = Object.create(Model.prototype);
+UserAdministration.EmpresaClasificacion.prototype.constructor = Model;
+
 </script>
