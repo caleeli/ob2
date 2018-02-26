@@ -50,6 +50,7 @@
 @import "sm";
 @import "md";
 @import "lg";
+@import "node_modules/toastr/toastr";
 
 // Clear layout on print mode
 @media print {
@@ -156,4 +157,8 @@
 .desc-ind {
     height: 2.4em;
     line-height: 1.2em;
+}
+.form-file-progress {
+    @include linearGradientH(rgba(39,127,227,0.1), rgba(39,127,227,0.2), no-repeat !important);
+    background-position: 0 0;
 }

@@ -7,11 +7,11 @@
             <input  v-if="field.type==='email'" type="email" class="form-control" :placeholder="field.label" v-model="values[field.value]" v-on:change="change">
             <div v-if="field.type==='file' || field.type==='multiplefile'" class="input-group">
                 <span v-if="field.type!=='multiplefile'" class="input-group-btn">
-                    <a class="btn btn-default" :href="file(values[field.value]).url" :download="file(values[field.value]).name"><i class="fa fa-download"></i></a>
+                    <a class="btn btn-default" title="Descargar" :href="file(values[field.value]).url" :download="file(values[field.value]).name"><i class="fa fa-download"></i></a>
                 </span>
                 <input type="text" readonly="readonly" v-model="file(values[field.value], field.type==='multiplefile').name" class="form-control form-file-progress">
                 <span class="input-group-btn">
-                    <span class="btn btn-default" type="button"><i class="fa fa-folder-open"></i><input type="file" style="
+                    <span class="btn btn-default" type="button" style="cursor: pointer;" title="Cargar"><i class="fa fa-folder-open"></i><input type="file" style="
                         width: 100%;
                         height: 100%;
                         position: absolute;

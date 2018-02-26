@@ -428,9 +428,16 @@
                         "name": "tipo_estado_financiero",
                         "type": "string",
                         "label": "Tipo estado financiero",
-                        //"ui": "select",
-                        /*"enum": ["Balance General", "Estado de Resultados", "Estado de Flujo de Efectivo", "Estado Cambios en el Patrimonio Neto",
-                        "Estado de Ejecución Presupuestaria de Recursos", "Cuenta Ahorro Financiamiento"],*/
+                        "ui": "select",
+                        "enum": [
+                            "Balance General",
+                            "Estado de Recursos y Gastos Corrientes",
+                            "Hoja de Trabajo",
+                            "Estado de Cambios en el Patrimonio Neto",
+                            "Partidas y Rubros Financieros",
+                            "Estado de Ejecución Presupuestaria de Gastos",
+                            "Estado de Ejecución Presupuestaria de Recursos"
+                        ],
                         "default": ""
                     }),
                     new Module.Model.Field({
