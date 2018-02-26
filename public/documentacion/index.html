@@ -59,6 +59,9 @@
             #DataTables_Table_3{
                 font-size: 80%;
             }
+            .menu-icon {
+                height:1.5em;
+            }
         </style>
     </head>
 
@@ -87,17 +90,17 @@
                                 <a href="javascript:void(0)" class="navbar-minimalize"><img src="img/logo.png?4" style="height: 44px;"></a>
                             </div>
                         </li>
-                        <li class="active"><a href="#empresasPublicas"><img class="fa fa-th-large" src="img/empresas.png" style="height:1em"> <span class="nav-label">Empresas públicas</span></a></li>
-                        <li class="active"><a href="#estadosFinancieros"><img class="fa fa-th-large" src="img/eeff.png" style="height:1em"> <span class="nav-label">Estados financieros</span></a></li>
-                        <li class="active"><a href="#UAI" v-on:click="abrirUAI"><img class="fa fa-th-large" src="img/uai.png" style="height:1em"> <span class="nav-label">UAI</span></a></li>
-                        <li class="active"><a href="#firmasDeAuditoria" v-on:click="abrirFirmasDeAuditoria"><img class="fa fa-th-large" src="img/firmas.png" style="height:1em"> <span class="nav-label">Evaluaciones de Consistencia</span></a></li>
-                        <li class="active"><a href="#PEIyPOA"><img class="fa fa-th-large" src="img/calendar.png" style="height:1em"> <span class="nav-label">PEI y POA</span></a></li>
-                        <li class="active"><a href="#seguimientoDeTareas"><img class="fa fa-th-large" src="img/tasks.png" style="height:1em"> <span class="nav-label">Seguimiento de tareas</span></a></li>
-                        <li class="active"><a href="#cambio_password"><img class="fa fa-th-large" src="img/candado.png" style="height:1em"> <span class="nav-label">Cambio de contraseña</span></a></li>
-                        <li class="active" v-if="user.username==='admin'"><a href="#hojas_de_trabajo"><img class="fa fa-th-large" src="img/candado.png" style="height:1em"> <span class="nav-label">Trabajos SCEP</span></a></li>
-                        <li class="active"><a href="#ClasificacionEmpresas"><img class="fa fa-th-large" src="img/fideicomiso.png" style="height:1em"> <span class="nav-label">Clasificacion de Empresas</span></a></li>
+                        <li class="active"><a href="#empresasPublicas"><img class="fa fa-th-large menu-icon" src="img/empresas.png"> <span class="nav-label">Empresas públicas</span></a></li>
+                        <li class="active"><a href="#estadosFinancieros"><img class="fa fa-th-large menu-icon" src="img/eeff.png"> <span class="nav-label">Estados financieros</span></a></li>
+                        <li class="active"><a href="#UAI" v-on:click="abrirUAI"><img class="fa fa-th-large menu-icon" src="img/uai.png"> <span class="nav-label">UAI</span></a></li>
+                        <li class="active"><a href="#firmasDeAuditoria" v-on:click="abrirFirmasDeAuditoria"><img class="fa fa-th-large menu-icon" src="img/firmas.png"> <span class="nav-label">Evaluaciones de Consistencia</span></a></li>
+                        <li class="active"><a href="#PEIyPOA"><img class="fa fa-th-large menu-icon" src="img/calendar.png"> <span class="nav-label">PEI y POA</span></a></li>
+                        <li class="active"><a href="#seguimientoDeTareas"><img class="fa fa-th-large menu-icon" src="img/tasks.png"> <span class="nav-label">Seguimiento de tareas</span></a></li>
+                        <li class="active"><a href="#cambio_password"><img class="fa fa-th-large menu-icon" src="img/candado.png"> <span class="nav-label">Cambio de contraseña</span></a></li>
+                        <li class="active" v-if="user.username==='admin'"><a href="#hojas_de_trabajo"><img class="fa fa-th-large menu-icon" src="img/candado.png"> <span class="nav-label">Trabajos SCEP</span></a></li>
+                        <li class="active"><a href="#ClasificacionEmpresas"><img class="fa fa-th-large menu-icon" src="img/fideicomiso.png"> <span class="nav-label">Clasificacion de Empresas</span></a></li>
                         <li class="active" v-if="user.username==='admin'">
-                            <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a>
+                            <a href="index.html"><i class="fa fa-th-large menu-icon"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li class="active"><a href="#estadosFinancierosAdmin">Estados financieros ADM</a></li>
                             </ul>
