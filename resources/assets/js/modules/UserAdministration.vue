@@ -752,15 +752,15 @@ UserAdministration.Fideicomiso = function (url, id) {
 UserAdministration.Fideicomiso.prototype = Object.create(Model.prototype);
 UserAdministration.Fideicomiso.prototype.constructor = Model;
 
-UserAdministration.EmpresaClasificacion = function (url, id) {
+UserAdministration.ClasificacionEmpresa = function (url, id) {
     var self = this;
-    this.$defaultUrl = "/api/UserAdministration/empresa_clasificacions";
-    Model.call(this, url, id, "UserAdministration.EmpresaClasificacion");
+    this.$defaultUrl = "/api/UserAdministration/clasificacion_empresas";
+    Model.call(this, url, id, "UserAdministration.ClasificacionEmpresa");
     this.$list = function () {
         return "fields=clasificacion,conteo";
     };
-    this.$name = "EmpresaClasificacion";
-    this.$pluralName = "EmpresaClasificacions";
+    this.$name = "ClasificacionEmpresa";
+    this.$pluralName = "ClasificacionEmpresas";
     this.$title = "Clasificacion de empresas";
     this.$pluralTitle = "Clasificacion de empresas";
     this.$ = {"clasificacion":{"name":"clasificacion","label":"Clasificación","type":"select","enum":["Sin clasificar","Empresas Departamentales","Empresa Nacional","Empresa Regional","Empresa Municipal","Empresa Productiva"],"source":undefined,"textField":undefined,"value":"clasificacion","isAssociation":false},"conteo":{"name":"conteo","label":"Conteo","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"conteo","isAssociation":false}};
@@ -777,7 +777,7 @@ UserAdministration.EmpresaClasificacion = function (url, id) {
         this.$load(id);
     }
 }
-UserAdministration.EmpresaClasificacion.prototype = Object.create(Model.prototype);
-UserAdministration.EmpresaClasificacion.prototype.constructor = Model;
+UserAdministration.ClasificacionEmpresa.prototype = Object.create(Model.prototype);
+UserAdministration.ClasificacionEmpresa.prototype.constructor = Model;
 
 </script>

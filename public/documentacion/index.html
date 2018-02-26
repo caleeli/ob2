@@ -1033,7 +1033,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
-                                                    <abm id="abmClasificacionEmpresas" v-bind:model="clasificacionEmpresas" v-bind:editable="false" toolbar='search' buttons="close"></abm>
+                                                    <abm id="abmClasificacionEmpresas" v-bind:model="clasificacionEmpresas" v-bind:editable="esUsuarioAuxiliar" v-bind:toolbar='esUsuarioAuxiliar?"new,search":"search"' buttons="close,save,delete"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -1127,7 +1127,7 @@
                         archivosAuditoria: [],
                         auditoriaFileName: '',
                         fideicomisos: new UserAdministration.Fideicomiso(),
-                        clasificacionEmpresas: new UserAdministration.EmpresaClasificacion()
+                        clasificacionEmpresas: new UserAdministration.ClasificacionEmpresa()
                     };
                 },
                 computed: {

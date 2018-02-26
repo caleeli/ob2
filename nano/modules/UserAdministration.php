@@ -1450,11 +1450,10 @@
             /**
              * Clasificacion de empresas
              */
-            new Module.ViewModel({
-                "name": "empresa_clasificacion",
+            new Module.Model({
+                "name": "clasificacion_empresa",
                 "title": "Clasificacion de empresas",
                 "pluralTitle": "Clasificacion de empresas",
-                "sql": "select clasificacion, count(*) conteo from adm_empresas group by clasificacion",
                 "fields": [
                     new Module.Model.Field({
                         "name": "clasificacion",
