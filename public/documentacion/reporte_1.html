@@ -74,6 +74,10 @@
                             <td style="width:10%; color: white!important; background-color: #22977E!important; padding: 0.5em 1em;">Gestión</td>
                             <td style="padding-left: 1em;">{{empresaSeleccionadaGestion}}</td>
                         </tr>
+                        <tr>
+                            <td style="width:10%; color: white!important; background-color: #22977E!important; padding: 0.5em 1em;">Fecha</td>
+                            <td style="padding-left: 1em;">{{date}}</td>
+                        </tr>
                     </table>
                     <br>
                     <div class="row">
@@ -322,6 +326,7 @@
                             password2: '',
                             cuadroSeleccionado: 1,
                             gestiones: gestiones,
+                            date: dateFormat(new Date(), 'yyyy-mm-dd')
                         };
                     },
                     computed: {
