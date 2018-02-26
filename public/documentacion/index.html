@@ -1373,7 +1373,9 @@
                         var self = this;
                         var s = self.empresa.detalle_empresa;
                         self.empresa.detalle_empresa = '';
-                        self.empresa.detalle_empresa = s;
+                        Vue.nextTick(function () {
+                            self.empresa.detalle_empresa = s;
+                        });
                         self.editingEmpresa = true;
                     },
                     saveEmpresa: function (empresa) {
