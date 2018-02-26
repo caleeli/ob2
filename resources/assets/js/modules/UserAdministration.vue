@@ -686,4 +686,34 @@ UserAdministration.HojaTrabajo = function (url, id) {
 UserAdministration.HojaTrabajo.prototype = Object.create(Model.prototype);
 UserAdministration.HojaTrabajo.prototype.constructor = Model;
 
+UserAdministration.Fideicomiso = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/fideicomisos";
+    Model.call(this, url, id, "UserAdministration.Fideicomiso");
+    this.$list = function () {
+        return "fields=empresa,decreto,financiador";
+    };
+    this.$name = "Fideicomiso";
+    this.$pluralName = "Fideicomisos";
+    this.$title = "FIDEICOMISOS";
+    this.$pluralTitle = "Empresas con asignación de Recursos Económicos";
+    this.$ = {"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"decreto":{"name":"decreto","label":"Decreto","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"decreto","isAssociation":false},"financiador":{"name":"financiador","label":"Financiador","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"financiador","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"empresa","visible":true,"render":function (data, type, full, meta) {
+                            return data ? data : '';
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Decreto","data":"attributes.decreto"},{"title":"Financiador","data":"attributes.financiador"}];
+    };
+    this.$methods = {
+    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Fideicomiso.prototype = Object.create(Model.prototype);
+UserAdministration.Fideicomiso.prototype.constructor = Model;
+
 </script>

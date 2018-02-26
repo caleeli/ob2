@@ -1391,6 +1391,42 @@
                 "methods": {
                 }
             }),
+            /**
+             * Firmas.
+             *
+             */
+            new Module.Model({
+                "name": "fideicomiso",
+                "title": "FIDEICOMISOS",
+                "pluralTitle": "Empresas con asignación de Recursos Económicos",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "decreto",
+                        "type": "string",
+                        "label": "Decreto",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "financiador",
+                        "label": "Financiador",
+                        "type": "string",
+                        "default": ""
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "empresa",
+                        "model": "empresa",
+                        "nullable": true,
+                        "list": true,
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
+                        "form": true,
+                        "position": 0
+                    })
+                ]
+            })
         ]
     });
 </script>
