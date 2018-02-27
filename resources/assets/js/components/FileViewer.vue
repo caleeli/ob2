@@ -9,7 +9,7 @@
                         <h5>Empresa</h5>
                         <select v-model="empresa" class="form-control">
                             <option v-bind:value="0">Todos</option>
-                            <option v-for="emp in listEmpresas" v-bind:value="emp.id">{{emp.attributes.nombre_empresa}}</option>
+                            <option v-for="emp in listEmpresas" v-bind:value="emp.id">{{emp.attributes.cod_empresa?emp.attributes.cod_empresa:' '}} {{emp.attributes.nombre_empresa}}</option>
                         </select>
                         <h5 class="tag-title">Gestión</h5>
                         <select v-model="gestion" class="form-control">
@@ -151,7 +151,9 @@
                 data.data.forEach(function (row) {
                     self.listEmpresas.push(row);
                 });
-            }, {});
+            }, {
+                'sort': 'cod_empresa'
+            });
         }
     });
 </script>
