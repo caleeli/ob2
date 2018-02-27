@@ -471,6 +471,9 @@ ul.notes li div {
   padding: 10px;
   background-color: #f8f8f8;
   border-top: 1px solid $border-color;
+  word-break: break-all;
+  height: 5.5em;
+  overflow: hidden;
 }
 
 .file-name small {

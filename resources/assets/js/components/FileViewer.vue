@@ -1,49 +1,42 @@
 <template>
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-sm-5 col-md-3">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="file-manager">
-                        <button class="btn btn-primary btn-block">Subir archivo</button>
+                        <button class="btn btn-primary btn-block" style="position: relative;">Subir archivo(s) <img src='/images/ajax-loader.gif' v-show='loading'><upload v-model="upload" target="" v-bind:multiplefile="true" /></button>
                         <div class="hr-line-dashed"></div>
-                        <h5>Folders</h5>
-                        <ul class="folder-list" style="padding: 0">
-                            <li style="background-color: lightblue;"><a href=""><i class="fa fa-folder"></i> Yacimientos Petroliferos fiscales</a></li>
-                            <li><a href=""><i class="fa fa-folder"></i> Corporacion minera de Bolivia COMIBOL</a></li>
-                            <li><a href=""><i class="fa fa-folder"></i> Empresa Nacional de Electricidad ENDE</a></li>
-                            <li><a href=""><i class="fa fa-folder"></i> Corporación de las Fuerzas Armadas para el Desarrollo Nacional COFADENA</a></li>
-                            <li><a href=""><i class="fa fa-folder"></i> Boliviana de Aviación BOA</a></li>
-                        </ul>
-                        <h5 class="tag-title">Tags</h5>
-                        <ul class="tag-list" style="padding: 0">
-                        </ul>
+                        <h5>Empresa</h5>
+                        <select v-model="empresa" class="form-control">
+                            <option v-bind:value="0">Todos</option>
+                            <option v-for="emp in listEmpresas" v-bind:value="emp.id">{{emp.attributes.nombre_empresa}}</option>
+                        </select>
+                        <h5 class="tag-title">Gestión</h5>
+                        <select v-model="gestion" class="form-control">
+                            <option v-for="g in gestiones" v-bind:value="g">{{g}}</option>
+                        </select>
+                        <h5 class="tag-title">Tipo</h5>
+                        <select v-model="tipo" class="form-control">
+                            <option v-for="g in tipos" v-bind:value="g">{{g}}</option>
+                        </select>
                         <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-7 animated fadeInRight">
+        <div class="col-sm-7 col-md-9 animated fadeInRight">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-sm-12">
                     <div v-for="file in listOfFiles" class="file-box">
                         <div class="file">
                             <a href="javascript:void(0)">
                                 <span class="corner"></span>
 
                                 <div class="icon">
-                                    <p>
-                                        <span v-for="variable in file.relationships.variables">
-                                            {{variable.attributes.name}}
-                                        </span>
-                                    </p>
-                                    <p>
-                                        <span v-for="parametro in file.relationships.parametros">
-                                            {{parametro.attributes.values}}
-                                        </span>
-                                    </p>
+                                    <i v-bind:class="icon(file).icon" v-bind:style="{color:icon(file).color}"></i>
                                 </div>
                                 <div class="file-name">
-                                    {{file.attributes.archivo.name}}
+                                    <a v-bind:href="file.attributes.archivo.url" target='_blank'>{{file.attributes.archivo.name}}</a>
                                     <br/>
                                     <small>{{file.attributes.updated_at}}</small>
                                 </div>
@@ -57,147 +50,108 @@
 </template>
 
 <script>
-    import BaseComponent from './BaseComponent.js';
-    export default BaseComponent.extend({
+    export default ({
         data: function () {
+            var gestiones = ['Todas'];
+            for (var g = 2015, l = new Date().getFullYear(); g <= l; g++) {
+                gestiones.push(g);
+            }
             return {
-                listOfFiles: [
-                    {
-                        attributes: {
-                            archivo: {
-                                name:"YPFB ESTADO DE CAMBIOS EN EL PATRIMONIO GESTION 2014.xlsx"
-                            },
-                            updated_at: "2017-07-01 13:35:43",
-                        },
-                        relationships: {
-                            variables: [
-                                {
-                                    attributes:{name:'activos'}
-                                },
-                                {
-                                    attributes:{name:'pasivos'}
-                                },
-                                {
-                                    attributes:{name:'patrimonio'}
-                                },
-                            ],
-                            parametros: [
-                                {
-                                    attributes:{name:'gestion', values:'2014'}
-                                },
-                                {
-                                    attributes:{name:'departamento', values:'LP,CBBA,SC,OR'}
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        attributes: {
-                            archivo: {
-                                name:"YPFB ESTADO DE CAMBIOS EN EL PATRIMONIO GESTION 2015.xlsx"
-                            },
-                            updated_at: "2017-07-01 13:35:43",
-                        },
-                        relationships: {
-                            variables: [
-                                {
-                                    attributes:{name:'activos'}
-                                },
-                                {
-                                    attributes:{name:'pasivos'}
-                                },
-                                {
-                                    attributes:{name:'patrimonio'}
-                                },
-                            ],
-                            parametros: [
-                                {
-                                    attributes:{name:'gestion', values:'2015'}
-                                },
-                                {
-                                    attributes:{name:'departamento', values:'LP,CBBA,SC,OR'}
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        attributes: {
-                            archivo: {
-                                name:"YPFB ESTADO DE CAMBIOS EN EL PATRIMONIO GESTION 2016.xlsx"
-                            },
-                            updated_at: "2017-07-01 13:35:43",
-                        },
-                        relationships: {
-                            variables: [
-                                {
-                                    attributes:{name:'activos'}
-                                },
-                                {
-                                    attributes:{name:'pasivos'}
-                                },
-                                {
-                                    attributes:{name:'patrimonio'}
-                                },
-                            ],
-                            parametros: [
-                                {
-                                    attributes:{name:'gestion', values:'2016'}
-                                },
-                                {
-                                    attributes:{name:'departamento', values:'LP,CBBA,SC,OR'}
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        attributes: {
-                            archivo: {
-                                name:"YPFB ESTADO DE CAMBIOS EN EL PATRIMONIO GESTION 2017.xlsx"
-                            },
-                            updated_at: "2017-07-01 13:35:43",
-                        },
-                        relationships: {
-                            variables: [
-                                {
-                                    attributes:{name:'activos'}
-                                },
-                                {
-                                    attributes:{name:'pasivos'}
-                                },
-                                {
-                                    attributes:{name:'patrimonio'}
-                                },
-                            ],
-                            parametros: [
-                                {
-                                    attributes:{name:'gestion'}
-                                },
-                                {
-                                    attributes:{name:'departamento'}
-                                },
-                            ],
-                        },
-                    },
-                ]
+                loading: false,
+                upload: '',
+                listOfFiles: [],
+                listEmpresas: [],
+                empresa: 0,
+                gestiones: gestiones,
+                gestion: 'Todas',
+                tipos: [
+                    "Todos",
+                    "Balance General",
+                    "Estado de Recursos y Gastos Corrientes",
+                    "Hoja de Trabajo",
+                    "Estado de Cambios en el Patrimonio Neto",
+                    "Partidas y Rubros Financieros",
+                    "Estado de Ejecución Presupuestaria de Gastos",
+                    "Estado de Ejecución Presupuestaria de Recursos"
+                ],
+                tipo: 'Todos'
             };
         },
-        props: [
-            "id",
-            "refreshWith",
-        ],
-        computed: {
+        props: {
+            "model": Object,
+            "empresas": Object,
+            "carga_estado": Object
+        },
+        watch: {
+            'upload': function (value) {
+                var self = this;
+                self.loading = true;
+                self.carga_estado.$load(0, function () {
+                    self.carga_estado.files = JSON.parse(value);
+                    self.carga_estado.$save('', function () {
+                        self.loading = false;
+                        self.loadFiles();
+                    });
+                });
+            },
+            'empresa': function () {
+                this.loadFiles()
+            },
+            'gestion': function () {
+                this.loadFiles()
+            },
+            'tipo': function () {
+                this.loadFiles()
+            }
         },
         methods: {
-            onLoadModel: function () {
-                this.refresh();
+            loadFiles: function () {
+                var self = this, filter = [];
+                if (self.empresa > 0) {
+                    filter.push('where,empresa_id,' + self.empresa);
+                }
+                if (self.gestion != 'Todas') {
+                    filter.push('where,gestion,' + self.gestion);
+                }
+                if (self.tipo != 'Todos') {
+                    filter.push('where,tipo_estado_financiero,' + JSON.stringify(self.tipo));
+                }
+                self.model.$select(function (data) {
+                    self.listOfFiles.splice(0);
+                    data.data.forEach(function (file) {
+                        self.listOfFiles.push(file);
+                    });
+                }, {
+                    'filter': filter
+                });
             },
-            init: function () {
-                var self = this;
-                //self.model.$on('load', self.onLoadModel, self);
-            },
-            refresh: function () {
-                var self = this;
-            },
+            icon: function (file) {
+                var color, icon, type;
+                switch (file.attributes.archivo.mime) {
+                    case 'application/pdf':
+                        icon = 'fa fa-file-pdf-o';
+                        color = 'rgb(226, 31, 52)';
+                        type = 'pdf';
+                        break;
+                    case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+                    case 'application/vnd.ms-excel':
+                    default:
+                        type = 'excel';
+                        icon = 'fa fa-file-excel-o';
+                        color = 'rgb(0, 177, 15)';
+                }
+                return {icon: icon, color: color, type: type};
+            }
+        },
+        mounted: function () {
+            var self = this;
+            self.loadFiles();
+            self.empresas.$select(function (data) {
+                self.listEmpresas.splice(0);
+                data.data.forEach(function (row) {
+                    self.listEmpresas.push(row);
+                });
+            }, {});
         }
     });
 </script>

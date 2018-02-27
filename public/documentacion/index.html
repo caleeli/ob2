@@ -331,10 +331,10 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow-y: scroll;">
-                                                    <abm v-bind:model="estado_financiero_adm" v-bind:editable="true" buttons='close,save,delete'></abm>
+                                                    <!-- abm v-bind:model="estado_financiero_adm" v-bind:editable="true" buttons='close,save,delete'></abm>
                                                     <h5>CARGA MASIVA</h5>
-                                                    <abm v-bind:model="carga_estado" v-bind:editable="true" buttons='close,save,delete'></abm>
-                                                    <!-- file-viewer /-->
+                                                    <abm v-bind:model="carga_estado" v-bind:editable="true" buttons='close,save,delete'></abm -->
+                                                    <file-viewer v-bind:model="estado_financiero_adm" v-bind:empresas="empresa" v-bind:carga_estado="carga_estado"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -1057,7 +1057,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.98"></script>
+        <script src="../js/server.js?v0.99"></script>
         <script>
         $(document).ready(function () {
             var app;

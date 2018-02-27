@@ -18,6 +18,7 @@ Vue.component('file-viewer', require('./components/FileViewer.vue'));
 Vue.component('htmleditor', require('./components/HtmlEditor.vue'));
 Vue.component('htmldynamic', require('./components/HtmlDynamic.vue'));
 Vue.component('tinymce', require('./components/Tinymce.vue'));
+Vue.component('upload', require('./components/Upload.vue'));
 //Vue.component('check', require('./components/Check.vue'));
 //Vue.component('pdf', require('./components/PDF.vue'));
 //Vue.component('documentlink', require('./components/DocumentLink.vue'));
