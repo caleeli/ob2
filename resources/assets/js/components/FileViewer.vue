@@ -4,7 +4,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="file-manager">
-                        <button class="btn btn-primary btn-block" style="position: relative;">Subir archivo(s) <img src='/images/ajax-loader.gif' v-show='loading'><upload v-model="upload" target="" v-bind:multiplefile="true" /></button>
+                        <span class="btn btn-primary btn-block" style="position: relative;">Subir archivo(s) <img src='/images/ajax-loader.gif' v-show='loading'><upload v-model="upload" target="" v-bind:multiplefile="true" /></span>
                         <div class="hr-line-dashed"></div>
                         <h5>Empresa</h5>
                         <select v-model="empresa" class="form-control">
