@@ -61,7 +61,7 @@
                 upload: '',
                 listOfFiles: [],
                 listEmpresas: [],
-                empresa: 0,
+                empresa: 1,
                 gestiones: gestiones,
                 gestion: 'Todas',
                 tipos: [
