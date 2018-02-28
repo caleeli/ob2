@@ -1455,10 +1455,10 @@
                         window.location.href="login.html";
                     },
                     esUsuarioGerente: function () {
-                        return app.user.role_id==1 || app.user.role_id==3;
+                        return this.user.role_id==1 || this.user.role_id==3;
                     },
                     esUsuarioAuxiliar: function () {
-                        return app.user.role_id==1 || app.user.role_id==4;
+                        return this.user.role_id==1 || this.user.role_id==4;
                     },
                     estadosAdjuntos: function (estadosFinancieros, cuadroSeleccionado) {
                         var self = this;
