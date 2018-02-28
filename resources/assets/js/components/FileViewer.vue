@@ -31,6 +31,7 @@
                         <div class="file">
                             <a href="javascript:void(0)">
                                 <span class="corner"></span>
+                                <span class="corner-up"><a href="javascript:void(0)" style="color:red" v-on:click="deleteFile(file)"><i class="fa fa-times"></i></a></span>
 
                                 <div class="icon">
                                     <i v-bind:class="icon(file).icon" v-bind:style="{color:icon(file).color}"></i>
@@ -124,6 +125,16 @@
                 }, {
                     'filter': filter
                 });
+            },
+            deleteFile: function (file) {
+                var self = this;
+                if (confirm('¿Desea eliminar el archivo '+file.attributes.archivo.name+'?')) {
+                    self.model.$load(file.id, function () {
+                        self.model.$delete('', function () {
+                            self.loadFiles();
+                        });
+                    });
+                }
             },
             icon: function (file) {
                 var color, icon, type;

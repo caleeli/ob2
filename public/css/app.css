@@ -5663,6 +5663,13 @@ ul.notes li div {
   bottom: 0em;
 }
 
+.corner-up {
+  position: absolute;
+  display: inline-block;
+  right: 0em;
+  top: 0em;
+}
+
 a.compose-mail {
   padding: 8px 10px;
 }
