@@ -134,7 +134,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow-y: scroll;">
-                                                    <newtable v-bind:model="empresa" v-on:selectrow="seleccionaEmpresa" title="" id_field="cod_empresa" group="sub_empresa" open="0" v-bind:candelete="esUsuarioAuxiliar" />
+                                                    <newtable v-bind:model="empresa" v-on:selectrow="seleccionaEmpresa" title="" id_field="cod_empresa" group="sub_empresa" open="0" v-bind:candelete="esUsuarioAuxiliar()" />
                                                 </div>
                                             </div>
                                         </div>
@@ -148,7 +148,7 @@
                                                 <div class="ibox">
                                                     <div class="ibox-title">
                                                         <h5> {{empresa.nombre_empresa}}</h5>
-                                                        <div class="ibox-tools" v-if='esUsuarioAuxiliar'>
+                                                        <div class="ibox-tools" v-if='esUsuarioAuxiliar()'>
                                                             <a v-show="!editingEmpresa" v-on:click="editEmpresa" title='Editar contenido'>
                                                                 <i class="fa fa-pencil-square-o"></i>
                                                             </a>
@@ -404,7 +404,7 @@
                                         <div class="ibox">
                                             <div class="ibox-title">
                                                 <h5>TAREAS</h5>
-                                                <div class="ibox-tools" v-if="esUsuarioGerente">
+                                                <div class="ibox-tools" v-if="esUsuarioGerente()">
                                                     <a href="#asignarTarea" class="btn btn-primary btn-xs" v-on:click='crearTarea'>Asignar tarea</a>
                                                 </div>
                                             </div>
@@ -1034,7 +1034,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
-                                                    <abm id="abmClasificacionEmpresas" v-bind:model="clasificacionEmpresas" v-bind:editable="esUsuarioAuxiliar" v-bind:toolbar='esUsuarioAuxiliar?"new,search":"search"' buttons="close,save,delete"></abm>
+                                                    <abm id="abmClasificacionEmpresas" v-bind:model="clasificacionEmpresas" v-bind:editable="esUsuarioAuxiliar()" v-bind:toolbar='esUsuarioAuxiliar()?"new,search":"search"' buttons="close,save,delete"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -1044,7 +1044,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
-                                                    <abm id="abmFideicomisos" v-bind:model="fideicomisos" v-bind:editable="esUsuarioAuxiliar" v-bind:toolbar='esUsuarioAuxiliar?"new,search":"search"' buttons="close,save,delete"></abm>
+                                                    <abm id="abmFideicomisos" v-bind:model="fideicomisos" v-bind:editable="esUsuarioAuxiliar()" v-bind:toolbar='esUsuarioAuxiliar()?"new,search":"search"' buttons="close,save,delete"></abm>
                                                 </div>
                                             </div>
                                         </div>
