@@ -134,7 +134,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow-y: scroll;">
-                                                    <newtable v-bind:model="empresa" v-on:selectrow="seleccionaEmpresa" title="" id_field="cod_empresa" group="sub_empresa" open="0" />
+                                                    <newtable v-bind:model="empresa" v-on:selectrow="seleccionaEmpresa" title="" id_field="cod_empresa" group="sub_empresa" open="0" v-bind:candelete="esUsuarioAuxiliar" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1058,7 +1058,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.103"></script>
+        <script src="../js/server.js?v0.104"></script>
         <script>
         $(document).ready(function () {
             var app;

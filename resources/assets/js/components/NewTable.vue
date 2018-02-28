@@ -22,6 +22,7 @@
                 <tr v-for='row in pageRows' v-bind:class="rowClass(row)" v-if="isVisible(row)">
                     <td v-for="group in groupByFields"><a href="javascript:void(0)" v-on:click="openCloseRow(row)"><i v-bind:class="groupClass(row, group)"></i></a></td>
                     <td v-for="field in fields" v-on:click="selectRow(row)" style="cursor: pointer;">{{format(row, field)}}</td>
+                    <td v-if="candelete"><a href="javascript:void(0)" v-on:click="deleteRow(row)" style="color:red"><i class="fa fa-times"></i></a></td>
                 </tr>
             </tbody>
         </table>
@@ -38,6 +39,7 @@
             "open",
             "title",
             "id_field",
+            "candelete",
 //            {name:"page", type: Number},
 //            {name:"rows", type: Number},
         ],
@@ -184,18 +186,31 @@
                 self.model.$load(row.id, function () {
                     self.$emit('selectrow', row.id, row);
                 });
+            },
+            deleteRow: function (row) {
+                var self = this;
+                self.model.$load(row.id, function () {
+                    if (confirm('¿Desea eliminar el registro?')) {
+                        self.model.$delete('', function () {
+                            self.refreshTable();
+                        });
+                    }
+                });
+            },
+            refreshTable: function () {
+                var self = this;
+                self.model.$select(function (rows) {
+                    self.data.splice(0);
+                    rows.data.forEach(function (row) {
+                        self.data.push(row);
+                    });
+                }, {
+                    sort: self.group
+                });
             }
         },
         mounted() {
-            var self = this;
-            self.model.$select(function (rows) {
-                self.data.splice(0);
-                rows.data.forEach(function (row) {
-                    self.data.push(row);
-                });
-            }, {
-                sort: self.group
-            });
+            this.refreshTable();
         }
     }
 </script>
