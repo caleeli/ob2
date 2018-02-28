@@ -152,10 +152,14 @@
                                                             <a v-show="!editingEmpresa" v-on:click="editEmpresa" title='Editar contenido'>
                                                                 <i class="fa fa-pencil-square-o"></i>
                                                             </a>
-                                                            <a v-show="editingEmpresa" v-on:click="cancelEmpresa(empresa)" title='Editar contenido'>
+                                                            <a v-show="editingEmpresa" title='Subir Archivo' style="position: relative;overflow: hidden;display: inline-block;line-height: 0.9em;">
+                                                                <i class="fa fa-upload"></i>
+                                                                <upload v-model="uploadAdjEmpresa" target="empresas" v-bind:multiplefile="false" v-on:change="mostrarUploadLink"/>
+                                                            </a>
+                                                            <a v-show="editingEmpresa" v-on:click="cancelEmpresa(empresa)" title='Salir'>
                                                                 <i class="fa fa-arrow-left"></i>
                                                             </a>
-                                                            <a v-show="editingEmpresa" v-on:click="saveEmpresa(empresa)" title='Editar contenido'>
+                                                            <a v-show="editingEmpresa" v-on:click="saveEmpresa(empresa)" title='Guardar'>
                                                                 <i class="fa fa-save"></i>
                                                             </a>
                                                         </div>
@@ -1127,7 +1131,8 @@
                         archivosAuditoria: [],
                         auditoriaFileName: '',
                         fideicomisos: new UserAdministration.Fideicomiso(),
-                        clasificacionEmpresas: new UserAdministration.ClasificacionEmpresa()
+                        clasificacionEmpresas: new UserAdministration.ClasificacionEmpresa(),
+                        uploadAdjEmpresa: ''
                     };
                 },
                 computed: {
@@ -1594,6 +1599,9 @@
                                 self.cerrarFileAuditoria();
                             });
                         });
+                    },
+                    mostrarUploadLink: function (file) {
+                        prompt('Archivo cargado', file.url);
                     }
                 },
                 watch: {

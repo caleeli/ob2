@@ -54,6 +54,12 @@ return [
             'urlBase' => 'documentacion/referencias/',
         ],
 
+        'empresas' => [
+            'driver' => 'local',
+            'root' => public_path('documentacion/empresas'),
+            'urlBase' => 'documentacion/empresas/',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
