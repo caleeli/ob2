@@ -874,8 +874,8 @@ and open the template in the editor.
                             <tr>
                                 <th>#</th>
                                 <th>Nº Control</th>
-                                <th>Gestión</th>
-                                <th>Referencia</th>
+                                <th>{{reporte.forma==='SoloDerivaciones' ? 'Fecha Derivación' : 'Gestión' }}</th>
+                                <th>{{reporte.forma==='SoloDerivaciones' ? 'Destinatario' : 'Referencia' }}</th>
                                 <th>Procedencia</th>
                                 <th>Fecha Recepción</th>
                                 <th>Conclusión</th>
@@ -891,7 +891,7 @@ and open the template in the editor.
                                 <td style="white-space: pre;">{{rep.fecha}}</td>
                                 <td style="white-space: pre;">{{rep.conclusion}}</td>
                             </tr>
-                            <tr v-if="reporte.forma!='SoloHojas'">
+                            <tr v-if="reporte.forma==='Combinado'">
                                 <th>{{reporte.forma==='SoloDerivaciones' ? '#': ''}}</th>
                                 <th>{{reporte.forma==='SoloDerivaciones' ? 'Hoja de ruta': '#'}}</th>
                                 <th>Fecha Derivación</th>
@@ -901,13 +901,13 @@ and open the template in the editor.
                                 <th></th>
                             </tr>
                             <tr v-if="reporte.forma!='SoloHojas'" v-for='(derivacion, d) in rep.derivaciones'>
-                                <th>{{reporte.forma==='SoloDerivaciones' ? d+1: ''}}</th>
+                                <th>{{reporte.forma==='SoloDerivaciones' ? d+r+1: ''}}</th>
                                 <th>{{reporte.forma==='SoloDerivaciones' ? rep.nro_de_control: d+1}}</th>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
                                 <td>{{derivacion.destinatario}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{reporte.forma==='SoloDerivaciones' ? rep.procedencia : ''}}</td>
+                                <td>{{reporte.forma==='SoloDerivaciones' ? rep.fecha : ''}}</td>
+                                <td>{{reporte.forma==='SoloDerivaciones' ? rep.conclusion : ''}}</td>
                             </tr>
                         </tbody>
                     </table>
