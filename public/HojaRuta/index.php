@@ -901,7 +901,7 @@ and open the template in the editor.
                                 <th></th>
                             </tr>
                             <tr v-if="reporte.forma!='SoloHojas'" v-for='(derivacion, d) in rep.derivaciones'>
-                                <th>{{reporte.forma==='SoloDerivaciones' ? d+r+1: ''}}</th>
+                                <th>{{reporte.forma==='SoloDerivaciones' ? derivacion.num: ''}}</th>
                                 <th>{{reporte.forma==='SoloDerivaciones' ? rep.nro_de_control: d+1}}</th>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
                                 <td>{{derivacion.destinatario}}</td>

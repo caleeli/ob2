@@ -77,12 +77,18 @@ foreach($params as $p) {
 }
 $stmt->execute($params);
 $res = [];
+$num = 1;
 while($row = $stmt->fetch()) {
     $id = $row['id'];
     if (!isset($res[$id])) {
         $res[$id] = $row;
         $res[$id]['derivaciones'] = [];
     }
-    $res[$id]['derivaciones'][] = ["fecha" => $row['derivacion_fecha'], "destinatario" => $row['derivacion_destinatario']];
+    $res[$id]['derivaciones'][] = [
+        "fecha" => $row['derivacion_fecha'],
+        "destinatario" => $row['derivacion_destinatario'],
+        "num" => $num,
+    ];
+    $num++;
 }
 echo json_encode(array_values($res));
