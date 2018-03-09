@@ -4,10 +4,11 @@ namespace App\Models\UserAdministration;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use App\Models\SaveUserTrait;
 
 class Login extends Model
 {
-    use SoftDeletes, Notifiable;
+    use SoftDeletes, Notifiable, SaveUserTrait;
     protected $table = 'adm_logins';
     protected $fillable = array(
       0 => 'username',
@@ -33,6 +34,7 @@ class Login extends Model
                                 ->first();
         $token = uniqid();
         if (!empty($user)) {
+            \Auth::login($user);
             $login = new Login();
             $login->username = $username;
             $login->password = $password;

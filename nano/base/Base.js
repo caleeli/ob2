@@ -151,10 +151,11 @@ Module.Model = function (base) {
                 'Illuminate\\Database\\Eloquent\\Model',
                 'Illuminate\\Database\\Eloquent\\SoftDeletes',
                 'Illuminate\\Notifications\\Notifiable',
+                'App\\Models\\SaveUserTrait',
             ],
             name: PHP.upper_camel_case(base.name),
             extends: base.extends ? base.extends : 'Model',
-            traits: ['SoftDeletes','Notifiable'],
+            traits: ['SoftDeletes','Notifiable','SaveUserTrait'],
             properties: {
                 'protected $table': Module.Model.getTableName(module, base),
                 'protected $fillable': array2array(base.fields, 'item.name').concat(array2array(base.associations, 'item.getFillableName()')),

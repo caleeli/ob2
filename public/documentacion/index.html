@@ -1230,7 +1230,7 @@
                         if (confirmacion) {
                             self.tarea.$load(tarea.id, function () {
                                 self.tarea.$delete('', function () {
-                                    self.listarTareas();
+                                    setTimeout(function() {self.listarTareas();}, 50);
                                 });
                             });
                         }
@@ -1641,6 +1641,11 @@
                 var $parent = $('#estadosFinancieros').parent();
                 $parent.slider('#estadosFinancieros');
             });
+        });
+        $.ajaxSetup({
+            headers: {
+              'Authorization': "Basic " + localStorage.user_id
+            }
         });
         </script>
         <!-- Peity -->
