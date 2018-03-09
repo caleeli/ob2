@@ -742,6 +742,7 @@
             new Module.Model({
                 "name": "firma",
                 "title": "Firma",
+                "table": "adm_evaluacion_consistencias",
                 "pluralTitle": "Firmas de auditoria",
                 "fields": [
                     new Module.Model.Field({

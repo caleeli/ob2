@@ -9,7 +9,7 @@ use App\Models\SaveUserTrait;
 class Firma extends Model
 {
     use SoftDeletes, Notifiable, SaveUserTrait;
-    protected $table = 'adm_firmas';
+    protected $table = 'adm_evaluacion_consistencias';
     protected $fillable = array(
       0 => 'cod_firma',
       1 => 'gestion',

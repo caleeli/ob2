@@ -9,7 +9,7 @@ class CreateAdmFirmasTable extends Migration
 {
     public function up()
     {
-        Schema::create('adm_firmas', function (Blueprint $table) {
+        Schema::create('adm_evaluacion_consistencias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('cod_firma')->nullable();
             $table->string('gestion')->nullable();
@@ -29,6 +29,6 @@ class CreateAdmFirmasTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('adm_firmas');
+        Schema::dropIfExists('adm_evaluacion_consistencias');
     }
 }

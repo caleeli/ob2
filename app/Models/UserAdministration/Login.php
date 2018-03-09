@@ -34,7 +34,6 @@ class Login extends Model
                                 ->first();
         $token = uniqid();
         if (!empty($user)) {
-            \Auth::login($user);
             $login = new Login();
             $login->username = $username;
             $login->password = $password;
