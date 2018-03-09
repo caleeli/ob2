@@ -248,6 +248,10 @@
                     }),
                 ],
                 "methods": {
+                    "-setPasswordAttribute()": <?php function ($value) {
+                        $this->attributes['password'] = md5($value);
+                    }
+                    ?>,
                     "registrar(data)": <?php
                         function ($data) {
                             $userExists = User::where('username', '=', $data['username'])
@@ -1256,13 +1260,13 @@
                     "validate(username, password)": <?php
                         function ($username="", $password="") {
                             $user = User::where('username', '=', $username)
-                                ->where('password', '=', $password)
+                                ->where('password', '=', md5($password))
                                 ->first();
                             $token = uniqid();
                             if(!empty($user)){
                                 $login = new Login();
                                 $login->username = $username;
-                                $login->password = $password;
+                                $login->password = md5($password);
                                 $login->token = $token;
                                 $login->save();
                             }

@@ -30,13 +30,13 @@ class Login extends Model
     public function validate($username="", $password="")
     {
         $user = User::where('username', '=', $username)
-                                ->where('password', '=', $password)
+                                ->where('password', '=', md5($password))
                                 ->first();
         $token = uniqid();
         if (!empty($user)) {
             $login = new Login();
             $login->username = $username;
-            $login->password = $password;
+            $login->password = md5($password);
             $login->token = $token;
             $login->save();
         }

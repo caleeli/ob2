@@ -130,6 +130,11 @@ class User extends \Illuminate\Foundation\Auth\User
     }
 
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = md5($value);
+    }
+
     public function registrar($data)
     {
         $userExists = User::where('username', '=', $data['username'])
