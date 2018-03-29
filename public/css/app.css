@@ -453,11 +453,12 @@ body.fixed-nav.fixed-nav-basic.fixed-sidebar.mini-navbar.body-small .navbar-fixe
 }
 
 body.mini-navbar .navbar-static-side {
-  width: 70px;
+  width: 270px;
+  background: #30404F;
 }
 
 body.mini-navbar .profile-element, body.mini-navbar .nav-label, body.mini-navbar .navbar-default .nav li a span {
-  display: none;
+  /*display: none;*/
 }
 
 body.canvas-menu .profile-element {
@@ -473,7 +474,7 @@ body.mini-navbar .navbar-default .nav > li > a {
 }
 
 body.mini-navbar .logo-element {
-  display: block;
+  /*display: block;*/
 }
 
 body.canvas-menu .logo-element {

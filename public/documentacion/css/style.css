@@ -387,12 +387,12 @@ body.fixed-nav.fixed-nav-basic.fixed-sidebar.mini-navbar.body-small .navbar-fixe
   margin-left: 0;
 }
 body.mini-navbar .navbar-static-side {
-  width: 70px;
+  /*width: 70px;*/
 }
 body.mini-navbar .profile-element,
 body.mini-navbar .nav-label,
 body.mini-navbar .navbar-default .nav li a span {
-  display: none;
+  /*display: none;*/
 }
 body.canvas-menu .profile-element {
   display: block;
@@ -404,7 +404,7 @@ body.mini-navbar .navbar-default .nav > li > a {
   font-size: 16px;
 }
 body.mini-navbar .logo-element {
-  display: block;
+  /*display: block;*/
 }
 body.canvas-menu .logo-element {
   display: none;
