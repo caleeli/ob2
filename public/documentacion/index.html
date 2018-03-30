@@ -682,6 +682,7 @@
                                                                 <select class="form-control" placeholder="asignado" v-model="tarea.usuario">
                                                                     <option v-for="user in users" v-bind:value="user.id">{{user.attributes.nombres+" "+user.attributes.apellidos}}</option>
                                                                 </select>
+                                                                <tags v-bind:model="tarea" v-bind:property="'usuario'" v-bind:domain="users" v-bind:field="{textField:'nombres'}" />
                                                             </dd>
                                                         </dl>
                                                     </div>
