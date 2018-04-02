@@ -178,7 +178,11 @@ class NanoBuildCommand extends Command
                         $phpCode = '';
                     } elseif (T_CLOSE_TAG === $t[0]) {
                         $lines = substr_count($phpCode, "\n") + 1;
-                        $xmlCode.=htmlentities(json_encode($phpCode), ENT_NOQUOTES, 'utf-8').str_repeat("\n", $lines);
+                        if (substr($phpCode, 0, 3)==='xml') {
+                            $xmlCode.="<?$phpCode?>\n";
+                        } else {
+                            $xmlCode.=htmlentities(json_encode($phpCode), ENT_NOQUOTES, 'utf-8').str_repeat("\n", $lines);
+                        }
                     } else {
                         $phpCode.=$t[1];
                     }

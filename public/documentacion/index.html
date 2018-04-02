@@ -468,7 +468,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-5 project-user">
-                                                                    <i class="fa fa-user-o"></i> {{!tareaI.relationships.usuario ? '': tareaI.relationships.usuario.attributes.nombres+' '+tareaI.relationships.usuario.attributes.apellidos}}
+                                                                    <i class="fa fa-user-o"></i> {{tareaI.relationships.usuarios && typeof tareaI.relationships.usuarios.map==='function' ? tareaI.relationships.usuarios.map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join(', ') : ''}}
                                                                 </div>
                                                                 <!-- td class="project-owner">
                                                                     <i class="fa fa-user-secret"></i> {{tareaI.relationships.creador.attributes.nombres+' '+tareaI.relationships.creador.attributes.apellidos}}
@@ -680,7 +680,7 @@
                                                         <dl class="dl-horizontal">
                                                             <dt>Asignado a:</dt> <dd>
                                                                 <div style="position:relative">
-                                                                    <tags v-bind:model="tarea" v-bind:property="'usuario'" v-bind:domain="users" v-bind:field="{textField:'nombres'}" />
+                                                                    <tags v-bind:model="tarea" v-bind:property="'usuarios'" v-bind:domain="users" v-bind:field="{textField:'nombres'}" />
                                                                 </div>
                                                             </dd>
                                                         </dl>
@@ -1058,7 +1058,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.105"></script>
+        <script src="../js/server.js?v0.106"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1217,7 +1217,6 @@
                     modificarTarea: function (tarea) {
                         var self = this;
                         this.tarea.$load(tarea.id, function () {
-                            self.tarea.usuario = self.tarea.usuario.id;
                         });
                     },
                     cancelarTarea: function (tarea) {

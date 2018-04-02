@@ -19,12 +19,11 @@ class Tarea extends Model
       5 => 'estado',
       6 => 'avance',
       7 => 'prioridad',
-      8 => 'usuario_id',
-      9 => 'creador_id',
-      10 => 'revisor1_id',
-      11 => 'aprobacion1_id',
-      12 => 'revisor2_id',
-      13 => 'aprobacion2_id',
+      8 => 'creador_id',
+      9 => 'revisor1_id',
+      10 => 'aprobacion1_id',
+      11 => 'revisor2_id',
+      12 => 'aprobacion2_id',
     );
     protected $attributes = array(
       'cod_tarea' => '',
@@ -49,9 +48,9 @@ class Tarea extends Model
     protected $events = array(
       'saved' => 'App\\Events\\UserAdministration\\TareaSaved',
     );
-    public function usuario()
+    public function usuarios()
     {
-        return $this->belongsTo('App\Models\UserAdministration\User');
+        return $this->belongsToMany('App\Models\UserAdministration\User');
     }
 
 

@@ -1075,9 +1075,9 @@
                     }),
                 ],
                 "associations": [
-                    new Module.Model.BelongsTo({
-                        "name": "usuario",
-                        "label": "Usuario",
+                    new Module.Model.BelongsToMany({
+                        "name": "usuarios",
+                        "label": "Usuarios",
                         "model": "user",
                         "textField": function(data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},
                         "ui": "select",
