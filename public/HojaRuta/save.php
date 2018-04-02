@@ -17,6 +17,17 @@ if (empty($_REQUEST['id'])) {
         empty($_REQUEST['conclusion']) ? '0000-00-00' : $_REQUEST['conclusion'],
         $_REQUEST['numero'],
     ]);
+    //save derivation
+    $stmt = $connection->prepare('insert into derivacion(fecha, comentarios, destinatario, instruccion, hoja_ruta_id)'
+        .' values (?,?,?,?,?)');
+
+    $stmt->execute([
+        empty($_REQUEST['fecha']) ? '0000-00-00': $_REQUEST['fecha'],
+        $_REQUEST['referencia'],
+        $_REQUEST['destinatario'],
+       '',
+        $connection->lastInsertId(),
+    ]);
 } else {
     $stmt = $connection->prepare('update hoja_ruta set tipo=?, fecha=?, referencia=?, procedencia=?, nro_de_control=?, anexo_hojas=?, destinatario=?, conclusion=? '
         .' where id = ?');

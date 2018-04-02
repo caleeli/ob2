@@ -175,6 +175,7 @@ and open the template in the editor.
                                             <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
                                         </ul>
                                     </div>
+                                <!-- tags v-bind:model="hoja" v-bind:property="'destinatario'" v-bind:domain="destinatarios" v-bind:field="{textField:'nombres'}" / -->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -530,6 +531,7 @@ and open the template in the editor.
                                             <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
                                         </ul>
                                     </div>
+                                    <!-- tags v-bind:model="hoja" v-bind:property="'destinatario'" v-bind:domain="destinatarios" v-bind:field="{textField:'nombres'}" /-->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -1061,6 +1063,18 @@ and open the template in the editor.
                 </span>
             </div>
         </script>
+        <script type='text/x-template' id='template-tags'>
+            <div class="form-control form-control-tags" style="position:relative;">
+                <div style="position:absolute;left:0px;top:0px;min-width:100%;height:100%; padding: 11px; ">
+                    <select :placeholder="placeholder" style="position:absolute;left:0px;top:0px;width:100%;height:100%;opacity:0;"
+                            v-on:change="select">
+                        <option v-for="option in domain" v-bind:value="typeof option=='object'?option.id:option" :hidden="isSelected(typeof option=='object'?option.id:option)">{{typeof option=='object'?option.attributes[field.textField]:option}}</option>
+                        <option value="" hidden=""></option>
+                    </select>
+                    <span v-for="option in selected" class="label label-info" :value="option.value" style="position:relative;" v-on:click="remove">{{option.text}} <i class="glyphicon glyphicon-remove"></i></span>
+                </div>
+            </div>
+        </script>
         <script>
         function Recepcion(values) {
             this.id = null,
@@ -1420,6 +1434,46 @@ and open the template in the editor.
                             success: function () {
                             }
                         }).done(function() {
+                            if (self.derivaciones.length==1) {
+                                var usuarios=[];
+                                self.destinatarios.forEach(function (d) {
+                                    if ((d.attributes.nombres + ' ' + d.attributes.apellidos).toLowerCase()===o.destinatario.toLowerCase()) {
+                                        usuarios.push(d);
+                                    }
+                                });
+                                $.ajax({
+                                    method: 'POST',
+                                    url: '/api/UserAdministration/tareas',
+                                    data: JSON.stringify({
+                                        "data":{
+                                            "type":"UserAdministration.Tarea",
+                                            "attributes":{
+                                                "cod_tarea":"",
+                                                "nombre_tarea": self.hoja.referencia,
+                                                "descripcion": o.instruccion + "\n" + o.comentarios,
+                                                //"fecha_ini":"",
+                                                //"fecha_fin":"",
+                                                "estado":"Pendiente",
+                                                "avance":0,
+                                                "prioridad":"Media"
+                                            },
+                                            "relationships":{
+                                                "creador":{
+                                                    "data":{"id":"1"}
+                                                },
+                                                "usuarios":{
+                                                    "data":usuarios
+                                                },
+                                                "revisor1":{"data":{"id":null}},
+                                                "aprobacion1":{"data":{"id":null}},
+                                                "revisor2":{"data":{"id":null}},
+                                                "aprobacion2":{"data":{"id":null}},
+                                                "adjuntos":{"data":[]},"avances":{"data":[]}
+                                            }
+                                        }
+                                    })
+                                });
+                            }
                             self.filtroDerivacion = '';
                             self.hoja.selectDerivations(self.derivaciones, self.filtroDerivacion);
                             if (typeof callback==='function') {
@@ -1918,6 +1972,140 @@ and open the template in the editor.
                         self.innerValue = $(self.$el).find("input").val();
                     });
                 });
+            }
+        });
+        Vue.component('tags', {
+            template: '#template-tags',
+            props:[
+                "placeholder",
+                "model",
+                "property",
+                "domain",
+                "field",
+            ],
+            data: function () {
+                return {
+                    changes: 0,
+                };
+            },
+            watch: {
+                'model.id': function () {
+                    console.log("entro");
+                    this.refresh();
+                }
+            },
+            computed: {
+                selected: function() {
+                    var selected = [];
+                    var self = this;
+                    var values = this.getValues();
+                    var options = {};
+                    this.changes;
+                    if(this.domain && typeof this.domain.forEach==='function') {
+                        this.domain.forEach(function(option){
+                            if(typeof option=='object') {
+                                options[option.id] = option.attributes[self.field.textField];
+                            } else {
+                                options[option] = option;
+                            }
+                        });
+                    }
+
+                    values.forEach(function(val){
+                        selected.push({
+                            value: val,
+                            text: typeof options[val]!=='undefined'?options[val]:'',
+                        });
+                    });
+                    return selected;
+                }
+            },
+            methods: {
+                clickControl: function (event) {
+                    if(event.target.nodeName==='DIV') {
+                        $(event.target.previousElementSibling).click();
+                    }
+                },
+                getValues: function() {
+                    var value = this.model[this.property];
+                    if (!value) {
+                        return [];
+                    } else if (typeof value.split==='function') {
+                        return value.split(this.separator);
+                    } else if (typeof value.forEach==='function') {
+                        var values = [];
+                        value.forEach(function(row) {
+                            values.push(row.id);
+                        });
+                        return values;
+                    } else {
+                        return [];
+                    }
+                },
+                setValues: function(values){
+                    var self = this;
+                    var value = this.model[this.property];
+                    if (!value) {
+                        this.model[this.property] = values.join(this.separator);
+                    } else if (typeof value.split==='function') {
+                        this.model[this.property] = values.join(this.separator);
+                    } else if (typeof value.forEach==='function') {
+                        this.model[this.property].length = 0;
+                        values.forEach(function(value) {
+                            self.domain.forEach(function(option) {
+                                if (option.id==value) {
+                                    self.model[self.property].push(option);
+                                }
+                            });
+                        });
+                    }
+                    this.$emit('change');
+                },
+                refresh: function() {
+                    var self = this;
+                    var values = this.getValues();
+                    console.log(values);
+                    this.options = {};
+                    this.changes++;
+                },
+                addLabel:function(newValue){
+                    var values = this.getValues();
+                    if(values.findIndex(function(e){return e==newValue})===-1) {
+                        values.push(newValue);
+                        this.setValues(values);
+                    }
+                    this.refresh();
+                },
+                removeLabel:function(oldValue){
+                    var values = this.getValues();
+                    if(values.findIndex(function(e){return e==oldValue})!==-1) {
+                        values.splice(values.findIndex(function(e){return e==oldValue}), 1);
+                        this.setValues(values);
+                    } else {
+                        throw "Tag not found id="+oldValue;
+                    }
+                    this.refresh();
+                },
+                isSelected:function(label){
+                    var values = this.getValues();
+                    return values.findIndex(function(e){return e==label})!==-1;
+                },
+                select: function(event) {
+                    var value = event.target.value;
+                    event.target.value = '';
+                    this.addLabel(value);
+                },
+                remove: function(event) {
+                    var value = event.currentTarget.getAttribute("value");
+                    this.removeLabel(value);
+                },
+            },
+            mounted: function () {
+                var self = this;
+                this.$$el = $(this.$el);
+                this.separator = ',';
+                this.options = {};
+                self.refresh();
             }
         });
         </script>
