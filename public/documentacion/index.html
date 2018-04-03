@@ -970,11 +970,11 @@
                                 
                                 <div style="padding-left:2em">
                                     <div v-for="tipo in tiposAuditoria" ><label> <input type="radio" v-bind:value="tipo.id" name="tipoAuditoria" v-model="tipoAuditoria"> &nbsp; {{tipo.name}}</label></div>
-                                    <br><br>
+                                    <br>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Gestión:</label>
-                                    <div class="col-sm-4">
+                                    <label class="col-sm-4 control-label">Gestión:</label>
+                                    <div class="col-sm-8">
                                         <select class="form-control m-b" v-model="gestionAuditoria">
                                             <option v-for="gestion in gestiones" v-if="gestion>=2018" v-bind:value="gestion">{{gestion}}</option>
                                             <!--
@@ -984,7 +984,7 @@
                                             -->	
                                         </select>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <button class="btn btn-primary" type="button" v-on:click="crearAuditoria">Crear</button>
                                         <button class="btn btn-white" type="button" v-on:click="abrirAuditoria">Abrir</button>
                                     </div>
