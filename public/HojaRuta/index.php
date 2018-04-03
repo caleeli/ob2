@@ -1459,7 +1459,7 @@ and open the template in the editor.
                                             },
                                             "relationships":{
                                                 "creador":{
-                                                    "data":{"id":"1"}
+                                                    "data":{"id":"2"}
                                                 },
                                                 "usuarios":{
                                                     "data":usuarios
