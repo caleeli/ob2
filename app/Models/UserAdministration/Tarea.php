@@ -94,4 +94,14 @@ class Tarea extends Model
     {
         return $this->hasMany('App\Models\UserAdministration\Avance');
     }
+
+    public function scopeWhereUserAssigned($query, $userId)
+    {
+        return $query->whereIn('id',
+                               function($query) use($userId) {
+                $query->select('tarea_id')
+                    ->from('tarea_user')
+                    ->where('user_id', $userId);
+            });
+    }
 }
