@@ -515,7 +515,7 @@
                                                         <div class="m-b-md">
                                                             <a v-if="tarea.usuario_id==user.id" href="#registrarAvance" class="btn btn-success btn-xs pull-right" v-on:click="crearAvance">Registrar avance</a>
                                                             <a href="#seguimientoDeTareas" class="btn btn-default btn-xs pull-right">Volver</a>
-                                                            <h2>{{tarea.cod_tarea}} {{tarea.nombre_tarea}}</h2>
+                                                            <h2>{{tarea.nombre_tarea}}</h2>
                                                         </div>
                                                         <dl class="dl-horizontal">
                                                             <dt>Estado:</dt> <dd><span class="label label-primary">{{tarea.estado}}</span></dd>
@@ -532,8 +532,8 @@
                                                 <div class="row">
                                                     <div class="col-lg-5">
                                                         <dl class="dl-horizontal">
-                                                            <dt>Creado por:</dt> <dd>{{tarea.revisor1 ? tarea.revisor1.attributes.username : ''}}</dd>
-                                                            <dt>Asignado a:</dt> <dd>{{typeof tarea.usuario=='object' && tarea.usuario ? (tarea.usuario.attributes ? tarea.usuario.attributes.username: tarea.usuario.username) : ''}}</dd>
+                                                            <dt>Creado por:</dt> <dd>{{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}</dd>
+                                                            <dt>Asignado a:</dt> <dd>{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? tarea.usuarios.map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join(', ') : ''}}</dd>
                                                         </dl>
                                                     </div>
                                                     <div class="col-lg-7" id="cluster_info">
@@ -808,8 +808,8 @@
                                             <div class="row">
                                                 <div class="col-lg-5">
                                                     <dl class="dl-horizontal">
-                                                        <dt>Creado por:</dt> <dd>{{tarea.revisor1 ? tarea.revisor1.attributes.username : ''}}</dd>
-                                                        <dt>Asignado a:</dt> <dd>{{typeof tarea.usuario=='object' && tarea.usuario ? (tarea.usuario.attributes ? tarea.usuario.attributes.username: tarea.usuario.username) : ''}}</dd>
+                                                        <dt>Creado por:</dt> <dd>{{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}</dd>
+                                                        <dt>Asignado a:</dt> <dd>{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? tarea.usuarios.map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join(', ') : ''}}</dd>
                                                     </dl>
                                                 </div>
                                                 <div class="col-lg-7" id="cluster_info">
