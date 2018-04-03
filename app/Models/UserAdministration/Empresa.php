@@ -60,7 +60,7 @@ class Empresa extends Model
     public function getDetalleEmpresaAttribute($value)
     {
         $value = str_replace('{{$uc(\'3\')}}', '<span class="calculado" title="patrimonio">{{$uc(\'3\')}}</span>', $value);
-        $ev = new \App\Evaluator($this->id, date('Y') - 1);
+        $ev = new \App\Evaluator($this->id, date('Y'));
         return $ev->calculate($value);
     }
 
