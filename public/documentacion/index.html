@@ -486,7 +486,7 @@
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" v-if="esUsuarioGerente()" href="javascript:void(0)" class="btn btn-white btn-sm" v-on:click='cancelarTarea(tareaI)'><i class="fa fa-times"></i> Cancelar </a>
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" href="#asignarTarea" class="btn btn-white btn-sm" v-on:click='modificarTarea(tareaI)'><i class="fa fa-pencil"></i> Modificar </a>
                                                                     <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Ver </a>
-                                                                    <a v-if="tareaI.relationships.usuario && tareaI.relationships.usuario.id==user.id && tareaI.attributes.avance<100" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
+                                                                    <a v-if="tareaI.relationships.usuarios && perteneceA(tareaI.relationships.usuarios, user.id) && tareaI.attributes.avance<100" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
                                                                 </div>
                                                                 <div class="col-xs-12">
                                                                     <hr>
@@ -1143,6 +1143,9 @@
                     },
                 },
                 methods: {
+                    perteneceA: function (usuarios, userId) {
+                        return usuarios.find(function(item){return item.id==userId})!==undefined;
+                    },
                     seleccionaEmpresa: function () {
                         window.location.hash = '#descripcionEmpresa';
                         $('#descripcionEmpresa')[0].scrollIntoView(true);
