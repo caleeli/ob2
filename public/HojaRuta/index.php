@@ -1449,7 +1449,7 @@ and open the template in the editor.
                                             "type":"UserAdministration.Tarea",
                                             "attributes":{
                                                 "cod_tarea":"",
-                                                "nombre_tarea": o.hoja.nroDeControl + ' ' + self.hoja.referencia,
+                                                "nombre_tarea": self.hoja.nroDeControl + ' ' + self.hoja.referencia,
                                                 "descripcion": o.comentarios,
                                                 //"fecha_ini":"",
                                                 //"fecha_fin":"",
