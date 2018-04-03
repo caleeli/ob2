@@ -1450,7 +1450,7 @@ and open the template in the editor.
                                             "attributes":{
                                                 "cod_tarea":"",
                                                 "nombre_tarea": self.hoja.referencia,
-                                                "descripcion": o.instruccion + "\n" + o.comentarios,
+                                                "descripcion": o.hoja.nroDeControl + ' ' + o.comentarios,
                                                 //"fecha_ini":"",
                                                 //"fecha_fin":"",
                                                 "estado":"Pendiente",
