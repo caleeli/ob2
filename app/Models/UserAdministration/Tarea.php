@@ -19,11 +19,12 @@ class Tarea extends Model
       5 => 'estado',
       6 => 'avance',
       7 => 'prioridad',
-      8 => 'creador_id',
-      9 => 'revisor1_id',
-      10 => 'aprobacion1_id',
-      11 => 'revisor2_id',
-      12 => 'aprobacion2_id',
+      8 => 'dias_otorgados',
+      9 => 'creador_id',
+      10 => 'revisor1_id',
+      11 => 'aprobacion1_id',
+      12 => 'revisor2_id',
+      13 => 'aprobacion2_id',
     );
     protected $attributes = array(
       'cod_tarea' => '',
@@ -34,6 +35,7 @@ class Tarea extends Model
       'estado' => 'Pendiente',
       'avance' => '0',
       'prioridad' => 'Media',
+      'dias_otorgados' => '0',
     );
     protected $casts = array(
       'cod_tarea' => 'string',
@@ -44,9 +46,13 @@ class Tarea extends Model
       'estado' => 'string',
       'avance' => 'integer',
       'prioridad' => 'string',
+      'dias_otorgados' => 'integer',
     );
     protected $events = array(
       'saved' => 'App\\Events\\UserAdministration\\TareaSaved',
+    );
+    protected $appends = array(
+      0 => 'dias_pasados',
     );
     public function usuarios()
     {
@@ -95,13 +101,18 @@ class Tarea extends Model
         return $this->hasMany('App\Models\UserAdministration\Avance');
     }
 
+
     public function scopeWhereUserAssigned($query, $userId)
     {
-        return $query->whereIn('id',
-                               function($query) use($userId) {
-                $query->select('tarea_id')
-                    ->from('tarea_user')
-                    ->where('user_id', $userId);
-            });
+        return $query->whereIn('id', function ($query) use ($userId) {
+            $query->select('tarea_id')
+                                ->from('tarea_user')
+                                ->where('user_id', $userId);
+        });
+    }
+
+    public function getDiasPasadosAttribute()
+    {
+        return $this->created_at->diff(\Carbon\Carbon::now())->days;
     }
 }

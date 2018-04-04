@@ -468,21 +468,30 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-5 project-user">
-                                                                    <i class="fa fa-user-o"></i> {{tareaI.relationships.usuarios && typeof tareaI.relationships.usuarios.map==='function' ? tareaI.relationships.usuarios.map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join(', ') : ''}}
+                                                                    <div v-for="u in (tareaI.relationships.usuarios && tareaI.relationships.usuarios instanceof Array ? tareaI.relationships.usuarios : [])">
+                                                                        <i class="fa fa-user-o"></i>
+                                                                        {{u.attributes.nombres+' '+u.attributes.apellidos}}
+                                                                    </div>
                                                                 </div>
                                                                 <!-- td class="project-owner">
                                                                     <i class="fa fa-user-secret"></i> {{tareaI.relationships.creador.attributes.nombres+' '+tareaI.relationships.creador.attributes.apellidos}}
                                                                 </td -->
                                                                 <div class="col-md-1 col-xs-3 text-right project-priority">
-                                                                    <small>Prioridad</small><br>
-                                                                    <span v-bind:class="{
-                                                                            'label': true,
-                                                                            'label-danger': tareaI.attributes.prioridad=='Alta',
-                                                                            'label-warning': tareaI.attributes.prioridad=='Media',
-                                                                            'label-primary': tareaI.attributes.prioridad=='Baja'
-                                                                        }">{{tareaI.attributes.prioridad}}</span>
+                                                                    <span style="display: inline-block">
+                                                                        <small>Prioridad</small><br>
+                                                                        <span v-bind:class="{
+                                                                                'label': true,
+                                                                                'label-danger': tareaI.attributes.prioridad=='Alta',
+                                                                                'label-warning': tareaI.attributes.prioridad=='Media',
+                                                                                'label-primary': tareaI.attributes.prioridad=='Baja'
+                                                                            }">{{tareaI.attributes.prioridad}}</span>
+                                                                    </span>
                                                                 </div>
                                                                 <div class="col-md-3 col-xs-12 project-actions" style="padding-top: 0.5em">
+                                                                    <span v-if="tareaI.attributes.dias_otorgados>0" style="display: inline-block; float: left;">
+                                                                        <div><peity v-bind:value="tareaI.attributes.dias_pasados" v-bind:total="tareaI.attributes.dias_otorgados"/></div>
+                                                                        <small>{{tareaI.attributes.dias_otorgados ? Math.max(0, tareaI.attributes.dias_otorgados - tareaI.attributes.dias_pasados)+'d' : ''}}</small>
+                                                                    </span>
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" v-if="esUsuarioGerente()" href="javascript:void(0)" class="btn btn-white btn-sm" v-on:click='cancelarTarea(tareaI)'><i class="fa fa-times"></i> Cancelar </a>
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" href="#asignarTarea" class="btn btn-white btn-sm" v-on:click='modificarTarea(tareaI)'><i class="fa fa-pencil"></i> Modificar </a>
                                                                     <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Ver </a>
@@ -533,7 +542,7 @@
                                                     <div class="col-lg-5">
                                                         <dl class="dl-horizontal">
                                                             <dt>Creado por:</dt> <dd>{{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}</dd>
-                                                            <dt>Asignado a:</dt> <dd>{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? tarea.usuarios.map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join(', ') : ''}}</dd>
+                                                            <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? tarea.usuarios.map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
                                                         </dl>
                                                     </div>
                                                     <div class="col-lg-7" id="cluster_info">
@@ -541,13 +550,15 @@
 
                                                             <dt>Creación:</dt> <dd>{{tarea.created_at}}</dd>
                                                             <dt>Última actualización:</dt> <dd>{{tarea.updated_at}}</dd>
+                                                            <dt>Tiempo asignado:</dt> <dd>{{tarea.dias_otorgados}} días</dd>
+                                                            <dt>Tiempo restante:</dt> <dd>{{Math.max(0, tarea.dias_otorgados - tarea.dias_pasados)}} días</dd>
                                                         </dl>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <dl class="dl-horizontal">
-                                                            <dt>Avance:</dt>
+                                                            <dt>Avance % :</dt>
                                                             <dd>
                                                                 <div v-bind:class="{'progress progress-striped active m-b-sm': tarea.avance < 100, 'progress progress-bar-default': tarea.avance == 100 }">
                                                                     <div v-bind:style="{width: tarea.avance+'%'}" v-bind:class="{
@@ -696,7 +707,7 @@
                                                 <div class="row" v-show="tarea.avance>0">
                                                     <div class="col-lg-12">
                                                         <dl class="dl-horizontal">
-                                                            <dt>Avance:</dt>
+                                                            <dt>Avance % :</dt>
                                                             <dd>
                                                                 <div class="progress progress-striped active m-b-sm">
                                                                     <div v-bind:style="{width: tarea.avance+'%'}" class="progress-bar progress-bar-warning"></div>
@@ -809,7 +820,7 @@
                                                 <div class="col-lg-5">
                                                     <dl class="dl-horizontal">
                                                         <dt>Creado por:</dt> <dd>{{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}</dd>
-                                                        <dt>Asignado a:</dt> <dd>{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? tarea.usuarios.map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join(', ') : ''}}</dd>
+                                                        <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? tarea.usuarios.map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
                                                     </dl>
                                                 </div>
                                                 <div class="col-lg-7" id="cluster_info">
@@ -817,13 +828,15 @@
 
                                                         <dt>Creación:</dt> <dd>{{tarea.created_at}}</dd>
                                                         <dt>Última actualización:</dt> <dd>{{tarea.updated_at}}</dd>
+                                                        <dt>Tiempo asignado:</dt> <dd>{{tarea.dias_otorgados}} días</dd>
+                                                        <dt>Tiempo restante:</dt> <dd>{{Math.max(0, tarea.dias_otorgados - tarea.dias_pasados)}} días</dd>
                                                     </dl>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <dl class="dl-horizontal">
-                                                        <dt>Avance:</dt>
+                                                        <dt>Avance % :</dt>
                                                         <dd>
                                                             <input type="number" min="0" max="100" class="form-control" placeholder="avance" v-model="avance.avance">
                                                         </dd>
@@ -872,7 +885,7 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr v-for="avance in tarea.actividades">
+                                                                            <tr v-for="avance in tarea.avances">
                                                                                 <td>
                                                                                     <span class="label label-primary">{{avance.attributes.avance}}</span>
                                                                                 </td>

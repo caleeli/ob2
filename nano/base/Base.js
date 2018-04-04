@@ -144,6 +144,13 @@ Module.Model = function (base) {
                 'App\\Listeners\\' + module.name + '\\' + PHP.upper_camel_case(base.name) + PHP.upper_camel_case(eventName)+'Listener'
             );
         }
+        var properties = Object.assign({
+                'protected $table': Module.Model.getTableName(module, base),
+                'protected $fillable': array2array(base.fields, 'item.name').concat(array2array(base.associations, 'item.getFillableName()')),
+                'protected $attributes': array2object(base.fields, 'item.name', 'item.default'),
+                'protected $casts': array2object(base.fields, 'item.name', 'item.type'),
+                'protected $events': object2object(base.events, 'key', JSON.stringify('App\\Events\\'+module.name + '\\' + PHP.upper_camel_case(base.name)) + " + PHP.upper_camel_case(key)"),
+            }, base.properties);
         PHP.createClass({
             filename: 'app/Models/' + module.name + '/' + PHP.upper_camel_case(base.name) + '.php',
             namespace: 'App\\Models\\' + module.name,
@@ -156,13 +163,7 @@ Module.Model = function (base) {
             name: PHP.upper_camel_case(base.name),
             extends: base.extends ? base.extends : 'Model',
             traits: ['SoftDeletes','Notifiable','SaveUserTrait'],
-            properties: {
-                'protected $table': Module.Model.getTableName(module, base),
-                'protected $fillable': array2array(base.fields, 'item.name').concat(array2array(base.associations, 'item.getFillableName()')),
-                'protected $attributes': array2object(base.fields, 'item.name', 'item.default'),
-                'protected $casts': array2object(base.fields, 'item.name', 'item.type'),
-                'protected $events': object2object(base.events, 'key', JSON.stringify('App\\Events\\'+module.name + '\\' + PHP.upper_camel_case(base.name)) + " + PHP.upper_camel_case(key)"),
-            },
+            properties: properties,
             methods: Object.assign({}, array2object(base.associations, 'item.name', 'item.code()'), base.methods),
         });
         PHP.createClass({

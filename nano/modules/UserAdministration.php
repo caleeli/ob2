@@ -1073,6 +1073,12 @@
                         "type": "string",
                         "default": "Media"
                     }),
+                    new Module.Model.Field({
+                        "name": "dias_otorgados",
+                        "label": "días otorgados",
+                        "type": "integer",
+                        "default": "0"
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsToMany({
@@ -1175,7 +1181,17 @@
                                 ->where('user_id', $userId);
                             });
                         }
+                    ?>,
+                    "-getDiasPasadosAttribute()": <?php
+                        function () {
+                            return $this->created_at->diff(\Carbon\Carbon::now())->days;
+                        }
                     ?>
+                },
+                "properties": {
+                    "protected $appends": [
+                        "dias_pasados"
+                    ],
                 }
             }),
             /**
