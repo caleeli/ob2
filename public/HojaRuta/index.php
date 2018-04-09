@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
@@ -112,7 +107,7 @@ and open the template in the editor.
             </div>
             <div class="row justify-content-md-center">
                 <div class="col-md-10" v-if="menu=='recepcion'">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" v-on:submit.prevent="generar">
                         <fieldset>
                             <legend>Hoja de ruta - SCEP <b># {{hoja.numero}}</b></legend>
                             <div class="form-group">
@@ -135,7 +130,7 @@ and open the template in the editor.
                                 <label for="inputEmail" class="col-lg-2 control-label">Fecha de recepción</label>
                                 <div class="col-lg-10">
                                         <div class='input-group date' id='datetimepicker1'>
-                                            <input type='text' v-model="hoja.fecha" class="form-control" />
+                                            <input required type='text' v-model="hoja.fecha" class="form-control" />
                                             <span class="input-group-addon" v-on:click='datepick'>
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -145,32 +140,32 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="textArea" class="col-lg-2 control-label">Referencia</label>
                                 <div class="col-lg-10">
-                                    <textarea class="form-control" v-model="hoja.referencia" rows="3" id="textArea"></textarea>
+                                    <textarea required class="form-control" v-model="hoja.referencia" rows="3" id="textArea"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Procedencia</label>
                                 <div class="col-lg-10">
-                                    <input type="text" v-model="hoja.procedencia" class="form-control" placeholder="">
+                                    <input required="required" type="text" v-model="hoja.procedencia" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Nº de control</label>
                                 <div class="col-lg-10">
-                                    <input type="number" v-model="hoja.nroDeControl" class="form-control" placeholder="">
+                                    <input required type="number" step="any" v-model="hoja.nroDeControl" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Anexo hojas</label>
                                 <div class="col-lg-10">
-                                    <input type="text" v-model="hoja.anexoHojas" class="form-control" placeholder="">
+                                    <input required type="text" v-model="hoja.anexoHojas" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Destinatario</label>
                                 <div class="col-lg-10">
                                     <div class="btn-group btn-block">
-                                        <input type="text" v-model="hoja.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
+                                        <input required type="text" v-model="hoja.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
                                         <ul class="dropdown-menu">
                                             <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
                                         </ul>
@@ -180,7 +175,7 @@ and open the template in the editor.
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="button" v-on:click="generar" class="btn btn-primary">Guardar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
                         </fieldset>
@@ -491,10 +486,8 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="inputEmail" class="col-lg-2 control-label">Fecha</label>
                                 <div class="col-lg-10">
-                                    <div class="form-group">
-                                        <div class='input-group date'>
-                                            <input type='text' disabled1="disabled" v-model="hoja.fecha" class="form-control" />
-                                        </div>
+                                    <div class='input-group date'>
+                                        <fecha v-model="hoja.fecha"></fecha>
                                     </div>
                                 </div>
                             </div>
@@ -531,7 +524,6 @@ and open the template in the editor.
                                             <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
                                         </ul>
                                     </div>
-                                    <!-- tags v-bind:model="hoja" v-bind:property="'destinatario'" v-bind:domain="destinatarios" v-bind:field="{textField:'nombres'}" /-->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -544,13 +536,11 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Fecha</label>
                                 <div class="col-lg-10">
-                                    <div class="form-group">
-                                        <div class='input-group date' id='datetimepicker3'>
-                                            <input type='text' :disabled="concluido()" v-model="derivacion.fecha" class="form-control" />
-                                            <span class="input-group-addon" v-on:click='datepick3'>
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
+                                    <div class='input-group date' id='datetimepicker3'>
+                                        <input type='text' :disabled="concluido()" v-model="derivacion.fecha" class="form-control" />
+                                        <span class="input-group-addon" v-on:click='datepick3'>
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -563,12 +553,13 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Destinatario</label>
                                 <div class="col-lg-10">
-                                    <div class="btn-group btn-block">
+                                    <!-- div class="btn-group btn-block">
                                         <input type="text" :disabled="concluido()" v-model="derivacion.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
                                         <ul class="dropdown-menu">
                                             <li v-for="dest in destinatarios" v-on:click="derivacion.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(derivacion.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
                                         </ul>
-                                    </div>
+                                    </div -->
+                                    <tags v-model="derivacion.destinatarios" v-bind:domain="destinatarios" v-bind:field="{textField:function(item){return item.nombres+' '+item.apellidos}}" v-on:change="sincronizaDestinatario"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -599,7 +590,7 @@ and open the template in the editor.
                         <tbody>
                             <tr v-for='derivacion in derivaciones'>
                                 <td v-if="!derivacion.editable">{{derivacion.fecha}}</td>
-                                <td v-if="!derivacion.editable">{{derivacion.destinatario}}</td>
+                                <td v-if="!derivacion.editable" style="white-space: pre">{{derivacion.destinatario}}</td>
                                 <td v-if="!derivacion.editable">{{derivacion.comentarios}}</td>
                                 <td v-if="!derivacion.editable">{{derivacion.instruccion}}</td>
                                 <td v-if="derivacion.editable"><input type="text" v-model="derivacion.fecha" class="form-control"></td>
@@ -906,7 +897,7 @@ and open the template in the editor.
                                 <th>{{reporte.forma==='SoloDerivaciones' ? derivacion.num: ''}}</th>
                                 <th>{{reporte.forma==='SoloDerivaciones' ? rep.nro_de_control: d+1}}</th>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
-                                <td>{{derivacion.destinatario}}</td>
+                                <td style="white-space: pre">{{derivacion.destinatario}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.procedencia : ''}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.fecha : ''}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.conclusion : ''}}</td>
@@ -1066,10 +1057,10 @@ and open the template in the editor.
         <script type='text/x-template' id='template-tags'>
             <div class="form-control form-control-tags" style="position:relative;">
                 <div style="position:absolute;left:0px;top:0px;min-width:100%;height:100%; padding: 11px; ">
-                    <select :placeholder="placeholder" style="position:absolute;left:0px;top:0px;width:100%;height:100%;opacity:0;"
+                    <select v-model="innerValue" style="position:absolute;left:0px;top:0px;width:100%;height:100%;opacity:0;"
                             v-on:change="select">
-                        <option v-for="option in domain" v-bind:value="typeof option=='object'?option.id:option" :hidden="isSelected(typeof option=='object'?option.id:option)">{{typeof option=='object'?option.attributes[field.textField]:option}}</option>
-                        <option value="" hidden=""></option>
+                        <option v-for="option in domain" v-bind:value="typeof option=='object'?option.id:option" :hidden="isSelected(typeof option=='object'?option.id:option)">{{getOptionText(option)}}</option>
+                        <option alue="" hidden=""></option>
                     </select>
                     <span v-for="option in selected" class="label label-info" :value="option.value" style="position:relative;" v-on:click="remove">{{option.text}} <i class="glyphicon glyphicon-remove"></i></span>
                 </div>
@@ -1197,6 +1188,7 @@ and open the template in the editor.
             this.hoja_ruta_id = '',
             this.fecha = '',
             this.destinatario = '',
+            this.destinatarios = '',
             this.comentarios = '',
             this.instruccion = '';
             this.load(values);
@@ -1271,6 +1263,14 @@ and open the template in the editor.
                     };
                 },
                 methods: {
+                    sincronizaDestinatario: function (destinatarios) {
+                        var self = this;
+                        var destinatario = [];
+                        destinatarios.forEach(function (dest) {
+                            destinatario.push(dest.text);
+                        });
+                        self.derivacion.destinatario = destinatario.join('\n');
+                    },
                     nuevaExterna : function () {
                         this.nueva('externa');
                     },
@@ -1294,6 +1294,10 @@ and open the template in the editor.
                     save: function(callback) {
                         var self = this;
                         var o = this.hoja;
+                        if (!o.fecha.match(/\d\d\d\d-\d\d-\d\d/)) {
+                            alert("El formato de la fecha no es correcto");
+                            return false;
+                        }
                         $.ajax({
                             method: 'get',
                             url: 'save.php',
@@ -1312,10 +1316,19 @@ and open the template in the editor.
                             },
                             dataType: 'json',
                             success: function () {
+                            },
+                            error: function (response) {
+                                alert(JSON.stringify(response));
                             }
-                        }).done(function() {
-                            if (typeof callback==='function') {
-                                callback();
+                        }).done(function(response) {
+                            if (typeof response==='object' && response.error) {
+                                alert(response.error);
+                            } else if (typeof response==='object' && response.success) {
+                                if (typeof callback==='function') {
+                                    callback();
+                                }
+                            } else {
+                                alert(response);
                             }
                         });
                     },
@@ -1427,6 +1440,7 @@ and open the template in the editor.
                                 fecha: o.fecha,
                                 comentarios: o.comentarios,
                                 destinatario: o.destinatario,
+                                destinatarios: o.destinatarios,
                                 instruccion: o.instruccion,
                                 t: new Date().getTime()
                             },
@@ -1434,44 +1448,22 @@ and open the template in the editor.
                             success: function () {
                             }
                         }).done(function() {
-                            if (self.derivaciones.length==1) {
+                            if (self.derivaciones.length==0) {
+                                //Primera derivacion crea la tarea
                                 var usuarios=[];
+                                var destinatarios_ids = o.destinatarios.split(",");
                                 self.destinatarios.forEach(function (d) {
-                                    if ((d.attributes.nombres + ' ' + d.attributes.apellidos).toLowerCase()===o.destinatario.toLowerCase()) {
+                                    if (destinatarios_ids.find(function(ii){return ii==d.id;})) {
                                         usuarios.push(d);
                                     }
                                 });
-                                $.ajax({
-                                    method: 'POST',
-                                    url: '/api/UserAdministration/tareas',
-                                    data: JSON.stringify({
-                                        "data":{
-                                            "type":"UserAdministration.Tarea",
-                                            "attributes":{
-                                                "cod_tarea":"",
-                                                "nombre_tarea": self.hoja.nroDeControl + ' - ' + self.hoja.referencia,
-                                                "descripcion": o.comentarios,
-                                                //"fecha_ini":"",
-                                                //"fecha_fin":"",
-                                                "estado":"Pendiente",
-                                                "avance":0,
-                                                "prioridad":"Media"
-                                            },
-                                            "relationships":{
-                                                "creador":{
-                                                    "data":{"id":"2"}
-                                                },
-                                                "usuarios":{
-                                                    "data":usuarios
-                                                },
-                                                "revisor1":{"data":{"id":null}},
-                                                "aprobacion1":{"data":{"id":null}},
-                                                "revisor2":{"data":{"id":null}},
-                                                "aprobacion2":{"data":{"id":null}},
-                                                "adjuntos":{"data":[]},"avances":{"data":[]}
-                                            }
-                                        }
-                                    })
+                                self.createTask(o, usuarios, function (tarea) {
+                                    //console.log(tarea);
+                                    //@todo establecer el nro de derivacion
+                                });
+                            } else {
+                                self.findTask(self.hoja.nroDeControl, function (tareas) {
+                                    console.log(tareas);
                                 });
                             }
                             self.filtroDerivacion = '';
@@ -1483,9 +1475,63 @@ and open the template in the editor.
                                 id:'',
                                 fecha: '',
                                 destinatario: '',
+                                destinatarios: '',
                                 comentarios: '',
                                 instruccion: '',
                             });
+                        });
+                    },
+                    createTask: function (derivacion, usuarios, callback) {
+                        var self = this;
+                        $.ajax({
+                            method: 'POST',
+                            url: '/api/UserAdministration/tareas',
+                            data: JSON.stringify({
+                                "data":{
+                                    "type":"UserAdministration.Tarea",
+                                    "attributes":{
+                                        "cod_tarea":"",
+                                        "nro_de_control": self.hoja.nroDeControl,
+                                        "nombre_tarea": self.hoja.nroDeControl + ' - ' + self.hoja.referencia,
+                                        "descripcion": derivacion.comentarios,
+                                        "estado":"Pendiente",
+                                        "avance":0,
+                                        "prioridad":"Media"
+                                    },
+                                    "relationships":{
+                                        "creador":{
+                                            "data":{"id":"2"}
+                                        },
+                                        "usuarios":{
+                                            "data":usuarios
+                                        },
+                                        "revisor1":{"data":{"id":null}},
+                                        "aprobacion1":{"data":{"id":null}},
+                                        "revisor2":{"data":{"id":null}},
+                                        "aprobacion2":{"data":{"id":null}},
+                                        "adjuntos":{"data":[]},"avances":{"data":[]}
+                                    }
+                                }
+                            }),
+                            success: function (tarea) {
+                                callback(tarea);
+                            }
+                        });
+                    },
+                    findTask: function (nroControl, callback) {
+                        var self = this;
+                        $.ajax({
+                            method: 'GET',
+                            url: '/api/UserAdministration/tareas',
+                            data: {
+                                filter: [
+                                    'where,nro_de_control,'+nroControl,
+                                ],
+                                include: 'usuarios'
+                            },
+                            success: function (tarea) {
+                                callback(tarea);
+                            }
                         });
                     },
                     terminarHoja: function() {
@@ -1505,14 +1551,8 @@ and open the template in the editor.
                         var self = this;
                         this.save(function () {
                             self.filtrar();
+                            window.location.hash="#busqueda";
                         });
-                        window.location.hash="#busqueda";
-                        
-                        /*Vue.nextTick(function () {
-                            setTimeout(function (){
-                                window.print();
-                            }, 100);
-                        });*/
                     },
                     generarNota: function() {
                         var self = this;
@@ -1977,36 +2017,40 @@ and open the template in the editor.
         Vue.component('tags', {
             template: '#template-tags',
             props:[
-                "placeholder",
-                "model",
-                "property",
                 "domain",
+                "value",
                 "field",
             ],
             data: function () {
                 return {
+                    innerValue: '',
                     changes: 0,
                 };
             },
             watch: {
-                'model.id': function () {
-                    console.log("entro");
+                'value': function (value) {
+                    this.innerValue = '';
                     this.refresh();
                 }
             },
             computed: {
                 selected: function() {
+                    return this.getSelected(this.value);
+                }
+            },
+            methods: {
+                getSelected: function (value) {
                     var selected = [];
                     var self = this;
-                    var values = this.getValues();
+                    var values = this.getValues(value);
                     var options = {};
                     this.changes;
                     if(this.domain && typeof this.domain.forEach==='function') {
                         this.domain.forEach(function(option){
                             if(typeof option=='object') {
-                                options[option.id] = option.attributes[self.field.textField];
+                                options[option.id] = self.getOptionText(option);
                             } else {
-                                options[option] = option;
+                                options[option] = self.getOptionText(option);
                             }
                         });
                     }
@@ -2018,16 +2062,26 @@ and open the template in the editor.
                         });
                     });
                     return selected;
-                }
-            },
-            methods: {
+                },
+                getOptionText: function (option) {
+                    var self = this;
+                    if(typeof option=='object') {
+                        return typeof self.field.textField === 'function'
+                            ? self.field.textField(option.attributes)
+                            : option.attributes[self.field.textField];
+                    } else {
+                        return option;
+                    }
+                },
                 clickControl: function (event) {
                     if(event.target.nodeName==='DIV') {
                         $(event.target.previousElementSibling).click();
                     }
                 },
-                getValues: function() {
-                    var value = this.model[this.property];
+                getValues: function(value) {
+                    if (value===undefined) {
+                        value = this.value;
+                    }
                     if (!value) {
                         return [];
                     } else if (typeof value.split==='function') {
@@ -2044,27 +2098,27 @@ and open the template in the editor.
                 },
                 setValues: function(values){
                     var self = this;
-                    var value = this.model[this.property];
-                    if (!value) {
-                        this.model[this.property] = values.join(this.separator);
-                    } else if (typeof value.split==='function') {
-                        this.model[this.property] = values.join(this.separator);
-                    } else if (typeof value.forEach==='function') {
-                        this.model[this.property].length = 0;
-                        values.forEach(function(value) {
+                    var value;
+                    if (!this.value) {
+                        value = values.join(this.separator);
+                    } else if (typeof this.value.split==='function') {
+                        value = values.join(this.separator);
+                    } else if (typeof this.value.forEach==='function') {
+                        value = [];
+                        values.forEach(function(v) {
                             self.domain.forEach(function(option) {
-                                if (option.id==value) {
-                                    self.model[self.property].push(option);
+                                if (option.id==v) {
+                                    value.push(option);
                                 }
                             });
                         });
                     }
-                    this.$emit('change');
+                    this.$emit('input', value);
+                    this.$emit('change', self.getSelected(value));
                 },
                 refresh: function() {
                     var self = this;
                     var values = this.getValues();
-                    console.log(values);
                     this.options = {};
                     this.changes++;
                 },

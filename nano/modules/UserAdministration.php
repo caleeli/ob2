@@ -1079,6 +1079,11 @@
                         "type": "integer",
                         "default": "0"
                     }),
+                    new Module.Model.Field({
+                        "name": "nro_de_control",
+                        "label": "Nro de control",
+                        "type": "string"
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsToMany({
@@ -1186,12 +1191,47 @@
                         function () {
                             return $this->created_at->diff(\Carbon\Carbon::now())->days;
                         }
-                    ?>
+                    ?>,
                 },
                 "properties": {
                     "protected $appends": [
                         "dias_pasados"
                     ],
+                }
+            }),
+            /**
+             * Asignación
+             *
+             */
+            new Module.Model({
+                "name": "asignacion",
+                "title": "Asignación",
+                "tabla": "tarea_user",
+                "pluralTitle": "Asignaciones",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "tarea_id",
+                        "type": "int",
+                        "label": "Tarea"
+                    }),
+                    new Module.Model.Field({
+                        "name": "user_id",
+                        "label": "Usuario",
+                        "type": "int"
+                    }),
+                    new Module.Model.Field({
+                        "name": "derivacion",
+                        "label": "# de derivación",
+                        "type": "int"
+                    }),
+                ],
+                "associations": [
+                ],
+                "events": {
+                },
+                "methods": {
+                },
+                "properties": {
                 }
             }),
             /**

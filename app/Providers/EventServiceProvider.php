@@ -46,6 +46,9 @@ class EventServiceProvider extends ServiceProvider
         'App\\Events\\UserAdministration\\UaiSaving' => [
             'App\\Listeners\\UserAdministration\\UaiSavingListener',
         ],
+        'App\\Events\\UserAdministration\\AsignacionSaved' => [
+            'App\\Listeners\\UserAdministration\\AsignacionSavedListener',
+        ],
     ];
 
     /**
