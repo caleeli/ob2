@@ -495,7 +495,7 @@
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-5 project-user">
                                                                     <div v-for="u in (tareaI.relationships.usuarios && tareaI.relationships.usuarios instanceof Array ? tareaI.relationships.usuarios : [])">
-                                                                        <img class="avatar1em" v-bind:src="u.attributes.avatar ? u.attributes.avatar.url : '/images/slightly-smiling-face_1f642.png'">
+                                                                        <img class="avatar1em" v-bind:src="u.attributes.fotografia ? u.attributes.fotografia.url : '/images/slightly-smiling-face_1f642.png'">
                                                                         {{u.attributes.nombres+' '+u.attributes.apellidos}}
                                                                     </div>
                                                                 </div>
@@ -1131,7 +1131,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.108"></script>
+        <script src="../js/server.js?v0.109"></script>
         <script>
         $(document).ready(function () {
             var app;

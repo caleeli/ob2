@@ -15,7 +15,7 @@ class CreateAdmUsersTable extends Migration
             $table->string('password');
             $table->string('nombres')->nullable();
             $table->string('apellidos')->nullable();
-            $table->text('avatar')->nullable();
+            $table->text('fotografia')->nullable();
             $table->integer('numero_ci');
             $table->integer('tipo_doc_ci');
             $table->integer('ext_doc')->nullable();

@@ -43,9 +43,9 @@
                         "required": false
                     }),
                     new Module.Model.Field({
-                        "name": "avatar",
+                        "name": "fotografia",
                         "type": "array",
-                        "label": "Avatar",
+                        "label": "Fotografia",
                         "ui": "file",
                         "textField": function(data){return data?data.name:''},
                     }),
