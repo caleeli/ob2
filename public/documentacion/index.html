@@ -62,6 +62,11 @@
             .menu-icon {
                 height:1.5em;
             }
+            .avatar1em {
+                width: 1em;
+                border: 1px solid;
+                border-radius: 1em;
+            }
         </style>
     </head>
 
@@ -103,6 +108,7 @@
                             <a href="index.html"><i class="fa fa-th-large menu-icon"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li class="active"><a href="#estadosFinancierosAdmin">Estados financieros ADM</a></li>
+                                <li class="active"><a href="#usuariosAdmin">Administración de usuarios</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -347,6 +353,26 @@
                             </div>
                         </div>
                     </carouselitem>
+                    <carouselitem id="usuariosAdmin">
+                        <div class="row wrapper border-bottom page-heading">
+                            <div class="wrapper wrapper-content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox">
+                                            <div class="ibox-title">
+                                                <h5>Administración de usuarios</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <div style="overflow-y: scroll;">
+                                                    <abm v-bind:model="usuarios" v-bind:editable="true" buttons='close,save'></abm>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </carouselitem>
                     <!--
                         FIRMAS
                     -->
@@ -469,7 +495,7 @@
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-5 project-user">
                                                                     <div v-for="u in (tareaI.relationships.usuarios && tareaI.relationships.usuarios instanceof Array ? tareaI.relationships.usuarios : [])">
-                                                                        <i class="fa fa-user-o"></i>
+                                                                        <img class="avatar1em" v-bind:src="u.attributes.avatar ? u.attributes.avatar.url : '/images/slightly-smiling-face_1f642.png'">
                                                                         {{u.attributes.nombres+' '+u.attributes.apellidos}}
                                                                     </div>
                                                                 </div>
@@ -1135,6 +1161,7 @@
                         },
                         user: userInstance,
                         usertarea: new UserAdministration.User(),
+                        usuarios: new UserAdministration.User(),
                         users: [],
                         empresas: [],
                         empresa: new UserAdministration.Empresa(),

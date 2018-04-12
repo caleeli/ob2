@@ -62,6 +62,7 @@
                         "label": "Tipo Doc de CI",
                         "default": 0,
                         "list": false,
+                        "form": false,
                         "required": true
                     }),
                     new Module.Model.Field({
@@ -70,6 +71,7 @@
                         "label": "Extensión Doc",
                         "default": 0,
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -78,6 +80,7 @@
                         "label": "Estado Civil",
                         "default": "",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -85,6 +88,7 @@
                         "type": "date",
                         "label": "Fecha Nac",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -92,6 +96,7 @@
                         "type": "integer",
                         "label": "Codigo Dep",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -99,6 +104,7 @@
                         "type": "integer",
                         "label": "Codigo Ciudad",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -106,6 +112,7 @@
                         "type": "integer",
                         "label": "Tipo Persona",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -113,6 +120,7 @@
                         "type": "integer",
                         "label": "Cod Nac",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -120,6 +128,7 @@
                         "type": "integer",
                         "label": "Nivel de Educación",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -127,6 +136,7 @@
                         "type": "integer",
                         "label": "Codigo Cliente",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -134,6 +144,7 @@
                         "type": "integer",
                         "label": "Fecha de vencimiento Cliente",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -150,6 +161,7 @@
                         "type": "string",
                         "label": "Nro Dependientes",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -157,6 +169,7 @@
                         "type": "string",
                         "label": "Calificación",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                      new Module.Model.Field({
@@ -164,6 +177,7 @@
                         "type": "string",
                         "label": "Dirección",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                      new Module.Model.Field({
@@ -171,6 +185,7 @@
                         "type": "string",
                         "label": "Ubicación",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -178,6 +193,7 @@
                         "type": "date",
                         "label": "Fecha de Registro",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                      new Module.Model.Field({
@@ -185,6 +201,7 @@
                         "type": "date",
                         "label": "Hora de Registro",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -192,6 +209,7 @@
                         "type": "string",
                         "list": false,
                         "label": "Codigo Municipio",
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -199,6 +217,7 @@
                         "type": "string",
                         "label": "Codigo Provincia",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -206,6 +225,7 @@
                         "type": "string",
                         "default": "Codigo Zona",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -214,6 +234,7 @@
                         "label": "Entidad / Unidad",
                         "default": "",
                         "list": false,
+                        "form": false,
                         "required": false
                     }),
                     new Module.Model.Field({
@@ -222,6 +243,7 @@
                         "label": "remember_token",
                         "default": "",
                         "list": false,
+                        "form": false,
                         "required": false
                     })
                 ],
@@ -249,7 +271,9 @@
                 ],
                 "methods": {
                     "-setPasswordAttribute()": <?php function ($value) {
-                        $this->attributes['password'] = md5($value);
+                        if ($this->attributes['password']!=$value) {
+                            $this->attributes['password'] = md5($value);
+                        }
                     }
                     ?>,
                     "registrar(data)": <?php
