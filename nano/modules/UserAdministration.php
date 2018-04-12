@@ -1084,6 +1084,11 @@
                         "label": "Nro de control",
                         "type": "string"
                     }),
+                    new Module.Model.Field({
+                        "name": "gestion",
+                        "label": "Gestion de la hoja de ruta",
+                        "type": "string"
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsToMany({
@@ -1166,6 +1171,10 @@
                         "model": "avance",
                         "form": true
                     }),
+                    new Module.Model.HasMany({
+                        "name": "asignaciones",
+                        "model": "asignacion"
+                    }),
                 ],
                 "events": {
                     "saved": <?php
@@ -1192,10 +1201,41 @@
                             return $this->created_at->diff(\Carbon\Carbon::now())->days;
                         }
                     ?>,
+                    "-getAvanceAttribute()": <?php
+                        function () {
+                            $avancesPorPersona = [];
+                            $lastAsignation = $this->asignaciones()->max('nro_asignacion');
+                            $avances = $this->avances()->with('asignacion')->orderBy('id', 'asc')->get();
+                            foreach ($avances as $avance) {
+                                if ($avance->asignacion && $avance->asignacion->nro_asignacion==$lastAsignation) {
+                                    $avancesPorPersona[$avance->usuario_abm_id] = $avance->avance;
+                                }
+                            }
+                            $total = array_sum($avancesPorPersona);
+                            $count = $this->asignaciones()->where('nro_asignacion', $lastAsignation)->count();
+                            return $count> 0 ? $total / $count : 0;
+                        }
+                    ?>,
+                    "-getUltimaAsignacionAttribute()": <?php
+                        function () {
+                            $asignaciones = $this->asignaciones()->orderBy('id', 'desc')->get();
+                            $ultimos = [];
+                            $first = false;
+                            foreach($asignaciones as $asignacion)
+                            {
+                                $first = $first ?: $asignacion->nro_asignacion;
+                                if ($first==$asignacion->nro_asignacion) {
+                                    $ultimos[$asignacion->user_id]=$asignacion->id;
+                                }
+                            }
+                            return $ultimos;
+                        }
+                    ?>,
                 },
                 "properties": {
                     "protected $appends": [
-                        "dias_pasados"
+                        "dias_pasados",
+                        "ultima_asignacion",
                     ],
                 }
             }),
@@ -1206,7 +1246,7 @@
             new Module.Model({
                 "name": "asignacion",
                 "title": "Asignación",
-                "tabla": "tarea_user",
+                "table": "tarea_user",
                 "pluralTitle": "Asignaciones",
                 "fields": [
                     new Module.Model.Field({
@@ -1220,8 +1260,8 @@
                         "type": "int"
                     }),
                     new Module.Model.Field({
-                        "name": "derivacion",
-                        "label": "# de derivación",
+                        "name": "nro_asignacion",
+                        "label": "Nro asignación",
                         "type": "int"
                     }),
                 ],
@@ -1230,6 +1270,11 @@
                 "events": {
                 },
                 "methods": {
+                    "-avances()": <?php
+                    function () {
+                        return $this->hasMany('App\Models\UserAdministration\Avance');
+                    }
+                    ?>
                 },
                 "properties": {
                 }
@@ -1279,6 +1324,18 @@
                         "model": "tarea",
                         "nullable": true,
                     }),
+                    new Module.Model.BelongsTo({
+                        "name": "usuario",
+                        "model": "user",
+                        "references": "usuario_abm_id",
+                        "columns": "id",
+                        "form": true
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "asignacion",
+                        "model": "asignacion",
+                        "form": true
+                    }),
                 ],
                 "events": {
                     "saved": <?php
@@ -1286,13 +1343,26 @@
                         if (!$event->avance->tarea_id) {
                             return;
                         }
-                        if ($event->avance->avance==100) {
-                            $event->avance->tarea->estado = 'Completado';
-                        }
-                        $event->avance->tarea->avance = $event->avance->avance;
+                        $event->avance->tarea->avance = $event->avance->tarea->getAvanceAttribute();
                         $event->avance->tarea->save();
                     }
                     ?>
+                },
+                "methods": {
+                    "-getAvanceRelativoAttribute()": <?php
+                    function () {
+                        if (!$this->asignacion) return 0;
+                        $nro_asignacion = $this->asignacion->nro_asignacion;
+                        $count = $this->tarea->asignaciones()
+                            ->where('nro_asignacion', $nro_asignacion)->count();
+                        return $count> 0 ? $this->avance / $count : 0;
+                    }
+                    ?>
+                },
+                "properties": {
+                    "protected $appends": [
+                        "avance_relativo"
+                    ],
                 }
             }),
             /**

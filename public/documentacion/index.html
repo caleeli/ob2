@@ -495,7 +495,7 @@
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" v-if="esUsuarioGerente()" href="javascript:void(0)" class="btn btn-white btn-sm" v-on:click='cancelarTarea(tareaI)'><i class="fa fa-times"></i> Cancelar </a>
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" href="#asignarTarea" class="btn btn-white btn-sm" v-on:click='modificarTarea(tareaI)'><i class="fa fa-pencil"></i> Modificar </a>
                                                                     <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Ver </a>
-                                                                    <a v-if="tareaI.relationships.usuarios && perteneceA(tareaI.relationships.usuarios, user.id) && tareaI.attributes.avance<100" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
+                                                                    <a v-if="puedeRegistrarAvance(tareaI)" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a>
                                                                 </div>
                                                                 <div class="col-xs-12">
                                                                     <hr>
@@ -522,7 +522,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="m-b-md">
-                                                            <a v-if="tarea.usuario_id==user.id" href="#registrarAvance" class="btn btn-success btn-xs pull-right" v-on:click="crearAvance">Registrar avance</a>
+                                                            <a v-if="puedeRegistrarAvance(tarea)" href="#registrarAvance" class="btn btn-success btn-xs pull-right" v-on:click="crearAvance">Registrar avance</a>
                                                             <a href="#seguimientoDeTareas" class="btn btn-default btn-xs pull-right">Volver</a>
                                                             <h2>{{tarea.nombre_tarea}}</h2>
                                                         </div>
@@ -605,24 +605,35 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Avance</th>
+                                                                                    <th>Numero de asignacion</th>
                                                                                     <th>Fecha y Hora</th>
+                                                                                    <th>Usuario</th>
                                                                                     <th>Comentarios</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="avance in tarea.avances">
+                                                                                <tr v-for="(avance,i) in avances">
                                                                                     <td>
-                                                                                        <span class="label label-primary">{{avance.attributes.avance}}</span>
+                                                                                        <span class="label label-primary">{{Math.round(avance.attributes.avance_relativo)}}%</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{avance.relationships.asignacion ? avance.relationships.asignacion.attributes.nro_asignacion : ''}}
                                                                                     </td>
                                                                                     <td>
                                                                                         {{avance.attributes.created_at}}
                                                                                     </td>
                                                                                     <td>
-                                                                                        <p class="small">
+                                                                                        <p>
+                                                                                            {{avance.relationships.usuario 
+                                                                                                ? avance.relationships.usuario.attributes.nombres + ' ' + avance.relationships.usuario.attributes.apellidos
+                                                                                                : ''}}
+                                                                                        </p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>
                                                                                             {{avance.attributes.descripcion}}
                                                                                         </p>
                                                                                     </td>
-
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -751,24 +762,35 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Avance</th>
+                                                                                    <th>Numero de asignacion</th>
                                                                                     <th>Fecha y Hora</th>
+                                                                                    <th>Usuario</th>
                                                                                     <th>Comentarios</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                <tr v-for="avance in tarea.avances">
+                                                                                <tr v-for="(avance,i) in avances">
                                                                                     <td>
-                                                                                        <span class="label label-primary">{{avance.attributes.avance}}</span>
+                                                                                        <span class="label label-primary">{{Math.round(avance.attributes.avance_relativo)}}%</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{avance.relationships.asignacion ? avance.relationships.asignacion.attributes.nro_asignacion : ''}}
                                                                                     </td>
                                                                                     <td>
                                                                                         {{avance.attributes.created_at}}
                                                                                     </td>
                                                                                     <td>
-                                                                                        <p class="small">
+                                                                                        <p>
+                                                                                            {{avance.relationships.usuario 
+                                                                                                ? avance.relationships.usuario.attributes.nombres + ' ' + avance.relationships.usuario.attributes.apellidos
+                                                                                                : ''}}
+                                                                                        </p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>
                                                                                             {{avance.attributes.descripcion}}
                                                                                         </p>
                                                                                     </td>
-
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
@@ -876,31 +898,42 @@
                                                                 </div>
                                                                 <div class="tab-pane" id="tab-2b">
 
-                                                                    <table class="table table-striped">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Avance</th>
-                                                                                <th>Fecha y Hora</th>
-                                                                                <th>Comentarios</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr v-for="avance in tarea.avances">
-                                                                                <td>
-                                                                                    <span class="label label-primary">{{avance.attributes.avance}}</span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    {{avance.attributes.created_at}}
-                                                                                </td>
-                                                                                <td>
-                                                                                    <p class="small">
-                                                                                        {{avance.attributes.descripcion}}
-                                                                                    </p>
-                                                                                </td>
-
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
+                                                                        <table class="table table-striped">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Avance</th>
+                                                                                    <th>Numero de asignacion</th>
+                                                                                    <th>Fecha y Hora</th>
+                                                                                    <th>Usuario</th>
+                                                                                    <th>Comentarios</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="(avance,i) in avances">
+                                                                                    <td>
+                                                                                        <span class="label label-primary">{{Math.round(avance.attributes.avance_relativo)}}%</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{avance.relationships.asignacion ? avance.relationships.asignacion.attributes.nro_asignacion : ''}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{avance.attributes.created_at}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>
+                                                                                            {{avance.relationships.usuario 
+                                                                                                ? avance.relationships.usuario.attributes.nombres + ' ' + avance.relationships.usuario.attributes.apellidos
+                                                                                                : ''}}
+                                                                                        </p>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <p>
+                                                                                            {{avance.attributes.descripcion}}
+                                                                                        </p>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
 
                                                                 </div>
                                                             </div>
@@ -1112,6 +1145,7 @@
                         uai: new UserAdministration.Uai(function(){return "/api/UserAdministration/users/"+localStorage.user_id+"/uais";}),
                         tarea: new UserAdministration.Tarea(),
                         avance: new UserAdministration.Avance(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/avances") : "/api/UserAdministration/avances"}),
+                        avances: [],
                         estados_financieros: [],
                         Adjunto: new UserAdministration.Adjunto(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/adjuntos") : "/api/UserAdministration/adjuntos"}),
                         PathItem: [],
@@ -1157,6 +1191,13 @@
                     },
                 },
                 methods: {
+                    puedeRegistrarAvance: function (tareaI) {
+                        var usuarios = tareaI.relationships ? tareaI.relationships.usuarios : tareaI.usuarios;
+                        var avance = tareaI.attributes ? tareaI.attributes.avance : tareaI.avance;
+                        return usuarios
+                            && this.perteneceA(usuarios, localStorage.user_id)
+                            && avance<100;
+                    },
                     perteneceA: function (usuarios, userId) {
                         return usuarios.find(function(item){return item.id==userId})!==undefined;
                     },
@@ -1228,13 +1269,29 @@
                             }
                         });
                     },
+                    cargarTarea: function (id, callback) {
+                        var self = this;
+                        self.tarea.$load(id, function () {
+                            if (id) {
+                                self.avance.$select(function (response) {
+                                    self.avances.splice(0);
+                                    response.data.forEach(function (a) {
+                                        self.avances.push(a);
+                                    });
+                                    if (typeof callback==='function') {
+                                        callback(self.tarea);
+                                    }
+                                }, {
+                                    'sort': 'id'
+                                });
+                            }
+                        });
+                    },
                     seleccionaTarea: function (tarea) {
-                        this.tarea.$load(tarea.id);
+                        this.cargarTarea(tarea.id);
                     },
                     modificarTarea: function (tarea) {
-                        var self = this;
-                        this.tarea.$load(tarea.id, function () {
-                        });
+                        this.cargarTarea(tarea.id);
                     },
                     cancelarTarea: function (tarea) {
                         var self = this;
@@ -1244,7 +1301,7 @@
                             + tarea.attributes.nombre_tarea
                         );
                         if (confirmacion) {
-                            self.tarea.$load(tarea.id, function () {
+                            self.cargarTarea(tarea.id, function () {
                                 self.tarea.$delete('', function () {
                                     setTimeout(function() {self.listarTareas();}, 50);
                                 });
@@ -1252,7 +1309,7 @@
                         }
                     },
                     crearTarea: function () {
-                        this.tarea.$load(0);
+                        this.cargarTarea(0);
                     },
                     guardarTarea: function (event, callback) {
                         var self = this;
@@ -1266,8 +1323,30 @@
                     },
                     crearAvance: function () {
                         var self = this;
+                        var ultimaAsignacion = self.tarea.ultima_asignacion[localStorage.user_id];
                         self.avance.$load(0, function () {
-                            self.avance.avance = self.tarea.avance;
+                            var max=0;
+                            self.avance.avance = 0;
+                            self.avance.asignacion = {id: ultimaAsignacion};
+                            self.avance.usuario = {id: localStorage.user_id};
+                            //console.log(self.tarea.ultima_asignacion, ultimaAsignacion);
+                            self.tarea.avances.forEach(function (avance) {
+                                /*console.log({'usuario_abm_id': avance.attributes.usuario_abm_id,
+                                    id: avance.id,
+                                    asignacion_id: avance.attributes.asignacion_id,
+                                    avance: avance.attributes.avance,
+                                    max: max,
+                                    a: avance.attributes.usuario_abm_id == localStorage.user_id,
+                                    b: avance.id>max,
+                                    c: avance.attributes.asignacion_id==ultimaAsignacion,
+                                });*/
+                                if (avance.attributes.usuario_abm_id == localStorage.user_id) {
+                                    if (avance.id>max && avance.attributes.asignacion_id==ultimaAsignacion) {
+                                        self.avance.avance = avance.attributes.avance;
+                                        max = avance.id;
+                                    }
+                                }
+                            });
                         });
                     },
                     guardarAvance: function () {
@@ -1275,22 +1354,20 @@
                         this.avance.tarea_id = this.tarea.id;
                         this.avance.$save('', function() {
                             self.listarTareas();
-                            self.tarea.$load(self.tarea.id);
+                            self.cargarTarea(self.tarea.id);
                         });
                     },
                     registrarAvanceTarea: function (tarea) {
                         var self = this;
-                        self.tarea.$load(tarea.id, function () {
-                            self.avance.$load(0, function () {
-                                self.avance.avance = self.tarea.avance;
-                            });
+                        self.cargarTarea(tarea.id, function () {
+                            self.crearAvance();
                         });
                     },
                     adjuntarArchivo: function () {
                         var self = this;
                         this.Adjunto.$save('', function () {
                             self.Adjunto.$load(0);
-                            self.tarea.$load(self.tarea.id);
+                            self.cargarTarea(self.tarea.id);
                         });
                     },
                     adjuntarArchivoNuevaTarea: function () {
@@ -1298,7 +1375,7 @@
                         self.guardarTarea(null, function () {
                             self.Adjunto.$save('', function () {
                                 self.Adjunto.$load(0);
-                                self.tarea.$load(self.tarea.id);
+                                self.cargarTarea(self.tarea.id);
                             });
                         });
                     },

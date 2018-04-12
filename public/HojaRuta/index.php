@@ -1448,24 +1448,24 @@
                             success: function () {
                             }
                         }).done(function() {
-                            if (self.derivaciones.length==0) {
-                                //Primera derivacion crea la tarea
-                                var usuarios=[];
-                                var destinatarios_ids = o.destinatarios.split(",");
-                                self.destinatarios.forEach(function (d) {
-                                    if (destinatarios_ids.find(function(ii){return ii==d.id;})) {
-                                        usuarios.push(d);
-                                    }
-                                });
-                                self.createTask(o, usuarios, function (tarea) {
-                                    //console.log(tarea);
-                                    //@todo establecer el nro de derivacion
-                                });
-                            } else {
-                                self.findTask(self.hoja.nroDeControl, function (tareas) {
-                                    console.log(tareas);
-                                });
-                            }
+                            var gestion = String(new Date().getFullYear());
+                            var nroDerivacion = self.derivaciones.length + 1;
+                            var usuarios=[];
+                            var destinatarios_ids = o.destinatarios.split(",");
+                            self.destinatarios.forEach(function (d) {
+                                if (destinatarios_ids.find(function(ii){return ii==d.id;})) {
+                                    usuarios.push(d);
+                                }
+                            });
+                            self.findTask(
+                                self.hoja.nroDeControl, gestion,
+                                function (tarea) {
+                                    self.crearAsignacion(tarea, usuarios, nroDerivacion, function () {});
+                                },
+                                function () {
+                                    self.createTask(o, gestion, usuarios, nroDerivacion, function () {});
+                                }
+                            );
                             self.filtroDerivacion = '';
                             self.hoja.selectDerivations(self.derivaciones, self.filtroDerivacion);
                             if (typeof callback==='function') {
@@ -1481,8 +1481,18 @@
                             });
                         });
                     },
-                    createTask: function (derivacion, usuarios, callback) {
+                    createTask: function (derivacion, gestion, nro_asignacion, usuarios, callback) {
                         var self = this;
+                        var asignaciones = [];
+                        usuarios.forEach(function(user){
+                            asignaciones.push({
+                                "type": "UserAdministration.Asignacion",
+                                "attributes": {
+                                    "nro_asignacion": nro_asignacion,
+                                    "user_id": user.id,
+                                }
+                            });
+                        });
                         $.ajax({
                             method: 'POST',
                             url: '/api/UserAdministration/tareas',
@@ -1492,6 +1502,7 @@
                                     "attributes":{
                                         "cod_tarea":"",
                                         "nro_de_control": self.hoja.nroDeControl,
+                                        "gestion": gestion, //gestion actual
                                         "nombre_tarea": self.hoja.nroDeControl + ' - ' + self.hoja.referencia,
                                         "descripcion": derivacion.comentarios,
                                         "estado":"Pendiente",
@@ -1502,8 +1513,8 @@
                                         "creador":{
                                             "data":{"id":"2"}
                                         },
-                                        "usuarios":{
-                                            "data":usuarios
+                                        "asignaciones":{
+                                            "data":asignaciones
                                         },
                                         "revisor1":{"data":{"id":null}},
                                         "aprobacion1":{"data":{"id":null}},
@@ -1518,7 +1529,7 @@
                             }
                         });
                     },
-                    findTask: function (nroControl, callback) {
+                    findTask: function (nroControl, gestion, exists, doesntExists) {
                         var self = this;
                         $.ajax({
                             method: 'GET',
@@ -1526,11 +1537,39 @@
                             data: {
                                 filter: [
                                     'where,nro_de_control,'+nroControl,
+                                    'where,gestion,'+gestion,
                                 ],
                                 include: 'usuarios'
                             },
-                            success: function (tarea) {
-                                callback(tarea);
+                            success: function (response) {
+                                if (response.data.length>0) {
+                                    exists(response.data[0]);
+                                } else {
+                                    doesntExists();
+                                }
+                            }
+                        });
+                    },
+                    crearAsignacion: function (tarea, usuarios, nro_asignacion, callback) {
+                        var asignaciones = [];
+                        usuarios.forEach(function(user){
+                            asignaciones.push({
+                                "type": "UserAdministration.Asignacion",
+                                "attributes": {
+                                    "nro_asignacion": nro_asignacion,
+                                    "user_id": user.id,
+                                    "tarea_id": tarea.id,
+                                }
+                            });
+                        });
+                        $.ajax({
+                            method: 'POST',
+                            url: '/api/UserAdministration/tareas/' + tarea.id + '/asignaciones',
+                            data: JSON.stringify({
+                                data: asignaciones
+                            }),
+                            success: function (response) {
+                                callback(response);
                             }
                         });
                     },

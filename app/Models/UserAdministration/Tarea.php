@@ -21,11 +21,12 @@ class Tarea extends Model
       7 => 'prioridad',
       8 => 'dias_otorgados',
       9 => 'nro_de_control',
-      10 => 'creador_id',
-      11 => 'revisor1_id',
-      12 => 'aprobacion1_id',
-      13 => 'revisor2_id',
-      14 => 'aprobacion2_id',
+      10 => 'gestion',
+      11 => 'creador_id',
+      12 => 'revisor1_id',
+      13 => 'aprobacion1_id',
+      14 => 'revisor2_id',
+      15 => 'aprobacion2_id',
     );
     protected $attributes = array(
       'cod_tarea' => '',
@@ -38,6 +39,7 @@ class Tarea extends Model
       'prioridad' => 'Media',
       'dias_otorgados' => '0',
       'nro_de_control' => null,
+      'gestion' => null,
     );
     protected $casts = array(
       'cod_tarea' => 'string',
@@ -50,12 +52,14 @@ class Tarea extends Model
       'prioridad' => 'string',
       'dias_otorgados' => 'integer',
       'nro_de_control' => 'string',
+      'gestion' => 'string',
     );
     protected $events = array(
       'saved' => 'App\\Events\\UserAdministration\\TareaSaved',
     );
     protected $appends = array(
       0 => 'dias_pasados',
+      1 => 'ultima_asignacion',
     );
     public function usuarios()
     {
@@ -105,6 +109,12 @@ class Tarea extends Model
     }
 
 
+    public function asignaciones()
+    {
+        return $this->hasMany('App\Models\UserAdministration\Asignacion');
+    }
+
+
     public function scopeWhereUserAssigned($query, $userId)
     {
         return $query->whereIn('id', function ($query) use ($userId) {
@@ -117,5 +127,34 @@ class Tarea extends Model
     public function getDiasPasadosAttribute()
     {
         return $this->created_at->diff(\Carbon\Carbon::now())->days;
+    }
+
+    public function getAvanceAttribute()
+    {
+        $avancesPorPersona = [];
+        $lastAsignation = $this->asignaciones()->max('nro_asignacion');
+        $avances = $this->avances()->with('asignacion')->orderBy('id', 'asc')->get();
+        foreach ($avances as $avance) {
+            if ($avance->asignacion && $avance->asignacion->nro_asignacion==$lastAsignation) {
+                $avancesPorPersona[$avance->usuario_abm_id] = $avance->avance;
+            }
+        }
+        $total = array_sum($avancesPorPersona);
+        $count = $this->asignaciones()->where('nro_asignacion', $lastAsignation)->count();
+        return $count> 0 ? $total / $count : 0;
+    }
+
+    public function getUltimaAsignacionAttribute()
+    {
+        $asignaciones = $this->asignaciones()->orderBy('id', 'desc')->get();
+        $ultimos = [];
+        $first = false;
+        foreach ($asignaciones as $asignacion) {
+            $first = $first ?: $asignacion->nro_asignacion;
+            if ($first==$asignacion->nro_asignacion) {
+                $ultimos[$asignacion->user_id]=$asignacion->id;
+            }
+        }
+        return $ultimos;
     }
 }
