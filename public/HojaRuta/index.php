@@ -1481,7 +1481,7 @@
                             });
                         });
                     },
-                    createTask: function (derivacion, gestion, nro_asignacion, usuarios, callback) {
+                    createTask: function (derivacion, gestion, usuarios, nro_asignacion, callback) {
                         var self = this;
                         var asignaciones = [];
                         usuarios.forEach(function(user){
