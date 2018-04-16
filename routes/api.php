@@ -38,6 +38,9 @@ Route::post('/uploaddocument/{disk}', array('as' => 'api', 'uses' => 'UploadFile
 Route::get('/ping', array('as' => 'api', 'uses' => 'PingController@ping'));
 Route::get('/empty', array('as' => 'api', 'uses' => 'PingController@data'));
 
+Route::get('/folder/{storage}', array('as' => 'api', 'uses' => 'FolderController@index'));
+Route::delete('/folder/{storage}/{file}', array('as' => 'api', 'uses' => 'FolderController@remove'));
+
 Route::get('/pivot/{table}/{aggregator}/{measure}/{rows}/{cols}/{variables}',
            array('as' => 'api', 'uses' => 'PivotController@index'));
 

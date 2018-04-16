@@ -15,6 +15,7 @@ Vue.component('imageviewer', require('./components/ImageViewer.vue'));
 Vue.component('newtable', require('./components/NewTable.vue'));
 Vue.component('basic-chart', require('./components/BaseChart.vue'));
 Vue.component('file-viewer', require('./components/FileViewer.vue'));
+Vue.component('folder-viewer', require('./components/FolderViewer.vue'));
 Vue.component('htmleditor', require('./components/HtmlEditor.vue'));
 Vue.component('htmldynamic', require('./components/HtmlDynamic.vue'));
 Vue.component('tinymce', require('./components/Tinymce.vue'));

@@ -60,6 +60,12 @@ return [
             'urlBase' => 'documentacion/empresas/',
         ],
 
+        'normativa' => [
+            'driver' => 'local',
+            'root' => public_path('documentacion/normativa'),
+            'urlBase' => 'documentacion/normativa/',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
