@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use stdClass;
-use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
+use Illuminate\Http\UploadedFile;
 
 class UploadFileController extends Controller
 {
@@ -22,12 +23,12 @@ class UploadFileController extends Controller
         return response()->json($response);
     }
 
-    private function packResponse($file)
+    private function packResponse(UploadedFile $file)
     {
         $json = new stdClass();
         $json->name = $file->getClientOriginalName();
         $json->mime = $file->getClientMimeType();
-        $json->path = $file->storePublicly('', 'public');
+        $json->path = $file->storePubliclyAs('', $this->getPublicName($file), 'public');
         $json->url = asset('storage/' . $json->path);
         return $json;
     }
@@ -54,5 +55,14 @@ class UploadFileController extends Controller
         $config = config('filesystems.disks')[$disk];
         $json->url = isset($config['urlBase']) ? asset($config['urlBase'] . $json->name) : '';
         return $json;
+    }
+
+    private function getPublicName(UploadedFile $file)
+    {
+        if (!$file->guessExtension()) {
+            return uniqid('', true) . '.' . $file->clientExtension();
+        } else {
+            return $file->hashName();
+        }
     }
 }
