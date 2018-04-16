@@ -1,11 +1,11 @@
 <template>
     <div class="row">
-        <div class="col-sm-5 col-md-3" v-if="canupload">
+        <div class="col-sm-5 col-md-3">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="file-manager">
-                        <span class="btn btn-primary btn-block" style="position: relative;">Subir archivo(s) <img src='/images/ajax-loader.gif' v-show='loading'><upload v-model="upload" v-bind:target="target" v-bind:multiplefile="true" /></span>
-                        <div class="hr-line-dashed"></div>
+                        <span v-if="canupload" class="btn btn-primary btn-block" style="position: relative;">Subir archivo(s) <img src='/images/ajax-loader.gif' v-show='loading'><upload v-model="upload" v-bind:target="target" v-bind:multiplefile="true" /></span>
+                        <div v-if="canupload" class="hr-line-dashed"></div>
                         <slot></slot>
                     </div>
                 </div>
