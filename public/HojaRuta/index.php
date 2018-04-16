@@ -1464,7 +1464,7 @@
                                 },
                                 function () {
                                     self.createTask(o, gestion, usuarios, nroDerivacion, function (tarea) {
-                                        self.crearAsignacion(tarea, usuarios, nroDerivacion, function () {});
+                                        self.crearAsignacion(tarea.data, usuarios, nroDerivacion, function () {});
                                     });
                                 }
                             );
