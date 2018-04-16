@@ -542,7 +542,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-5 project-user">
-                                                                    <div v-for="u in (tareaI.relationships.usuarios && tareaI.relationships.usuarios instanceof Array ? tareaI.relationships.usuarios : [])">
+                                                                    <div v-for="u in usuariosAsignados(tareaI.relationships.usuarios)">
                                                                         <img class="avatar1em" v-bind:src="u.attributes.fotografia ? u.attributes.fotografia.url : '/images/slightly-smiling-face_1f642.png'">
                                                                         {{u.attributes.nombres+' '+u.attributes.apellidos}}
                                                                     </div>
@@ -616,7 +616,7 @@
                                                     <div class="col-lg-5">
                                                         <dl class="dl-horizontal">
                                                             <dt>Creado por:</dt> <dd>{{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}</dd>
-                                                            <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? tarea.usuarios.map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
+                                                            <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? usuariosAsignados(tarea.usuarios).map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
                                                         </dl>
                                                     </div>
                                                     <div class="col-lg-7" id="cluster_info">
@@ -916,7 +916,7 @@
                                                 <div class="col-lg-5">
                                                     <dl class="dl-horizontal">
                                                         <dt>Creado por:</dt> <dd>{{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}</dd>
-                                                        <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? tarea.usuarios.map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
+                                                        <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? usuariosAsignados(tarea.usuarios).map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
                                                     </dl>
                                                 </div>
                                                 <div class="col-lg-7" id="cluster_info">
@@ -1272,6 +1272,16 @@
                     },
                 },
                 methods: {
+                    usuariosAsignados: function (tareaUsuarios) {
+                        var usuarios = tareaUsuarios && tareaUsuarios instanceof Array ? tareaUsuarios : [];
+                        var asignados = [];
+                        usuarios.forEach(function (usuario) {
+                            if(!asignados.find(function(u){return u.id===usuario.id;})) {
+                                asignados.push(usuario);
+                            }
+                        });
+                        return asignados;
+                    },
                     puedeRegistrarAvance: function (tareaI) {
                         var usuarios = tareaI.relationships ? tareaI.relationships.usuarios : tareaI.usuarios;
                         var avance = tareaI.attributes ? tareaI.attributes.avance : tareaI.avance;
