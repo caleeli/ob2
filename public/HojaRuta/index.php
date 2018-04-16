@@ -1463,7 +1463,9 @@
                                     self.crearAsignacion(tarea, usuarios, nroDerivacion, function () {});
                                 },
                                 function () {
-                                    self.createTask(o, gestion, usuarios, nroDerivacion, function () {});
+                                    self.createTask(o, gestion, usuarios, nroDerivacion, function (tarea) {
+                                        self.crearAsignacion(tarea, usuarios, nroDerivacion, function () {});
+                                    });
                                 }
                             );
                             self.filtroDerivacion = '';
@@ -1513,9 +1515,9 @@
                                         "creador":{
                                             "data":{"id":"2"}
                                         },
-                                        "asignaciones":{
+                                        /*"asignaciones":{
                                             "data":asignaciones
-                                        },
+                                        },*/
                                         "revisor1":{"data":{"id":null}},
                                         "aprobacion1":{"data":{"id":null}},
                                         "revisor2":{"data":{"id":null}},
