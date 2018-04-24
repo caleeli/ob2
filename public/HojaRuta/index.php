@@ -157,8 +157,33 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Anexo hojas</label>
-                                <div class="col-lg-10">
-                                    <input required type="text" v-model="hoja.anexoHojas" class="form-control" placeholder="">
+                                <div class="col-sm-1">
+                                    <input type="text" v-model="hoja.anexoHojas_fjs" class="form-control" placeholder="">
+                                    fjs
+                                </div>
+                                <div class="col-sm-1">
+                                    <input type="text" v-model="hoja.anexoHojas_arch" class="form-control" placeholder="">
+                                    arch
+                                </div>
+                                <div class="col-sm-1">
+                                    <input type="text" v-model="hoja.anexoHojas_ani" class="form-control" placeholder="">
+                                    anillados
+                                </div>
+                                <div class="col-sm-1">
+                                    <input type="text" v-model="hoja.anexoHojas_leg" class="form-control" placeholder="">
+                                    legajo
+                                </div>
+                                <div class="col-sm-1">
+                                    <input type="text" v-model="hoja.anexoHojas_eje" class="form-control" placeholder="">
+                                    ejemplar
+                                </div>
+                                <div class="col-sm-1">
+                                    <input type="text" v-model="hoja.anexoHojas_eng" class="form-control" placeholder="">
+                                    engrapdo
+                                </div>
+                                <div class="col-sm-1">
+                                    <input type="text" v-model="hoja.anexoHojas_cd" class="form-control" placeholder="">
+                                    cd
                                 </div>
                             </div>
                             <div class="form-group">
@@ -528,7 +553,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="button" v-on:click="generar" class="btn btn-primary">Guardar cambios</button>
+                                    <button type="button" v-on:click="actualizarHR" class="btn btn-primary">Guardar cambios</button>
                                 </div>
                             </div>
                             <div v-if="!concluido()">
@@ -1263,6 +1288,13 @@
                     };
                 },
                 methods: {
+                    hoja_fjs: function (anexo) {var ma =anexo.match(/(\d+)\s*fjs/);return ma ? ma[1] : ''},
+                    hoja_arch: function (anexo) {var ma =anexo.match(/(\d+)\s*arch/);return ma ? ma[1] : ''},
+                    hoja_ani: function (anexo) {var ma =anexo.match(/(\d+)\s*ani/);return ma ? ma[1] : ''},
+                    hoja_leg: function (anexo) {var ma =anexo.match(/(\d+)\s*leg/);return ma ? ma[1] : ''},
+                    hoja_eje: function (anexo) {var ma =anexo.match(/(\d+)\s*eje/);return ma ? ma[1] : ''},
+                    hoja_eng: function (anexo) {var ma =anexo.match(/(\d+)\s*eng/);return ma ? ma[1] : ''},
+                    hoja_cd: function (anexo) {var ma =anexo.match(/(\d+)\s*cd/);return ma ? ma[1] : ''},
                     sincronizaDestinatario: function (destinatarios) {
                         var self = this;
                         var destinatario = [];
@@ -1289,6 +1321,13 @@
                         this.hoja.conclusion = '';
                         this.hoja.tipo = !tipo ? 'interna' : tipo;
                         this.hoja.numero = '';
+                        this.hoja.anexoHojas_fjs = '';
+                        this.hoja.anexoHojas_arch = '';
+                        this.hoja.anexoHojas_ani = '';
+                        this.hoja.anexoHojas_leg = '';
+                        this.hoja.anexoHojas_eje = '';
+                        this.hoja.anexoHojas_eng = '';
+                        this.hoja.anexoHojas_cd = '';
                         this.reservarNumero();
                     },
                     save: function(callback) {
@@ -1590,6 +1629,23 @@
                     },
                     generar: function() {
                         var self = this;
+                        var o = self.hoja;
+                        var anexoHojas = [];
+                        if (o.anexoHojas_fjs) anexoHojas.push(o.anexoHojas_fjs+' fjs');
+                        if (o.anexoHojas_arch) anexoHojas.push(o.anexoHojas_arch+' arch');
+                        if (o.anexoHojas_ani) anexoHojas.push(o.anexoHojas_ani+' anillados');
+                        if (o.anexoHojas_leg) anexoHojas.push(o.anexoHojas_leg+' legajo');
+                        if (o.anexoHojas_eje) anexoHojas.push(o.anexoHojas_eje+' ejemplar');
+                        if (o.anexoHojas_eng) anexoHojas.push(o.anexoHojas_eng+' engrapad');
+                        if (o.anexoHojas_cd) anexoHojas.push(o.anexoHojas_cd+' cd');
+                        if (anexoHojas.length) o.anexoHojas = anexoHojas.join(', ');
+                        this.save(function () {
+                            self.filtrar();
+                            window.location.hash="#busqueda";
+                        });
+                    },
+                    actualizarHR: function() {
+                        var self = this;
                         this.save(function () {
                             self.filtrar();
                             window.location.hash="#busqueda";
@@ -1859,7 +1915,16 @@
                         return (new Date(fecha)).getYear()+1900;
                     },
                     abrir: function (hoja) {
-                        this.hoja.load(hoja);
+                        var self = this;
+                        this.hoja.load(hoja, function () {
+                            self.hoja.anexoHojas_fjs = self.hoja_fjs(self.hoja.anexoHojas);
+                            self.hoja.anexoHojas_arch = self.hoja_arch(self.hoja.anexoHojas);
+                            self.hoja.anexoHojas_ani = self.hoja_ani(self.hoja.anexoHojas);
+                            self.hoja.anexoHojas_leg = self.hoja_leg(self.hoja.anexoHojas);
+                            self.hoja.anexoHojas_eje = self.hoja_eje(self.hoja.anexoHojas);
+                            self.hoja.anexoHojas_eng = self.hoja_eng(self.hoja.anexoHojas);
+                            self.hoja.anexoHojas_cd = self.hoja_cd(self.hoja.anexoHojas);
+                        });
                         this.derivacion.load({
                             id:'',
                             fecha: '',

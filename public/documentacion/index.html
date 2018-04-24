@@ -375,11 +375,8 @@
                                                         v-bind:candelete='esAdmin'
                                                         v-bind:filter="
                                                                 (biblioteca_busqueda ? '%' + biblioteca_busqueda + '%' : '')
-                                                                + (biblioteca_gestion ? '_' + biblioteca_gestion : '')
                                                                 + ('.%')
                                                         ">
-                                                        <h5>Criterio de busqueda</h5>
-                                                        <input v-model="biblioteca_busqueda" class="form-control">
                                                         <h5>Normativa</h5>
                                                         <select v-model="biblioteca_normativa" class="form-control">
                                                             <option>Todos</option>
@@ -390,8 +387,8 @@
                                                             <option>Creación de Empresas Públicas</option>
                                                             <option>Interno SCEP</option>
                                                         </select>
-                                                        <h5>Gestión</h5>
-                                                        <input v-model="biblioteca_gestion" class="form-control">
+                                                        <h5>Criterio de busqueda</h5>
+                                                        <input v-model="biblioteca_busqueda" class="form-control">
                                                     </folder-viewer>
                                                 </div>
                                             </div>

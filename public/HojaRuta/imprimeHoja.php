@@ -8,6 +8,15 @@ $pos = empty($_REQUEST['pos']) ? 1 : $_REQUEST['pos'];
 $stmt = $connection->prepare('select * from hoja_ruta where id = ?');
 $stmt->execute([$id]);
 $hoja = $stmt->fetch();
+var_dump($hoja['anexo_hojas']);
+$hoja['anexoHojas_fjs'] = preg_match('/(\d+)\s*fjs/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_arch'] = preg_match('/(\d+)\s*arc/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_ani'] = preg_match('/(\d+)\s*ani/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_leg'] = preg_match('/(\d+)\s*leg/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_eje'] = preg_match('/(\d+)\s*eje/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_eng'] = preg_match('/(\d+)\s*eng/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_cd'] = preg_match('/(\d+)\s*cd/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+
 ?>
 <html>
     <head>
@@ -73,7 +82,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_fjs'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -86,7 +95,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_arch'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -99,7 +108,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_ani'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -112,7 +121,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_leg'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -125,7 +134,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_eje'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -138,7 +147,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_eng'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -151,7 +160,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_cd'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -260,7 +269,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_fjs'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -273,7 +282,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_arch'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -286,7 +295,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_ani'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -299,7 +308,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_leg'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -312,7 +321,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_eje'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -325,7 +334,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_eng'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -338,7 +347,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_cd'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -447,7 +456,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_fjs'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -460,7 +469,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_arch'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -473,7 +482,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_ani'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -486,7 +495,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_leg'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -499,7 +508,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_eje'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -512,7 +521,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_eng'] ?>
                                             </span>
                                         </p>
                                     </td>
@@ -525,7 +534,7 @@ $hoja = $stmt->fetch();
                                     </td>
                                     <td class="c3" colspan="1" rowspan="1">
                                         <p class="c7">
-                                            <span class="c5">
+                                            <span class="c5"><?= $hoja['anexoHojas_cd'] ?>
                                             </span>
                                         </p>
                                     </td>
