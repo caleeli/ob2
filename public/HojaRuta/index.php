@@ -1288,13 +1288,13 @@
                     };
                 },
                 methods: {
-                    hoja_fjs: function (anexo) {var ma =anexo.match(/(\d+)\s*fjs/);return ma ? ma[1] : ''},
-                    hoja_arch: function (anexo) {var ma =anexo.match(/(\d+)\s*arch/);return ma ? ma[1] : ''},
-                    hoja_ani: function (anexo) {var ma =anexo.match(/(\d+)\s*ani/);return ma ? ma[1] : ''},
-                    hoja_leg: function (anexo) {var ma =anexo.match(/(\d+)\s*leg/);return ma ? ma[1] : ''},
-                    hoja_eje: function (anexo) {var ma =anexo.match(/(\d+)\s*eje/);return ma ? ma[1] : ''},
-                    hoja_eng: function (anexo) {var ma =anexo.match(/(\d+)\s*eng/);return ma ? ma[1] : ''},
-                    hoja_cd: function (anexo) {var ma =anexo.match(/(\d+)\s*cd/);return ma ? ma[1] : ''},
+                    hoja_fjs: function (anexo) {var ma =anexo.match(/(\d+)\s*fjs/i);return ma ? ma[1] : ''},
+                    hoja_arch: function (anexo) {var ma =anexo.match(/(\d+)\s*arc/i);return ma ? ma[1] : ''},
+                    hoja_ani: function (anexo) {var ma =anexo.match(/(\d+)\s*ani/i);return ma ? ma[1] : ''},
+                    hoja_leg: function (anexo) {var ma =anexo.match(/(\d+)\s*leg/i);return ma ? ma[1] : ''},
+                    hoja_eje: function (anexo) {var ma =anexo.match(/(\d+)\s*eje/i);return ma ? ma[1] : ''},
+                    hoja_eng: function (anexo) {var ma =anexo.match(/(\d+)\s*eng/i);return ma ? ma[1] : ''},
+                    hoja_cd: function (anexo) {var ma =anexo.match(/(\d+)\s*cd/i);return ma ? ma[1] : ''},
                     sincronizaDestinatario: function (destinatarios) {
                         var self = this;
                         var destinatario = [];

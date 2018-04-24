@@ -9,13 +9,13 @@ $stmt = $connection->prepare('select * from hoja_ruta where id = ?');
 $stmt->execute([$id]);
 $hoja = $stmt->fetch();
 var_dump($hoja['anexo_hojas']);
-$hoja['anexoHojas_fjs'] = preg_match('/(\d+)\s*fjs/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
-$hoja['anexoHojas_arch'] = preg_match('/(\d+)\s*arc/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
-$hoja['anexoHojas_ani'] = preg_match('/(\d+)\s*ani/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
-$hoja['anexoHojas_leg'] = preg_match('/(\d+)\s*leg/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
-$hoja['anexoHojas_eje'] = preg_match('/(\d+)\s*eje/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
-$hoja['anexoHojas_eng'] = preg_match('/(\d+)\s*eng/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
-$hoja['anexoHojas_cd'] = preg_match('/(\d+)\s*cd/', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_fjs'] = preg_match('/(\d+)\s*fjs/i', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_arch'] = preg_match('/(\d+)\s*arc/i', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_ani'] = preg_match('/(\d+)\s*ani/i', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_leg'] = preg_match('/(\d+)\s*leg/i', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_eje'] = preg_match('/(\d+)\s*eje/i', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_eng'] = preg_match('/(\d+)\s*eng/i', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
+$hoja['anexoHojas_cd'] = preg_match('/(\d+)\s*cd/i', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
 
 ?>
 <html>
