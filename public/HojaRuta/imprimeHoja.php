@@ -8,7 +8,6 @@ $pos = empty($_REQUEST['pos']) ? 1 : $_REQUEST['pos'];
 $stmt = $connection->prepare('select * from hoja_ruta where id = ?');
 $stmt->execute([$id]);
 $hoja = $stmt->fetch();
-var_dump($hoja['anexo_hojas']);
 $hoja['anexoHojas_fjs'] = preg_match('/(\d+)\s*fjs/i', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
 $hoja['anexoHojas_arch'] = preg_match('/(\d+)\s*arc/i', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
 $hoja['anexoHojas_ani'] = preg_match('/(\d+)\s*ani/i', $hoja['anexo_hojas'], $ma) ? $ma[1] : '';
