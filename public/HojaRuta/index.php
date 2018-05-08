@@ -594,6 +594,75 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-lg-2 control-label">Tipo</label>
+                                <div class="col-md-5">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="EDC" v-model="derivacion.tipo">
+                                            1. Evaluación de consistencia
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="AUD" v-model="derivacion.tipo">
+                                            2. Auditorías
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SUP" v-model="derivacion.tipo">
+                                            3. Supervisiones
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="RDI" v-model="derivacion.tipo">
+                                            4. Relevamiento de Información
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="COD" v-model="derivacion.tipo">
+                                            5. Contrataciones Directas
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="EIU" v-model="derivacion.tipo">
+                                            6. Evaluación de Informaciones de UAI's
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SYD" v-model="derivacion.tipo">
+                                            7. Solicitudes y denuncias
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="TAA" v-model="derivacion.tipo">
+                                            8. Tareas administrativas
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="derivacion.tipo">
+                                            9. Solicitud de información
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Días plazo</label>
+                                <div class="col-lg-10">
+                                    <div class="btn-group btn-block">
+                                        <input type="number" v-model="derivacion.dias_plazo" class="form-control dropdown-toggle" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
                                     <button type="button" :disabled="concluido()" v-on:click="saveDerivation(derivacion)" class="btn btn-primary">Registrar</button>
                                     <button type="button" :disabled="concluido()" v-on:click="terminarHoja" class="btn btn-warning">Terminar</button>
@@ -1216,6 +1285,8 @@
             this.destinatarios = '',
             this.comentarios = '',
             this.instruccion = '';
+            this.tipo = '';
+            this.dias_plazo = '';
             this.load(values);
             this.editable = false;
         }
@@ -1481,6 +1552,8 @@
                                 destinatario: o.destinatario,
                                 destinatarios: o.destinatarios,
                                 instruccion: o.instruccion,
+                                tipo: o.tipo,
+                                dias_plazo: o.dias_plazo,
                                 t: new Date().getTime()
                             },
                             dataType: 'json',
@@ -1499,11 +1572,11 @@
                             self.findTask(
                                 self.hoja.nroDeControl, gestion,
                                 function (tarea) {
-                                    self.crearAsignacion(tarea, usuarios, nroDerivacion, function () {});
+                                    self.crearAsignacion(o, tarea, usuarios, nroDerivacion, function () {});
                                 },
                                 function () {
                                     self.createTask(o, gestion, usuarios, nroDerivacion, function (tarea) {
-                                        self.crearAsignacion(tarea.data, usuarios, nroDerivacion, function () {});
+                                        self.crearAsignacion(o, tarea.data, usuarios, nroDerivacion, function () {});
                                     });
                                 }
                             );
@@ -1591,7 +1664,7 @@
                             }
                         });
                     },
-                    crearAsignacion: function (tarea, usuarios, nro_asignacion, callback) {
+                    crearAsignacion: function (derivacion, tarea, usuarios, nro_asignacion, callback) {
                         var asignaciones = [];
                         usuarios.forEach(function(user){
                             asignaciones.push({
@@ -1600,6 +1673,8 @@
                                     "nro_asignacion": nro_asignacion,
                                     "user_id": user.id,
                                     "tarea_id": tarea.id,
+                                    "tipo": derivacion.tipo,
+                                    "dias_plazo": derivacion.dias_plazo,
                                 }
                             });
                         });

@@ -1288,6 +1288,16 @@
                         "label": "Nro asignación",
                         "type": "int"
                     }),
+                    new Module.Model.Field({
+                        "name": "tipo",
+                        "label": "Tipo",
+                        "type": "string"
+                    }),
+                    new Module.Model.Field({
+                        "name": "dias_plazo",
+                        "label": "Días plazo",
+                        "type": "int"
+                    }),
                 ],
                 "associations": [
                 ],

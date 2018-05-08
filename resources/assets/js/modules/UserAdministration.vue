@@ -523,18 +523,18 @@ UserAdministration.Asignacion = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/asignacions";
     Model.call(this, url, id, "UserAdministration.Asignacion");
     this.$list = function () {
-        return "fields=tarea_id,user_id,nro_asignacion";
+        return "fields=tarea_id,user_id,nro_asignacion,tipo,dias_plazo";
     };
     this.$name = "Asignacion";
     this.$pluralName = "Asignacions";
     this.$title = "Asignación";
     this.$pluralTitle = "Asignaciones";
-    this.$ = {"tarea_id":{"name":"tarea_id","label":"Tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tarea_id","isAssociation":false},"user_id":{"name":"user_id","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"user_id","isAssociation":false},"nro_asignacion":{"name":"nro_asignacion","label":"Nro asignación","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nro_asignacion","isAssociation":false}};
+    this.$ = {"tarea_id":{"name":"tarea_id","label":"Tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tarea_id","isAssociation":false},"user_id":{"name":"user_id","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"user_id","isAssociation":false},"nro_asignacion":{"name":"nro_asignacion","label":"Nro asignación","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nro_asignacion","isAssociation":false},"tipo":{"name":"tipo","label":"Tipo","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo","isAssociation":false},"dias_plazo":{"name":"dias_plazo","label":"Días plazo","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"dias_plazo","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Tarea","data":"attributes.tarea_id"},{"title":"Usuario","data":"attributes.user_id"},{"title":"Nro asignación","data":"attributes.nro_asignacion"}];
+        return [{"title":"Tarea","data":"attributes.tarea_id"},{"title":"Usuario","data":"attributes.user_id"},{"title":"Nro asignación","data":"attributes.nro_asignacion"},{"title":"Tipo","data":"attributes.tipo"},{"title":"Días plazo","data":"attributes.dias_plazo"}];
     };
     this.$methods = {
     };
