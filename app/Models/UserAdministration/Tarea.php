@@ -22,11 +22,12 @@ class Tarea extends Model
       8 => 'dias_otorgados',
       9 => 'nro_de_control',
       10 => 'gestion',
-      11 => 'creador_id',
-      12 => 'revisor1_id',
-      13 => 'aprobacion1_id',
-      14 => 'revisor2_id',
-      15 => 'aprobacion2_id',
+      11 => 'tipo',
+      12 => 'creador_id',
+      13 => 'revisor1_id',
+      14 => 'aprobacion1_id',
+      15 => 'revisor2_id',
+      16 => 'aprobacion2_id',
     );
     protected $attributes = array(
       'cod_tarea' => '',
@@ -40,6 +41,7 @@ class Tarea extends Model
       'dias_otorgados' => '0',
       'nro_de_control' => null,
       'gestion' => null,
+      'tipo' => null,
     );
     protected $casts = array(
       'cod_tarea' => 'string',
@@ -53,6 +55,7 @@ class Tarea extends Model
       'dias_otorgados' => 'integer',
       'nro_de_control' => 'string',
       'gestion' => 'string',
+      'tipo' => 'string',
     );
     protected $events = array(
       'saved' => 'App\\Events\\UserAdministration\\TareaSaved',

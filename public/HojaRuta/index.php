@@ -552,6 +552,67 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-lg-2 control-label">Tipo</label>
+                                <div class="col-md-5">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="EDC" v-model="hoja.tipoTarea">
+                                            1. Evaluación de consistencia
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="AUD" v-model="hoja.tipoTarea">
+                                            2. Auditorías
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SUP" v-model="hoja.tipoTarea">
+                                            3. Supervisiones
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="RDI" v-model="hoja.tipoTarea">
+                                            4. Relevamiento de Información
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="COD" v-model="hoja.tipoTarea">
+                                            5. Contrataciones Directas
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="EIU" v-model="hoja.tipoTarea">
+                                            6. Evaluación de Informaciones de UAI's
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SYD" v-model="hoja.tipoTarea">
+                                            7. Solicitudes y denuncias
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="TAA" v-model="hoja.tipoTarea">
+                                            8. Tareas administrativas
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="hoja.tipoTarea">
+                                            9. Solicitud de información
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
                                     <button type="button" v-on:click="actualizarHR" class="btn btn-primary">Guardar cambios</button>
                                 </div>
@@ -591,67 +652,6 @@
                                 <label class="col-lg-2 control-label">Instrucción</label>
                                 <div class="col-lg-10">
                                     <input type="text" :disabled="concluido()" v-model="derivacion.instruccion" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">Tipo</label>
-                                <div class="col-md-5">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="EDC" v-model="derivacion.tipo">
-                                            1. Evaluación de consistencia
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="AUD" v-model="derivacion.tipo">
-                                            2. Auditorías
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="SUP" v-model="derivacion.tipo">
-                                            3. Supervisiones
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="RDI" v-model="derivacion.tipo">
-                                            4. Relevamiento de Información
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="COD" v-model="derivacion.tipo">
-                                            5. Contrataciones Directas
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="EIU" v-model="derivacion.tipo">
-                                            6. Evaluación de Informaciones de UAI's
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="SYD" v-model="derivacion.tipo">
-                                            7. Solicitudes y denuncias
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="TAA" v-model="derivacion.tipo">
-                                            8. Tareas administrativas
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="derivacion.tipo">
-                                            9. Solicitud de información
-                                        </label>
-                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -1172,6 +1172,7 @@
             this.fechaAuditor= '';
             this.conclusion= '';
             this.tipo= 'interna';
+            this.tipoTarea= '';
             this.numero= '';
             this.load(values);
         }
@@ -1285,7 +1286,6 @@
             this.destinatarios = '',
             this.comentarios = '',
             this.instruccion = '';
-            this.tipo = '';
             this.dias_plazo = '';
             this.load(values);
             this.editable = false;
@@ -1391,6 +1391,7 @@
                         this.hoja.fechaAuditor = '';
                         this.hoja.conclusion = '';
                         this.hoja.tipo = !tipo ? 'interna' : tipo;
+                        this.hoja.tipoTarea = '';
                         this.hoja.numero = '';
                         this.hoja.anexoHojas_fjs = '';
                         this.hoja.anexoHojas_arch = '';
@@ -1414,6 +1415,7 @@
                             data: {
                                 id: o.id ? o.id: '',
                                 tipo: o.tipo,
+                                tipo_tarea: o.tipoTarea,
                                 fecha: o.fecha,
                                 referencia: o.referencia,
                                 procedencia: o.procedencia,
@@ -1552,7 +1554,7 @@
                                 destinatario: o.destinatario,
                                 destinatarios: o.destinatarios,
                                 instruccion: o.instruccion,
-                                tipo: o.tipo,
+                                //tipo: o.tipo,
                                 dias_plazo: o.dias_plazo,
                                 t: new Date().getTime()
                             },
@@ -1616,6 +1618,7 @@
                                     "attributes":{
                                         "cod_tarea":"",
                                         "nro_de_control": self.hoja.nroDeControl,
+                                        "tipo": self.hoja.tipoTarea,
                                         "gestion": gestion, //gestion actual
                                         "nombre_tarea": self.hoja.nroDeControl + ' - ' + self.hoja.referencia,
                                         "descripcion": derivacion.comentarios,
@@ -1673,7 +1676,7 @@
                                     "nro_asignacion": nro_asignacion,
                                     "user_id": user.id,
                                     "tarea_id": tarea.id,
-                                    "tipo": derivacion.tipo,
+                                    //"tipo": derivacion.tipo,
                                     "dias_plazo": derivacion.dias_plazo,
                                 }
                             });
@@ -1850,6 +1853,7 @@
                                     self.hojasDeRutaBusqueda.push(new Recepcion({
                                         id: o.id,
                                         tipo: o.tipo,
+                                        tipoTarea: o.tipo_tarea,
                                         fecha: o.fecha,
                                         referencia: o.referencia,
                                         procedencia: o.procedencia,

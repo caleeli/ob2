@@ -1113,6 +1113,11 @@
                         "label": "Gestion de la hoja de ruta",
                         "type": "string"
                     }),
+                    new Module.Model.Field({
+                        "name": "tipo",
+                        "label": "Tipo de tarea",
+                        "type": "string"
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsToMany({
@@ -1287,11 +1292,6 @@
                         "name": "nro_asignacion",
                         "label": "Nro asignación",
                         "type": "int"
-                    }),
-                    new Module.Model.Field({
-                        "name": "tipo",
-                        "label": "Tipo",
-                        "type": "string"
                     }),
                     new Module.Model.Field({
                         "name": "dias_plazo",

@@ -4,8 +4,8 @@ header("Content-type:application/json");
 $connection = require('connection.php');
 
 if (empty($_REQUEST['id'])) {
-    $stmt = $connection->prepare('insert into hoja_ruta(tipo, fecha, referencia, procedencia, nro_de_control, anexo_hojas, destinatario, conclusion, numero)'
-        .' values (?,?,?,?,?,?,?,?,?)');
+    $stmt = $connection->prepare('insert into hoja_ruta(tipo, fecha, referencia, procedencia, nro_de_control, anexo_hojas, destinatario, conclusion, numero, tipo_tarea)'
+        .' values (?,?,?,?,?,?,?,?,?,?)');
 
     $guardo = $stmt->execute([
         $_REQUEST['tipo'],
@@ -17,9 +17,10 @@ if (empty($_REQUEST['id'])) {
         $_REQUEST['destinatario'],
         empty($_REQUEST['conclusion']) ? '0000-00-00' : $_REQUEST['conclusion'],
         $_REQUEST['numero'],
+        $_REQUEST['tipo_tarea'],
     ]);
 } else {
-    $stmt = $connection->prepare('update hoja_ruta set tipo=?, fecha=?, referencia=?, procedencia=?, nro_de_control=?, anexo_hojas=?, destinatario=?, conclusion=? '
+    $stmt = $connection->prepare('update hoja_ruta set tipo=?, fecha=?, referencia=?, procedencia=?, nro_de_control=?, anexo_hojas=?, destinatario=?, conclusion=?, tipo_tarea=? '
         .' where id = ?');
 
     $guardo = $stmt->execute([
@@ -31,6 +32,7 @@ if (empty($_REQUEST['id'])) {
         $_REQUEST['anexo_hojas'],
         $_REQUEST['destinatario'],
         empty($_REQUEST['conclusion']) ? '0000-00-00' : $_REQUEST['conclusion'],
+        $_REQUEST['tipo_tarea'],
         $_REQUEST['id'],
     ]);
 }
