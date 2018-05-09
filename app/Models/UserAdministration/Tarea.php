@@ -118,12 +118,15 @@ class Tarea extends Model
     }
 
 
-    public function scopeWhereUserAssigned($query, $userId)
+    public function scopeWhereUserAssigned($query, $userId, $ownerId)
     {
-        return $query->whereIn('id', function ($query) use ($userId) {
+        return $query->whereIn('id', function ($query) use ($userId, $ownerId) {
             $query->select('tarea_id')
                                 ->from('tarea_user')
-                                ->where('user_id', $userId);
+                                ->where(function ($query) use ($userId, $ownerId) {
+                                    $query->where('user_id', $userId)
+                                        ->orWhere('creador_id', $ownerId);
+                                });
         });
     }
 

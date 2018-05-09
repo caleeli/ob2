@@ -24,6 +24,7 @@
         <link rel="stylesheet" type="text/css" href="/css/buttons.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="http://webapplayers.com/inspinia_admin-v2.7.1/css/plugins/steps/jquery.steps.css">
         <!-- link rel="stylesheet" type="text/css" href="/css/viewer.css" -->
         <script>
             if (typeof localStorage.user_id === 'undefined'
@@ -66,6 +67,17 @@
                 width: 1em;
                 border: 1px solid;
                 border-radius: 1em;
+            }
+            .wizard > .steps > ul > li {
+                width: 12%;
+            }
+            .wizard > .steps .unable a,
+            .wizard > .steps .unable a:hover,
+            .wizard > .steps .unable a:active
+            {
+                background: #fff;
+                color: #aaa;
+                cursor: default;
             }
         </style>
     </head>
@@ -480,6 +492,23 @@
                                                 </div>
                                             </div>
                                             <div class="ibox-content">
+                                                        <div class="panel blank-panel">
+                                                            <div class="">
+                                                                <div class="panel-options">
+                                                                    <ul class="nav nav-tabs small">
+                                                                        <li class="active"><a v-on:click="setTipoTarea('EDC')" data-toggle="tab">1.</span>Evaluación de consistencia</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('AUD')" data-toggle="tab">2. Auditorías</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('SUP')" data-toggle="tab">3. Supervisiones</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('RDI')" data-toggle="tab">4. Relevamiento de Información</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('COD')" data-toggle="tab">5. Contrataciones Directas</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('EIU')" data-toggle="tab">6. Evaluación de Informaciones de UAI's</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('SYD')" data-toggle="tab">7. Solicitudes y denuncias</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('TAA')" data-toggle="tab">8. Tareas administrativas</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('SDI')" data-toggle="tab">9. Solicitud de información</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <span class="input-group-btn">
@@ -498,7 +527,6 @@
                                                     </div>
                                                 </div>
                                                 <div>
-
                                                     <div class="row" v-for='tareaI in tareas'>
                                                                 <div class="col-md-4 col-xs-12">
                                                                     <table width="100%">
@@ -661,6 +689,18 @@
                                                             <div class="panel-body">
 
                                                                 <div class="tab-content">
+                                                        <div class=" wizard-big wizard clearfix">
+                                                            <div class="steps clearfix">
+                                                                <ul role="tablist">
+                                                                    <li role="tab" class="current" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
+                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
+                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
+                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
+                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
+                                                                    <li role="tab" class="unable" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                                     <div class="tab-pane active" id="tab-1">
                                                                         <p>
                                                                             {{tarea.descripcion}}
@@ -1176,7 +1216,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.111"></script>
+        <script src="../js/server.js?v0.112"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1255,6 +1295,7 @@
                         biblioteca_busqueda: '',
                         biblioteca_normativa: '',
                         biblioteca_gestion: '',
+                        tipoTarea: 'EDC',
                     };
                 },
                 computed: {
@@ -1269,6 +1310,10 @@
                     },
                 },
                 methods: {
+                    setTipoTarea: function (tipoTarea) {
+                        this.tipoTarea = tipoTarea;
+                        this.listarTareas();
+                    },
                     usuariosAsignados: function (tareaUsuarios) {
                         var usuarios = tareaUsuarios && tareaUsuarios instanceof Array ? tareaUsuarios : [];
                         var asignados = [];
@@ -1305,8 +1350,8 @@
                             },
                             {
                                 filter:[
-                                    'whereUserAssigned,'+localStorage.user_id,
-                                    'orWhere,creador_id,=,'+localStorage.user_id,
+                                    'where,tipo,'+JSON.stringify(self.tipoTarea),
+                                    'whereUserAssigned,'+localStorage.user_id+','+localStorage.user_id,
                                 ],
                                 sort: '-updated_at'
                             }

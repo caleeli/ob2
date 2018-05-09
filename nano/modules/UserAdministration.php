@@ -1217,11 +1217,14 @@
                 },
                 "methods": {
                     "-scopeWhereUserAssigned()": <?php
-                        function ($query, $userId) {
-                            return $query->whereIn('id', function($query) use($userId) {
+                        function ($query, $userId, $ownerId) {
+                            return $query->whereIn('id', function($query) use($userId, $ownerId) {
                                 $query->select('tarea_id')
                                 ->from('tarea_user')
-                                ->where('user_id', $userId);
+                                ->where(function ($query) use($userId, $ownerId) {
+                                    $query->where('user_id', $userId)
+                                        ->orWhere('creador_id', $ownerId);
+                                });
                             });
                         }
                     ?>,
