@@ -124,8 +124,10 @@ class Tarea extends Model
             $query->select('tarea_id')
                                 ->from('tarea_user')
                                 ->where(function ($query) use ($userId, $ownerId) {
-                                    $query->where('user_id', $userId)
-                                        ->orWhere('creador_id', $ownerId);
+                                    if ($ownerId!='1') {
+                                        $query->where('user_id', $userId)
+                                            ->orWhere('creador_id', $ownerId);
+                                    }
                                 });
         });
     }
