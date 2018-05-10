@@ -66,6 +66,12 @@ return [
             'urlBase' => 'documentacion/normativa/',
         ],
 
+        'tareas' => [
+            'driver' => 'local',
+            'root' => public_path('documentacion/tareas'),
+            'urlBase' => 'documentacion/tareas/',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

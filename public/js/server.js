@@ -1,6 +1,6 @@
 var API_SERVER='';
-document.writeln('\n<link href="/css/app.css?v0.112" rel="stylesheet">\n');
-document.writeln('\n<script src="/js/admin.js?v0.112"></script>\n');
+document.writeln('\n<link href="/css/app.css?v0.113" rel="stylesheet">\n');
+document.writeln('\n<script src="/js/admin.js?v0.113"></script>\n');
 document.writeln('\n<script type="text/javascript" charset="utf8" src="/bower_components/jq-ajax-progress/src/jq-ajax-progress.min.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net/js/jquery.dataTables.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>\n');
@@ -17,3 +17,5 @@ document.writeln('\n<script type="text/javascript" src="/bower_components/datata
 document.writeln('\n<script type="text/javascript" src="/bower_components/chart.js/dist/Chart.bundle.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/chart.js/samples/utils.js"></script>\n');
 document.writeln('\n<script type="text/javascript" src="/bower_components/tinymce/tinymce.min.js"></script>\n');
+document.writeln('\n<script type="text/javascript" src="/HojaRuta/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>\n');
+document.writeln('\n<script type="text/javascript" src="/HojaRuta/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js"></script>\n');

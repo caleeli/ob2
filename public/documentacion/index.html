@@ -654,7 +654,7 @@
                                                         </dl>
                                                     </div>
                                                 </div>
-                                                <div class="row">
+                                                <!-- div class="row">
                                                     <div class="col-lg-12">
                                                         <dl class="dl-horizontal">
                                                             <dt>Avance % :</dt>
@@ -673,9 +673,40 @@
                                                             </dd>
                                                         </dl>
                                                     </div>
-                                                </div>
+                                                </div -->
                                                 <div class="row m-t-sm">
                                                     <div class="col-lg-12">
+                                                        <div class=" wizard-big wizard clearfix">
+                                                            <div class="steps clearfix">
+                                                                <ul role="tablist">
+                                                                    <li role="tab" class="current" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
+                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
+                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
+                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
+                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
+                                                                    <li role="tab" class="unable" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel blank-panel">
+                                                            <div class="panel-body">
+                                                                <folder-viewer api="/api/folder/tareas"
+                                                                    v-bind:target='"tareas"'
+                                                                    v-bind:canupload='true'
+                                                                    v-bind:candelete='true'
+                                                                    v-bind:filter="''">
+                                                                    <div>
+                                                                        <label>Fecha</label>
+                                                                        <fecha v-model="paso.fecha"/>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Descripción</label>
+                                                                        <textarea class="form-control" v-model='paso.descripcion'></textarea>
+                                                                    </div>
+                                                                </folder-viewer>
+                                                            </div>
+                                                        </div>
+                                                        <!--
                                                         <div class="panel blank-panel">
                                                             <div class="panel-heading">
                                                                 <div class="panel-options">
@@ -689,18 +720,6 @@
                                                             <div class="panel-body">
 
                                                                 <div class="tab-content">
-                                                        <div class=" wizard-big wizard clearfix">
-                                                            <div class="steps clearfix">
-                                                                <ul role="tablist">
-                                                                    <li role="tab" class="current" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
-                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
-                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
-                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
-                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
-                                                                    <li role="tab" class="unable" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
                                                                     <div class="tab-pane active" id="tab-1">
                                                                         <p>
                                                                             {{tarea.descripcion}}
@@ -755,6 +774,7 @@
                                                             </div>
 
                                                         </div>
+                                                        -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -1216,7 +1236,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.112"></script>
+        <script src="../js/server.js?v0.113"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1296,6 +1316,10 @@
                         biblioteca_normativa: '',
                         biblioteca_gestion: '',
                         tipoTarea: 'EDC',
+                        paso: {
+                            fecha: '',
+                            descripcion: '',
+                        },
                     };
                 },
                 computed: {
