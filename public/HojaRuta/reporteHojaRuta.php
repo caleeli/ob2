@@ -63,9 +63,18 @@ if (!empty($_REQUEST['destinatario'])) {
 $addDerivacion = true;
 $select = 'hoja_ruta.*, derivacion.fecha as derivacion_fecha, derivacion.destinatario as derivacion_destinatario';
 
-$query = 'select '.$select.' from hoja_ruta '
-    . ($addDerivacion ? 'left join derivacion on (derivacion.hoja_ruta_id=hoja_ruta.id) ' : '')
-    . ($query ? ' where ' . implode(' and ', $query) : '');
+if ($_REQUEST['todasLasDerivaciones'] === 'true') {
+    $query = 'select ' . $select . ' from hoja_ruta '
+        . ($addDerivacion ? 'left join derivacion on (derivacion.hoja_ruta_id=hoja_ruta.id) ' : '')
+        . ($query ? 'where hoja_ruta.id in '
+        . '(select hoja_ruta.id from hoja_ruta left join derivacion on (derivacion.hoja_ruta_id=hoja_ruta.id) where '
+        . implode(' and ', $query) . ')' : '');
+} else {
+    $query = 'select ' . $select . ' from hoja_ruta '
+        . ($addDerivacion ? 'left join derivacion on (derivacion.hoja_ruta_id=hoja_ruta.id) ' : '')
+        . ($query ? ' where ' . implode(' and ', $query) : '');
+}
+
 
 $stmt = $connection->prepare($query);
 foreach($params as $p) {

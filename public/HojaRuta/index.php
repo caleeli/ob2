@@ -950,6 +950,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-10">
+                                    <input type="checkbox" value='1' v-model="reporte.todasLasDerivaciones" /> Mostrar todas las derivaciones
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-md-10 col-lg-offset-2">
                                     <button type="button" v-on:click="generarReporteExterna" class="btn btn-primary">Generar Reporte</button>
                                 </div>
@@ -1351,7 +1357,8 @@
                             fecha_derivacion1: '',
                             fecha_derivacion2: '',
                             destinatario: '',
-                            forma: 'Combinado'
+                            forma: 'Combinado',
+                            todasLasDerivaciones: false,
                         },
                         reporteExterna: [],
                         notaReporte: new NotaReporte(),
