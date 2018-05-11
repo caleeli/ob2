@@ -985,8 +985,8 @@
                                 <td style="white-space: pre;">{{rep.conclusion}}</td>
                             </tr>
                             <tr v-if="reporte.forma==='Combinado'">
-                                <th>{{reporte.forma==='SoloDerivaciones' ? '#': ''}}</th>
-                                <th>{{reporte.forma==='SoloDerivaciones' ? 'Hoja de ruta': '#'}}</th>
+                                <th>#</th>
+                                <th>Hoja de ruta</th>
                                 <th>Fecha Derivación</th>
                                 <th style="vertical-align: bottom;">Destinatario</th>
                                 <th></th>
@@ -994,8 +994,8 @@
                                 <th></th>
                             </tr>
                             <tr v-if="reporte.forma!='SoloHojas'" v-for='(derivacion, d) in rep.derivaciones'>
-                                <th>{{reporte.forma==='SoloDerivaciones' ? derivacion.num: ''}}</th>
-                                <th>{{reporte.forma==='SoloDerivaciones' ? rep.nro_de_control: d+1}}</th>
+                                <th>{{d+1}}</th>
+                                <td>{{rep.nro_de_control}}</td>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
                                 <td style="white-space: pre">{{derivacion.destinatario}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.procedencia : ''}}</td>
