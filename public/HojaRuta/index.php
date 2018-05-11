@@ -995,7 +995,7 @@
                                 <th></th>
                             </tr>
                             <tr v-if="reporte.forma!='SoloHojas'" v-for='(derivacion, d) in rep.derivaciones'>
-                                <th>{{d+1}}</th>
+                                <th>&nbsp;{{d+1}}</th>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
                                 <td style="white-space: pre">{{reporte.forma==='SoloDerivaciones' ? derivacion.destinatario : rep.referencia}}</td>
