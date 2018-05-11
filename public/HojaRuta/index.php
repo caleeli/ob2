@@ -998,7 +998,7 @@
                                 <th>{{d+1}}</th>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
-                                <td style="white-space: pre">{{rep.referencia}}</td>
+                                <td style="white-space: pre">{{reporte.forma==='SoloDerivaciones' ? derivacion.destinatario : rep.referencia}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.procedencia : derivacion.destinatario}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.fecha : ''}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.conclusion : ''}}</td>
