@@ -972,6 +972,7 @@
                                 <th>Procedencia</th>
                                 <th>Fecha Recepción</th>
                                 <th>Conclusión</th>
+                                <th v-if="reporte.forma==='SoloDerivaciones'">Referencia</th>
                             </tr>
                         </thead>
                         <tbody v-for='(rep, r) in reporteExterna'>
@@ -988,8 +989,8 @@
                                 <th>#</th>
                                 <th>Hoja de ruta</th>
                                 <th>Fecha Derivación</th>
-                                <th style="vertical-align: bottom;">Destinatario</th>
-                                <th></th>
+                                <th>Referencia</th>
+                                <th>Destinatario</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -997,10 +998,11 @@
                                 <th>{{d+1}}</th>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
-                                <td style="white-space: pre">{{derivacion.destinatario}}</td>
-                                <td>{{reporte.forma==='SoloDerivaciones' ? rep.procedencia : ''}}</td>
+                                <td style="white-space: pre">{{rep.referencia}}</td>
+                                <td>{{reporte.forma==='SoloDerivaciones' ? rep.procedencia : derivacion.destinatario}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.fecha : ''}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.conclusion : ''}}</td>
+                                <td v-if="reporte.forma==='SoloDerivaciones'">{{rep.referencia}}</td>
                             </tr>
                         </tbody>
                     </table>
