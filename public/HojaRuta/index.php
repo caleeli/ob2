@@ -14,6 +14,7 @@
         <script src="bower_components/vue/dist/vue.min.js"></script>
         <script src="bower_components/moment/min/moment-with-locales.min.js"></script>
         <script src="/documentacion/js/plugins/peity/jquery.peity.min.js"></script>
+        <script src="/js/export-excel.js"></script>
         <style>
         @media print{
            .noprint{
@@ -958,11 +959,12 @@
                             <div class="form-group">
                                 <div class="col-md-10 col-lg-offset-2">
                                     <button type="button" v-on:click="generarReporteExterna" class="btn btn-primary">Generar Reporte</button>
+                                    <button type="button" v-on:click="exportarExcel('reporteExterna', 'Hojas de Ruta Externas')" class="btn btn btn-default">Exportar Excel</button>
                                 </div>
                             </div>
                         </fieldset>
                     </form>
-                    <table class="table table-striped table-hover ">
+                    <table id="reporteExterna" class="table table-striped table-hover ">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -1112,11 +1114,12 @@
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-2">
                                     <button type="button" v-on:click="generarNotaReporte" class="btn btn-primary">Generar Reporte</button>
+                                    <button type="button" v-on:click="exportarExcel('reporteExterna', 'Hojas de Ruta Externas')" class="btn btn btn-default">Exportar Excel</button>
                                 </div>
                             </div>
                         </fieldset>
                     </form>
-                    <table class="table table-striped table-hover ">
+                    <table id="reporteInterna" class="table table-striped table-hover ">
                         <thead>
                             <tr>
                                 <th>Hoja de Ruta</th>
@@ -1368,6 +1371,9 @@
                     };
                 },
                 methods: {
+                    exportarExcel: function (id, name) {
+                        exportToExcel(id, name);
+                    },
                     hoja_fjs: function (anexo) {var ma =anexo.match(/(\d+)\s*fjs/i);return ma ? ma[1] : ''},
                     hoja_arch: function (anexo) {var ma =anexo.match(/(\d+)\s*arc/i);return ma ? ma[1] : ''},
                     hoja_ani: function (anexo) {var ma =anexo.match(/(\d+)\s*ani/i);return ma ? ma[1] : ''},
