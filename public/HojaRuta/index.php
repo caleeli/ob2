@@ -131,7 +131,7 @@
                                 <label for="inputEmail" class="col-lg-2 control-label">Fecha de recepción</label>
                                 <div class="col-lg-10">
                                         <div class='input-group date' id='datetimepicker1'>
-                                            <input required type='text' v-model="hoja.fecha" class="form-control" />
+                                            <input required type='text' readonly="readonly" v-model="hoja.fecha" class="form-control" />
                                             <span class="input-group-addon" v-on:click='datepick'>
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -623,12 +623,13 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Fecha</label>
                                 <div class="col-lg-10">
-                                    <div class='input-group date' id='datetimepicker3'>
-                                        <input type='text' :disabled="concluido()" v-model="derivacion.fecha" class="form-control" />
+                                    <div v-bind:class='{"input-group":1, "date":1, "has-error": derivacion_err.fecha}' id='datetimepicker3'>
+                                        <input type='text' :disabled="concluido()" readonly="readonly" v-model="derivacion.fecha" class="form-control" />
                                         <span class="input-group-addon" v-on:click='datepick3'>
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="form-group">
@@ -640,13 +641,9 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Destinatario</label>
                                 <div class="col-lg-10">
-                                    <!-- div class="btn-group btn-block">
-                                        <input type="text" :disabled="concluido()" v-model="derivacion.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
-                                        <ul class="dropdown-menu">
-                                            <li v-for="dest in destinatarios" v-on:click="derivacion.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(derivacion.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
-                                        </ul>
-                                    </div -->
-                                    <tags v-model="derivacion.destinatarios" v-bind:domain="destinatarios" v-bind:field="{textField:function(item){return item.nombres+' '+item.apellidos}}" v-on:change="sincronizaDestinatario"/>
+                                    <div v-bind:class='{"has-error": derivacion_err.destinatarios}'>
+                                        <tags v-model="derivacion.destinatarios" v-bind:domain="destinatarios" v-bind:field="{textField:function(item){return item.nombres+' '+item.apellidos}}" v-on:change="sincronizaDestinatario"/>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -945,9 +942,8 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
                                 <div class="col-md-10">
-                                    <input type="radio" name="reporteForma" value="Combinado" v-model="reporte.forma" /> Combinado
-                                    <input type="radio" name="reporteForma" value="SoloHojas" v-model="reporte.forma" /> Solo hojas de ruta
-                                    <input type="radio" name="reporteForma" value="SoloDerivaciones" v-model="reporte.forma" /> Solo derivaciones
+                                    <input type="radio" name="reporteForma" value="SoloHojas" v-model="reporte.forma" /> Por hojas de ruta
+                                    <input type="radio" name="reporteForma" value="SoloDerivaciones" v-model="reporte.forma" /> Por derivaciones
                                 </div>
                             </div>
                             <div class="form-group">
@@ -968,6 +964,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th v-if="reporte.forma==='SoloDerivaciones'"></th>
                                 <th>Nº Control</th>
                                 <th>{{reporte.forma==='SoloDerivaciones' ? 'Fecha Derivación' : 'Gestión' }}</th>
                                 <th>{{reporte.forma==='SoloDerivaciones' ? 'Destinatario' : 'Referencia' }}</th>
@@ -989,7 +986,7 @@
                             </tr>
                             <tr v-if="reporte.forma==='Combinado'">
                                 <th>#</th>
-                                <th>Hoja de ruta</th>
+                                <th>Nº Control</th>
                                 <th>Fecha Derivación</th>
                                 <th>Referencia</th>
                                 <th>Destinatario</th>
@@ -997,7 +994,8 @@
                                 <th></th>
                             </tr>
                             <tr v-if="reporte.forma!='SoloHojas'" v-for='(derivacion, d) in rep.derivaciones'>
-                                <td>&nbsp;{{d+1}}</td>
+                                <th v-if="reporte.forma==='SoloDerivaciones'">{{r+1}}</th>
+                                <td>{{d+1}}</td>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
                                 <td style="white-space: pre">{{reporte.forma==='SoloDerivaciones' ? derivacion.destinatario : rep.referencia}}</td>
@@ -1153,7 +1151,7 @@
         </div>
         <script type='text/x-template' id='template-fecha'>
             <div class='input-group date'>
-                <input type='text' v-model="innerValue" class="form-control" />
+                <input type='text' v-model="innerValue" readonly="readonly" class="form-control" />
                 <span class="input-group-addon" v-on:click="datepick">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -1368,6 +1366,10 @@
                         reporteExterna: [],
                         notaReporte: new NotaReporte(),
                         reporteNotas: [],
+                        derivacion_err: {
+                            fecha: false,
+                            destinatarios: false,
+                        },
                     };
                 },
                 methods: {
@@ -1558,6 +1560,11 @@
                     saveDerivation: function(callback, o) {
                         var self = this;
                         if (typeof o==='undefined') o = this.derivacion;
+                        self.derivacion_err.fecha = !o.fecha;
+                        self.derivacion_err.destinatarios = !o.destinatarios;
+                        if (self.derivacion_err.fecha || self.derivacion_err.destinatarios) {
+                            return;
+                        }
                         $.ajax({
                             method: 'get',
                             url: 'saveDerivacion.php',
