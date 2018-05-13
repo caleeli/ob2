@@ -200,6 +200,75 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-lg-2 control-label">Tipo
+                                    <p class="text-danger" v-if="errores.hoja_tipo">Seleccione un tipo</p>
+                                </label>
+                                <div v-bind:class="{'col-md-5':1, 'has-error':errores.hoja_tipo}">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="EDC" v-model="hoja.tipoTarea">
+                                            1. Evaluación de consistencia
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="AUD" v-model="hoja.tipoTarea">
+                                            2. Auditorías
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SUP" v-model="hoja.tipoTarea">
+                                            3. Supervisiones
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="RDI" v-model="hoja.tipoTarea">
+                                            4. Relevamientos de Información
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="COD" v-model="hoja.tipoTarea">
+                                            5. Contrataciones Directas
+                                        </label>
+                                    </div>
+                                </div>
+                                <div v-bind:class="{'col-md-5':1, 'has-error':errores.hoja_tipo}">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="EIU" v-model="hoja.tipoTarea">
+                                            6. Evaluación de Informes de UAI's
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SYD" v-model="hoja.tipoTarea">
+                                            7. Evaluación de Informes de POA y PE de UAI
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="TAA" v-model="hoja.tipoTarea">
+                                            8. Solicitudes y denuncias
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="hoja.tipoTarea">
+                                            9. Tareas administrativas
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="hoja.tipoTarea">
+                                            10. Otros
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
@@ -553,8 +622,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-2 control-label">Tipo</label>
-                                <div class="col-md-5">
+                                <label class="col-lg-2 control-label">Tipo
+                                    <p class="text-danger" v-if="errores.hoja_tipo">Seleccione un tipo</p>
+                                </label>
+                                <div v-bind:class="{'col-md-5':1, 'has-error':errores.hoja_tipo}">
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="hoja_edit_tipo" value="EDC" v-model="hoja.tipoTarea">
@@ -576,7 +647,7 @@
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="hoja_edit_tipo" value="RDI" v-model="hoja.tipoTarea">
-                                            4. Relevamiento de Información
+                                            4. Relevamientos de Información
                                         </label>
                                     </div>
                                     <div class="radio">
@@ -586,29 +657,35 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div v-bind:class="{'col-md-5':1, 'has-error':errores.hoja_tipo}">
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="hoja_edit_tipo" value="EIU" v-model="hoja.tipoTarea">
-                                            6. Evaluación de Informaciones de UAI's
+                                            6. Evaluación de Informes de UAI's
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="hoja_edit_tipo" value="SYD" v-model="hoja.tipoTarea">
-                                            7. Solicitudes y denuncias
+                                            7. Evaluación de Informes de POA y PE de UAI
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="hoja_edit_tipo" value="TAA" v-model="hoja.tipoTarea">
-                                            8. Tareas administrativas
+                                            8. Solicitudes y denuncias
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="hoja.tipoTarea">
-                                            9. Solicitud de información
+                                            9. Tareas administrativas
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="hoja.tipoTarea">
+                                            10. Otros
                                         </label>
                                     </div>
                                 </div>
@@ -623,7 +700,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Fecha</label>
                                 <div class="col-lg-10">
-                                    <div v-bind:class='{"input-group":1, "date":1, "has-error": derivacion_err.fecha}' id='datetimepicker3'>
+                                    <div v-bind:class='{"input-group":1, "date":1, "has-error": errores.derivacion_fecha}' id='datetimepicker3'>
                                         <input type='text' :disabled="concluido()" readonly="readonly" v-model="derivacion.fecha" class="form-control" />
                                         <span class="input-group-addon" v-on:click='datepick3'>
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -641,7 +718,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Destinatario</label>
                                 <div class="col-lg-10">
-                                    <div v-bind:class='{"has-error": derivacion_err.destinatarios}'>
+                                    <div v-bind:class='{"has-error": errores.derivacion_destinatarios}'>
                                         <tags v-model="derivacion.destinatarios" v-bind:domain="destinatarios" v-bind:field="{textField:function(item){return item.nombres+' '+item.apellidos}}" v-on:change="sincronizaDestinatario"/>
                                     </div>
                                 </div>
@@ -1366,9 +1443,10 @@
                         reporteExterna: [],
                         notaReporte: new NotaReporte(),
                         reporteNotas: [],
-                        derivacion_err: {
-                            fecha: false,
-                            destinatarios: false,
+                        errores: {
+                            derivacion_fecha: false,
+                            derivacion_destinatarios: false,
+                            hoja_tipo: false,
                         },
                     };
                 },
@@ -1424,6 +1502,10 @@
                         var o = this.hoja;
                         if (!o.fecha.match(/\d\d\d\d-\d\d-\d\d/)) {
                             alert("El formato de la fecha no es correcto");
+                            return false;
+                        }
+                        self.errores.hoja_tipo = !o.tipoTarea;
+                        if (self.errores.hoja_tipo) {
                             return false;
                         }
                         $.ajax({
@@ -1560,9 +1642,9 @@
                     saveDerivation: function(callback, o) {
                         var self = this;
                         if (typeof o==='undefined') o = this.derivacion;
-                        self.derivacion_err.fecha = !o.fecha;
-                        self.derivacion_err.destinatarios = !o.destinatarios;
-                        if (self.derivacion_err.fecha || self.derivacion_err.destinatarios) {
+                        self.errores.derivacion_fecha = !o.fecha;
+                        self.errores.derivacion_destinatarios = !o.destinatarios;
+                        if (self.errores.derivacion_fecha || self.errores.derivacion_destinatarios) {
                             return;
                         }
                         $.ajax({
