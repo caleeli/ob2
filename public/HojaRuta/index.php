@@ -155,7 +155,7 @@
                                 <div class="col-lg-10">
                                     <input required type="number" step="any" v-model="hoja.nroDeControl" class="form-control" placeholder="" v-on:blur="validarNroControl(hoja.nroDeControl)">
                                     <p class="text-danger" v-if="errores.nro_control_dup"><small>{{errores.nro_control_msg}}</small></p>
-                                    <p class="text-success" v-if="!errores.nro_control_dup && errores.nro_control_msg"><small>{{errores.nro_control_msg}}</small></p>
+                                    <p class="text-success" v-if="!errores.nro_control_dup && errores.nro_control_msg"><small><i class="fa fa-check"></i></small></p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -605,7 +605,7 @@
                                 <div class="col-lg-10">
                                     <input type="text" disabled1="disabled" v-model="hoja.nroDeControl" class="form-control" placeholder="" v-on:blur="validarNroControl(hoja.nroDeControl)">
                                     <p class="text-danger" v-if="errores.nro_control_dup"><small>{{errores.nro_control_msg}}</small></p>
-                                    <p class="text-success" v-if="!errores.nro_control_dup && errores.nro_control_msg"><small>{{errores.nro_control_msg}}</small></p>
+                                    <p class="text-success" v-if="!errores.nro_control_dup && errores.nro_control_msg"><small><i class="fa fa-check"></i></small></p>
                                 </div>
                             </div>
                             <div class="form-group">

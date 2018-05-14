@@ -17,13 +17,12 @@ if (!isset($_REQUEST['gestion'])) {
     echo json_encode($res);
     return;
 }
-$numero = $_REQUEST['numero']*1;
+$numero = $_REQUEST['numero'] * 1;
 $gestion = $_REQUEST['gestion'];
 
 $stmt = $connection->prepare('select nro_de_control from hoja_ruta where '
-    . 'nro_de_control = '.$numero.' and gestion = ?');
+    . 'nro_de_control = ' . $numero . ' and gestion = ?');
 $stmt->execute([
-    //$numero * 1,
     $gestion
 ]);
 
@@ -31,7 +30,7 @@ $row = $stmt->fetchAll();
 $success = !$row;
 $res = [
     'success' => $success,
-    'message' => $success ? '<i class="fa fa-check"></i>' : 'El número de control de la hoja de ruta ya fue registrado.',
-    'row' => $row,
+    'message' => $success ? 'ok' : 'El número de control de la hoja de ruta ya fue registrado.',
+    'row'     => $row,
 ];
 echo json_encode($res);
