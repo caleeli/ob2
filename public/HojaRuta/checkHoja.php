@@ -27,7 +27,7 @@ $stmt->execute([
     $gestion
 ]);
 
-$row = $stmt->fetch();
+$row = $stmt->fetchAll();
 $success = !$row;
 $res = [
     'success' => $success,
