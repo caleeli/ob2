@@ -28,7 +28,7 @@ $stmt->execute([
 ]);
 
 $row = $stmt->fetch();
-$success = !empty($row);
+$success = !$row;
 $res = [
     'success' => $success,
     'message' => $success ? '<i class="fa fa-check"></i>' : 'El número de control de la hoja de ruta ya fue registrado.',
