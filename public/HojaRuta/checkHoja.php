@@ -21,9 +21,9 @@ $numero = $_REQUEST['numero'];
 $gestion = $_REQUEST['gestion'];
 
 $stmt = $connection->prepare('select nro_de_control from hoja_ruta where '
-    . 'nro_de_control = '.$numero.' and gestion = ?');
+    . 'nro_de_control = ? and gestion = ?');
 $stmt->execute([
-    //$numero * 1,
+    $numero * 1,
     $gestion
 ]);
 
