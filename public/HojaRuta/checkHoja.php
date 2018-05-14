@@ -23,7 +23,7 @@ $gestion = $_REQUEST['gestion'];
 $stmt = $connection->prepare('select nro_de_control from hoja_ruta where '
     . 'nro_de_control = ? and gestion = ?');
 $stmt->execute([
-    $numero,
+    $numero * 1,
     $gestion
 ]);
 
@@ -33,9 +33,5 @@ $res = [
     'success' => $success,
     'message' => $success ? '<i class="fa fa-check"></i>' : 'El número de control de la hoja de ruta ya fue registrado.',
     'row' => $row,
-    'data'=>[
-    $numero,
-    $gestion
-],
 ];
 echo json_encode($res);
