@@ -17,13 +17,13 @@ if (!isset($_REQUEST['gestion'])) {
     echo json_encode($res);
     return;
 }
-$numero = $_REQUEST['numero'];
+$numero = $_REQUEST['numero']*1;
 $gestion = $_REQUEST['gestion'];
 
 $stmt = $connection->prepare('select nro_de_control from hoja_ruta where '
-    . 'nro_de_control = ? and gestion = ?');
+    . 'nro_de_control = '.$numero.' and gestion = ?');
 $stmt->execute([
-    $numero * 1,
+    //$numero * 1,
     $gestion
 ]);
 
