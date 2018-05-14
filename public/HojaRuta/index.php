@@ -127,7 +127,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{'form-group':1, 'has-error':errores.fechaHojaRuta}">
                                 <label for="inputEmail" class="col-lg-2 control-label">Fecha de recepción</label>
                                 <div class="col-lg-10">
                                         <div class='input-group date' id='datetimepicker1'>
@@ -150,7 +150,7 @@
                                     <input required="required" type="text" v-model="hoja.procedencia" class="form-control" placeholder="">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{'form-group':1, 'has-error':errores.nroDeControl}">
                                 <label class="col-lg-2 control-label">Nº de control</label>
                                 <div class="col-lg-10">
                                     <input required type="number" step="any" v-model="hoja.nroDeControl" class="form-control" placeholder="" v-on:blur="validarNroControl(hoja.nroDeControl)">
@@ -603,9 +603,7 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Nº de control</label>
                                 <div class="col-lg-10">
-                                    <input type="text" disabled1="disabled" v-model="hoja.nroDeControl" class="form-control" placeholder="" v-on:blur="validarNroControl(hoja.nroDeControl)">
-                                    <p class="text-danger" v-if="errores.nro_control_dup"><small>{{errores.nro_control_msg}}</small></p>
-                                    <p class="text-success" v-if="!errores.nro_control_dup && errores.nro_control_msg"><small><i class="glyphicon glyphicon-check"></i></small></p>
+                                    <input type="text" disabled1="disabled" v-model="hoja.nroDeControl" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -1261,7 +1259,7 @@
             this.destinatario= '';
             this.fechaAuditor= '';
             this.conclusion= '';
-            this.tipo= 'interna';
+            this.tipo= 'externa';
             this.tipoTarea= '';
             this.numero= '';
             this.load(values);
@@ -1453,6 +1451,7 @@
                             hoja_tipo: false,
                             nro_control_dup: false,
                             nro_control_msg: '',
+                            nroDeControl: false,
                         },
                     };
                 },
@@ -1506,7 +1505,7 @@
                         this.hoja.destinatario = '';
                         this.hoja.fechaAuditor = '';
                         this.hoja.conclusion = '';
-                        this.hoja.tipo = !tipo ? 'interna' : tipo;
+                        this.hoja.tipo = !tipo ? 'externa' : tipo;
                         this.hoja.tipoTarea = '';
                         this.hoja.numero = '';
                         this.hoja.anexoHojas_fjs = '';
@@ -1521,8 +1520,9 @@
                     save: function(callback) {
                         var self = this;
                         var o = this.hoja;
-                        if (!o.fecha.match(/\d\d\d\d-\d\d-\d\d/)) {
-                            alert("El formato de la fecha no es correcto");
+                        self.errores.fechaHojaRuta = !o.fecha.match(/\d\d\d\d-\d\d-\d\d/);
+                        if (self.errores.fechaHojaRuta) {
+                            //alert("El formato de la fecha no es correcto");
                             return false;
                         }
                         self.errores.hoja_tipo = !o.tipoTarea;
@@ -1834,6 +1834,10 @@
                         var self = this;
                         var o = self.hoja;
                         var anexoHojas = [];
+                        self.errores.nroDeControl = !(!self.errores.nro_control_dup && self.errores.nro_control_msg);
+                        if (self.errores.nroDeControl) {
+                            return false;
+                        }
                         if (o.anexoHojas_fjs) anexoHojas.push(o.anexoHojas_fjs+' fjs');
                         if (o.anexoHojas_arch) anexoHojas.push(o.anexoHojas_arch+' arch');
                         if (o.anexoHojas_ani) anexoHojas.push(o.anexoHojas_ani+' anillados');
