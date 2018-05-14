@@ -643,6 +643,7 @@
                                                             <dt>Creado por:</dt> <dd>{{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}</dd>
                                                             <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? usuariosAsignados(tarea.usuarios).map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
                                                         </dl>
+                                                        <button class="btn btn-primary" type="button"><i class="fa fa-link"></i> Enlazar</button>
                                                     </div>
                                                     <div class="col-lg-7" id="cluster_info">
                                                         <dl class="dl-horizontal">
@@ -679,12 +680,14 @@
                                                         <div class=" wizard-big wizard clearfix">
                                                             <div class="steps clearfix">
                                                                 <ul role="tablist">
-                                                                    <li role="tab" class="current" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
-                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
-                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
-                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
-                                                                    <li role="tab" class="disabled" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
-                                                                    <li role="tab" class="unable" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
+                                                                    <li role="tab" v-bind:class="{'current': pasos.length>=1, 'disabled': pasos.length<1}" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
+                                                                    <li role="tab" v-bind:class="{'current': pasos.length>=2, 'disabled': pasos.length<2}"aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
+                                                                    <li role="tab" v-bind:class="{'current': pasos.length>=3, 'disabled': pasos.length<3}" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
+                                                                    <li role="tab" v-bind:class="{'current': pasos.length>=4, 'disabled': pasos.length<4}" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
+                                                                    <li role="tab" v-bind:class="{'current': pasos.length>=5, 'disabled': pasos.length<5}" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
+                                                                    <li role="tab" v-bind:class="{'current': pasos.length>=6, 'disabled': pasos.length<6}" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
+                                                                    <li role="tab" v-bind:class="{'current': pasos.length>=7, 'disabled': pasos.length<7}" aria-disabled="true"><a aria-controls="form-p-1">Paso 7</a></li>
+                                                                    <li role="tab" v-bind:class="{'current': pasos.length>=8, 'disabled': pasos.length<8}" aria-disabled="true"><a aria-controls="form-p-1">Paso 8</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -694,16 +697,33 @@
                                                                     v-bind:target='"tareas"'
                                                                     v-bind:canupload='true'
                                                                     v-bind:candelete='true'
-                                                                    v-bind:filter="''">
+                                                                    v-bind:filter="''"
+                                                                    col="6"
+                                                                    v-show="!pasosAuditoriaAbierta">
+                                                                    <h3>{{pasosTitulo(paso)}}</h3>
                                                                     <div>
                                                                         <label>Fecha</label>
-                                                                        <fecha v-model="paso.fecha"/>
+                                                                        <fecha v-model="pasos[paso].fecha"/>
                                                                     </div>
                                                                     <div>
                                                                         <label>Descripción</label>
-                                                                        <textarea class="form-control" v-model='paso.descripcion'></textarea>
+                                                                        <textarea class="form-control" v-model='pasos[paso].descripcion'></textarea>
                                                                     </div>
+                                                                    <br>
+                                                                    <button v-if="paso===3" class="btn btn-primary btn-block" type="button" v-on:click='abrirPasoAuditoria'><i class="fa fa-save"></i> F-3007</button>
+                                                                    <button class="btn btn-primary btn-block" type="button" v-on:click='guardarPaso'><i class="fa fa-save"></i> Guardar</button>
                                                                 </folder-viewer>
+                                                                <div class="col-md-12" style="background: white;" v-show="pasosAuditoriaAbierta">
+                                                                    <iframe id="editorAuditoria" v-bind:src="auditoriaUrl" style="width:100%;height:80vh;border:1px solid black;"></iframe>
+                                                                    <div class="form-group">
+                                                                        <div>
+                                                                            <input class="form-control" v-model="auditoriaFileName">
+                                                                            <button class="btn btn-primary" type="button" v-on:click="pasosRecargarFileAuditoria">Recargar</button>
+                                                                            <button class="btn btn-primary" type="button" v-on:click="pasosGuardarFileAuditoria">Guardar</button>
+                                                                            <button class="btn btn-white" type="button" v-on:click="pasosCerrarFileAuditoria">Cerrar</button>
+                                                                        </div>
+                                                                    </div>		
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <!--
@@ -1236,7 +1256,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.113"></script>
+        <script src="../js/server.js?v0.114"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1316,10 +1336,12 @@
                         biblioteca_normativa: '',
                         biblioteca_gestion: '',
                         tipoTarea: 'EDC',
-                        paso: {
+                        pasos: [{
                             fecha: '',
                             descripcion: '',
-                        },
+                        }],
+                        paso: 0,
+                        pasosAuditoriaAbierta: false,
                     };
                 },
                 computed: {
@@ -1334,6 +1356,47 @@
                     },
                 },
                 methods: {
+                    pasosRecargarFileAuditoria: function () {
+                        this.recargarFileAuditoria();
+                    },
+                    pasosGuardarFileAuditoria: function () {
+                        this.guardarFileAuditoria();
+                        this.pasosAuditoriaAbierta = false;
+                    },
+                    pasosCerrarFileAuditoria: function () {
+                        this.cerrarFileAuditoria();
+                        this.pasosAuditoriaAbierta = false;
+                    },
+                    abrirPasoAuditoria: function () {
+                        this.pasosAuditoriaAbierta = true;
+                        this.tipoAuditoria = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
+                        this.crearAuditoria();
+                    },
+                    guardarPaso: function () {
+                        if (this.paso===7) {
+                            return;
+                        }
+                        if (this.paso===this.pasos.length-1) {
+                            this.pasos.push({
+                                fecha: '',
+                                descripcion: '',
+                            });
+                        }
+                        this.paso++;
+                    },
+                    pasosTitulo: function (paso) {
+                        var titulos = [
+                            '1. Nota de solicitud de documentación a la empresa',
+                            '2. Nota de solicitud de papeles de trabajo',
+                            '3. Análisis de tendencia',
+                            '4. Trabajo de campo',
+                            '5. Informe/Nota de Evaluación de Consistencias',
+                            '6. Revisión',
+                            '7. Documento Aprobado',
+                            '8. Remisión de Informe de Evaluación de Consistencia a Despacho',
+                        ];
+                        return titulos[paso];
+                    },
                     setTipoTarea: function (tipoTarea) {
                         this.tipoTarea = tipoTarea;
                         this.listarTareas();

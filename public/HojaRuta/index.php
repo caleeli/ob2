@@ -153,7 +153,9 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Nº de control</label>
                                 <div class="col-lg-10">
-                                    <input required type="number" step="any" v-model="hoja.nroDeControl" class="form-control" placeholder="">
+                                    <input required type="number" step="any" v-model="hoja.nroDeControl" class="form-control" placeholder="" v-on:blur="validarNroControl(hoja.nroDeControl)">
+                                    <p class="text-danger" v-if="errores.nro_control_dup"><small>{{errores.nro_control_msg}}</small></p>
+                                    <p class="text-success" v-if="!errores.nro_control_dup && errores.nro_control_msg"><small>{{errores.nro_control_msg}}</small></p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -601,7 +603,9 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Nº de control</label>
                                 <div class="col-lg-10">
-                                    <input type="text" disabled1="disabled" v-model="hoja.nroDeControl" class="form-control" placeholder="">
+                                    <input type="text" disabled1="disabled" v-model="hoja.nroDeControl" class="form-control" placeholder="" v-on:blur="validarNroControl(hoja.nroDeControl)">
+                                    <p class="text-danger" v-if="errores.nro_control_dup"><small>{{errores.nro_control_msg}}</small></p>
+                                    <p class="text-success" v-if="!errores.nro_control_dup && errores.nro_control_msg"><small>{{errores.nro_control_msg}}</small></p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -1447,10 +1451,27 @@
                             derivacion_fecha: false,
                             derivacion_destinatarios: false,
                             hoja_tipo: false,
+                            nro_control_dup: false,
+                            nro_control_msg: '',
                         },
                     };
                 },
                 methods: {
+                    validarNroControl: function (numero) {
+                        var self = this;
+                        $.ajax({
+                            url: 'checkHoja.php',
+                            data: {
+                                numero: numero,
+                                gestion: new Date().getFullYear(),
+                            },
+                            dataType: 'json',
+                            success: function (response) {
+                                self.errores.nro_control_dup = !response.success;
+                                self.errores.nro_control_msg = !response.message;
+                            }
+                        });
+                    },
                     exportarExcel: function (id, name) {
                         exportToExcel(id, name);
                     },

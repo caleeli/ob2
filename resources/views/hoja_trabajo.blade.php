@@ -123,7 +123,7 @@
 </script>
 <script type='text/x-template' id='texto'>
     <div class="editable" >
-        @{{innerValue}}
+        <span v-html="innerValue.split('\n').join('<br>')"></span>
         <textarea v-model="innerValue"></textarea>
     </div>
 </script>

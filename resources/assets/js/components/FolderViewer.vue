@@ -1,17 +1,16 @@
 <template>
     <div class="row">
-        <div class="col-sm-5 col-md-3">
+        <div v-bind:class="colDef1()">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="file-manager">
-                        <span v-if="canupload" class="btn btn-primary btn-block" style="position: relative;">Subir archivo(s) <img src='/images/ajax-loader.gif' v-show='loading'><upload v-model="upload" v-bind:target="target" v-bind:multiplefile="true" /></span>
-                        <div v-if="canupload" class="hr-line-dashed"></div>
                         <slot></slot>
+                        <span v-if="canupload" class="btn btn-primary btn-block" style="position: relative;">Subir archivo(s) <img src='/images/ajax-loader.gif' v-show='loading'><upload v-model="upload" v-bind:target="target" v-bind:multiplefile="true" /></span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-7 col-md-9 animated fadeInRight">
+        <div v-bind:class="colDef2()">
             <div class="row">
                 <div class="col-sm-12">
                     <div v-for="file in listOfFiles" class="file-box">
@@ -57,6 +56,7 @@
             "target": String,
             "candelete": Boolean,
             "canupload": Boolean,
+            "col": String,
         },
         watch: {
             'upload': function (value) {
@@ -68,6 +68,20 @@
             },
         },
         methods: {
+            colDef1: function () {
+                if (this.col) {
+                    return "col-sm-"+this.col+" col-md-"+this.col;
+                } else {
+                    return "col-sm-5 col-md-3";
+                }
+            },
+            colDef2: function () {
+                if (this.col) {
+                    return "col-sm-"+(12-this.col)+" col-md-"+(12-this.col) + " animated fadeInRight";
+                } else {
+                    return "col-sm-7 col-md-9 animated fadeInRight";
+                }
+            },
             loadFiles: function () {
                 var self = this;
                 if (self.pendingAjax) return;
