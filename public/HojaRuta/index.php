@@ -246,25 +246,25 @@
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="SYD" v-model="hoja.tipoTarea">
+                                            <input type="radio" name="hoja_edit_tipo" value="EIP" v-model="hoja.tipoTarea">
                                             7. Evaluación de Informes de POA y PE de UAI
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="TAA" v-model="hoja.tipoTarea">
+                                            <input type="radio" name="hoja_edit_tipo" value="SYD" v-model="hoja.tipoTarea">
                                             8. Solicitudes y denuncias
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="hoja.tipoTarea">
+                                            <input type="radio" name="hoja_edit_tipo" value="TAD" v-model="hoja.tipoTarea">
                                             9. Tareas administrativas
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="hoja.tipoTarea">
+                                            <input type="radio" name="hoja_edit_tipo" value="OTR" v-model="hoja.tipoTarea">
                                             10. Otros
                                         </label>
                                     </div>
@@ -670,25 +670,25 @@
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="SYD" v-model="hoja.tipoTarea">
+                                            <input type="radio" name="hoja_edit_tipo" value="EIP" v-model="hoja.tipoTarea">
                                             7. Evaluación de Informes de POA y PE de UAI
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="TAA" v-model="hoja.tipoTarea">
+                                            <input type="radio" name="hoja_edit_tipo" value="SYD" v-model="hoja.tipoTarea">
                                             8. Solicitudes y denuncias
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="hoja.tipoTarea">
+                                            <input type="radio" name="hoja_edit_tipo" value="TAD" v-model="hoja.tipoTarea">
                                             9. Tareas administrativas
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="hoja_edit_tipo" value="SDI" v-model="hoja.tipoTarea">
+                                            <input type="radio" name="hoja_edit_tipo" value="OTR" v-model="hoja.tipoTarea">
                                             10. Otros
                                         </label>
                                     </div>
