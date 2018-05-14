@@ -17,7 +17,11 @@ class FolderController extends Controller
         $filter = $request->input('filter', '');
         $regexp = $filter ? '/' . str_replace('%', '.*', preg_quote($filter, '/')) . '/' : '';
         $list = $this->listFiles($storage, $regexp, [], '');
-        $list = $this->listFiles('empresas', $regexp, $list, '/.+_crea\..+/');
+        if ($storage==='tareas') {
+
+        } else {
+            $list = $this->listFiles('empresas', $regexp, $list, '/.+_crea\..+/');
+        }
         return $response = response()->json(['data' => $list], 200);
     }
 
