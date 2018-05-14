@@ -33,5 +33,9 @@ $res = [
     'success' => $success,
     'message' => $success ? '<i class="fa fa-check"></i>' : 'El número de control de la hoja de ruta ya fue registrado.',
     'row' => $row,
+    'data'=>[
+    $numero,
+    $gestion
+],
 ];
 echo json_encode($res);
