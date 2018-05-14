@@ -1468,7 +1468,7 @@
                             dataType: 'json',
                             success: function (response) {
                                 self.errores.nro_control_dup = !response.success;
-                                self.errores.nro_control_msg = !response.message;
+                                self.errores.nro_control_msg = response.message;
                             }
                         });
                     },
