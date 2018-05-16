@@ -2211,7 +2211,7 @@
                     cargarDestinatarios : function () {
                         var self = this;
                         $.ajax({
-                            url:'/api/UserAdministration/users?fields=nombres,apellidos',
+                            url:'/api/UserAdministration/users?fields=nombres,apellidos&sort=position',
                             method:'get',
                             data: {
                                 t: Math.floor(new Date().getTime()/1000)
