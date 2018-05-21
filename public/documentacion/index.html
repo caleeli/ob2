@@ -111,6 +111,7 @@
                         <li class="active"><a href="#estadosFinancieros"><img class="fa fa-th-large menu-icon" src="img/eeff.png"> <span class="nav-label">Estados financieros</span></a></li>
                         <li class="active"><a href="#UAI" v-on:click="abrirUAI"><img class="fa fa-th-large menu-icon" src="img/uai.png"> <span class="nav-label">UAI</span></a></li>
                         <li class="active"><a href="#firmasDeAuditoria" v-on:click="abrirFirmasDeAuditoria"><img class="fa fa-th-large menu-icon" src="img/firmas.png"> <span class="nav-label">Evaluaciones de Consistencia</span></a></li>
+                        <li class="active"><a href="#contratacionesDirectas" v-on:click="abrirContratacionesDirectas"><img class="fa fa-th-large menu-icon" src="img/firmas.png"> <span class="nav-label">Contrataciones Directas</span></a></li>
                         <li class="active"><a href="#PEIyPOA"><img class="fa fa-th-large menu-icon" src="img/calendar.png"> <span class="nav-label">PEI y POA</span></a></li>
                         <li class="active"><a href="#seguimientoDeTareas"><img class="fa fa-th-large menu-icon" src="img/tasks.png"> <span class="nav-label">Seguimiento de tareas</span></a></li>
                         <li class="active"><a href="#cambio_password"><img class="fa fa-th-large menu-icon" src="img/candado.png"> <span class="nav-label">Cambio de contraseña</span></a></li>
@@ -431,7 +432,7 @@
                         </div>
                     </carouselitem>
                     <!--
-                        FIRMAS
+                        EVALUACIONES DE CONSISTENCIA
                     -->
                     <carouselitem id="firmasDeAuditoria">
                         <div class="row wrapper border-bottom page-heading">
@@ -445,6 +446,29 @@
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
                                                     <abm id="abmFirmasDeAuditoria" v-bind:model="firma_auditoria" v-bind:editable="true" buttons="close,save,delete"></abm>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </carouselitem>
+                    <!--
+                        CONTRATACIONES DIRECTAS
+                    -->
+                    <carouselitem id="contratacionesDirectas">
+                        <div class="row wrapper border-bottom page-heading">
+                            <div class="wrapper wrapper-content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox">
+                                            <div class="ibox-title">
+                                                <h5>CONTRATACIONES DIRECTAS</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <div style="overflow: auto;">
+                                                    <abm id="abmContratacionesDirectas" v-bind:model="contratacion_directa" v-bind:editable="true" buttons="close,save,delete"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -1257,7 +1281,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.114"></script>
+        <script src="../js/server.js?v0.115"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1295,6 +1319,7 @@
                         estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
                         estado_financiero_adm: new UserAdministration.EstadoFinanciero(),
                         firma_auditoria: new UserAdministration.Firma(function(){return "/api/UserAdministration/firmas";}),
+                        contratacion_directa: new UserAdministration.Contratacion(function(){return "/api/UserAdministration/contratacions";}),
                         uai: new UserAdministration.Uai(function(){return "/api/UserAdministration/users/"+localStorage.user_id+"/uais";}),
                         tarea: new UserAdministration.Tarea(),
                         avance: new UserAdministration.Avance(function(){return app.tarea && app.tarea.id? ("/api/UserAdministration/tareas/"+app.tarea.id+"/avances") : "/api/UserAdministration/avances"}),
@@ -1605,6 +1630,9 @@
                     },
                     abrirFirmasDeAuditoria: function () {
                         $("#abmFirmasDeAuditoria").get(0).__vue__.goto(0);
+                    },
+                    abrirContratacionesDirectas: function () {
+                        $("#abmContratacionesDirectas").get(0).__vue__.goto(0);
                     },
                     buscarTarea: function () {
                         this.pintarTareas();

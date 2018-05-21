@@ -906,6 +906,153 @@
                 }
             }),
             /**
+             * Contrataciones directas.
+             *
+             */
+            new Module.Model({
+                "name": "contratacion",
+                "title": "Contratación",
+                "table": "contrataciones",
+                "pluralTitle": "Contrataciones directas",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "cod_firma",
+                        "type": "string",
+                        "label": "Código",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "gestion",
+                        "label": "Gestión",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "detalle",
+                        "label": "Detalle",
+                        "type": "string",
+                        "default": "",
+                        "list": false
+                    }),
+                    new Module.Model.Field({
+                        "name": "representante_legal",
+                        "label": "Representante legal",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "informe_dictamen",
+                        "label": "Informe o Dictamen",
+                        "type": "array",
+                        "ui": "file",
+                        "textField": function(data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('&lt;a&gt;&lt;/a&gt;');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
+                            return $("&lt;div /&gt;").append($a).html()
+                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
+                              + time;
+                        },
+                        "list": true,
+                    }),
+                    new Module.Model.Field({
+                        "name": "vigencia_certificado",
+                        "label": "Vigencia certificado",
+                        "type": "string",
+                        "list": false,
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "documento_firma",
+                        "type": "array",
+                        "label": "Documento Firma",
+                        "ui": "file",
+                        "textField": function(data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('&lt;a&gt;&lt;/a&gt;');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
+                            return $("&lt;div /&gt;").append($a).html()
+                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
+                              + time;
+                        },
+                    }),
+                    new Module.Model.Field({
+                        "name": "informes",
+                        "type": "array",
+                        "label": "Informes",
+                        "ui": "multiplefile",
+                        "textField": function(data,type,row){
+                            var res = [];
+                            if (data &amp;&amp; typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('&lt;a href="' + item.url + '" target="_blank"&gt;' + item.name + '&lt;/a&gt;');
+                                });
+                            }
+                            return res.join("&lt;br&gt; ");
+                        }
+                    }),
+                    new Module.Model.Field({
+                        "name": "usuario_abm_id",
+                        "type": "integer",
+                        "label": "usuario",
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "empresa",
+                        "model": "empresa",
+                        "nullable": true,
+                        "list": false,
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
+                        "form": false
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "owner",
+                        "label": "Propietario",
+                        "model": "user",
+                        "textField": null,
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "nullable": true,
+                        "form": false,
+                        "list": true,
+                        "visible": false
+                    })
+                ],
+                "methods": {
+                    "listEditButton(data, type, row, meta)": function(data, type, row, meta){
+                        var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
+                        var canEdit = owner_id == localStorage.user_id;
+                        return canEdit ? true : '';
+                    }
+                }
+            }),
+            /**
              * UAIs
              *
              */
@@ -1291,7 +1438,7 @@
                     new Module.Model.Field({
                         "name": "user_id",
                         "label": "Usuario",
-                        "type": "int"
+                        "type": "integer"
                     }),
                     new Module.Model.Field({
                         "name": "nro_asignacion",
@@ -1301,7 +1448,7 @@
                     new Module.Model.Field({
                         "name": "dias_plazo",
                         "label": "Días plazo",
-                        "type": "int"
+                        "type": "integer"
                     }),
                 ],
                 "associations": [

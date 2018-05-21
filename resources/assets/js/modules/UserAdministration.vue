@@ -358,6 +358,128 @@ listEditButton: function (data, type, row, meta){
 UserAdministration.Firma.prototype = Object.create(Model.prototype);
 UserAdministration.Firma.prototype.constructor = Model;
 
+UserAdministration.Contratacion = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/contratacions";
+    Model.call(this, url, id, "UserAdministration.Contratacion");
+    this.$list = function () {
+        return "fields=cod_firma,gestion,representante_legal,informe_dictamen,documento_firma,informes,usuario_abm_id,owner";
+    };
+    this.$name = "Contratacion";
+    this.$pluralName = "Contratacions";
+    this.$title = "Contratación";
+    this.$pluralTitle = "Contrataciones directas";
+    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Representante legal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Informe o Dictamen","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        },"value":"informe_dictamen","isAssociation":false},"vigencia_certificado":{"name":"vigencia_certificado","label":"Vigencia certificado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"vigencia_certificado","isAssociation":false},"documento_firma":{"name":"documento_firma","label":"Documento Firma","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        },"value":"documento_firma","isAssociation":false},"informes":{"name":"informes","label":"Informes","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
+                        },"value":"informes","isAssociation":false},"usuario_abm_id":{"name":"usuario_abm_id","label":"usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"usuario_abm_id","isAssociation":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Representante legal","data":"attributes.representante_legal"},{"title":"Informe o Dictamen","data":"attributes.informe_dictamen","render":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        }},{"title":"Documento Firma","data":"attributes.documento_firma","render":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        }},{"title":"Informes","data":"attributes.informes","render":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
+                        }},{"title":"usuario","data":"attributes.usuario_abm_id"},{"title":"Propietario","visible":false,"render":function (data, type, full, meta) {
+                            return data ? data : '';
+                        },"data":"relationships.owner.attributes.null"}];
+    };
+    this.$methods = {
+listEditButton: function (data, type, row, meta){
+                        var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
+                        var canEdit = owner_id == localStorage.user_id;
+                        return canEdit ? true : '';
+                    }    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Contratacion.prototype = Object.create(Model.prototype);
+UserAdministration.Contratacion.prototype.constructor = Model;
+
 UserAdministration.Uai = function (url, id) {
     var self = this;
     this.$defaultUrl = "/api/UserAdministration/uais";

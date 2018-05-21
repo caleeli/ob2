@@ -24,9 +24,9 @@ class Asignacion extends Model
     );
     protected $casts = array(
       'tarea_id' => 'int',
-      'user_id' => 'int',
+      'user_id' => 'integer',
       'nro_asignacion' => 'int',
-      'dias_plazo' => 'int',
+      'dias_plazo' => 'integer',
     );
     protected $events = array(
     );
