@@ -363,13 +363,13 @@ UserAdministration.Contratacion = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/contratacions";
     Model.call(this, url, id, "UserAdministration.Contratacion");
     this.$list = function () {
-        return "fields=cod_firma,gestion,representante_legal,informe_dictamen,documento_firma,informes,usuario_abm_id,owner";
+        return "fields=cod_firma,gestion,representante_legal,informe_dictamen,nota,owner";
     };
     this.$name = "Contratacion";
     this.$pluralName = "Contratacions";
     this.$title = "Contratación";
     this.$pluralTitle = "Contrataciones directas";
-    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Representante legal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Informe o Dictamen","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Representante legal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Informe","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -387,7 +387,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"informe_dictamen","isAssociation":false},"vigencia_certificado":{"name":"vigencia_certificado","label":"Vigencia certificado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"vigencia_certificado","isAssociation":false},"documento_firma":{"name":"documento_firma","label":"Documento Firma","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"informe_dictamen","isAssociation":false},"vigencia_certificado":{"name":"vigencia_certificado","label":"Vigencia certificado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"vigencia_certificado","isAssociation":false},"nota":{"name":"nota","label":"Nota","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -405,20 +405,12 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"documento_firma","isAssociation":false},"informes":{"name":"informes","label":"Informes","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
-                            var res = [];
-                            if (data && typeof data.forEach==='function') {
-                                data.forEach(function (item) {
-                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
-                                });
-                            }
-                            return res.join("<br> ");
-                        },"value":"informes","isAssociation":false},"usuario_abm_id":{"name":"usuario_abm_id","label":"usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"usuario_abm_id","isAssociation":false}};
+                        },"value":"nota","isAssociation":false},"usuario_abm_id":{"name":"usuario_abm_id","label":"usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"usuario_abm_id","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Representante legal","data":"attributes.representante_legal"},{"title":"Informe o Dictamen","data":"attributes.informe_dictamen","render":function (data,type,row){
+        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Representante legal","data":"attributes.representante_legal"},{"title":"Informe","data":"attributes.informe_dictamen","render":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -436,7 +428,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Documento Firma","data":"attributes.documento_firma","render":function (data,type,row){
+                        }},{"title":"Nota","data":"attributes.nota","render":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -454,15 +446,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Informes","data":"attributes.informes","render":function (data,type,row){
-                            var res = [];
-                            if (data && typeof data.forEach==='function') {
-                                data.forEach(function (item) {
-                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
-                                });
-                            }
-                            return res.join("<br> ");
-                        }},{"title":"usuario","data":"attributes.usuario_abm_id"},{"title":"Propietario","visible":false,"render":function (data, type, full, meta) {
+                        }},{"title":"Propietario","visible":false,"render":function (data, type, full, meta) {
                             return data ? data : '';
                         },"data":"relationships.owner.attributes.null"}];
     };

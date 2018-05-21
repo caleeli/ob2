@@ -17,11 +17,10 @@ class Contratacion extends Model
       3 => 'representante_legal',
       4 => 'informe_dictamen',
       5 => 'vigencia_certificado',
-      6 => 'documento_firma',
-      7 => 'informes',
-      8 => 'usuario_abm_id',
-      9 => 'empresa_id',
-      10 => 'owner_id',
+      6 => 'nota',
+      7 => 'usuario_abm_id',
+      8 => 'empresa_id',
+      9 => 'owner_id',
     );
     protected $attributes = array(
       'cod_firma' => '',
@@ -30,8 +29,7 @@ class Contratacion extends Model
       'representante_legal' => '',
       'informe_dictamen' => null,
       'vigencia_certificado' => '',
-      'documento_firma' => null,
-      'informes' => null,
+      'nota' => null,
       'usuario_abm_id' => null,
     );
     protected $casts = array(
@@ -41,8 +39,7 @@ class Contratacion extends Model
       'representante_legal' => 'string',
       'informe_dictamen' => 'array',
       'vigencia_certificado' => 'string',
-      'documento_firma' => 'array',
-      'informes' => 'array',
+      'nota' => 'array',
       'usuario_abm_id' => 'integer',
     );
     protected $events = array(

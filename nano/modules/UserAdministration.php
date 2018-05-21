@@ -942,7 +942,7 @@
                     }),
                     new Module.Model.Field({
                         "name": "informe_dictamen",
-                        "label": "Informe o Dictamen",
+                        "label": "Informe",
                         "type": "array",
                         "ui": "file",
                         "textField": function(data,type,row){
@@ -974,9 +974,9 @@
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "documento_firma",
+                        "name": "nota",
                         "type": "array",
-                        "label": "Documento Firma",
+                        "label": "Nota",
                         "ui": "file",
                         "textField": function(data,type,row){
                             if (!data) {
@@ -999,24 +999,10 @@
                         },
                     }),
                     new Module.Model.Field({
-                        "name": "informes",
-                        "type": "array",
-                        "label": "Informes",
-                        "ui": "multiplefile",
-                        "textField": function(data,type,row){
-                            var res = [];
-                            if (data &amp;&amp; typeof data.forEach==='function') {
-                                data.forEach(function (item) {
-                                    res.push('&lt;a href="' + item.url + '" target="_blank"&gt;' + item.name + '&lt;/a&gt;');
-                                });
-                            }
-                            return res.join("&lt;br&gt; ");
-                        }
-                    }),
-                    new Module.Model.Field({
                         "name": "usuario_abm_id",
                         "type": "integer",
                         "label": "usuario",
+                        "list": false,
                     }),
                 ],
                 "associations": [
