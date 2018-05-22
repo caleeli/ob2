@@ -14,11 +14,9 @@ class CreateAdmContratacionsTable extends Migration
             $table->string('cod_firma')->nullable();
             $table->string('gestion')->nullable();
             $table->string('detalle')->nullable();
-            $table->string('representante_legal')->nullable();
             $table->text('informe_dictamen')->nullable();
             $table->string('vigencia_certificado')->nullable();
             $table->text('nota')->nullable();
-            $table->integer('usuario_abm_id')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();
             $table->integer('owner_id')->unsigned()->nullable();
             $table->timestamps();

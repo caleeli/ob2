@@ -935,12 +935,6 @@
                         "list": false
                     }),
                     new Module.Model.Field({
-                        "name": "representante_legal",
-                        "label": "Representante legal",
-                        "type": "string",
-                        "default": ""
-                    }),
-                    new Module.Model.Field({
                         "name": "informe_dictamen",
                         "label": "Informe",
                         "type": "array",
@@ -998,12 +992,12 @@
                               + time;
                         },
                     }),
-                    new Module.Model.Field({
+                    /*new Module.Model.Field({
                         "name": "usuario_abm_id",
                         "type": "integer",
                         "label": "usuario",
                         "list": false,
-                    }),
+                    }),*/
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
@@ -1032,9 +1026,7 @@
                 ],
                 "methods": {
                     "listEditButton(data, type, row, meta)": function(data, type, row, meta){
-                        var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
-                        var canEdit = owner_id == localStorage.user_id;
-                        return canEdit ? true : '';
+                        return true;
                     }
                 }
             }),

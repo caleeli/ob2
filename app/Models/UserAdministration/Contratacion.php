@@ -14,33 +14,27 @@ class Contratacion extends Model
       0 => 'cod_firma',
       1 => 'gestion',
       2 => 'detalle',
-      3 => 'representante_legal',
-      4 => 'informe_dictamen',
-      5 => 'vigencia_certificado',
-      6 => 'nota',
-      7 => 'usuario_abm_id',
-      8 => 'empresa_id',
-      9 => 'owner_id',
+      3 => 'informe_dictamen',
+      4 => 'vigencia_certificado',
+      5 => 'nota',
+      6 => 'empresa_id',
+      7 => 'owner_id',
     );
     protected $attributes = array(
       'cod_firma' => '',
       'gestion' => '',
       'detalle' => '',
-      'representante_legal' => '',
       'informe_dictamen' => null,
       'vigencia_certificado' => '',
       'nota' => null,
-      'usuario_abm_id' => null,
     );
     protected $casts = array(
       'cod_firma' => 'string',
       'gestion' => 'string',
       'detalle' => 'string',
-      'representante_legal' => 'string',
       'informe_dictamen' => 'array',
       'vigencia_certificado' => 'string',
       'nota' => 'array',
-      'usuario_abm_id' => 'integer',
     );
     protected $events = array(
     );
