@@ -369,7 +369,7 @@ UserAdministration.Contratacion = function (url, id) {
     this.$pluralName = "Contratacions";
     this.$title = "Contratación";
     this.$pluralTitle = "Contrataciones directas";
-    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Informe","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Informe","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -387,7 +387,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"informe_dictamen","isAssociation":false},"vigencia_certificado":{"name":"vigencia_certificado","label":"Vigencia certificado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"vigencia_certificado","isAssociation":false},"nota":{"name":"nota","label":"Nota","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"informe_dictamen","isAssociation":false},"nota":{"name":"nota","label":"Nota","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
                             if (!data) {
                                 return '';
                             }

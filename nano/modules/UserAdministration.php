@@ -928,13 +928,6 @@
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "detalle",
-                        "label": "Detalle",
-                        "type": "string",
-                        "default": "",
-                        "list": false
-                    }),
-                    new Module.Model.Field({
                         "name": "informe_dictamen",
                         "label": "Informe",
                         "type": "array",
@@ -959,13 +952,6 @@
                               + time;
                         },
                         "list": true,
-                    }),
-                    new Module.Model.Field({
-                        "name": "vigencia_certificado",
-                        "label": "Vigencia certificado",
-                        "type": "string",
-                        "list": false,
-                        "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "nota",
