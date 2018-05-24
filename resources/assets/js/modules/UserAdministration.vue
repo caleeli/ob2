@@ -365,21 +365,31 @@ UserAdministration.Contratacion = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/contratacions";
     Model.call(this, url, id, "UserAdministration.Contratacion");
     this.$list = function () {
-        return "fields=cod_firma,informes,nota,gestion,owner";
+        return "fields=cod_firma,informe_scep,nota,gestion,owner";
     };
     this.$name = "Contratacion";
     this.$pluralName = "Contratacions";
     this.$title = "Contratación";
     this.$pluralTitle = "Contrataciones directas";
-    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"informes":{"name":"informes","label":"Informes SCEP","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
-                            var res = [];
-                            if (data && typeof data.forEach==='function') {
-                                data.forEach(function (item) {
-                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
-                                });
+    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"informe_scep":{"name":"informe_scep","label":"Informe SCEP","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
                             }
-                            return res.join("<br> ");
-                        },"value":"informes","isAssociation":false},"nota":{"name":"nota","label":"Nota emitida a la empresa","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        },"value":"informe_scep","isAssociation":false},"nota":{"name":"nota","label":"Nota emitida a la empresa","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -402,14 +412,24 @@ UserAdministration.Contratacion = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Informes SCEP","data":"attributes.informes","render":function (data,type,row){
-                            var res = [];
-                            if (data && typeof data.forEach==='function') {
-                                data.forEach(function (item) {
-                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
-                                });
+        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Informe SCEP","data":"attributes.informe_scep","render":function (data,type,row){
+                            if (!data) {
+                                return '';
                             }
-                            return res.join("<br> ");
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
                         }},{"title":"Nota emitida a la empresa","data":"attributes.nota","render":function (data,type,row){
                             if (!data) {
                                 return '';

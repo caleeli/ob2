@@ -917,19 +917,29 @@
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "informes",
+                        "name": "informe_scep",
                         "type": "array",
-                        "label": "Informes SCEP",
-                        "ui": "multiplefile",
+                        "label": "Informe SCEP",
+                        "ui": "file",
                         "textField": function(data,type,row){
-                            var res = [];
-                            if (data &amp;&amp; typeof data.forEach==='function') {
-                                data.forEach(function (item) {
-                                    res.push('&lt;a href="' + item.url + '" target="_blank"&gt;' + item.name + '&lt;/a&gt;');
-                                });
+                            if (!data) {
+                                return '';
                             }
-                            return res.join("&lt;br&gt; ");
-                        }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('&lt;a&gt;&lt;/a&gt;');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
+                            return $("&lt;div /&gt;").append($a).html()
+                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
+                              + time;
+                        },
                     }),
                     new Module.Model.Field({
                         "name": "nota",

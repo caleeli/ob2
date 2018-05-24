@@ -12,7 +12,7 @@ class CreateAdmContratacionsTable extends Migration
         Schema::create('contrataciones', function (Blueprint $table) {
             $table->increments('id');
             $table->string('cod_firma')->nullable();
-            $table->text('informes')->nullable();
+            $table->text('informe_scep')->nullable();
             $table->text('nota')->nullable();
             $table->string('gestion')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();

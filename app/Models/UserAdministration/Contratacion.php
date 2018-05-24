@@ -12,7 +12,7 @@ class Contratacion extends Model
     protected $table = 'contrataciones';
     protected $fillable = array(
       0 => 'cod_firma',
-      1 => 'informes',
+      1 => 'informe_scep',
       2 => 'nota',
       3 => 'gestion',
       4 => 'empresa_id',
@@ -20,13 +20,13 @@ class Contratacion extends Model
     );
     protected $attributes = array(
       'cod_firma' => '',
-      'informes' => null,
+      'informe_scep' => null,
       'nota' => null,
       'gestion' => '',
     );
     protected $casts = array(
       'cod_firma' => 'string',
-      'informes' => 'array',
+      'informe_scep' => 'array',
       'nota' => 'array',
       'gestion' => 'string',
     );
