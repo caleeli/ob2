@@ -917,68 +917,51 @@
                         "default": ""
                     }),
                     new Module.Model.Field({
+                        "name": "informes",
+                        "type": "array",
+                        "label": "Informes SCEP",
+                        "ui": "multiplefile",
+                        "textField": function(data,type,row){
+                            var res = [];
+                            if (data &amp;&amp; typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('&lt;a href="' + item.url + '" target="_blank"&gt;' + item.name + '&lt;/a&gt;');
+                                });
+                            }
+                            return res.join("&lt;br&gt; ");
+                        }
+                    }),
+                    new Module.Model.Field({
+                        "name": "nota",
+                        "type": "array",
+                        "label": "Nota emitida a la empresa",
+                        "ui": "file",
+                        "textField": function(data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('&lt;a&gt;&lt;/a&gt;');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
+                            return $("&lt;div /&gt;").append($a).html()
+                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
+                              + time;
+                        },
+                    }),
+                    new Module.Model.Field({
                         "name": "gestion",
                         "label": "Gestión",
                         "type": "string",
                         "default": ""
                     }),
-                    new Module.Model.Field({
-                        "name": "informe_dictamen",
-                        "label": "Informe",
-                        "type": "array",
-                        "ui": "file",
-                        "textField": function(data,type,row){
-                            if (!data) {
-                                return '';
-                            }
-                            var time = row.attributes.updated_at
-                                ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
-                                    'yyyy-mm-dd hh:MM:ss'
-                                )
-                                : '';
-                            var $a = $('&lt;a&gt;&lt;/a&gt;');
-                            $a.text(data.name);
-                            $a.attr('href', data.url);
-                            $a.attr('target', '_blank');
-                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
-                            return $("&lt;div /&gt;").append($a).html()
-                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
-                              + time;
-                        },
-                        "list": true,
-                    }),
-                    new Module.Model.Field({
-                        "name": "nota",
-                        "type": "array",
-                        "label": "Nota",
-                        "ui": "file",
-                        "textField": function(data,type,row){
-                            if (!data) {
-                                return '';
-                            }
-                            var time = row.attributes.updated_at
-                                ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
-                                    'yyyy-mm-dd hh:MM:ss'
-                                )
-                                : '';
-                            var $a = $('&lt;a&gt;&lt;/a&gt;');
-                            $a.text(data.name);
-                            $a.attr('href', data.url);
-                            $a.attr('target', '_blank');
-                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
-                            return $("&lt;div /&gt;").append($a).html()
-                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
-                              + time;
-                        },
-                    }),
-                    /*new Module.Model.Field({
-                        "name": "usuario_abm_id",
-                        "type": "integer",
-                        "label": "usuario",
-                        "list": false,
-                    }),*/
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({

@@ -12,23 +12,23 @@ class Contratacion extends Model
     protected $table = 'contrataciones';
     protected $fillable = array(
       0 => 'cod_firma',
-      1 => 'gestion',
-      2 => 'informe_dictamen',
-      3 => 'nota',
+      1 => 'informes',
+      2 => 'nota',
+      3 => 'gestion',
       4 => 'empresa_id',
       5 => 'owner_id',
     );
     protected $attributes = array(
       'cod_firma' => '',
-      'gestion' => '',
-      'informe_dictamen' => null,
+      'informes' => null,
       'nota' => null,
+      'gestion' => '',
     );
     protected $casts = array(
       'cod_firma' => 'string',
-      'gestion' => 'string',
-      'informe_dictamen' => 'array',
+      'informes' => 'array',
       'nota' => 'array',
+      'gestion' => 'string',
     );
     protected $events = array(
     );
