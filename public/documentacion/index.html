@@ -705,14 +705,14 @@
                                                         <div class=" wizard-big wizard clearfix">
                                                             <div class="steps clearfix">
                                                                 <ul role="tablist">
-                                                                    <li v-on:click="paso=1" role="tab" v-bind:class="{'current': pasos.length>=1, 'disabled': pasos.length<1}" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
-                                                                    <li v-on:click="paso=2" role="tab" v-bind:class="{'current': pasos.length>=2, 'disabled': pasos.length<2}" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
-                                                                    <li v-on:click="paso=3" role="tab" v-bind:class="{'current': pasos.length>=3, 'disabled': pasos.length<3}" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
-                                                                    <li v-on:click="paso=4" role="tab" v-bind:class="{'current': pasos.length>=4, 'disabled': pasos.length<4}" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
-                                                                    <li v-on:click="paso=5" role="tab" v-bind:class="{'current': pasos.length>=5, 'disabled': pasos.length<5}" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
-                                                                    <li v-on:click="paso=6" role="tab" v-bind:class="{'current': pasos.length>=6, 'disabled': pasos.length<6}" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
-                                                                    <li v-on:click="paso=7" role="tab" v-bind:class="{'current': pasos.length>=7, 'disabled': pasos.length<7}" aria-disabled="true"><a aria-controls="form-p-1">Paso 7</a></li>
-                                                                    <li v-on:click="paso=8" role="tab" v-bind:class="{'current': pasos.length>=8, 'disabled': pasos.length<8}" aria-disabled="true"><a aria-controls="form-p-1">Paso 8</a></li>
+                                                                    <li v-on:click="paso=1" role="tab" v-bind:class="{'current': pasos.maximo>=1, 'disabled': pasos.maximo<1}" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
+                                                                    <li v-on:click="paso=2" role="tab" v-bind:class="{'current': pasos.maximo>=2, 'disabled': pasos.maximo<2}" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
+                                                                    <li v-on:click="paso=3" role="tab" v-bind:class="{'current': pasos.maximo>=3, 'disabled': pasos.maximo<3}" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
+                                                                    <li v-on:click="paso=4" role="tab" v-bind:class="{'current': pasos.maximo>=4, 'disabled': pasos.maximo<4}" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
+                                                                    <li v-on:click="paso=5" role="tab" v-bind:class="{'current': pasos.maximo>=5, 'disabled': pasos.maximo<5}" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
+                                                                    <li v-on:click="paso=6" role="tab" v-bind:class="{'current': pasos.maximo>=6, 'disabled': pasos.maximo<6}" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
+                                                                    <li v-on:click="paso=7" role="tab" v-bind:class="{'current': pasos.maximo>=7, 'disabled': pasos.maximo<7}" aria-disabled="true"><a aria-controls="form-p-1">Paso 7</a></li>
+                                                                    <li v-on:click="paso=8" role="tab" v-bind:class="{'current': pasos.maximo>=8, 'disabled': pasos.maximo<8}" aria-disabled="true"><a aria-controls="form-p-1">Paso 8</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -728,11 +728,11 @@
                                                                     <h3>{{pasosTitulo(paso)}}</h3>
                                                                     <div>
                                                                         <label>Fecha</label>
-                                                                        <fecha v-model="pasos[paso].fecha"/>
+                                                                        <fecha v-model="pasos.data[pasos.actual].fecha"/>
                                                                     </div>
                                                                     <div>
                                                                         <label>Descripción</label>
-                                                                        <textarea class="form-control" v-model='pasos[paso].descripcion'></textarea>
+                                                                        <textarea class="form-control" v-model='pasos.data[pasos.actual].descripcion'></textarea>
                                                                     </div>
                                                                     <br>
                                                                     <button v-if="paso===3" class="btn btn-primary btn-block" type="button" v-on:click='abrirPasoAuditoria'><i class="fa fa-save"></i> F-3007</button>
@@ -1281,7 +1281,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.120"></script>
+        <script src="../js/server.js?v0.121"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1362,18 +1362,23 @@
                         biblioteca_normativa: '',
                         biblioteca_gestion: '',
                         tipoTarea: 'EDC',
-                        pasos: [
-                            {fecha: '', descripcion: ''},
-                            {fecha: '', descripcion: ''},
-                            {fecha: '', descripcion: ''},
-                            {fecha: '', descripcion: ''},
-                            {fecha: '', descripcion: ''},
-                            {fecha: '', descripcion: ''},
-                            {fecha: '', descripcion: ''},
-                            {fecha: '', descripcion: ''},
-                        ],
-                        paso: 0,
-                        pasosAuditoriaAbierta: false,
+                        pasos: {
+                            data: [
+                                {fecha: '', descripcion: ''},
+                                {fecha: '', descripcion: ''},
+                                {fecha: '', descripcion: ''},
+                                {fecha: '', descripcion: ''},
+                                {fecha: '', descripcion: ''},
+                                {fecha: '', descripcion: ''},
+                                {fecha: '', descripcion: ''},
+                                {fecha: '', descripcion: ''},
+                            ],
+                            actual: 0,
+                            subpaso4: 0,
+                            maximo: 1,
+                        },
+                        //pasosAuditoriaAbierta: false,
+                        hojaTrabajoLocalSave: false,
                     };
                 },
                 computed: {
@@ -1416,40 +1421,28 @@
                     },
                     abrirPasoAuditoria: function () {
                         var self = this;
-                        self.pasos[self.paso].data;
-                        self.paso;
-                        self.pasos[self.paso].subpaso;
-                        
-                        self.pasos[self.paso];
-                        self.paso;
-                        self.subpaso4;
-                        
-                        self.pasos = {
-                            data: [],
-                            actual: 0,
-                            subpaso4: 0,
-                        }
+                        //this.pasosAuditoriaAbierta = true;
                         self.pasos.subpaso4 = 1;
                         self.pasos.data[3].template = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
 
                         //<pages :page="self.paso"><page><a></a></page><page><a></a></page></pages>
-                        this.pasosAuditoriaAbierta = true;
-                        this.tipoAuditoria = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
-                        this.crearAuditoria();
+                        self.tipoAuditoria = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
+                        self.crearAuditoria();
                         //self.tipoAuditoria=
-                        //this.abrirFileAudioria({id:'', attributes: {titulo:''});
+                        //self.abrirFileAudioria({id:'', attributes: {titulo:''});
                     },
                     guardarPaso: function () {
-                        if (this.paso===7) {
+                        if (this.pasos.actual===7) {
                             return;
                         }
-                        if (this.paso===this.pasos.length-1) {
-                            this.pasos.push({
-                                fecha: '',
-                                descripcion: '',
-                            });
-                        }
-                        this.paso++;
+                        this.pasos.actual++;
+                        this.pasos.maximo = this.pasos.actual;
+                    },
+                    hojaTrabajoSave: function (hojaTrabajo) {
+                        var hoja = {
+                            gestion: hojaTrabajo.gestion,
+                            gestion: hojaTrabajo.gestion,
+                        };
                     },
                     pasosTitulo: function (paso) {
                         var titulos = [
@@ -1921,8 +1914,9 @@
                             }
                         });
                     },
-                    crearAuditoria: function () {
+                    crearAuditoria: function (localSave) {
                         var self = this;
+                        this.hojaTrabajoLocalSave = localSave;
                         this.auditoriaUrl = '/vue-editor/file/' + this.tipoAuditoria;
                         this.auditoriaFileName = 'Nuevo documento';
                         self.hoja_trabajo.$load(0, function () {
@@ -1982,10 +1976,14 @@
                             self.hoja_trabajo.valores = valores;
                             self.hoja_trabajo.gestion = self.gestionAuditoria;
                             self.hoja_trabajo.templeta = self.tipoAuditoria;
-                            self.hoja_trabajo.$save('', function () {
-                                self.abrirAuditoria();
-                                self.cerrarFileAuditoria();
-                            });
+                            if (self.hojaTrabajoLocalSave) {
+                                self.hojaTrabajoSave(self.hoja_trabajo);
+                            } else {
+                                self.hoja_trabajo.$save('', function () {
+                                    self.abrirAuditoria();
+                                    self.cerrarFileAuditoria();
+                                });
+                            }
                         });
                     },
                     mostrarUploadLink: function (file) {

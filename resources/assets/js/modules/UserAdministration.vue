@@ -241,49 +241,13 @@ UserAdministration.Firma = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/firmas";
     Model.call(this, url, id, "UserAdministration.Firma");
     this.$list = function () {
-        return "fields=cod_firma,gestion,representante_legal,informe_dictamen,documento_firma,informes,owner";
+        return "fields=cod_firma,informes,empresa,informe_dictamen,documento_firma,representante_legal,gestion,owner";
     };
     this.$name = "Firma";
     this.$pluralName = "Firmas";
     this.$title = "Firma";
     this.$pluralTitle = "Firmas de auditoria";
-    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Representante legal","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Informe o Dictamen","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
-                            if (!data) {
-                                return '';
-                            }
-                            var time = row.attributes.updated_at
-                                ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
-                                    'yyyy-mm-dd hh:MM:ss'
-                                )
-                                : '';
-                            var $a = $('<a></a>');
-                            $a.text(data.name);
-                            $a.attr('href', data.url);
-                            $a.attr('target', '_blank');
-                            $a.prepend('<i class="fa fa-download"></i> ');
-                            return $("<div />").append($a).html()
-                              + '<br><i class="fa fa-clock-o"></i> '
-                              + time;
-                        },"value":"informe_dictamen","isAssociation":false},"vigencia_certificado":{"name":"vigencia_certificado","label":"Vigencia certificado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"vigencia_certificado","isAssociation":false},"documento_firma":{"name":"documento_firma","label":"Documento Firma","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
-                            if (!data) {
-                                return '';
-                            }
-                            var time = row.attributes.updated_at
-                                ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
-                                    'yyyy-mm-dd hh:MM:ss'
-                                )
-                                : '';
-                            var $a = $('<a></a>');
-                            $a.text(data.name);
-                            $a.attr('href', data.url);
-                            $a.attr('target', '_blank');
-                            $a.prepend('<i class="fa fa-download"></i> ');
-                            return $("<div />").append($a).html()
-                              + '<br><i class="fa fa-clock-o"></i> '
-                              + time;
-                        },"value":"documento_firma","isAssociation":false},"informes":{"name":"informes","label":"Informes","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"informes":{"name":"informes","label":"Informes SCEP","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -291,12 +255,58 @@ UserAdministration.Firma = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        },"value":"informes","isAssociation":false}};
+                        },"value":"informes","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa auditada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"informe_dictamen":{"name":"informe_dictamen","label":"Dictamen o Informe","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        },"value":"informe_dictamen","isAssociation":false},"documento_firma":{"name":"documento_firma","label":"Documento Firma","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        },"value":"documento_firma","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Representante legal","data":"attributes.representante_legal"},{"title":"Informe o Dictamen","data":"attributes.informe_dictamen","render":function (data,type,row){
+        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Informes SCEP","data":"attributes.informes","render":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
+                        }},{"title":"Empresa auditada","visible":true,"render":function (data, type, full, meta) {
+                            return data ? data : '';
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Dictamen o Informe","data":"attributes.informe_dictamen","render":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -332,15 +342,7 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Informes","data":"attributes.informes","render":function (data,type,row){
-                            var res = [];
-                            if (data && typeof data.forEach==='function') {
-                                data.forEach(function (item) {
-                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
-                                });
-                            }
-                            return res.join("<br> ");
-                        }},{"title":"Propietario","visible":false,"render":function (data, type, full, meta) {
+                        }},{"title":"Firma de auditoria","data":"attributes.representante_legal"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Propietario","visible":false,"render":function (data, type, full, meta) {
                             return data ? data : '';
                         },"data":"relationships.owner.attributes.null"}];
     };

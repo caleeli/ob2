@@ -780,27 +780,23 @@
                         "default": ""
                     }),
                     new Module.Model.Field({
-                        "name": "gestion",
-                        "label": "Gestión",
-                        "type": "string",
-                        "default": ""
-                    }),
-                    new Module.Model.Field({
-                        "name": "detalle",
-                        "label": "Detalle",
-                        "type": "string",
-                        "default": "",
-                        "list": false
-                    }),
-                    new Module.Model.Field({
-                        "name": "representante_legal",
-                        "label": "Representante legal",
-                        "type": "string",
-                        "default": ""
+                        "name": "informes",
+                        "type": "array",
+                        "label": "Informes SCEP",
+                        "ui": "multiplefile",
+                        "textField": function(data,type,row){
+                            var res = [];
+                            if (data &amp;&amp; typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('&lt;a href="' + item.url + '" target="_blank"&gt;' + item.name + '&lt;/a&gt;');
+                                });
+                            }
+                            return res.join("&lt;br&gt; ");
+                        }
                     }),
                     new Module.Model.Field({
                         "name": "informe_dictamen",
-                        "label": "Informe o Dictamen",
+                        "label": "Dictamen o Informe",
                         "type": "array",
                         "ui": "file",
                         "textField": function(data,type,row){
@@ -823,13 +819,6 @@
                               + time;
                         },
                         "list": true,
-                    }),
-                    new Module.Model.Field({
-                        "name": "vigencia_certificado",
-                        "label": "Vigencia certificado",
-                        "type": "string",
-                        "list": false,
-                        "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "documento_firma",
@@ -857,31 +846,37 @@
                         },
                     }),
                     new Module.Model.Field({
-                        "name": "informes",
-                        "type": "array",
-                        "label": "Informes",
-                        "ui": "multiplefile",
-                        "textField": function(data,type,row){
-                            var res = [];
-                            if (data &amp;&amp; typeof data.forEach==='function') {
-                                data.forEach(function (item) {
-                                    res.push('&lt;a href="' + item.url + '" target="_blank"&gt;' + item.name + '&lt;/a&gt;');
-                                });
-                            }
-                            return res.join("&lt;br&gt; ");
-                        }
+                        "name": "representante_legal",
+                        "label": "Firma de auditoria",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "gestion",
+                        "label": "Gestión",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "detalle",
+                        "label": "Detalle",
+                        "type": "string",
+                        "default": "",
+                        "list": false
                     }),
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
                         "name": "empresa",
                         "model": "empresa",
+                        "label": "Empresa auditada",
                         "nullable": true,
-                        "list": false,
+                        "list": true,
                         "textField": "nombre_empresa",
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
-                        "form": false
+                        "form": true,
+                        "position": 2,
                     }),
                     new Module.Model.BelongsTo({
                         "name": "owner",
