@@ -12,9 +12,9 @@ class Firma extends Model
     protected $table = 'adm_evaluacion_consistencias';
     protected $fillable = array(
       0 => 'cod_firma',
-      1 => 'informes',
-      2 => 'informe_dictamen',
-      3 => 'documento_firma',
+      1 => 'documento_firma',
+      2 => 'informes',
+      3 => 'informe_dictamen',
       4 => 'representante_legal',
       5 => 'gestion',
       6 => 'detalle',
@@ -23,18 +23,18 @@ class Firma extends Model
     );
     protected $attributes = array(
       'cod_firma' => '',
+      'documento_firma' => null,
       'informes' => null,
       'informe_dictamen' => null,
-      'documento_firma' => null,
       'representante_legal' => '',
       'gestion' => '',
       'detalle' => '',
     );
     protected $casts = array(
       'cod_firma' => 'string',
+      'documento_firma' => 'array',
       'informes' => 'array',
       'informe_dictamen' => 'array',
-      'documento_firma' => 'array',
       'representante_legal' => 'string',
       'gestion' => 'string',
       'detalle' => 'string',

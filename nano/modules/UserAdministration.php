@@ -780,6 +780,31 @@
                         "default": ""
                     }),
                     new Module.Model.Field({
+                        "name": "documento_firma",
+                        "type": "array",
+                        "label": "Resumen Ejecutivo",
+                        "ui": "file",
+                        "textField": function(data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('&lt;a&gt;&lt;/a&gt;');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
+                            return $("&lt;div /&gt;").append($a).html()
+                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
+                              + time;
+                        },
+                    }),
+                    new Module.Model.Field({
                         "name": "informes",
                         "type": "array",
                         "label": "Informes SCEP",
@@ -819,31 +844,6 @@
                               + time;
                         },
                         "list": true,
-                    }),
-                    new Module.Model.Field({
-                        "name": "documento_firma",
-                        "type": "array",
-                        "label": "Documento Firma",
-                        "ui": "file",
-                        "textField": function(data,type,row){
-                            if (!data) {
-                                return '';
-                            }
-                            var time = row.attributes.updated_at
-                                ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
-                                    'yyyy-mm-dd hh:MM:ss'
-                                )
-                                : '';
-                            var $a = $('&lt;a&gt;&lt;/a&gt;');
-                            $a.text(data.name);
-                            $a.attr('href', data.url);
-                            $a.attr('target', '_blank');
-                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
-                            return $("&lt;div /&gt;").append($a).html()
-                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
-                              + time;
-                        },
                     }),
                     new Module.Model.Field({
                         "name": "representante_legal",

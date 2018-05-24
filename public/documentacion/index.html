@@ -79,6 +79,10 @@
                 color: #aaa;
                 cursor: default;
             }
+            .wizard .active
+            {
+                font-weight: bold;
+            }
         </style>
     </head>
 
@@ -705,14 +709,14 @@
                                                         <div class=" wizard-big wizard clearfix">
                                                             <div class="steps clearfix">
                                                                 <ul role="tablist">
-                                                                    <li v-on:click="paso=1" role="tab" v-bind:class="{'current': pasos.maximo>=1, 'disabled': pasos.maximo<1}" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
-                                                                    <li v-on:click="paso=2" role="tab" v-bind:class="{'current': pasos.maximo>=2, 'disabled': pasos.maximo<2}" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
-                                                                    <li v-on:click="paso=3" role="tab" v-bind:class="{'current': pasos.maximo>=3, 'disabled': pasos.maximo<3}" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
-                                                                    <li v-on:click="paso=4" role="tab" v-bind:class="{'current': pasos.maximo>=4, 'disabled': pasos.maximo<4}" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
-                                                                    <li v-on:click="paso=5" role="tab" v-bind:class="{'current': pasos.maximo>=5, 'disabled': pasos.maximo<5}" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
-                                                                    <li v-on:click="paso=6" role="tab" v-bind:class="{'current': pasos.maximo>=6, 'disabled': pasos.maximo<6}" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
-                                                                    <li v-on:click="paso=7" role="tab" v-bind:class="{'current': pasos.maximo>=7, 'disabled': pasos.maximo<7}" aria-disabled="true"><a aria-controls="form-p-1">Paso 7</a></li>
-                                                                    <li v-on:click="paso=8" role="tab" v-bind:class="{'current': pasos.maximo>=8, 'disabled': pasos.maximo<8}" aria-disabled="true"><a aria-controls="form-p-1">Paso 8</a></li>
+                                                                    <li v-on:click="pasos.maximo>=1?pasos.actual=0:null" role="tab" v-bind:class="{'current': pasos.maximo>=1, 'disabled': pasos.maximo<1, 'active': pasos.actual==0}" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
+                                                                    <li v-on:click="pasos.maximo>=2?pasos.actual=1:null" role="tab" v-bind:class="{'current': pasos.maximo>=2, 'disabled': pasos.maximo<2, 'active': pasos.actual==1}" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
+                                                                    <li v-on:click="pasos.maximo>=3?pasos.actual=2:null" role="tab" v-bind:class="{'current': pasos.maximo>=3, 'disabled': pasos.maximo<3, 'active': pasos.actual==2}" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
+                                                                    <li v-on:click="pasos.maximo>=4?pasos.actual=3:null" role="tab" v-bind:class="{'current': pasos.maximo>=4, 'disabled': pasos.maximo<4, 'active': pasos.actual==3}" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
+                                                                    <li v-on:click="pasos.maximo>=5?pasos.actual=4:null" role="tab" v-bind:class="{'current': pasos.maximo>=5, 'disabled': pasos.maximo<5, 'active': pasos.actual==4}" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
+                                                                    <li v-on:click="pasos.maximo>=6?pasos.actual=5:null" role="tab" v-bind:class="{'current': pasos.maximo>=6, 'disabled': pasos.maximo<6, 'active': pasos.actual==5}" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
+                                                                    <li v-on:click="pasos.maximo>=7?pasos.actual=6:null" role="tab" v-bind:class="{'current': pasos.maximo>=7, 'disabled': pasos.maximo<7, 'active': pasos.actual==6}" aria-disabled="true"><a aria-controls="form-p-1">Paso 7</a></li>
+                                                                    <li v-on:click="pasos.maximo>=8?pasos.actual=7:null" role="tab" v-bind:class="{'current': pasos.maximo>=8, 'disabled': pasos.maximo<8, 'active': pasos.actual==7}" aria-disabled="true"><a aria-controls="form-p-1">Paso 8</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -724,8 +728,8 @@
                                                                     v-bind:candelete='true'
                                                                     v-bind:filter="''"
                                                                     col="6"
-                                                                    v-show="!pasosAuditoriaAbierta">
-                                                                    <h3>{{pasosTitulo(paso)}}</h3>
+                                                                    v-show="!estaPasoAuditoriaAbierta()">
+                                                                    <h3>{{pasosTitulo(pasos.actual)}}</h3>
                                                                     <div>
                                                                         <label>Fecha</label>
                                                                         <fecha v-model="pasos.data[pasos.actual].fecha"/>
@@ -735,10 +739,10 @@
                                                                         <textarea class="form-control" v-model='pasos.data[pasos.actual].descripcion'></textarea>
                                                                     </div>
                                                                     <br>
-                                                                    <button v-if="paso===3" class="btn btn-primary btn-block" type="button" v-on:click='abrirPasoAuditoria'><i class="fa fa-save"></i> F-3007</button>
+                                                                    <button v-if="pasos.actual===3" class="btn btn-primary btn-block" type="button" v-on:click='abrirPasoAuditoria'><i class="fa fa-save"></i> F-3007</button>
                                                                     <button class="btn btn-primary btn-block" type="button" v-on:click='guardarPaso'><i class="fa fa-save"></i> Guardar</button>
                                                                 </folder-viewer>
-                                                                <div class="col-md-12" style="background: white;" v-show="pasosAuditoriaAbierta">
+                                                                <div class="col-md-12" style="background: white;" v-show="estaPasoAuditoriaAbierta()">
                                                                     <iframe id="editorAuditoria" v-bind:src="auditoriaUrl" style="width:100%;height:80vh;border:1px solid black;"></iframe>
                                                                     <div class="form-group">
                                                                         <div>
@@ -1413,11 +1417,18 @@
                             self.abrirAuditoria();
                             self.cerrarFileAuditoria();
                         });
-                        this.pasosAuditoriaAbierta = false;
+                        this.cerrarPasoAuditoria();
                     },
                     pasosCerrarFileAuditoria: function () {
                         this.cerrarFileAuditoria();
-                        this.pasosAuditoriaAbierta = false;
+                        this.cerrarPasoAuditoria();
+                    },
+                    cerrarPasoAuditoria: function () {
+                        //this.pasosAuditoriaAbierta = false;
+                        this.pasos.subpaso4 = 0;
+                    },
+                    estaPasoAuditoriaAbierta: function () {
+                        return this.pasos.subpaso4 === 1;
                     },
                     abrirPasoAuditoria: function () {
                         var self = this;
@@ -1436,7 +1447,7 @@
                             return;
                         }
                         this.pasos.actual++;
-                        this.pasos.maximo = this.pasos.actual;
+                        this.pasos.maximo = Math.max(this.pasos.maximo, this.pasos.actual+1);
                     },
                     hojaTrabajoSave: function (hojaTrabajo) {
                         var hoja = {
