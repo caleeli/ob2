@@ -1285,7 +1285,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.123"></script>
+        <script src="../js/server.js?v0.125"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1402,6 +1402,46 @@
                     },
                 },
                 methods: {
+                    cargarPasosTarea: function () {
+                        var self = this;
+                        var merge = function (target, source, replace, name) {
+                            if (target instanceof Array && replace) {
+                                target.splice(0);
+                                for (var i=0,l=source.length;i<l;i++) {
+                                    target.push(source[i]);
+                                }
+                            } else if (target instanceof Array) {
+                                for (var i=0,l=target.length;i<l;i++) {
+                                    if (typeof target[i]==='object') {
+                                        merge(target[i], source[i], false, i);
+                                    } else {
+                                        target[i] = source[i];
+                                    }
+                                }
+                            } else if (target instanceof Object && replace) {
+                                for (var a in source) {
+                                    if (typeof target[a]==='object') {
+                                        merge(target[a], source[a]);
+                                    } else {
+                                        target[a] = source[a];
+                                    }
+                                }
+                            } else if (target instanceof Object) {
+                                for (var a in target) {
+                                    if (typeof source[a]!=='undefined') {
+                                        if (typeof target[a]==='object') {
+                                            merge(target[a], source[a], a==='valores', a);
+                                        } else {
+                                            target[a] = source[a];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (self.tarea.datos) {
+                            merge(self.pasos, self.tarea.datos);
+                        }
+                    },
                     /**
                      * Este metodo es llamado desde el iframe de la templeta de auditoria
                      * @param object variables
@@ -1423,6 +1463,10 @@
                     pasosRecargarFileAuditoria: function () {
                         this.recargarFileAuditoria();
                     },
+                    pasosGuardarDB: function () {
+                        this.tarea.datos = JSON.parse(JSON.stringify(this.pasos));
+                        this.tarea.$save('', function() {}, true);
+                    },
                     pasosGuardarFileAuditoria: function () {
                         var self = this;
                         var iframe = $("#pasosEditorAuditoria")[0];
@@ -1431,22 +1475,20 @@
                             return;
                         }
                         iframeWindow.guardarHoja(function (valores) {
-                            self.pasos.data[3].hojaTrabajo = {
-                                titulo : self.auditoriaFileName,
-                                valores : valores,
-                                gestion : self.gestionAuditoria,
-                                templeta : self.tipoAuditoria,
-                            };
-                            self.cerrarFileAuditoria();
+                            self.pasos.data[3].hojaTrabajo.titulo = self.auditoriaFileName;
+                            self.pasos.data[3].hojaTrabajo.valores = valores;
+                            self.pasos.data[3].hojaTrabajo.gestion = self.gestionAuditoria;
+                            self.pasos.data[3].hojaTrabajo.templeta = self.tipoAuditoria;
+                            self.cerrarPasoAuditoria();
+                            self.pasosGuardarDB();
                         });
-                        this.cerrarPasoAuditoria();
+                        self.cerrarPasoAuditoria();
                     },
                     pasosCerrarFileAuditoria: function () {
                         this.cerrarFileAuditoria();
                         this.cerrarPasoAuditoria();
                     },
                     cerrarPasoAuditoria: function () {
-                        //this.pasosAuditoriaAbierta = false;
                         this.pasos.subpaso4 = 0;
                     },
                     estaPasoAuditoriaAbierta: function () {
@@ -1487,6 +1529,7 @@
                         }
                         this.pasos.actual++;
                         this.pasos.maximo = Math.max(this.pasos.maximo, this.pasos.actual+1);
+                        this.pasosGuardarDB();
                     },
                     pasosTitulo: function (paso) {
                         var titulos = [
@@ -1612,10 +1655,16 @@
                         });
                     },
                     seleccionaTarea: function (tarea) {
-                        this.cargarTarea(tarea.id);
+                        var self = this;
+                        self.cargarTarea(tarea.id, function () {
+                            self.cargarPasosTarea();
+                        });
                     },
                     modificarTarea: function (tarea) {
-                        this.cargarTarea(tarea.id);
+                        var self = this;
+                        self.cargarTarea(tarea.id, function () {
+                            self.cargarPasosTarea();
+                        });
                     },
                     cancelarTarea: function (tarea) {
                         var self = this;

@@ -93,7 +93,7 @@ export default function(uri0, id, type) {
     this.$create = function (loadCallback) {
         return this.$load(0, loadCallback);
     };
-    this.$save = function (childrenAssociation, saveCallback) {
+    this.$save = function (childrenAssociation, saveCallback, doNotRefreshData) {
         var method;
         var url;
         var attributes = {}, relationships = {};
@@ -139,7 +139,7 @@ export default function(uri0, id, type) {
                 }
             }),
             success: function (data) {
-                if (data.data) {
+                if (data.data && !doNotRefreshData) {
                     loadFromData(data);
                 }
                 callback(self);

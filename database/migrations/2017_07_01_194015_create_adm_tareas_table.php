@@ -23,6 +23,7 @@ class CreateAdmTareasTable extends Migration
             $table->string('nro_de_control')->nullable();
             $table->string('gestion')->nullable();
             $table->string('tipo')->nullable();
+            $table->text('datos')->nullable();
             $table->integer('creador_id')->unsigned()->nullable();
             $table->integer('revisor1_id')->unsigned()->nullable();
             $table->integer('aprobacion1_id')->unsigned()->nullable();

@@ -1217,6 +1217,13 @@
                         "label": "Tipo de tarea",
                         "type": "string"
                     }),
+                    new Module.Model.Field({
+                        "name": "datos",
+                        "label": "Datos de la tarea",
+                        "type": "array",
+                        "form": true,
+                        "list": false,
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsToMany({
