@@ -739,14 +739,14 @@
                                                                         <textarea class="form-control" v-model='pasos.data[pasos.actual].descripcion'></textarea>
                                                                     </div>
                                                                     <br>
-                                                                    <button v-if="pasos.actual===3" class="btn btn-primary btn-block" type="button" v-on:click='abrirPasoAuditoria'><i class="fa fa-save"></i> F-3007</button>
+                                                                    <button v-if="pasos.actual===3" class="btn btn-primary btn-block" type="button" v-on:click='abrirPasoAuditoria("F-3007")'><i class="fa fa-save"></i> F-3007</button>
                                                                     <button class="btn btn-primary btn-block" type="button" v-on:click='guardarPaso'><i class="fa fa-save"></i> Guardar</button>
                                                                 </folder-viewer>
                                                                 <div class="col-md-12" style="background: white;" v-show="estaPasoAuditoriaAbierta()">
-                                                                    <iframe id="editorAuditoria" v-bind:src="auditoriaUrl" style="width:100%;height:80vh;border:1px solid black;"></iframe>
+                                                                    <iframe id="pasosEditorAuditoria" v-bind:src="auditoriaUrl" style="width:100%;height:60vh;border:1px solid black;"></iframe>
                                                                     <div class="form-group">
                                                                         <div>
-                                                                            <input class="form-control" v-model="auditoriaFileName">
+                                                                            <input class="form-control" v-model="auditoriaFileName" v-show="false">
                                                                             <button class="btn btn-primary" type="button" v-on:click="pasosRecargarFileAuditoria">Recargar</button>
                                                                             <button class="btn btn-primary" type="button" v-on:click="pasosGuardarFileAuditoria">Guardar</button>
                                                                             <button class="btn btn-white" type="button" v-on:click="pasosCerrarFileAuditoria">Cerrar</button>
@@ -1371,7 +1371,12 @@
                                 {fecha: '', descripcion: ''},
                                 {fecha: '', descripcion: ''},
                                 {fecha: '', descripcion: ''},
-                                {fecha: '', descripcion: ''},
+                                {fecha: '', descripcion: '', hojaTrabajo: {
+                                    titulo : '',
+                                    valores : {},
+                                    gestion : '',
+                                    templeta : '',
+                                }},
                                 {fecha: '', descripcion: ''},
                                 {fecha: '', descripcion: ''},
                                 {fecha: '', descripcion: ''},
@@ -1397,24 +1402,41 @@
                     },
                 },
                 methods: {
+                    /**
+                     * Este metodo es llamado desde el iframe de la templeta de auditoria
+                     * @param object variables
+                     */
+                    variablesCargadas: function (variables) {
+                        if (typeof this.pasos!=='undefined'
+                            && typeof this.pasos.data!=='undefined'
+                            && typeof this.pasos.data[3]!=='undefined'
+                            && typeof this.pasos.data[3].hojaTrabajo!=='undefined'
+                            && typeof this.pasos.data[3].hojaTrabajo.valores!=='undefined') {
+                            var valores = this.pasos.data[3].hojaTrabajo.valores;
+                            for(var a in valores) {
+                                if (typeof valores[a]!=='function') {
+                                    variables[a] = valores[a];
+                                }
+                            }
+                        }
+                    },
                     pasosRecargarFileAuditoria: function () {
                         this.recargarFileAuditoria();
                     },
                     pasosGuardarFileAuditoria: function () {
                         var self = this;
-                        var iframe = $("#editorAuditoria")[0];
+                        var iframe = $("#pasosEditorAuditoria")[0];
                         var iframeWindow = iframe.contentWindow || iframe.contentDocument;
                         if (!iframeWindow.guardarHoja) {
                             return;
                         }
                         iframeWindow.guardarHoja(function (valores) {
-                            self.pasos[self.paso].hojaTrabajo = {
+                            self.pasos.data[3].hojaTrabajo = {
                                 titulo : self.auditoriaFileName,
                                 valores : valores,
                                 gestion : self.gestionAuditoria,
                                 templeta : self.tipoAuditoria,
                             };
-                            self.abrirAuditoria();
                             self.cerrarFileAuditoria();
                         });
                         this.cerrarPasoAuditoria();
@@ -1428,19 +1450,36 @@
                         this.pasos.subpaso4 = 0;
                     },
                     estaPasoAuditoriaAbierta: function () {
-                        return this.pasos.subpaso4 === 1;
+                        return this.pasos.subpaso4 === 1 && this.pasos.actual === 3;
                     },
-                    abrirPasoAuditoria: function () {
+                    abrirPasoAuditoria: function (name) {
                         var self = this;
-                        //this.pasosAuditoriaAbierta = true;
-                        self.pasos.subpaso4 = 1;
                         self.pasos.data[3].template = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
-
-                        //<pages :page="self.paso"><page><a></a></page><page><a></a></page></pages>
-                        self.tipoAuditoria = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
-                        self.crearAuditoria();
-                        //self.tipoAuditoria=
-                        //self.abrirFileAudioria({id:'', attributes: {titulo:''});
+                        if (self.pasos.data[3].hojaTrabajo.titulo) {
+                            self.abrirPasoFileAuditoria();
+                        } else {
+                            self.tipoAuditoria = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
+                            self.crearPasoAuditoria(name);
+                        }
+                    },
+                    crearPasoAuditoria: function (name) {
+                        var self = this;
+                        this.auditoriaUrl = '/vue-editor/file/' + this.tipoAuditoria;
+                        this.auditoriaFileName = name;
+                        self.hoja_trabajo.$load(0, function () {
+                            self.pasos.subpaso4 = 1;
+                        });
+                    },
+                    abrirPasoFileAuditoria: function () {
+                        var self = this;
+                        self.tipoAuditoria = self.pasos.data[3].hojaTrabajo.templeta;
+                        self.auditoriaUrl = '/vue-editor/file/' + self.tipoAuditoria;
+                        self.auditoriaFileName = self.pasos.data[3].hojaTrabajo.titulo;
+                        self.hoja_trabajo.titulo = self.pasos.data[3].hojaTrabajo.titulo;
+                        self.hoja_trabajo.valores = self.pasos.data[3].hojaTrabajo.valores;
+                        self.hoja_trabajo.gestion = self.pasos.data[3].hojaTrabajo.gestion;
+                        self.hoja_trabajo.templeta = self.pasos.data[3].hojaTrabajo.templeta;
+                        self.pasos.subpaso4 = 1;
                     },
                     guardarPaso: function () {
                         if (this.pasos.actual===7) {
@@ -1448,12 +1487,6 @@
                         }
                         this.pasos.actual++;
                         this.pasos.maximo = Math.max(this.pasos.maximo, this.pasos.actual+1);
-                    },
-                    hojaTrabajoSave: function (hojaTrabajo) {
-                        var hoja = {
-                            gestion: hojaTrabajo.gestion,
-                            gestion: hojaTrabajo.gestion,
-                        };
                     },
                     pasosTitulo: function (paso) {
                         var titulos = [
@@ -1925,9 +1958,8 @@
                             }
                         });
                     },
-                    crearAuditoria: function (localSave) {
+                    crearAuditoria: function () {
                         var self = this;
-                        this.hojaTrabajoLocalSave = localSave;
                         this.auditoriaUrl = '/vue-editor/file/' + this.tipoAuditoria;
                         this.auditoriaFileName = 'Nuevo documento';
                         self.hoja_trabajo.$load(0, function () {
@@ -1987,14 +2019,10 @@
                             self.hoja_trabajo.valores = valores;
                             self.hoja_trabajo.gestion = self.gestionAuditoria;
                             self.hoja_trabajo.templeta = self.tipoAuditoria;
-                            if (self.hojaTrabajoLocalSave) {
-                                self.hojaTrabajoSave(self.hoja_trabajo);
-                            } else {
-                                self.hoja_trabajo.$save('', function () {
-                                    self.abrirAuditoria();
-                                    self.cerrarFileAuditoria();
-                                });
-                            }
+                            self.hoja_trabajo.$save('', function () {
+                                self.abrirAuditoria();
+                                self.cerrarFileAuditoria();
+                            });
                         });
                     },
                     mostrarUploadLink: function (file) {

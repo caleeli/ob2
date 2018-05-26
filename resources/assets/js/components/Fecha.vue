@@ -41,7 +41,6 @@
             var self = this;
             self.$nextTick(function () {
                 $(self.$el).datepicker({autoclose: true, format: 'yyyy-mm-dd', language: 'es'});
-                $(self.$el).datepicker('show');
                 $(self.$el).on("changeDate", function (e) {
                     self.innerValue = $(self.$el).find("input").val();
                 });

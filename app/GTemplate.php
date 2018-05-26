@@ -47,7 +47,7 @@ class GTemplate
                 ($params ? "v-bind:data=\"{$params}\"" : "")
                 . "></{$match[2]}>";
         }, $html);
-        $html .= '<script>var variables = ' . json_encode($variables) . '</script>';
+        $html .= '<script>var variables = ' . json_encode($variables) . ';parent.app.variablesCargadas(variables);</script>';
         return $html;
     }
 }
