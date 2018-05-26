@@ -1440,6 +1440,27 @@
                         }
                         if (self.tarea.datos) {
                             merge(self.pasos, self.tarea.datos);
+                        } else {
+                            merge(self.pasos, {
+                                data: [
+                                    {fecha: '', descripcion: ''},
+                                    {fecha: '', descripcion: ''},
+                                    {fecha: '', descripcion: ''},
+                                    {fecha: '', descripcion: '', hojaTrabajo: {
+                                        titulo : '',
+                                        valores : {},
+                                        gestion : '',
+                                        templeta : '',
+                                    }},
+                                    {fecha: '', descripcion: ''},
+                                    {fecha: '', descripcion: ''},
+                                    {fecha: '', descripcion: ''},
+                                    {fecha: '', descripcion: ''},
+                                ],
+                                actual: 0,
+                                subpaso4: 0,
+                                maximo: 1,
+                            });
                         }
                     },
                     /**
