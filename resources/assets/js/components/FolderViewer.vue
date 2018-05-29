@@ -64,7 +64,10 @@
                 self.loadFiles()
             },
             'filter': function () {
-                this.loadFiles()
+                this.loadFiles();
+            },
+            'target': function () {
+                this.loadFiles();
             },
         },
         methods: {

@@ -722,8 +722,8 @@
                                                         </div>
                                                         <div class="panel blank-panel">
                                                             <div class="panel-body">
-                                                                <folder-viewer api="/api/folder/tareas"
-                                                                    v-bind:target='"tareas"'
+                                                                <folder-viewer v-bind:api="'/api/folder/tareas/' + tarea.id + '/' + (pasos.actual+1)"
+                                                                    v-bind:target="'tareas/' + tarea.id + '/' + (pasos.actual+1)"
                                                                     v-bind:canupload='true'
                                                                     v-bind:candelete='true'
                                                                     v-bind:filter="''"
@@ -1285,7 +1285,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.125"></script>
+        <script src="../js/server.js?v0.126"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1378,7 +1378,12 @@
                                     templeta : '',
                                 }},
                                 {fecha: '', descripcion: ''},
-                                {fecha: '', descripcion: ''},
+                                {fecha: '', descripcion: '', hojaTrabajo: {
+                                        titulo : '',
+                                        valores : {},
+                                        gestion : '',
+                                        templeta : '',
+                                    }},
                                 {fecha: '', descripcion: ''},
                                 {fecha: '', descripcion: ''},
                             ],
@@ -1453,7 +1458,12 @@
                                         templeta : '',
                                     }},
                                     {fecha: '', descripcion: ''},
-                                    {fecha: '', descripcion: ''},
+                                    {fecha: '', descripcion: '', hojaTrabajo: {
+                                        titulo : '',
+                                        valores : {},
+                                        gestion : '',
+                                        templeta : '',
+                                    }},
                                     {fecha: '', descripcion: ''},
                                     {fecha: '', descripcion: ''},
                                 ],

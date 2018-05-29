@@ -34,11 +34,11 @@ Route::get('/lang/datatable', function () {
     return $response;
 });
 Route::post('/uploadfile', array('as' => 'api', 'uses' => 'UploadFileController@upload'));
-Route::post('/uploaddocument/{disk}', array('as' => 'api', 'uses' => 'UploadFileController@uploadDocument'));
+Route::post('/uploaddocument/{disk}/{path1?}/{path2?}/{path3?}/{path4?}', array('as' => 'api', 'uses' => 'UploadFileController@uploadDocument'));
 Route::get('/ping', array('as' => 'api', 'uses' => 'PingController@ping'));
 Route::get('/empty', array('as' => 'api', 'uses' => 'PingController@data'));
 
-Route::get('/folder/{storage}', array('as' => 'api', 'uses' => 'FolderController@index'));
+Route::get('/folder/{storage}/{path1?}/{path2?}/{path3?}/{path4?}', array('as' => 'api', 'uses' => 'FolderController@index'));
 Route::delete('/folder/{storage}/{file}', array('as' => 'api', 'uses' => 'FolderController@remove'));
 
 Route::get('/pivot/{table}/{aggregator}/{measure}/{rows}/{cols}/{variables}',

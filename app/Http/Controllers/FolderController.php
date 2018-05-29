@@ -12,24 +12,25 @@ class FolderController extends Controller
     /**
      * /api/folder/normativa?filter={name:'%.png'}
      */
-    public function index($storage, Request $request)
+    public function index(Request $request, $storage, ...$pathArray)
     {
+        $path = '/' . implode('/', $pathArray);
         $filter = $request->input('filter', '');
         $regexp = $filter ? '/' . str_replace('%', '.*', preg_quote($filter, '/')) . '/' : '';
-        $list = $this->listFiles($storage, $regexp, [], '');
+        $list = $this->listFiles($storage, $regexp, [], '', $path);
         if ($storage==='tareas') {
 
         } else {
-            $list = $this->listFiles('empresas', $regexp, $list, '/.+_crea\..+/');
+            $list = $this->listFiles('empresas', $regexp, $list, '/.+_crea\..+/', $path);
         }
         return $response = response()->json(['data' => $list], 200);
     }
 
-    private function listFiles($storage, $regexp, $list, $extrareg)
+    private function listFiles($storage, $regexp, $list, $extrareg, $path)
     {
         $config = config('filesystems.disks')[$storage];
         $driver = Storage::disk($storage);
-        foreach ($driver->files('/') as $filename) {
+        foreach ($driver->files($path) as $filename) {
             if (
                 ($regexp && !preg_match($regexp, $filename))
                 || ($extrareg && !preg_match($extrareg, $filename))
