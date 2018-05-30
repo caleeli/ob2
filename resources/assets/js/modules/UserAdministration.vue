@@ -601,7 +601,7 @@ UserAdministration.Tarea = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/tareas";
     Model.call(this, url, id, "UserAdministration.Tarea");
     this.$list = function () {
-        return "fields=cod_tarea,creador,usuarios,nombre_tarea,descripcion,fecha_ini,fecha_fin,estado,avance,prioridad,dias_otorgados,nro_de_control,gestion,tipo";
+        return "fields=cod_tarea,creador,usuarios,nombre_tarea,descripcion,fecha_ini,fecha_fin,estado,avance,prioridad,dias_otorgados,nro_de_control,gestion,tipo,datos";
     };
     this.$name = "Tarea";
     this.$pluralName = "Tareas";
@@ -612,7 +612,7 @@ UserAdministration.Tarea = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_tarea"},{"title":"Creador","visible":true,"render":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.creador.attributes"},{"title":"Usuarios","visible":true,"render":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.usuarios.attributes"},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"},{"title":"Estado","data":"attributes.estado"},{"title":"Avance","data":"attributes.avance"},{"title":"Prioridad","data":"attributes.prioridad"},{"title":"días otorgados","data":"attributes.dias_otorgados"},{"title":"Nro de control","data":"attributes.nro_de_control"},{"title":"Gestion de la hoja de ruta","data":"attributes.gestion"},{"title":"Tipo de tarea","data":"attributes.tipo"}];
+        return [{"title":"Código","data":"attributes.cod_tarea"},{"title":"Creador","visible":true,"render":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.creador.attributes"},{"title":"Usuarios","visible":true,"render":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.usuarios.attributes"},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"},{"title":"Estado","data":"attributes.estado"},{"title":"Avance","data":"attributes.avance"},{"title":"Prioridad","data":"attributes.prioridad"},{"title":"días otorgados","data":"attributes.dias_otorgados"},{"title":"Nro de control","data":"attributes.nro_de_control"},{"title":"Gestion de la hoja de ruta","data":"attributes.gestion"},{"title":"Tipo de tarea","data":"attributes.tipo"},{"title":"Datos de la tarea","data":"attributes.datos"}];
     };
     this.$methods = {
     };

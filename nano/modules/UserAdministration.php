@@ -1222,7 +1222,7 @@
                         "label": "Datos de la tarea",
                         "type": "array",
                         "form": true,
-                        "list": false,
+                        "list": true,
                     }),
                 ],
                 "associations": [

@@ -83,6 +83,17 @@
             {
                 font-weight: bold;
             }
+            .tarea-paso {
+                padding: 2px 4px!important;
+                border-radius: 8px;
+            }
+            .tarea-paso1 {background-color: #C72328!important;}
+            .tarea-paso2 {background-color: #E43A28!important;}
+            .tarea-paso3 {background-color: #E66826!important;}
+            .tarea-paso4 {background-color: #FBCD37!important;}
+            .tarea-paso5 {background-color: #FEF149!important;}
+            .tarea-paso6 {background-color: #D2FD3B!important;}
+            .tarea-paso7 {background-color: #70D52D!important;}
         </style>
     </head>
 
@@ -594,6 +605,14 @@
                                                                             'progress-bar-primary': 70 <= tareaI.attributes.avance*1
                                                                         }"></div>
                                                                     </div>
+                                                                    <span class="tarea-paso tarea-paso1 label label-primary">1</span>
+                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso2':pasoPorTarea(tareaI, 2), label:1, 'label-primary': pasoPorTarea(tareaI, 2), 'label-default': !pasoPorTarea(tareaI, 2)}">2</span>
+                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso3':pasoPorTarea(tareaI, 3), label:1, 'label-primary': pasoPorTarea(tareaI, 3), 'label-default': !pasoPorTarea(tareaI, 3)}">3</span>
+                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso4':pasoPorTarea(tareaI, 4), label:1, 'label-primary': pasoPorTarea(tareaI, 4), 'label-default': !pasoPorTarea(tareaI, 4)}">4</span>
+                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso5':pasoPorTarea(tareaI, 5), label:1, 'label-primary': pasoPorTarea(tareaI, 5), 'label-default': !pasoPorTarea(tareaI, 5)}">5</span>
+                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso6':pasoPorTarea(tareaI, 6), label:1, 'label-primary': pasoPorTarea(tareaI, 6), 'label-default': !pasoPorTarea(tareaI, 6)}">6</span>
+                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso7':pasoPorTarea(tareaI, 7), label:1, 'label-primary': pasoPorTarea(tareaI, 7), 'label-default': !pasoPorTarea(tareaI, 7)}">7</span>
+                                                                    
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-5 project-user">
                                                                     <div v-for="u in usuariosAsignados(tareaI.relationships.usuarios)">
@@ -1285,7 +1304,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.126"></script>
+        <script src="../js/server.js?v0.127"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1407,6 +1426,10 @@
                     },
                 },
                 methods: {
+                    pasoPorTarea: function (tarea, paso) {
+                        return tarea.attributes && tarea.attributes.datos
+                            && tarea.attributes.datos.maximo && tarea.attributes.datos.maximo>=paso;
+                    },
                     cargarPasosTarea: function () {
                         var self = this;
                         var merge = function (target, source, replace, name) {
