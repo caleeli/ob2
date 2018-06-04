@@ -692,7 +692,7 @@
                                                             <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? usuariosAsignados(tarea.usuarios).map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
                                                         </dl>
                                                         <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-link"></i> Enlazar</button>
-                                                        <a v-for="enlace in tarea.relationships.enlaces" class="text-info"><i class="fa fa-book"></i> {{tarea.nombre_tarea}}</a>
+                                                        <!-- a v-for="enlace in tarea.relationships.enlaces" class="text-info"><i class="fa fa-book"></i> {{tarea.nombre_tarea}}</a -->
                                                     </div>
                                                     <div class="col-lg-7" id="cluster_info">
                                                         <dl class="dl-horizontal">
