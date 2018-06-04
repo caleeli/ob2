@@ -96,4 +96,14 @@ class Empresa extends Model
         }
         return $res;
     }
+                    
+
+    public function procedencias()
+    {
+        $sql = "select nombre_empresa as nombre from adm_empresas
+                                union
+                                select nombre_empresa as nombre from adm_firmas";
+        $res = \DB::select($sql);
+        return ["data"=>$res];
+    }
 }

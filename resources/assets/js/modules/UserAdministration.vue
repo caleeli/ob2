@@ -79,7 +79,8 @@ UserAdministration.Empresa = function (url, id) {
         return [{"title":"Código","data":"attributes.cod_empresa"},{"title":"Empresa","data":"attributes.nombre_empresa"},{"title":"Caracter","data":"attributes.caracter"},{"title":"Rubro","data":"attributes.rubro"}];
     };
     this.$methods = {
-eeff:function(gestion, eeff,methodCallback,childrenAssociation){self.$call("eeff",{"gestion":gestion,"eeff":eeff}, childrenAssociation, methodCallback)}    };
+eeff:function(gestion, eeff,methodCallback,childrenAssociation){self.$call("eeff",{"gestion":gestion,"eeff":eeff}, childrenAssociation, methodCallback)},
+        procedencias:function(methodCallback,childrenAssociation){self.$call("procedencias",{}, childrenAssociation, methodCallback)}    };
     this.$initFields();
     if(id) {
         this.$load(id);

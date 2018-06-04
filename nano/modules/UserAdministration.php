@@ -441,6 +441,15 @@
                             }
                             return $res;
                         }
+                    ?>,
+                    "procedencias()": <?php
+                        function () {
+                            $sql = "select nombre_empresa as nombre from adm_empresas
+                                union
+                                select nombre_empresa as nombre from adm_firmas";
+                            $res = \DB::select($sql);
+                            return ["data"=>$res];
+                        }
                     ?>
                 }
             }),

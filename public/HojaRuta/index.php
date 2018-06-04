@@ -147,7 +147,13 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Procedencia</label>
                                 <div class="col-lg-10">
-                                    <input required="required" type="text" v-model="hoja.procedencia" class="form-control" placeholder="">
+                                    <!-- input required="required" type="text" v-model="hoja.procedencia" class="form-control" placeholder="" -->
+                                    <div class="btn-group btn-block">
+                                        <input required type="text" v-model="hoja.procedencia" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
+                                        <ul class="dropdown-menu">
+                                            <li v-for="proc in procedencias" v-on:click="hoja.procedencia = proc.nombre" v-if="(proc.nombre+'').toLowerCase().indexOf(hoja.procedencia.toLowerCase())>-1"><a href="javascript:void(0)">{{proc.nombre}}</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div v-bind:class="{'form-group':1, 'has-error':errores.nroDeControl}">
@@ -1453,9 +1459,29 @@
                             nro_control_msg: '',
                             nroDeControl: false,
                         },
+                        procedencias: [],
                     };
                 },
                 methods: {
+                    cargarProcedencias : function () {
+                        var self = this;
+                        $.ajax({
+                            url:'/api/UserAdministration/empresas',
+                            method:'post',
+                            data: JSON.stringify({
+                                call: {
+                                    method: "procedencias",
+                                    arguments: []
+                                }
+                            }),
+                            dataType:'json'
+                        }).then(function (data) {
+                            self.procedencias.splice(0);
+                            data.response.data.forEach(function (row) {
+                                self.procedencias.push(row);
+                            });
+                        });
+                    },
                     validarNroControl: function (numero) {
                         var self = this;
                         $.ajax({
@@ -2272,6 +2298,7 @@
                     this.menu=menu?menu:(window.isManager?'busqueda':'recepcion');
                     self.dibujarDashboard();
                     self.cargarDestinatarios();
+                    self.cargarProcedencias();
                     self.nueva();
                 }
             });

@@ -87,13 +87,14 @@
                 padding: 2px 4px!important;
                 border-radius: 8px;
             }
-            .tarea-paso1 {background-color: #C72328!important;}
-            .tarea-paso2 {background-color: #E43A28!important;}
-            .tarea-paso3 {background-color: #E66826!important;}
-            .tarea-paso4 {background-color: #FBCD37!important;}
-            .tarea-paso5 {background-color: #FEF149!important;}
-            .tarea-paso6 {background-color: #D2FD3B!important;}
-            .tarea-paso7 {background-color: #70D52D!important;}
+            .tarea-paso1 {background-color: #940813!important;}
+            .tarea-paso2 {background-color: #C72328!important;}
+            .tarea-paso3 {background-color: #E43A28!important;}
+            .tarea-paso4 {background-color: #E66826!important;}
+            .tarea-paso5 {background-color: #FBCD37!important;}
+            .tarea-paso6 {background-color: #FEF149!important;}
+            .tarea-paso7 {background-color: #D2FD3B!important;}
+            .tarea-paso8 {background-color: #70D52D!important;}
         </style>
     </head>
 
@@ -612,6 +613,7 @@
                                                                     <span v-bind:class="{'tarea-paso':1, 'tarea-paso5':pasoPorTarea(tareaI, 5), label:1, 'label-primary': pasoPorTarea(tareaI, 5), 'label-default': !pasoPorTarea(tareaI, 5)}">5</span>
                                                                     <span v-bind:class="{'tarea-paso':1, 'tarea-paso6':pasoPorTarea(tareaI, 6), label:1, 'label-primary': pasoPorTarea(tareaI, 6), 'label-default': !pasoPorTarea(tareaI, 6)}">6</span>
                                                                     <span v-bind:class="{'tarea-paso':1, 'tarea-paso7':pasoPorTarea(tareaI, 7), label:1, 'label-primary': pasoPorTarea(tareaI, 7), 'label-default': !pasoPorTarea(tareaI, 7)}">7</span>
+                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso8':pasoPorTarea(tareaI, 8), label:1, 'label-primary': pasoPorTarea(tareaI, 8), 'label-default': !pasoPorTarea(tareaI, 8)}">8</span>
                                                                     
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-5 project-user">
@@ -673,6 +675,10 @@
                                                             <a href="#seguimientoDeTareas" class="btn btn-default btn-xs pull-right">Volver</a>
                                                             <h2>{{tarea.nombre_tarea}}</h2>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-5">
                                                         <dl class="dl-horizontal">
                                                             <dt>Estado:</dt> <dd><span class="label label-primary">{{tarea.estado}}</span></dd>
                                                             <div style="height: 4px;"></div>
@@ -682,16 +688,11 @@
                                                                     <span><i v-bind:class="{'fa fa-circle':true, 'text-danger':tarea.prioridad=='Alta', 'text-warning':tarea.prioridad=='Media', 'text-primary':tarea.prioridad=='Baja'}"></i> {{tarea.prioridad}}</span>
                                                                 </p>
                                                             </dd>
-                                                        </dl>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-5">
-                                                        <dl class="dl-horizontal">
                                                             <dt>Creado por:</dt> <dd>{{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}</dd>
                                                             <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? usuariosAsignados(tarea.usuarios).map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
                                                         </dl>
-                                                        <button class="btn btn-primary" type="button"><i class="fa fa-link"></i> Enlazar</button>
+                                                        <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-link"></i> Enlazar</button>
+                                                        <a v-for="enlace in tarea.relationships.enlaces" class="text-info"><i class="fa fa-book"></i> {{tarea.nombre_tarea}}</a>
                                                     </div>
                                                     <div class="col-lg-7" id="cluster_info">
                                                         <dl class="dl-horizontal">
@@ -703,26 +704,6 @@
                                                         </dl>
                                                     </div>
                                                 </div>
-                                                <!-- div class="row">
-                                                    <div class="col-lg-12">
-                                                        <dl class="dl-horizontal">
-                                                            <dt>Avance % :</dt>
-                                                            <dd>
-                                                                <div v-bind:class="{'progress progress-striped active m-b-sm': tarea.avance < 100, 'progress progress-bar-default': tarea.avance == 100 }">
-                                                                    <div v-bind:style="{width: tarea.avance+'%'}" v-bind:class="{
-                                                                         'progress-bar': true,
-                                                                         'progress-bar-danger': tarea.avance <= 30,
-                                                                         'progress-bar-warning': 30 < tarea.avance && tarea.avance < 70,
-                                                                         'progress-bar-primary': 70 <= tarea.avance
-                                                                    }"></div>
-                                                                </div>
-                                                                <small>
-                                                                    El avance de la tarea es de <strong>{{tarea.avance}}%</strong>.
-                                                                </small>
-                                                            </dd>
-                                                        </dl>
-                                                    </div>
-                                                </div -->
                                                 <div class="row m-t-sm">
                                                     <div class="col-lg-12">
                                                         <div class=" wizard-big wizard clearfix">
