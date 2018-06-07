@@ -597,15 +597,6 @@
                                                                     </table>
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-4 project-completion">
-                                                                    <small>Avance: {{tareaI.attributes.avance}}%</small>
-                                                                    <div class="progress progress-mini">
-                                                                        <div v-bind:style="{width: tareaI.attributes.avance+'%'}" v-bind:class="{
-                                                                            'progress-bar': true,
-                                                                            'progress-bar-danger': tareaI.attributes.avance*1 <= 30,
-                                                                            'progress-bar-warning': 30 < tareaI.attributes.avance*1 && tareaI.attributes.avance*1 < 70,
-                                                                            'progress-bar-primary': 70 <= tareaI.attributes.avance*1
-                                                                        }"></div>
-                                                                    </div>
                                                                     <span class="tarea-paso tarea-paso1 label label-primary">1</span>
                                                                     <span v-bind:class="{'tarea-paso':1, 'tarea-paso2':pasoPorTarea(tareaI, 2), label:1, 'label-primary': pasoPorTarea(tareaI, 2), 'label-default': !pasoPorTarea(tareaI, 2)}">2</span>
                                                                     <span v-bind:class="{'tarea-paso':1, 'tarea-paso3':pasoPorTarea(tareaI, 3), label:1, 'label-primary': pasoPorTarea(tareaI, 3), 'label-default': !pasoPorTarea(tareaI, 3)}">3</span>
@@ -692,7 +683,6 @@
                                                             <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? usuariosAsignados(tarea.usuarios).map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
                                                         </dl>
                                                         <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-link"></i> Enlazar</button>
-                                                        <!-- a v-for="enlace in tarea.relationships.enlaces" class="text-info"><i class="fa fa-book"></i> {{tarea.nombre_tarea}}</a -->
                                                     </div>
                                                     <div class="col-lg-7" id="cluster_info">
                                                         <dl class="dl-horizontal">
@@ -702,6 +692,11 @@
                                                             <dt>Tiempo asignado:</dt> <dd>{{tarea.dias_otorgados}} días</dd>
                                                             <dt>Tiempo restante:</dt> <dd>{{Math.max(0, tarea.dias_otorgados - tarea.dias_pasados)}} días</dd>
                                                         </dl>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <a v-for="enlace in tarea.enlaces" class="text-info"><i class="fa fa-book"></i> {{enlace.attributes.nombre_tarea}}</a>
                                                     </div>
                                                 </div>
                                                 <div class="row m-t-sm">
@@ -1285,7 +1280,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.127"></script>
+        <script src="../js/server.js?v0.130"></script>
         <script>
         $(document).ready(function () {
             var app;

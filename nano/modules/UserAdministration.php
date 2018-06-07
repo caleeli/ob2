@@ -1319,6 +1319,14 @@
                         "name": "asignaciones",
                         "model": "asignacion"
                     }),
+                    new Module.Model.BelongsToMany({
+                        "name": "enlaces",
+                        "model": "tarea",
+                        "form": true,
+                        "table": "enlace_tarea",
+                        "foreignKey" : "tarea_id",
+                        "otherKey" : "enlace_tarea_id",
+                    }),
                 ],
                 "events": {
                     "saved": <?php

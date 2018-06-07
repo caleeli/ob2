@@ -528,7 +528,11 @@ Module.Model.BelongsToMany = function (base) {
         
         return "    public function " + base.name + "()\n" +
           "    {\n" +
-          "        return $this->belongsToMany('App\\Models\\" + (base.module?base.module:module.name) + "\\" + PHP.upper_camel_case(base.model) + "');\n" +
+          "        return $this->belongsToMany('App\\Models\\" + (base.module?base.module:module.name) + "\\" + PHP.upper_camel_case(base.model) + "'"+
+                    (base.table?", '"+base.table+"'":"")+
+                    (base.foreignKey?", '"+base.foreignKey+"'":"")+
+                    (base.otherKey?", '"+base.otherKey+"'":"")+
+                    ");\n" +
           "    }\n";
     }
     this.migration = function () {

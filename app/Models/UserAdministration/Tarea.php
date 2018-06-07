@@ -121,6 +121,12 @@ class Tarea extends Model
     }
 
 
+    public function enlaces()
+    {
+        return $this->belongsToMany('App\Models\UserAdministration\Tarea', 'enlace_tarea', 'tarea_id', 'enlace_tarea_id');
+    }
+
+
     public function scopeWhereUserAssigned($query, $userId, $ownerId)
     {
         return $query->whereIn('id', function ($query) use ($userId, $ownerId) {
