@@ -98,15 +98,15 @@
                                         supported by Chrome and Opera */
     }
     #container.highlight .textLayer div:hover{
-        background-color: lightgreen;
+        background-color: #f66;
         cursor: copy;
     }
     #container.highlight .textLayer div.pdfselect:hover{
-        background-color: green;
+        background-color: #f00;
         cursor: not-allowed;
     }
     .pdfselect {
-        background-color: green;
+        background-color: #f00;
     }
 </style>
 <script type='text/x-template' id='gtemplate'>
