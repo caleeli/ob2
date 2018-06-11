@@ -1494,8 +1494,14 @@
                         this.recargarFileAuditoria();
                     },
                     pasosGuardarDB: function () {
+                        var self = this;
                         this.tarea.datos = JSON.parse(JSON.stringify(this.pasos));
-                        this.tarea.$save('', function() {}, true);
+                        this.tarea.$save('', function() {
+                            self.pasos.actual++;
+                            Vue.nextTick(function () {
+                                self.pasos.actual--;
+                            });
+                        }, true);
                     },
                     pasosGuardarFileAuditoria: function () {
                         var self = this;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GDrive;
 use App\Models\UserAdministration\HojaTrabajo;
+use App\Models\UserAdministration\Tarea;
 use Illuminate\Support\Facades\Storage;
 
 class VueEditorController extends Controller
@@ -14,6 +15,23 @@ class VueEditorController extends Controller
         $drive = new GDrive;
         $gTemplate = new \App\GTemplate($drive, $templeta);
         return view('hoja_trabajo', ['document' => $gTemplate->parse($hojaTrabajo)]);
+    }
+
+    public function viewTarea($templeta, Tarea $tarea, $indice)
+    {
+        $drive = new GDrive;
+        $gTemplate = new \App\GTemplate($drive, $templeta);
+        $valores = $tarea->datos['data'][$indice]['hojaTrabajo']['valores'];
+        header('Content-Type: application/msword');
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename=' . $tarea->datos['data'][$indice]['hojaTrabajo']['titulo']. '.doc');
+        header('Content-Transfer-Encoding: binary');
+        header('Connection: Keep-Alive');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+        return view('hoja_trabajo', ['document' => $gTemplate->parseValores($valores)]);
     }
 
     public function index($path)

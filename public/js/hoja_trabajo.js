@@ -64,6 +64,9 @@ Vue.component('lista', {
         };
     },
     methods: {
+        editable: function () {
+            return this.$parent.editMode;
+        },
         text: function (id) {
             var item = this.data.find(function (item) {
                 return item.id === id;
@@ -92,6 +95,9 @@ Vue.component('texto', {
         };
     },
     methods: {
+        editable: function () {
+            return this.$parent.editMode;
+        }
     }
 });
 
@@ -115,10 +121,15 @@ Vue.component('check', {
         };
     },
     methods: {
+        editable: function () {
+            return this.$parent.editMode;
+        },
         rotarCheck: function () {
-            var index = this.data.indexOf(this.innerValue);
-            index = (index + 1) % this.data.length;
-            this.innerValue = this.data[index];
+            if (this.editable()) {
+                var index = this.data.indexOf(this.innerValue);
+                index = (index + 1) % this.data.length;
+                this.innerValue = this.data[index];
+            }
         },
         fixEmpty: function (value) {
             return value ? value : '&nbsp;';
@@ -165,6 +176,9 @@ Vue.component('enlace', {
         };
     },
     methods: {
+        editable: function () {
+            return this.$parent.editMode;
+        },
         abrirEnlace: function () {
             var self = this;
             this.$parent.pdfEditMode = false;
@@ -275,6 +289,7 @@ var app = new Vue({
             pdfEditMode: true,
             highlightMode: false,
             selectedLinkName: '',
+            editMode: true,
             uploadAux: ''
         }, window.variables);
     },

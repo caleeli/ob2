@@ -1,6 +1,6 @@
 {!! $document !!}
 <link type="text/css" href="/css/text_layer_builder.css" rel="stylesheet">
-<div class="popup" v-show="showPDF">
+<div class="popup" v-show="showPDF" style="display:none">
     <div class="header" v-show="pdfEditMode">
         <input placeholder="Ingrese el texto del enlace" size="30" v-model="selectedLinkName"/>
         <upload v-model="uploadAux" type="singlefile" v-bind:small="true" disk="referencias" v-on:uploaded="fileUploaded"></upload>
@@ -21,6 +21,9 @@
     </div>
 </div>
 <style>
+    .noedit .editable {
+        border: none;
+    }
     .popup {
         position: fixed;
         top: 10vh;
@@ -116,7 +119,7 @@
 <script type='text/x-template' id='lista'>
     <div class="editable" >
         @{{text(innerValue)}}
-        <select v-model="innerValue">
+        <select v-model="innerValue" v-if="editable()">
             <option v-for="item in data" v-bind:value="item.id">@{{item.text}}</option>
         </select>
     </div>
@@ -124,7 +127,7 @@
 <script type='text/x-template' id='texto'>
     <div class="editable" >
         <span v-html="innerValue.split('\n').join('<br>')"></span>
-        <textarea v-model="innerValue"></textarea>
+        <textarea v-model="innerValue" v-if="editable()"></textarea>
     </div>
 </script>
 <script type='text/x-template' id='check'>
@@ -134,7 +137,7 @@
 <script type='text/x-template' id='enlace'>
     <div class="editable link-button">
         <span v-on:click="abrirEnlace">@{{innerValue.text}}</span>
-        <button type="button" v-on:click="editarEnlace">&#128279;</button>
+        <button type="button" v-on:click="editarEnlace" v-if="editable()">&#128279;</button>
     </div>
 </script>
 <script type='text/x-template' id='upload'>

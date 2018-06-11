@@ -40,14 +40,24 @@ class FolderController extends Controller
             }
             $path = $driver->getDriver()->getAdapter()->applyPathPrefix($filename);
             $file = new File($path);
+            $url = isset($config['urlBase']) ? asset($config['urlBase'] . $filename) : '';
+            $mime = $file->getMimeType();
+            $id = $filename;
+            if ($file->getExtension()==='link') {
+                $data = json_decode(file_get_contents($file->path()), true);
+                if ($data) {
+                    $mime = !empty($data['mime']) ? $data['mime'] : $mime;
+                    $url = !empty($data['url']) ? $data['url'] : $url;
+                }
+            }
             $list[] = [
-                'id'         => $filename,
+                'id'         => $id,
                 'attributes' => [
-                    'id'         => $filename,
+                    'id'         => $id,
                     'name'       => $filename,
-                    'url'        => isset($config['urlBase']) ? asset($config['urlBase'] . $filename) : '',
+                    'url'        => $url,
                     'updated_at' => $driver->lastModified($filename),
-                    'mime'       => $file->getMimeType(),
+                    'mime'       => $mime,
                 ]
             ];
         }
@@ -61,5 +71,18 @@ class FolderController extends Controller
     {
         Storage::disk($storage)->delete($file);
         return response()->json([]);
+    }
+
+    /**
+     * Guardar un archivo tipo link
+     * link={"mime":"application/msword", "url": "http://..."}
+     *
+     * @param string $storage
+     * @param string $filename
+     * @param array $link
+     */
+    public static function saveLink($storage, $filename, array $link)
+    {
+        return Storage::disk($storage)->put($filename, json_encode($link));
     }
 }
