@@ -22,7 +22,7 @@ class VueEditorController extends Controller
         $drive = new GDrive;
         $gTemplate = new \App\GTemplate($drive, $templeta);
         $valores = $tarea->datos['data'][$indice]['hojaTrabajo']['valores'];
-        header('Content-Type: application/msword');
+        /*header('Content-Type: application/msword');
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename=' . $tarea->datos['data'][$indice]['hojaTrabajo']['titulo']. '.doc');
@@ -30,7 +30,7 @@ class VueEditorController extends Controller
         header('Connection: Keep-Alive');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Pragma: public');
+        header('Pragma: public');*/
         return view('hoja_trabajo', ['document' => $gTemplate->parseValores($valores)]);
     }
 
