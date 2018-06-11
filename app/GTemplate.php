@@ -79,8 +79,8 @@ class GTemplate
                 $valor = $lista[$valor];
             }
             if ($match[2] === 'enlace') {
-                $enlace = json_decode($match[3]);
-                $valor = print_r([$match[3], $enlace], true);
+                $enlace = json_decode($valor);
+                $valor = print_r([$valor, $enlace], true);
             }
             return $valor;
         }, $html);
