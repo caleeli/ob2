@@ -80,7 +80,11 @@ class GTemplate
             }
             if ($match[2] === 'enlace') {
                 $enlace = json_decode($valor);
-                $valor = '<a href="'. htmlentities($enlace->file, ENT_QUOTES).'" target="_blank">'.$enlace->text.'</a>';
+                if ($enlace) {
+                    $valor = '<a href="'. htmlentities($enlace->file, ENT_QUOTES).'" target="_blank">'.$enlace->text.'</a>';
+                } else {
+                    $valor = '';
+                }
             }
             return $valor;
         }, $html);
