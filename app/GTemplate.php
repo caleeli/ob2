@@ -78,6 +78,10 @@ class GTemplate
                 $lista = $this->loadLista($match[3]);
                 $valor = $lista[$valor];
             }
+            if ($match[2] === 'enlace') {
+                $enlace = json_decode($match[3]);
+                $valor = $enlace['text'];
+            }
             return $valor;
         }, $html);
         return $html;
