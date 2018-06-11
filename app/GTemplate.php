@@ -80,7 +80,7 @@ class GTemplate
             }
             if ($match[2] === 'enlace') {
                 $enlace = json_decode($match[3]);
-                $valor = $enlace['text'];
+                $valor = $enlace['texto'];
             }
             return $valor;
         }, $html);
