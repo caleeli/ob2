@@ -175,6 +175,29 @@
 <script src="/bower_components/vue/dist/vue.js"></script>
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/js/pdf.js"></script>
+<script>
+    var autoSave = {!! json_encode(empty($autoSave) ? null : $autoSave) !!};
+    var saveLast = false;
+    function doAutoSave() {
+        if (!saveLast) return;
+        console.log("Saving");
+        saveLast = false;
+        for (var a in variables) {
+            variables[a] = app[a];
+        }
+        window.opener.app.pasosFileAuditoriaAutoSave(variables);
+    }
+    function saveTarea() {
+        saveLast = true;
+    }
+    window.onbeforeunload = doAutoSave;
+    /*function () {
+        if (saveLast) {
+            return confirm('Algunos cambios aun se guardaron, ¿Desea cerrar la ventana o esperar?');
+        }
+    };*/
+    var timeoutSave = setInterval(doAutoSave , 4000);
+</script>
 <script src="/js/hoja_trabajo.js?{{filemtime(public_path('/js/hoja_trabajo.js'))}}"></script>
 <script type="text/javascript" src="/js/text_layer_builder.js"></script>
 <script type="text/javascript" charset="utf8" src="/bower_components/jq-ajax-progress/src/jq-ajax-progress.min.js"></script>

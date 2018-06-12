@@ -1493,14 +1493,13 @@
                     pasosRecargarFileAuditoria: function () {
                         this.recargarFileAuditoria();
                     },
-                    pasosGuardarDB: function () {
+                    pasosGuardarDB: function (callback) {
                         var self = this;
                         this.tarea.datos = JSON.parse(JSON.stringify(this.pasos));
                         this.tarea.$save('', function() {
-                            self.pasos.actual++;
-                            Vue.nextTick(function () {
-                                self.pasos.actual--;
-                            });
+                            if (typeof callback === 'function') {
+                                callback();
+                            }
                         }, true);
                     },
                     pasosGuardarFileAuditoria: function () {
@@ -1519,6 +1518,21 @@
                             self.pasosGuardarDB();
                         });
                         self.cerrarPasoAuditoria();
+                    },
+                    pasosFileAuditoriaAutoSave: function (valores) {
+                        var self = this;
+                        self.pasos.data[3].hojaTrabajo.titulo = 'F-3007';
+                        self.pasos.data[3].hojaTrabajo.valores = valores;
+                        self.pasos.data[3].hojaTrabajo.gestion = self.gestionAuditoria;
+                        self.pasos.data[3].hojaTrabajo.templeta = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
+                        self.pasosGuardarDB(function () {
+                            /*self.pasos.actual++;
+                            Vue.nextTick(function () {
+                                setTimeout(function () {
+                                    self.pasos.actual--;
+                                }, 200);
+                            });*/
+                        });
                     },
                     pasosCerrarFileAuditoria: function () {
                         this.cerrarFileAuditoria();
@@ -1542,22 +1556,27 @@
                     },
                     crearPasoAuditoria: function (name) {
                         var self = this;
-                        this.auditoriaUrl = '/vue-editor/file/' + this.tipoAuditoria;
-                        this.auditoriaFileName = name;
-                        self.hoja_trabajo.$load(0, function () {
+                        var paso = 3;
+                        var templete = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
+                        //self.auditoriaUrl = '/vue-editor/file/' + this.tipoAuditoria;
+                        self.auditoriaFileName = name;
+                        /*self.hoja_trabajo.$load(0, function () {
                             self.pasos.subpaso4 = 1;
-                        });
+                        });*/
+                        window.open("/vue-editor/tarea/" + templete + "/" + self.tarea.id + "/" + paso, "editorF");
                     },
                     abrirPasoFileAuditoria: function () {
                         var self = this;
-                        self.tipoAuditoria = self.pasos.data[3].hojaTrabajo.templeta;
+                        var paso = 3;
+                        self.tipoAuditoria = self.pasos.data[paso].hojaTrabajo.templeta;
                         self.auditoriaUrl = '/vue-editor/file/' + self.tipoAuditoria;
-                        self.auditoriaFileName = self.pasos.data[3].hojaTrabajo.titulo;
-                        self.hoja_trabajo.titulo = self.pasos.data[3].hojaTrabajo.titulo;
-                        self.hoja_trabajo.valores = self.pasos.data[3].hojaTrabajo.valores;
-                        self.hoja_trabajo.gestion = self.pasos.data[3].hojaTrabajo.gestion;
-                        self.hoja_trabajo.templeta = self.pasos.data[3].hojaTrabajo.templeta;
-                        self.pasos.subpaso4 = 1;
+                        self.auditoriaFileName = self.pasos.data[paso].hojaTrabajo.titulo;
+                        self.hoja_trabajo.titulo = self.pasos.data[paso].hojaTrabajo.titulo;
+                        self.hoja_trabajo.valores = self.pasos.data[paso].hojaTrabajo.valores;
+                        self.hoja_trabajo.gestion = self.pasos.data[paso].hojaTrabajo.gestion;
+                        self.hoja_trabajo.templeta = self.pasos.data[paso].hojaTrabajo.templeta;
+                        //self.pasos.subpaso4 = 1;
+                        window.open("/vue-editor/tarea/" + self.pasos.data[paso].hojaTrabajo.templeta + "/" + self.tarea.id + "/" + paso, "editorF");
                     },
                     guardarPaso: function () {
                         if (this.pasos.actual===7) {

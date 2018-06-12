@@ -46,6 +46,7 @@ Route::get('/vue-editor/file/{templeta}/{hojaTrabajo?}', 'VueEditorController@ed
 Route::get('/vue-editor/list/{path}', 'VueEditorController@index')->name('vue-editor-list');
 Route::get('/vue-editor/references', 'VueEditorController@listPDFs')->name('vue-editor-references');
 Route::get('/vue-editor/download/{templeta}/{tarea}/{indice}', 'VueEditorController@viewTarea')->name('vue-download');
+Route::get('/vue-editor/tarea/{templeta}/{tarea}/{indice}', 'VueEditorController@editTarea')->name('vue-tarea');
 
 Route::get('/report', 'ReportController@report')->name('report');
 Route::get('/pdf', 'ReportController@pdf')->name('pdf');

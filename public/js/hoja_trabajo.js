@@ -53,6 +53,9 @@ Vue.component('lista', {
     watch: {
         'value': function (value) {
             this.innerValue = value;
+            if (typeof window.autoSave==='string') {
+                window[window.autoSave]();
+            }
         },
         'innerValue': function (value) {
             this.$emit('input', value);
@@ -84,6 +87,9 @@ Vue.component('texto', {
     watch: {
         'value': function (value) {
             this.innerValue = value;
+            if (typeof window.autoSave==='string') {
+                window[window.autoSave]();
+            }
         },
         'innerValue': function (value) {
             this.$emit('input', value);
@@ -110,6 +116,9 @@ Vue.component('check', {
     watch: {
         'value': function (value) {
             this.innerValue = value;
+            if (typeof window.autoSave==='string') {
+                window[window.autoSave]();
+            }
         },
         'innerValue': function (value) {
             this.$emit('input', value);
@@ -155,6 +164,9 @@ Vue.component('enlace', {
                 value.marks.forEach(function (mark) {
                     self.innerValue.marks.push(mark);
                 });
+                if (typeof window.autoSave==='string') {
+                    window[window.autoSave]();
+                }
             },
             deep: true
         },
