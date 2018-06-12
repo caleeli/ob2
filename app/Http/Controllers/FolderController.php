@@ -54,7 +54,7 @@ class FolderController extends Controller
                 'id'         => $id,
                 'attributes' => [
                     'id'         => $id,
-                    'name'       => $filename,
+                    'name'       => basename($filename),
                     'url'        => $url,
                     'updated_at' => $driver->lastModified($filename),
                     'mime'       => $mime,
