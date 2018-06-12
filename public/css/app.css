@@ -5516,7 +5516,7 @@ ul.notes li div {
 /* FILE MANAGER */
 .file-box {
   float: left;
-  width: 150px;
+  width: 124px;
 }
 
 .file-manager h5 {
@@ -5645,7 +5645,7 @@ ul.notes li div {
   word-break: break-all;
   height: 5.5em;
   overflow: hidden;
-  font-size: 85%;
+  font-size: 80%;
 }
 
 .file-name small {
