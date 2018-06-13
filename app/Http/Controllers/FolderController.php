@@ -43,6 +43,9 @@ class FolderController extends Controller
             $url = isset($config['urlBase']) ? asset($config['urlBase'] . $filename) : '';
             $mime = $file->getMimeType();
             $id = $filename;
+            if ($file->getExtension()==='marks') {
+                continue;
+            }
             if ($file->getExtension()==='link') {
                 $data = json_decode(file_get_contents($file->path()), true);
                 if ($data) {
