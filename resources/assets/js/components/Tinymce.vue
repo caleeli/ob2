@@ -1,5 +1,5 @@
 <template>
-    <div style="height:100%">
+    <div v-bind:style="{height:getHeight()}">
     </div>
 </template>
 
@@ -12,6 +12,8 @@
         },
         props: {
             'value': String,
+            'plugins': String,
+            'height': String,
             'inline': Boolean
         },
         watch: {
@@ -29,6 +31,9 @@
             }
         },
         methods: {
+            getHeight: function () {
+                return this.height ? this.height : '100%';
+            }
         },
         /*updated: function () {
             self.$nextTick(function () {
@@ -37,7 +42,7 @@
         mounted: function () {
             var self = this;
             self.editorPromise=tinymce.init({
-                plugins: "textcolor colorpicker contextmenu lists link autoresize",
+                plugins: "textcolor colorpicker contextmenu lists link autoresize" + (self.plugins ? ' ' + self.plugins:''),
                 menubar: 'edit insert format table tools',
                 toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright | numlist bullist outdent indent | link",
                 target: self.$el,
