@@ -47,6 +47,10 @@ Route::get('/vue-editor/list/{path}', 'VueEditorController@index')->name('vue-ed
 Route::get('/vue-editor/references', 'VueEditorController@listPDFs')->name('vue-editor-references');
 Route::get('/vue-editor/download/{templeta}/{tarea}/{indice}', 'VueEditorController@viewTarea')->name('vue-download');
 Route::get('/vue-editor/tarea/{templeta}/{tarea}/{indice}', 'VueEditorController@editTarea')->name('vue-tarea');
+Route::get('/pdfhl/edit/{storage?}/{path1?}/{path2?}/{path3?}/{path4?}', 'VueEditorController@editPDF')->name('vue-edit-pdf');
+Route::get('/pdfhl/view/{storage?}/{path1?}/{path2?}/{path3?}/{path4?}', 'VueEditorController@viewPDF')->name('vue-view-pdf');
+Route::get('/pdfhl/list/{storage}/{path1?}/{path2?}/{path3?}/{path4?}', 'VueEditorController@listPDFStorage')->name('vue-edit-pdf');
+Route::put('/pdfhl/mark/{storage}/{path1?}/{path2?}/{path3?}/{path4?}', 'VueEditorController@markPDF')->name('vue-mark-pdf');
 
 Route::get('/report', 'ReportController@report')->name('report');
 Route::get('/pdf', 'ReportController@pdf')->name('pdf');

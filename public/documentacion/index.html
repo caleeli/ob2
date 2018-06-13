@@ -732,7 +732,6 @@
                                                                     <div>
                                                                         <label>Descripción</label>
                                                                         <tinymce v-model='pasos.data[pasos.actual].descripcion' plugins="table" height="10em" />
-                                                                        <!-- textarea class="form-control" v-model='pasos.data[pasos.actual].descripcion'  wrap='off' rows="6" style="white-space: nowrap"></textarea -->
                                                                     </div>
                                                                     <br>
                                                                     <button v-if="pasos.actual===3" class="btn btn-primary btn-block" type="button" v-on:click='abrirPasoAuditoria("F-3007")'><i class="fa fa-save"></i> F-3007</button>

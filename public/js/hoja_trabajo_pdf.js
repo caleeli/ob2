@@ -13,7 +13,6 @@ function moveContentIntoDiv() {
     }
     document.body.insertBefore(div, document.body.firstChild);
 }
-window.linksSelected = {};
 moveContentIntoDiv();
 //Lista de seleccion
 Vue.component('gtemplate', {
@@ -192,25 +191,9 @@ Vue.component('enlace', {
         editable: function () {
             return this.$parent.editMode;
         },
-        abrirEnlace: function () {
-            var self = this;
-            var selectedFileBase = location.origin + '/documentacion/';
-            var path = '';
-            if (self.innerValue.file) {
-                path = self.innerValue.file.substr(selectedFileBase.length);
-            }
-            window.linksSelected[path] = this;
-            window.open('/pdfhl/view/' + path, path);
-        },
         editarEnlace: function () {
-            var self = this;
-            var selectedFileBase = location.origin + '/documentacion/';
-            var path = '';
-            if (self.innerValue.file) {
-                path = self.innerValue.file.substr(selectedFileBase.length);
-            }
-            window.linksSelected[path] = this;
-            window.open('/pdfhl/edit/' + path, path);
+            this.abrirEnlace();
+            this.$parent.pdfEditMode = true;
         },
         setFile: function (file) {
             this.innerValue.file = file;
@@ -224,9 +207,6 @@ Vue.component('enlace', {
         },
         setText: function (text) {
             this.innerValue.text = text;
-        },
-        getText: function () {
-            return this.innerValue.text;
         }
     }
 });
@@ -297,18 +277,20 @@ var API_SERVER = '';
 var app = new Vue({
     el: '#app',
     data: function () {
+        var selectedLink = opener && opener.linksSelected ? opener.linksSelected[window.name] : null;
         return Object.assign({
             message: 'Hello Vue2!',
             empresas: [],
             files: [],
-            selectedFile: '',
+            selectedFile: window.selectedFile,
             selectedLink: '',
-            marks: [],
+            marks: window.marks,
             showPDF: false,
             pdfEditMode: true,
             highlightMode: false,
-            selectedLinkName: '',
+            selectedLinkName: selectedLink ? selectedLink.getText() : '',
             editMode: true,
+            storagePath: 'tareas/24',
             uploadAux: ''
         }, window.variables);
     },
@@ -329,7 +311,7 @@ var app = new Vue({
         loadPDFList: function (callback) {
             var self = this;
             $.ajax({
-                url: '/vue-editor/references',
+                url: '/pdfhl/list/' + self.storagePath,
                 method: 'get',
                 dataType: 'json',
                 success: function (res) {
@@ -364,7 +346,7 @@ var app = new Vue({
                         // Get desired page
                         pdf.getPage(i).then(function (page) {
 
-                            var scale = 1;
+                            var scale = 1.25;
                             var viewport = page.getViewport(scale);
                             var div = document.createElement("div");
 
@@ -460,16 +442,22 @@ var app = new Vue({
         },
         completarSeleccion: function () {
             var self = this;
-            self.selectedLink.setFile(self.selectedFile);
-            self.selectedLink.setMarks(self.marks);
-            self.selectedLink.setText(self.selectedLinkName);
-            self.cerrarPDF();
+            var selectedLink = opener.linksSelected[window.name];
+            $.ajax({
+                method: 'put',
+                data: JSON.stringify(self.marks),
+                dataType: 'json',
+                url: '/pdfhl/mark/' + self.selectedFile.substr(window.selectedFileBase.length),
+                success: function () {
+                    selectedLink.setFile(self.selectedFile);
+                    selectedLink.setMarks(self.marks);
+                    selectedLink.setText(self.selectedLinkName);
+                    self.cerrarPDF();
+                }
+            });
         },
         cerrarPDF: function () {
-            this.showPDF = false;
-            if (this.highlightMode) {
-                this.modoResaltar();
-            }
+            window.close();
         },
         marcarDiv: function (div) {
             var self = this;
@@ -520,6 +508,7 @@ var app = new Vue({
         var self = this;
         self.loadList('/api/UserAdministration/empresas', 'nombre_empresa', self.empresas);
         self.loadPDFList();
+        self.loadPDF(window.selectedFile);
         $("#container").mousedown(function (event) {
             self.iniMarcarDiv(event.target);
         });
