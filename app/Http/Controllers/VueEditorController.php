@@ -60,6 +60,12 @@ class VueEditorController extends Controller
             if (strtolower(substr($file, -4)) != '.pdf') continue;
             $res[] = ['url' => $this->getStorageUrl($storage, $file), 'name' => basename($file)];
         }
+        //Agrega los files de referencias tambien
+        $files = Storage::disk('referencias')->files('/');
+        foreach ($files as $file) {
+            if (strtolower(substr($file, -4)) != '.pdf') continue;
+            $res[] = ['url' => env('APP_URL') . '/documentacion/referencias/' . $file, 'name' => basename($file)];
+        }
         return $res;
     }
 
