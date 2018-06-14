@@ -284,13 +284,29 @@ var app = new Vue({
             files: [],
             selectedFile: window.selectedFile,
             selectedLink: '',
+            //selectors de las Marcas
             marks: window.marks,
+            //Titulos-Marcas
+            markIds: window.markIds,
+            //Metadatos de las marcas (id=title)
+            markMetas: window.markMetas,
+            //Indice frl metadato actual
+            markMetaCurrent: -1,
+            //metadato actual
+            markMeta: {
+                id: 0,
+                title: '',
+                description: '',
+                file: '',
+                reference: '',
+            },
+            metaEditTitle: -1,
             showPDF: false,
             pdfEditMode: true,
             highlightMode: false,
             selectedLinkName: selectedLink ? selectedLink.getText() : '',
             editMode: true,
-            storagePath: 'tareas/24',
+            storagePath: window.storePath,
             uploadAux: ''
         }, window.variables);
     },
@@ -325,11 +341,17 @@ var app = new Vue({
                 }
             });
         },
+        selectPDF: function (url) {
+            window.location.href = '/pdfhl/edit/' + url.substr(window.selectedFileBase.length);
+        },
         loadPDF: function (url) {
             var self = this;
             self.selectedFile = url;
             document.getElementById("container").innerHTML = '';
             if (!url) {
+                return;
+            }
+            if (url.substr(url.length - 4).toLowerCase() != '.pdf') {
                 return;
             }
             // Asynchronous download PDF
@@ -403,22 +425,63 @@ var app = new Vue({
                                     // Render text-fragments
                                     textLayer.render();
                                     // Highligth saved marks
-                                    setTimeout(function () {
-                                        self.marks.forEach(function (mark) {
-                                            if (firstMark) {
-                                                $(mark)[0].scrollIntoView();
+                                    var hlMarks = function () {
+                                        if ($("#container > div:nth-child(1) > div").length===0) {
+                                            return setTimeout(hlMarks, 1);
+                                        }
+                                        var lastFocused = null;
+                                        self.marks.forEach(function (mark, i) {
+                                            var meta = {};
+                                            var id = self.markIds[i];
+                                            self.markMetas.forEach(function (m) {
+                                                if (m.id===id) {
+                                                    meta = m;
+                                                }
+                                            });
+                                            if (firstMark || (self.selectedLinkName===meta.title && !lastFocused)) {
+                                                rightMark = $(mark);
                                                 firstMark = false;
+                                                lastFocused = self.selectedLinkName;
                                             }
                                             $(mark).addClass('pdfselect');
+                                            $(mark).data('markMeta', meta);
                                         });
-                                    }, 1);
+                                        if (rightMark) self.focusOn(rightMark);
+                                    };
+                                    setTimeout(hlMarks, 100);
                                 });
                         });
                     }
                 });
         },
         modoResaltar: function () {
-            $("#container").toggleClass('highlight');
+            var titulo;
+            if (!$("#container").hasClass('highlight')) {
+                var tituloPromt = 'Título del comentario';
+                while(titulo = prompt(tituloPromt)) {
+                    var exists = false;
+                    this.markMetas.forEach(function (meta) {
+                        exists = exists || meta.title === titulo;
+                    });
+                    if (!exists) {
+                        this.markMetaCurrent = this.markMetas.length;
+                        this.markMeta.id = this.markMetaCurrent;
+                        this.markMeta.title = titulo;
+                        this.markMeta.description = '';
+                        this.markMeta.file = '';
+                        this.markMeta.reference = '';
+                        this.markMetas.push(JSON.parse(JSON.stringify(this.markMeta)));
+                        break;
+                    } else {
+                        tituloPromt = 'Ese título ya existe, ingrese otro texto';
+                    }
+                }
+            }
+            if (titulo) {
+                $("#container").addClass('highlight');
+            } else {
+                $("#container").removeClass('highlight');
+            }
             this.highlightMode = $("#container").hasClass('highlight');
         },
         marcarSeleccion2: function () {
@@ -442,13 +505,17 @@ var app = new Vue({
         },
         completarSeleccion: function () {
             var self = this;
-            var selectedLink = opener.linksSelected[window.name];
             $.ajax({
                 method: 'put',
-                data: JSON.stringify(self.marks),
+                data: JSON.stringify({
+                    marks: self.marks,
+                    ids: self.markIds,
+                    metas: self.markMetas,
+                }),
                 dataType: 'json',
                 url: '/pdfhl/mark/' + self.selectedFile.substr(window.selectedFileBase.length),
                 success: function () {
+                    var selectedLink = opener.linksSelected[window.name];
                     selectedLink.setFile(self.selectedFile);
                     selectedLink.setMarks(self.marks);
                     selectedLink.setText(self.selectedLinkName);
@@ -459,13 +526,41 @@ var app = new Vue({
         cerrarPDF: function () {
             window.close();
         },
+        /**
+         * Abre otro PDF para enalzarlo con el actual.
+         *
+         * @param {object} meta
+         */
+        openLinkedPDF: function (meta) {
+            var self = this;
+            var name = self.selectedFile + ':' + meta.id;
+            var path = meta.file ? meta.file.substr(window.selectedFileBase.length) : '';
+            window.linksSelected[name] = {
+                    id: meta.id,
+                    setFile: function (selectedFile) {
+                        self.markMetas[this.id].file = selectedFile;
+                    },
+                    setMarks: function (marks) {
+                        
+                    },
+                    setText: function (text) {
+                        self.markMetas[this.id].reference = text;
+                    },
+                    getText: function() {
+                        return self.markMetas[this.id].reference;
+                    }
+            };
+            window.open('/pdfhl/edit/' + path + '?sp=' + encodeURIComponent(self.storagePath), name);
+        },
         marcarDiv: function (div) {
             var self = this;
             if (self.markActive && $(div.parentNode).hasClass('textLayer') && !$(div).hasClass('endOfContent')) {
                 if (self.unmarkMode) {
                     $(div).removeClass('pdfselect');
+                    $(div).removeData('markMeta');
                 } else {
                     $(div).addClass('pdfselect');
+                    $(div).data('markMeta', JSON.parse(JSON.stringify(self.markMeta)));
                 }
             }
         },
@@ -475,6 +570,11 @@ var app = new Vue({
                 self.markActive = true;
                 self.unmarkMode = $(div).hasClass('pdfselect');
                 $(div).toggleClass('pdfselect');
+                if ($(div).hasClass('pdfselect')) {
+                    $(div).data('markMeta', JSON.parse(JSON.stringify(self.markMeta)));
+                } else {
+                    $(div).removeData('markMeta');
+                }
             }
         },
         endMarcarDiv: function (div) {
@@ -483,16 +583,43 @@ var app = new Vue({
             if ($("#container").hasClass('highlight') && $(div.parentNode).hasClass('textLayer') && !$(div).hasClass('endOfContent')) {
                 if (self.unmarkMode) {
                     $(div).removeClass('pdfselect');
+                    $(div).removeData('markMeta');
                 } else {
                     $(div).addClass('pdfselect');
+                    $(div).data('markMeta', JSON.parse(JSON.stringify(self.markMeta)));
                 }
             }
             self.markActive = false;
             var baseLength = $("#container").getPath().length;
             self.marks.splice(0);
+            self.markIds.splice(0);
             $("#container .pdfselect").each(function () {
                 self.marks.push('#container' + $(this).getPath().substr(baseLength));
+                var meta = $(this).data('markMeta');
+                self.markIds.push(meta.id);
             });
+        },
+        gotoMark: function (id) {
+            var self = this;
+            var found = false;
+            self.markMetas.forEach(function (m, j) {
+                if (m.id===id) {
+                    self.markMetaCurrent = j;
+                }
+            });
+            self.markIds.forEach(function (t, i) {
+                if (t===id && !found) {
+                    self.focusOn($(self.marks[i]));
+                    found = true;
+                }
+            });
+        },
+        focusOn: function ($el) {
+            if ($el[0]) {
+                $('#app').css('margin-top', '-4em');
+                $el[0].scrollIntoView();
+                $('#app').css('margin-top', '0em');
+            }
         },
         fileUploaded: function (file) {
             var self = this;

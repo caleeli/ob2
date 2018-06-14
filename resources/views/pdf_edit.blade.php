@@ -7,19 +7,22 @@
     .information{color: #31708C;background-color: #D1E4F1;border: #BCE8EF solid 1px;}
     .warning{color: #8A6D39;background-color: #FCF8E1;border: #FAEBCA solid 1px;}
     .failure{color: #AC260D;background-color: #F2DEDC;border: #EBCCCF solid 1px;}
+    .message-button {cursor: pointer;}
 </style>
 <div id='app'>
     @if($mode==='edit')
-    <div class="header" style='width: 765px'>
-        <input placeholder="Ingrese el texto del enlace" size="30" v-model="selectedLinkName"/>
-        <upload v-model="uploadAux" type="singlefile" v-bind:small="true" disk="referencias" v-on:uploaded="fileUploaded"></upload>
-        <select v-model="selectedFile" v-on:change="loadPDF(selectedFile)">
-            <option value=""></option>
-            <option v-for="file in files" v-bind:value="file.url">@{{file.name}}</option>
-        </select>
-        <button type="button" v-on:click="modoResaltar" v-bind:style="{backgroundColor:highlightMode?'green':''}">&#128221;</button>
-        <button type="button" v-on:click="completarSeleccion">&#128190;</button>
-        <button type="button" v-on:click="cerrarPDF" style="position:absolute; right:0px;">X</button>
+    <div class='popup'>
+        <div class="header" style='width: 765px;'>
+            <input placeholder="Ingrese el texto del enlace" size="30" v-model="selectedLinkName"/>
+            <upload v-model="uploadAux" type="singlefile" v-bind:small="true" disk="referencias" v-on:uploaded="fileUploaded"></upload>
+            <select v-model="selectedFile" v-on:change="selectPDF(selectedFile)">
+                <option value=""></option>
+                <option v-for="file in files" v-bind:value="file.url">@{{file.name}}</option>
+            </select>
+            <button type="button" v-on:click="modoResaltar" v-bind:style="{backgroundColor:highlightMode?'green':''}">&#128221;</button>
+            <button type="button" v-on:click="completarSeleccion">&#128190;</button>
+            <button type="button" v-on:click="cerrarPDF" style="position:absolute; right:0px;">X</button>
+        </div>
     </div>
     @endif
     <div style='display: flex;'>
@@ -28,8 +31,15 @@
         </div>
         <div style='position: relative'>
             <div class="container bg_logo" style='position: fixed'>
-                <div class="message information">
-                    <p><a href='javascript:void(0)'>@{{selectedLinkName}}</a></p>
+                <div v-bind:class="{message:1, information:ii!==markMetaCurrent, success:ii===markMetaCurrent}" v-for='(meta,ii) in markMetas'>
+                    <p>
+                        <a v-show='metaEditTitle!==ii' href='javascript:void(0)' v-on:click='gotoMark(meta.id)'>@{{meta.title}}</a>
+                        <input v-show='metaEditTitle===ii' v-model='meta.title'>
+                        <span class='message-button' v-show='metaEditTitle!==ii' v-on:click='metaEditTitle=ii'>[editar]</span>
+                        <span class='message-button' v-show='metaEditTitle===ii' v-on:click='metaEditTitle=-1'>[ok]</span>
+                        <span class='message-button' v-show='metaEditTitle!==ii' v-on:click='openLinkedPDF(meta)'>[enlace]</span>
+                    </p>
+                    <p v-if='meta.description'>@{{meta.description}}</p>
                 </div>
             </div>
         </div>
@@ -41,11 +51,9 @@
     }
     .popup {
         position: fixed;
-        top: 10vh;
-        left: 10vw;
-        width: 80vw;
-        height: 80vh;
-        border: 1px solid black;
+        top: 0px;
+        left: 0px;
+        z-index: 1
     }
     .popup .header {
         height: 2em;
@@ -194,6 +202,10 @@
     var selectedFile = location.origin + '/documentacion/' + {!! json_encode($pdfPath) !!};
     var selectedFileBase = location.origin + '/documentacion/';
     var marks = {!! json_encode($pdfMarks) !!};
+    var markIds = {!! json_encode($markIds) !!};
+    var markMetas = {!! json_encode($markMetas) !!};
+    var storePath = {!! json_encode($storePath) !!};
+    window.linksSelected = {};
 </script>
 <script src="/js/hoja_trabajo_pdf.js?{{filemtime(public_path('/js/hoja_trabajo_pdf.js'))}}"></script>
 <script type="text/javascript" src="/js/text_layer_builder.js"></script>

@@ -61,10 +61,12 @@ class VueEditorController extends Controller
             $res[] = ['url' => $this->getStorageUrl($storage, $file), 'name' => basename($file)];
         }
         //Agrega los files de referencias tambien
-        $files = Storage::disk('referencias')->files('/');
-        foreach ($files as $file) {
-            if (strtolower(substr($file, -4)) != '.pdf') continue;
-            $res[] = ['url' => env('APP_URL') . '/documentacion/referencias/' . $file, 'name' => basename($file)];
+        if ($storage!=='referencias') {
+            $files = Storage::disk('referencias')->files('/');
+            foreach ($files as $file) {
+                if (strtolower(substr($file, -4)) != '.pdf') continue;
+                $res[] = ['url' => env('APP_URL') . '/documentacion/referencias/' . $file, 'name' => basename($file)];
+            }
         }
         return $res;
     }
@@ -77,18 +79,48 @@ class VueEditorController extends Controller
      *
      * @return View
      */
-    public function editPDF($storage=null, ...$path)
+    public function editPDF(Request $request, $storage=null, ...$path)
     {
         $filePath = implode('/', $path);
         $marksFile = $filePath . '.marks';
-        $marks = [];
+        $data = [
+            'marks' => [],
+            'ids' => [],
+            'metas' => [],
+        ];
+        $defaultSP = $storage==='tareas' && !empty($path[0]) ? $storage . '/' . $path[0] : ($storage ? $storage : 'referencias');
+        $storePath = $request->input('sp', $defaultSP);
         if ($storage) {
             if (Storage::disk($storage)->exists($marksFile)) {
-                $marks = json_decode(Storage::disk($storage)->get($marksFile));
-                if (!$marks) $marks = [];
+                $data = json_decode(Storage::disk($storage)->get($marksFile), true);
+                if (!$data) $data = [];
+                if (!isset($data['marks'])) {
+                    $marks = $data;
+                    $data['marks'] = $marks;
+                    $data['ids'] = [];
+                    $data['metas'] = [];
+                    $defaultTitle = '1.';
+                    foreach($marks as $m) {
+                        $data['ids'][] = 0;
+                    }
+                    $data['metas'][] = [
+                        'id' => 0,
+                        'title' => $defaultTitle,
+                        'description' => '',
+                        'file' => '',
+                        'reference' => '',
+                    ];
+                }
             }
         }
-        return view('pdf_edit', ['pdfPath' => $storage . '/' . $filePath, 'pdfMarks' => $marks, 'mode'=>'edit']);
+        return view('pdf_edit', [
+            'pdfPath' => $storage . '/' . $filePath,
+            'pdfMarks' => $data['marks'],
+            'markIds' => $data['ids'],
+            'markMetas' => $data['metas'],
+            'mode'=>'edit',
+            'storePath' => $storePath,
+        ]);
     }
 
     /**
@@ -99,18 +131,48 @@ class VueEditorController extends Controller
      *
      * @return View
      */
-    public function viewPDF($storage=null, ...$path)
+    public function viewPDF(Request $request, $storage=null, ...$path)
     {
         $filePath = implode('/', $path);
         $marksFile = $filePath . '.marks';
-        $marks = [];
+        $data = [
+            'marks' => [],
+            'ids' => [],
+            'metas' => [],
+        ];
+        $defaultSP = $storage==='tareas' && !empty($path[0]) ? $storage . '/' . $path[0] : ($storage ? $storage : 'referencias');
+        $storePath = $request->input('sp', $defaultSP);
         if ($storage) {
             if (Storage::disk($storage)->exists($marksFile)) {
-                $marks = json_decode(Storage::disk($storage)->get($marksFile));
-                if (!$marks) $marks = [];
+                $data = json_decode(Storage::disk($storage)->get($marksFile), true);
+                if (!$data) $data = [];
+                if (!isset($data['marks'])) {
+                    $marks = $data;
+                    $data['marks'] = $marks;
+                    $data['ids'] = [];
+                    $data['metas'] = [];
+                    $defaultTitle = '1.';
+                    foreach($marks as $m) {
+                        $data['ids'][] = 0;
+                    }
+                    $data['metas'][] = [
+                        'id' => 0,
+                        'title' => $defaultTitle,
+                        'description' => '',
+                        'file' => '',
+                        'reference' => '',
+                    ];
+                }
             }
         }
-        return view('pdf_edit', ['pdfPath' => $storage . '/' . $filePath, 'pdfMarks' => $marks, 'mode'=>'view']);
+        return view('pdf_edit', [
+            'pdfPath' => $storage . '/' . $filePath,
+            'pdfMarks' => $data['marks'],
+            'markIds' => $data['ids'],
+            'markMetas' => $data['metas'],
+            'mode'=>'view',
+            'storePath' => $storePath,
+        ]);
     }
 
     /**
