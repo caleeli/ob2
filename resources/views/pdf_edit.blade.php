@@ -1,6 +1,16 @@
 <link type="text/css" href="/css/text_layer_builder.css" rel="stylesheet">
+<style>
+    .container{width:600px; margin:0 auto; padding-bottom: 30px;}
+    .message{padding: 13px; margin-top: 15px; border-radius: 4px; border: #ccc solid 1px;}
+    .message p{margin: 0px; font-size: 14px; font-weight: normal; font-family: arial;}
+    .success{color: #2C7635;background-color: #DFF0D4;border: #D6E9C4 solid 1px;}
+    .information{color: #31708C;background-color: #D1E4F1;border: #BCE8EF solid 1px;}
+    .warning{color: #8A6D39;background-color: #FCF8E1;border: #FAEBCA solid 1px;}
+    .failure{color: #AC260D;background-color: #F2DEDC;border: #EBCCCF solid 1px;}
+</style>
+<div id='app'>
     @if($mode==='edit')
-    <div class="header">
+    <div class="header" style='width: 765px'>
         <input placeholder="Ingrese el texto del enlace" size="30" v-model="selectedLinkName"/>
         <upload v-model="uploadAux" type="singlefile" v-bind:small="true" disk="referencias" v-on:uploaded="fileUploaded"></upload>
         <select v-model="selectedFile" v-on:change="loadPDF(selectedFile)">
@@ -12,9 +22,19 @@
         <button type="button" v-on:click="cerrarPDF" style="position:absolute; right:0px;">X</button>
     </div>
     @endif
-    <div class="preview">
-        <div id="container"></div>
+    <div style='display: flex;'>
+        <div class="preview" style='width: 765px'>
+            <div id="container"></div>
+        </div>
+        <div style='position: relative'>
+            <div class="container bg_logo" style='position: fixed'>
+                <div class="message information">
+                    <p><a href='javascript:void(0)'>@{{selectedLinkName}}</a></p>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 <style>
     .noedit .editable {
         border: none;

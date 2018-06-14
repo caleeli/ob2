@@ -13,7 +13,7 @@ function moveContentIntoDiv() {
     }
     document.body.insertBefore(div, document.body.firstChild);
 }
-moveContentIntoDiv();
+//moveContentIntoDiv();
 //Lista de seleccion
 Vue.component('gtemplate', {
     props: {

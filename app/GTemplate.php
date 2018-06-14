@@ -14,6 +14,7 @@ use DB;
 class GTemplate
 {
     const SHORT_CUTS = [
+        'ch()' => 'check(✔|✕|N/A)',
         '✔/✕' => '[check*=check(✔|✕|N/A)]',
         '&#10004;/&#10005;' => '[check*=check(✔|✕|N/A)]',
         '[texto()]' => '[texto*=texto()]',
@@ -49,7 +50,7 @@ class GTemplate
             }
             return "<{$match[2]} v-model='{$varName}' ".
                 ($params ? "v-bind:data=\"{$params}\"" : "")
-                . "></{$match[2]}>";
+                . " title='{$varName}'></{$match[2]}>";
         }, $html);
         $html .= '<script>var variables = ' . json_encode($variables) . ';parent && parent.app && parent.app.variablesCargadas ? parent.app.variablesCargadas(variables):null;</script>';
         return $html;
