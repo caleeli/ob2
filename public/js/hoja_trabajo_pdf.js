@@ -430,6 +430,7 @@ var app = new Vue({
                                             return setTimeout(hlMarks, 1);
                                         }
                                         var lastFocused = null;
+                                        var rightMark = null;
                                         self.marks.forEach(function (mark, i) {
                                             var meta = {};
                                             var id = self.markIds[i];
