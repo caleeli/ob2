@@ -10,6 +10,47 @@ use Illuminate\Http\Request;
 
 class VueEditorController extends Controller
 {
+    const pasos = [
+        'EDC'=> [
+            ['titulo'=>'1. Nota de solicitud y remisión de documentación a la empresa'],
+            ['titulo'=>'2. Notas de solicitud y remisión de papeles de trabajo'],
+            ['titulo'=>'3. Análisis de tendencia'],
+            [
+                'titulo'=>'4. Trabajo de campo',
+                'buttons'=>[
+                    'F-3007'=> [
+                        'template'=>'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
+                        'name'=>'hojaTrabajo',
+                    ]
+                ]
+            ],
+            ['titulo'=>'5. Informe/Nota de Evaluación de Consistencias'],
+            ['titulo'=>'6. Revisión'],
+            ['titulo'=>'7. Documento Aprobado'],
+            ['titulo'=>'8. Remisión de Informe de Evaluación de Consistencia a Despacho'],
+        ],
+        'AUD'=> [
+            ['titulo'=>'1. Recepción y Solicitud a Empresas y/o Firmas'],
+            ['titulo'=>'2. Análisis de Tendencia'],
+            [
+                'titulo'=>'3. Trabajos de Campo',
+                'buttons'=>[
+                    'Form 1'=>[
+                        'template'=>'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
+                        'name'=>'hojaTrabajo1',
+                    ],
+                    'Form 2'=>[
+                        'template'=>'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
+                        'name'=>'hojaTrabajo2',
+                    ]
+                ]
+            ],
+            ['titulo'=>'4. Informe'],
+            ['titulo'=>'5. Revisión'],
+            ['titulo'=>'6. Documento Aprobado'],
+            ['titulo'=>'7. Remisión de Informe de Evaluación de Auditoría de Confiabilidad a Despacho'],
+        ]
+    ];
 
     public function edit($templeta, HojaTrabajo $hojaTrabajo = null)
     {
@@ -18,20 +59,37 @@ class VueEditorController extends Controller
         return view('hoja_trabajo', ['document' => $gTemplate->parse($hojaTrabajo)]);
     }
 
-    public function editTarea($templeta, Tarea $tarea, $indice)
+    public function editTarea($templeta, Tarea $tarea, $paso, $nombre)
     {
         $drive = new GDrive;
         $gTemplate = new \App\GTemplate($drive, $templeta);
-        $valores = $tarea->datos['data'][$indice]['hojaTrabajo']['valores'];
-        return view('hoja_trabajo', ['document' => $gTemplate->parseVariables($valores ?: []), 'autoSave'=>'saveTarea']);
+        $hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
+        if (!isset($tarea->datos['data'][$paso][$hoja])) {
+            $valores = [];
+        } else {
+            $valores = $tarea->datos['data'][$paso][$hoja]['valores'];
+        }
+        return view('hoja_trabajo', [
+            'document' => $gTemplate->parseVariables($valores ?: []),
+            'autoSave'=>'saveTarea',
+            'tipoTarea'=>$tarea->tipo,
+            'step'=>$paso,
+            'fileName'=>$nombre,
+        ]);
     }
 
-    public function viewTarea($templeta, Tarea $tarea, $indice)
+    public function viewTarea($templeta, Tarea $tarea, $paso, $nombre)
     {
         $drive = new GDrive;
         $gTemplate = new \App\GTemplate($drive, $templeta);
-        $valores = $tarea->datos['data'][$indice]['hojaTrabajo']['valores'];
-        return view('hoja_trabajo', ['document' => $gTemplate->parseValores($valores)]);
+        $hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
+        $valores = $tarea->datos['data'][$paso][$hoja]['valores'];
+        return view('hoja_trabajo', [
+            'document' => $gTemplate->parseValores($valores),
+            'tipoTarea'=>$tarea->tipo,
+            'step'=>$paso,
+            'fileName'=>$nombre,
+        ]);
     }
 
     public function index($path)

@@ -1335,16 +1335,25 @@
                             $event->tarea->cod_tarea = "SCEP-" . $event->tarea->id;
                             $event->tarea->save();
                         }
-                        $paso = 3;
-                        if (!empty($event->tarea->datos['data'][$paso]['hojaTrabajo'])) {
-                            $hoja = $event->tarea->datos['data'][$paso]['hojaTrabajo'];
-                            $titulo = $hoja['titulo'];
-                            $filename = $event->tarea->id . '/' . ($paso + 1) . '/' . $titulo . '.link';
-                            $link = [
-                                "mime" => "application/msword",
-                                "url" => "/vue-editor/download/" . $hoja['templeta'] . "/" . $event->tarea->id . "/" . $paso,
-                            ];
-                            \App\Http\Controllers\FolderController::saveLink('tareas', $filename, $link);
+                        $defs = \App\Http\Controllers\VueEditorController::pasos;
+                        if (isset($defs[$event->tarea->tipo])) {
+                            $def = $defs[$event->tarea->tipo];
+                            for($paso = 0, $l = count($def); $paso<$l; $paso++) {
+                                if (!isset($def[$paso]['buttons'])) continue;
+                                foreach($def[$paso]['buttons'] as $hojaNombre => $hojaDef) {
+                                    $hojaTrabajo = $hojaDef['name'];
+                                    if (!empty($event->tarea->datos['data'][$paso][$hojaTrabajo])) {
+                                        $hoja = $event->tarea->datos['data'][$paso][$hojaTrabajo];
+                                        $titulo = $hoja['titulo'];
+                                        $filename = $event->tarea->id . '/' . ($paso + 1) . '/' . $titulo . '.link';
+                                        $link = [
+                                            "mime" => "application/msword",
+                                            "url" => "/vue-editor/download/" . $hoja['templeta'] . "/" . $event->tarea->id . "/" . $paso . "/" . rawurlencode($hojaNombre),
+                                        ];
+                                        \App\Http\Controllers\FolderController::saveLink('tareas', $filename, $link);
+                                    }
+                                }
+                            }
                         }
                     }
                     ?>

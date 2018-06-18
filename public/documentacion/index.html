@@ -598,13 +598,13 @@
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-4 project-completion">
                                                                     <span class="tarea-paso tarea-paso1 label label-primary">1</span>
-                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso2':pasoPorTarea(tareaI, 2), label:1, 'label-primary': pasoPorTarea(tareaI, 2), 'label-default': !pasoPorTarea(tareaI, 2)}">2</span>
-                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso3':pasoPorTarea(tareaI, 3), label:1, 'label-primary': pasoPorTarea(tareaI, 3), 'label-default': !pasoPorTarea(tareaI, 3)}">3</span>
-                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso4':pasoPorTarea(tareaI, 4), label:1, 'label-primary': pasoPorTarea(tareaI, 4), 'label-default': !pasoPorTarea(tareaI, 4)}">4</span>
-                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso5':pasoPorTarea(tareaI, 5), label:1, 'label-primary': pasoPorTarea(tareaI, 5), 'label-default': !pasoPorTarea(tareaI, 5)}">5</span>
-                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso6':pasoPorTarea(tareaI, 6), label:1, 'label-primary': pasoPorTarea(tareaI, 6), 'label-default': !pasoPorTarea(tareaI, 6)}">6</span>
-                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso7':pasoPorTarea(tareaI, 7), label:1, 'label-primary': pasoPorTarea(tareaI, 7), 'label-default': !pasoPorTarea(tareaI, 7)}">7</span>
-                                                                    <span v-bind:class="{'tarea-paso':1, 'tarea-paso8':pasoPorTarea(tareaI, 8), label:1, 'label-primary': pasoPorTarea(tareaI, 8), 'label-default': !pasoPorTarea(tareaI, 8)}">8</span>
+                                                                    <span v-show='definicionPasos[tareaI.attributes.tipo].length>=2' v-bind:class="{'tarea-paso':1, 'tarea-paso2':pasoPorTarea(tareaI, 2), label:1, 'label-primary': pasoPorTarea(tareaI, 2), 'label-default': !pasoPorTarea(tareaI, 2)}">2</span>
+                                                                    <span v-show='definicionPasos[tareaI.attributes.tipo].length>=3' v-bind:class="{'tarea-paso':1, 'tarea-paso3':pasoPorTarea(tareaI, 3), label:1, 'label-primary': pasoPorTarea(tareaI, 3), 'label-default': !pasoPorTarea(tareaI, 3)}">3</span>
+                                                                    <span v-show='definicionPasos[tareaI.attributes.tipo].length>=4' v-bind:class="{'tarea-paso':1, 'tarea-paso4':pasoPorTarea(tareaI, 4), label:1, 'label-primary': pasoPorTarea(tareaI, 4), 'label-default': !pasoPorTarea(tareaI, 4)}">4</span>
+                                                                    <span v-show='definicionPasos[tareaI.attributes.tipo].length>=5' v-bind:class="{'tarea-paso':1, 'tarea-paso5':pasoPorTarea(tareaI, 5), label:1, 'label-primary': pasoPorTarea(tareaI, 5), 'label-default': !pasoPorTarea(tareaI, 5)}">5</span>
+                                                                    <span v-show='definicionPasos[tareaI.attributes.tipo].length>=6' v-bind:class="{'tarea-paso':1, 'tarea-paso6':pasoPorTarea(tareaI, 6), label:1, 'label-primary': pasoPorTarea(tareaI, 6), 'label-default': !pasoPorTarea(tareaI, 6)}">6</span>
+                                                                    <span v-show='definicionPasos[tareaI.attributes.tipo].length>=7' v-bind:class="{'tarea-paso':1, 'tarea-paso7':pasoPorTarea(tareaI, 7), label:1, 'label-primary': pasoPorTarea(tareaI, 7), 'label-default': !pasoPorTarea(tareaI, 7)}">7</span>
+                                                                    <span v-show='definicionPasos[tareaI.attributes.tipo].length>=8' v-bind:class="{'tarea-paso':1, 'tarea-paso8':pasoPorTarea(tareaI, 8), label:1, 'label-primary': pasoPorTarea(tareaI, 8), 'label-default': !pasoPorTarea(tareaI, 8)}">8</span>
                                                                     
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-5 project-user">
@@ -704,14 +704,14 @@
                                                         <div class=" wizard-big wizard clearfix">
                                                             <div class="steps clearfix">
                                                                 <ul role="tablist">
-                                                                    <li v-on:click="pasos.maximo>=1?pasos.actual=0:null" role="tab" v-bind:class="{'current': pasos.maximo>=1, 'disabled': pasos.maximo<1, 'active': pasos.actual==0}" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
-                                                                    <li v-on:click="pasos.maximo>=2?pasos.actual=1:null" role="tab" v-bind:class="{'current': pasos.maximo>=2, 'disabled': pasos.maximo<2, 'active': pasos.actual==1}" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
-                                                                    <li v-on:click="pasos.maximo>=3?pasos.actual=2:null" role="tab" v-bind:class="{'current': pasos.maximo>=3, 'disabled': pasos.maximo<3, 'active': pasos.actual==2}" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
-                                                                    <li v-on:click="pasos.maximo>=4?pasos.actual=3:null" role="tab" v-bind:class="{'current': pasos.maximo>=4, 'disabled': pasos.maximo<4, 'active': pasos.actual==3}" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
-                                                                    <li v-on:click="pasos.maximo>=5?pasos.actual=4:null" role="tab" v-bind:class="{'current': pasos.maximo>=5, 'disabled': pasos.maximo<5, 'active': pasos.actual==4}" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
-                                                                    <li v-on:click="pasos.maximo>=6?pasos.actual=5:null" role="tab" v-bind:class="{'current': pasos.maximo>=6, 'disabled': pasos.maximo<6, 'active': pasos.actual==5}" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
-                                                                    <li v-on:click="pasos.maximo>=7?pasos.actual=6:null" role="tab" v-bind:class="{'current': pasos.maximo>=7, 'disabled': pasos.maximo<7, 'active': pasos.actual==6}" aria-disabled="true"><a aria-controls="form-p-1">Paso 7</a></li>
-                                                                    <li v-on:click="pasos.maximo>=8?pasos.actual=7:null" role="tab" v-bind:class="{'current': pasos.maximo>=8, 'disabled': pasos.maximo<8, 'active': pasos.actual==7}" aria-disabled="true"><a aria-controls="form-p-1">Paso 8</a></li>
+                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=1' v-on:click="pasos.maximo>=1?pasos.actual=0:null" role="tab" v-bind:class="{'current': pasos.maximo>=1, 'disabled': pasos.maximo<1, 'active': pasos.actual==0}" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
+                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=2' v-on:click="pasos.maximo>=2?pasos.actual=1:null" role="tab" v-bind:class="{'current': pasos.maximo>=2, 'disabled': pasos.maximo<2, 'active': pasos.actual==1}" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
+                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=3' v-on:click="pasos.maximo>=3?pasos.actual=2:null" role="tab" v-bind:class="{'current': pasos.maximo>=3, 'disabled': pasos.maximo<3, 'active': pasos.actual==2}" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
+                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=4' v-on:click="pasos.maximo>=4?pasos.actual=3:null" role="tab" v-bind:class="{'current': pasos.maximo>=4, 'disabled': pasos.maximo<4, 'active': pasos.actual==3}" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
+                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=5' v-on:click="pasos.maximo>=5?pasos.actual=4:null" role="tab" v-bind:class="{'current': pasos.maximo>=5, 'disabled': pasos.maximo<5, 'active': pasos.actual==4}" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
+                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=6' v-on:click="pasos.maximo>=6?pasos.actual=5:null" role="tab" v-bind:class="{'current': pasos.maximo>=6, 'disabled': pasos.maximo<6, 'active': pasos.actual==5}" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
+                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=7' v-on:click="pasos.maximo>=7?pasos.actual=6:null" role="tab" v-bind:class="{'current': pasos.maximo>=7, 'disabled': pasos.maximo<7, 'active': pasos.actual==6}" aria-disabled="true"><a aria-controls="form-p-1">Paso 7</a></li>
+                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=8' v-on:click="pasos.maximo>=8?pasos.actual=7:null" role="tab" v-bind:class="{'current': pasos.maximo>=8, 'disabled': pasos.maximo<8, 'active': pasos.actual==7}" aria-disabled="true"><a aria-controls="form-p-1">Paso 8</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -734,7 +734,10 @@
                                                                         <tinymce v-model='pasos.data[pasos.actual].descripcion' plugins="table" height="10em" />
                                                                     </div>
                                                                     <br>
-                                                                    <button v-if="pasos.actual===3" class="btn btn-primary btn-block" type="button" v-on:click='abrirPasoAuditoria("F-3007")'><i class="fa fa-save"></i> F-3007</button>
+                                                                    <button
+                                                                        v-for="(botonPaso, formName) in botonesDePasoActual()"
+                                                                        class="btn btn-primary btn-block" type="button"
+                                                                        v-on:click='abrirPasoAuditoria(formName, botonPaso, pasos.actual)'><i class="fa fa-save"></i> {{formName}}</button>
                                                                     <button class="btn btn-primary btn-block" type="button" v-on:click='guardarPaso'><i class="fa fa-save"></i> Guardar</button>
                                                                 </folder-viewer>
                                                                 <div class="col-md-12" style="background: white;" v-show="estaPasoAuditoriaAbierta()">
@@ -750,75 +753,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!--
-                                                        <div class="panel blank-panel">
-                                                            <div class="panel-heading">
-                                                                <div class="panel-options">
-                                                                    <ul class="nav nav-tabs">
-                                                                        <li class="active"><a href="#tab-1" data-toggle="tab">Descripción</a></li>
-                                                                        <li class=""><a href="#tab-2" data-toggle="tab">Actividades</a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="panel-body">
-
-                                                                <div class="tab-content">
-                                                                    <div class="tab-pane active" id="tab-1">
-                                                                        <p>
-                                                                            {{tarea.descripcion}}
-                                                                        </p>
-                                                                        <h5>Adjuntos</h5>
-                                                                        <ul class="list-unstyled project-files">
-                                                                            <li v-for="adjunto in tarea.adjuntos" v-if='adjunto.attributes.archivo'><a :href="adjunto.attributes.archivo?adjunto.attributes.archivo.url:''" target="_blank"><i class="fa fa-file"></i> {{adjunto.attributes.archivo?adjunto.attributes.archivo.name:''}}</a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="tab-pane" id="tab-2">
-
-                                                                        <table class="table table-striped">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Avance</th>
-                                                                                    <th>Numero de asignacion</th>
-                                                                                    <th>Fecha y Hora</th>
-                                                                                    <th>Usuario</th>
-                                                                                    <th>Comentarios</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr v-for="(avance,i) in avances">
-                                                                                    <td>
-                                                                                        <span class="label label-primary">{{Math.round(avance.attributes.avance_relativo)}}%</span>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        {{avance.relationships.asignacion ? avance.relationships.asignacion.attributes.nro_asignacion : ''}}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        {{avance.attributes.created_at}}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <p>
-                                                                                            {{avance.relationships.usuario 
-                                                                                                ? avance.relationships.usuario.attributes.nombres + ' ' + avance.relationships.usuario.attributes.apellidos
-                                                                                                : ''}}
-                                                                                        </p>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <p>
-                                                                                            {{avance.attributes.descripcion}}
-                                                                                        </p>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-                                                        -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -1388,6 +1322,47 @@
                         },
                         //pasosAuditoriaAbierta: false,
                         hojaTrabajoLocalSave: false,
+                        definicionPasos: {
+                            'EDC': [
+                                {titulo:'1. Nota de solicitud y remisión de documentación a la empresa'},
+                                {titulo:'2. Notas de solicitud y remisión de papeles de trabajo'},
+                                {titulo:'3. Análisis de tendencia'},
+                                {
+                                    titulo:'4. Trabajo de campo',
+                                    buttons:{
+                                        'F-3007': {
+                                            template:'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
+                                            name:'hojaTrabajo',
+                                        }
+                                    }
+                                },
+                                {titulo:'5. Informe/Nota de Evaluación de Consistencias'},
+                                {titulo:'6. Revisión'},
+                                {titulo:'7. Documento Aprobado'},
+                                {titulo:'8. Remisión de Informe de Evaluación de Consistencia a Despacho'},
+                            ],
+                            'AUD': [
+                                {titulo:'1. Recepción y Solicitud a Empresas y/o Firmas'},
+                                {titulo:'2. Análisis de Tendencia'},
+                                {
+                                    titulo:'3. Trabajos de Campo',
+                                    buttons:{
+                                        'Form 1':{
+                                            template:'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
+                                            name:'hojaTrabajo1',
+                                        },
+                                        'Form 2':{
+                                            template:'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
+                                            name:'hojaTrabajo2',
+                                        }
+                                    }
+                                },
+                                {titulo:'4. Informe'},
+                                {titulo:'5. Revisión'},
+                                {titulo:'6. Documento Aprobado'},
+                                {titulo:'7. Remisión de Informe de Evaluación de Auditoría de Confiabilidad a Despacho'},
+                            ]
+                        }
                     };
                 },
                 computed: {
@@ -1402,6 +1377,11 @@
                     },
                 },
                 methods: {
+                    botonesDePasoActual: function () {
+                        return this.definicionPasos[this.tarea.tipo] &&
+                            this.definicionPasos[this.tarea.tipo][this.pasos.actual] ? 
+                            this.definicionPasos[this.tarea.tipo][this.pasos.actual].buttons : [];
+                    },
                     pasoPorTarea: function (tarea, paso) {
                         return tarea.attributes && tarea.attributes.datos
                             && tarea.attributes.datos.maximo && tarea.attributes.datos.maximo>=paso;
@@ -1519,19 +1499,25 @@
                         });
                         self.cerrarPasoAuditoria();
                     },
-                    pasosFileAuditoriaAutoSave: function (valores) {
+                    pasosFileAuditoriaAutoSave: function (valores, tipoTarea, step, fileName) {
                         var self = this;
-                        self.pasos.data[3].hojaTrabajo.titulo = 'F-3007';
-                        self.pasos.data[3].hojaTrabajo.valores = valores;
-                        self.pasos.data[3].hojaTrabajo.gestion = self.gestionAuditoria;
-                        self.pasos.data[3].hojaTrabajo.templeta = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
+                        var def = self.definicionPasos[tipoTarea][step];
+                        var templeta;
+                        var hoja;
+                        for(var titulo in def.buttons) {
+                            if (fileName===titulo) {
+                                templeta = def.buttons[titulo].template;
+                                hoja = def.buttons[titulo].name;
+                            }
+                        };
+                        if (!templeta) {
+                            throw "No se pudo encontrar una templeta";
+                        }
+                        self.pasos.data[step][hoja].titulo = fileName;
+                        self.pasos.data[step][hoja].valores = valores;
+                        self.pasos.data[step][hoja].gestion = self.gestionAuditoria;
+                        self.pasos.data[step][hoja].templeta = templeta;
                         self.pasosGuardarDB(function () {
-                            /*self.pasos.actual++;
-                            Vue.nextTick(function () {
-                                setTimeout(function () {
-                                    self.pasos.actual--;
-                                }, 200);
-                            });*/
                         });
                     },
                     pasosCerrarFileAuditoria: function () {
@@ -1544,39 +1530,50 @@
                     estaPasoAuditoriaAbierta: function () {
                         return this.pasos.subpaso4 === 1 && this.pasos.actual === 3;
                     },
-                    abrirPasoAuditoria: function (name) {
+                    abrirPasoAuditoria: function (name, def, paso) {
                         var self = this;
-                        self.pasos.data[3].template = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
-                        if (self.pasos.data[3].hojaTrabajo.titulo) {
-                            self.abrirPasoFileAuditoria();
+                        var hoja = def.name;
+                        self.pasos.data[paso].template = def.template;
+                        if (self.pasos.data[paso][hoja]===undefined) {
+                            self.pasos.data[paso][hoja] = {
+                                titulo : '',
+                                valores : {},
+                                gestion : '',
+                                templeta : '',
+                            };
+                        }
+                        if (self.pasos.data[paso][hoja].titulo) {
+                            self.abrirPasoFileAuditoria(paso, def);
                         } else {
-                            self.tipoAuditoria = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
-                            self.crearPasoAuditoria(name);
+                            self.tipoAuditoria = def.template;
+                            self.crearPasoAuditoria(name, def.template, paso);
                         }
                     },
-                    crearPasoAuditoria: function (name) {
+                    crearPasoAuditoria: function (name, templete, paso) {
                         var self = this;
-                        var paso = 3;
-                        var templete = '1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI';
-                        //self.auditoriaUrl = '/vue-editor/file/' + this.tipoAuditoria;
                         self.auditoriaFileName = name;
-                        /*self.hoja_trabajo.$load(0, function () {
-                            self.pasos.subpaso4 = 1;
-                        });*/
-                        window.open("/vue-editor/tarea/" + templete + "/" + self.tarea.id + "/" + paso, "editorF");
+                        window.open(
+                            "/vue-editor/tarea/" + templete + "/" + self.tarea.id + "/"
+                            + paso + "/" + encodeURIComponent(name),
+                            "editorF"
+                        );
                     },
-                    abrirPasoFileAuditoria: function () {
+                    abrirPasoFileAuditoria: function (paso, def) {
                         var self = this;
-                        var paso = 3;
-                        self.tipoAuditoria = self.pasos.data[paso].hojaTrabajo.templeta;
+                        var hoja = def.name;
+                        self.tipoAuditoria = self.pasos.data[paso][hoja].templeta;
                         self.auditoriaUrl = '/vue-editor/file/' + self.tipoAuditoria;
-                        self.auditoriaFileName = self.pasos.data[paso].hojaTrabajo.titulo;
-                        self.hoja_trabajo.titulo = self.pasos.data[paso].hojaTrabajo.titulo;
-                        self.hoja_trabajo.valores = self.pasos.data[paso].hojaTrabajo.valores;
-                        self.hoja_trabajo.gestion = self.pasos.data[paso].hojaTrabajo.gestion;
-                        self.hoja_trabajo.templeta = self.pasos.data[paso].hojaTrabajo.templeta;
-                        //self.pasos.subpaso4 = 1;
-                        window.open("/vue-editor/tarea/" + self.pasos.data[paso].hojaTrabajo.templeta + "/" + self.tarea.id + "/" + paso, "editorF");
+                        self.auditoriaFileName = self.pasos.data[paso][hoja].titulo;
+                        self.hoja_trabajo.titulo = self.pasos.data[paso][hoja].titulo;
+                        self.hoja_trabajo.valores = self.pasos.data[paso][hoja].valores;
+                        self.hoja_trabajo.gestion = self.pasos.data[paso][hoja].gestion;
+                        self.hoja_trabajo.templeta = self.pasos.data[paso][hoja].templeta;
+                        window.open(
+                            "/vue-editor/tarea/" + self.pasos.data[paso][hoja].templeta
+                            + "/" + self.tarea.id + "/" + paso
+                            + "/" + encodeURIComponent(self.pasos.data[paso][hoja].titulo),
+                            "editorF"
+                        );
                     },
                     guardarPaso: function () {
                         if (this.pasos.actual===7) {
@@ -1587,17 +1584,7 @@
                         this.pasosGuardarDB();
                     },
                     pasosTitulo: function (paso) {
-                        var titulos = [
-                            '1. Nota de solicitud y remisión de documentación a la empresa',
-                            '2. Notas de solicitud y remisión de papeles de trabajo',
-                            '3. Análisis de tendencia',
-                            '4. Trabajo de campo',
-                            '5. Informe/Nota de Evaluación de Consistencias',
-                            '6. Revisión',
-                            '7. Documento Aprobado',
-                            '8. Remisión de Informe de Evaluación de Consistencia a Despacho',
-                        ];
-                        return titulos[paso];
+                        return this.definicionPasos[this.tipoTarea][paso].titulo;
                     },
                     setTipoTarea: function (tipoTarea) {
                         this.tipoTarea = tipoTarea;

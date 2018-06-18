@@ -177,15 +177,17 @@
 <script src="/js/pdf.js"></script>
 <script>
     var autoSave = {!! json_encode(empty($autoSave) ? null : $autoSave) !!};
+    var tipoTarea = {!! json_encode($tipoTarea) !!};
+    var step = {!! json_encode($step) !!};
+    var fileName = {!! json_encode($fileName) !!};
     var saveLast = false;
     function doAutoSave() {
         if (!saveLast) return;
-        console.log("Saving");
         saveLast = false;
         for (var a in variables) {
             variables[a] = app[a];
         }
-        window.opener.app.pasosFileAuditoriaAutoSave(variables);
+        window.opener.app.pasosFileAuditoriaAutoSave(variables, tipoTarea, step, fileName);
     }
     function saveTarea() {
         saveLast = true;
