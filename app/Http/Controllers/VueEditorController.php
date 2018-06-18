@@ -36,11 +36,11 @@ class VueEditorController extends Controller
                 'titulo'=>'3. Trabajos de Campo',
                 'buttons'=>[
                     'Form 1'=>[
-                        'template'=>'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
+                        'template'=>'1NBz72qVQzCIxrvXdHppUHSM6LLdFnBVeGHPgQqh8Hik',
                         'name'=>'hojaTrabajo1',
                     ],
                     'Form 2'=>[
-                        'template'=>'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
+                        'template'=>'1OIHs2pa9pqHvSxDFk6wMkwLs2Jbr2KHHONec6dFuWqU',
                         'name'=>'hojaTrabajo2',
                     ]
                 ]
