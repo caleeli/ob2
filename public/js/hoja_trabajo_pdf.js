@@ -516,10 +516,12 @@ var app = new Vue({
                 dataType: 'json',
                 url: '/pdfhl/mark/' + self.selectedFile.substr(window.selectedFileBase.length),
                 success: function () {
-                    var selectedLink = opener.linksSelected[window.name];
-                    selectedLink.setFile(self.selectedFile);
-                    selectedLink.setMarks(self.marks);
-                    selectedLink.setText(self.selectedLinkName);
+                    if (opener.linksSelected && opener.linksSelected[window.name]) {
+                        var selectedLink = opener.linksSelected[window.name];
+                        selectedLink.setFile(self.selectedFile);
+                        selectedLink.setMarks(self.marks);
+                        selectedLink.setText(self.selectedLinkName);
+                    }
                     self.cerrarPDF();
                 }
             });

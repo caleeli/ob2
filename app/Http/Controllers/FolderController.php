@@ -53,6 +53,9 @@ class FolderController extends Controller
                     $url = !empty($data['url']) ? $data['url'] : $url;
                 }
             }
+            if ($storage==='tareas' && strtolower($file->getExtension())==='pdf') {
+                $url = $this->urlPDFCommentsEditor($storage, $filename);
+            }
             $list[] = [
                 'id'         => $id,
                 'attributes' => [
@@ -87,5 +90,18 @@ class FolderController extends Controller
     public static function saveLink($storage, $filename, array $link)
     {
         return Storage::disk($storage)->put($filename, json_encode($link));
+    }
+
+    /**
+     * Crea un link para abrir un PDF con el editor de comentarios.
+     *
+     * @param string $storage
+     * @param string $filename
+     *
+     * @return string
+     */
+    private function urlPDFCommentsEditor($storage, $filename)
+    {
+        return '/pdfhl/edit/' . $storage . '/' . $filename;
     }
 }
