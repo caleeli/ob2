@@ -403,7 +403,7 @@
                         function($value)
                         {
                             $value = str_replace('{{$uc(\'3\')}}', '<span class="calculado" title="patrimonio">{{$uc(\'3\')}}</span>', $value);
-                            $ev = new \App\Evaluator($this->id, date('Y'));
+                            $ev = new \App\Evaluator($this->id, '2017');
                             return $ev->calculate($value);
                         }
                     ?>,
