@@ -634,7 +634,7 @@
                                                                     </span>
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" v-if="esUsuarioGerente()" href="javascript:void(0)" class="btn btn-white btn-sm" v-on:click='cancelarTarea(tareaI)'><i class="fa fa-times"></i> Cancelar </a>
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" href="#asignarTarea" class="btn btn-white btn-sm" v-on:click='modificarTarea(tareaI)'><i class="fa fa-pencil"></i> Modificar </a>
-                                                                    <a href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Abrir </a>
+                                                                    <a v-if="definicionPasos[tareaI.attributes.tipo].length>1" href="#detalleTarea" class="btn btn-white btn-sm" v-on:click='seleccionaTarea(tareaI)'><i class="fa fa-folder"></i> Abrir </a>
                                                                     <!-- a v-if="puedeRegistrarAvance(tareaI)" href="#registrarAvance" class="btn btn-white btn-sm" v-on:click='registrarAvanceTarea(tareaI)'><i class="fa fa-forward"></i> Avance </a -->
                                                                 </div>
                                                                 <div class="col-xs-12">
@@ -1361,7 +1361,15 @@
                                 {titulo:'5. Revisión'},
                                 {titulo:'6. Documento Aprobado'},
                                 {titulo:'7. Remisión de Informe de Evaluación de Auditoría de Confiabilidad a Despacho'},
-                            ]
+                            ],
+                            'SUP':[{titulo:''}],
+                            'RDI':[{titulo:''}],
+                            'COD':[{titulo:''}],
+                            'EIU':[{titulo:''}],
+                            'EIP':[{titulo:''}],
+                            'SYD':[{titulo:''}],
+                            'TAD':[{titulo:''}],
+                            'OTR':[{titulo:''}],
                         }
                     };
                 },
@@ -1584,7 +1592,7 @@
                         this.pasosGuardarDB();
                     },
                     pasosTitulo: function (paso) {
-                        return this.definicionPasos[this.tipoTarea][paso].titulo;
+                        return this.definicionPasos[this.tipoTarea] ? this.definicionPasos[this.tipoTarea][paso].titulo : '';
                     },
                     setTipoTarea: function (tipoTarea) {
                         this.tipoTarea = tipoTarea;
