@@ -1050,6 +1050,7 @@
                             <tr>
                                 <th>#</th>
                                 <th v-if="reporte.forma==='SoloDerivaciones'"></th>
+                                <th>Tipo</th>
                                 <th>Nº Control</th>
                                 <th>{{reporte.forma==='SoloDerivaciones' ? 'Fecha Derivación' : 'Gestión' }}</th>
                                 <th>{{reporte.forma==='SoloDerivaciones' ? 'Destinatario' : 'Referencia' }}</th>
@@ -1062,6 +1063,7 @@
                         <tbody v-for='(rep, r) in reporteExterna'>
                             <tr v-if="reporte.forma!='SoloDerivaciones'">
                                 <th>{{r+1}}</th>
+                                <td>{{rep.tipo_tarea}}</td>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td>{{rep.gestion}}</td>
                                 <td>{{rep.referencia}}</td>
@@ -1071,6 +1073,7 @@
                             </tr>
                             <tr v-if="reporte.forma==='Combinado'">
                                 <th>#</th>
+                                <th></th>
                                 <th>Nº Control</th>
                                 <th>Fecha Derivación</th>
                                 <th>Referencia</th>
@@ -1081,6 +1084,7 @@
                             <tr v-if="reporte.forma!='SoloHojas'" v-for='(derivacion, d) in rep.derivaciones'>
                                 <th v-if="reporte.forma==='SoloDerivaciones'">{{r+1}}</th>
                                 <td>{{d+1}}</td>
+                                <td>{{rep.tipo_tarea}}</td>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
                                 <td style="white-space: pre">{{reporte.forma==='SoloDerivaciones' ? derivacion.destinatario : rep.referencia}}</td>
