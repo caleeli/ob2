@@ -1378,6 +1378,12 @@
                             return $this->created_at->diff(\Carbon\Carbon::now())->days;
                         }
                     ?>,
+                    "-getDiasOtorgadosAttribute()": <?php
+                        function () {
+                            $asignacion = $this->asignaciones()->orderBy('created_at', 'desc')->first();
+                            return $asignacion ? $asignacion->dias_plazo : 0;
+                        }
+                    ?>,
                     "-getAvanceAttribute()": <?php
                         function () {
                             $avancesPorPersona = [];
