@@ -889,14 +889,14 @@
                     }),
                     new Module.Model.BelongsTo({
                         "name": "owner",
-                        "label": "Propietario",
+                        "label": "Elaborado por",
                         "model": "user",
                         "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.User"),
                         "default": "",
                         "nullable": true,
-                        "form": false,
+                        "form": true,
                         "list": true,
                         "visible": true
                     })

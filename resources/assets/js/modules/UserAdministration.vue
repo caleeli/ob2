@@ -292,7 +292,7 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"informe_dictamen","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false}};
+                        },"value":"informe_dictamen","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -343,7 +343,7 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Firma de auditoria","data":"attributes.representante_legal"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Propietario","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
+                        }},{"title":"Firma de auditoria","data":"attributes.representante_legal"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
     };
     this.$methods = {
 listEditButton: function (data, type, row, meta){
