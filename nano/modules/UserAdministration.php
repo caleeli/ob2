@@ -898,7 +898,7 @@
                         "nullable": true,
                         "form": false,
                         "list": true,
-                        "visible": false
+                        "visible": true
                     })
                 ],
                 "methods": {
