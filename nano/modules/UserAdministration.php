@@ -987,24 +987,24 @@
                         "name": "empresa",
                         "model": "empresa",
                         "nullable": true,
-                        "list": false,
+                        "list": true,
                         "textField": "nombre_empresa",
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
-                        "form": false
+                        "form": true
                     }),
                     new Module.Model.BelongsTo({
                         "name": "owner",
-                        "label": "Propietario",
+                        "label": "Elaborado por",
                         "model": "user",
-                        "textField": null,
+                        "textField":  function(data){return data?data.nombres + ' ' +data.apellidos:''},
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.User"),
                         "default": "",
                         "nullable": true,
-                        "form": false,
+                        "form": true,
                         "list": true,
-                        "visible": false
+                        "visible": true
                     })
                 ],
                 "methods": {

@@ -364,7 +364,7 @@ UserAdministration.Contratacion = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/contratacions";
     Model.call(this, url, id, "UserAdministration.Contratacion");
     this.$list = function () {
-        return "fields=cod_firma,informe_scep,nota,gestion,owner";
+        return "fields=cod_firma,informe_scep,nota,gestion,empresa,owner";
     };
     this.$name = "Contratacion";
     this.$pluralName = "Contratacions";
@@ -406,7 +406,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"nota","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false}};
+                        },"value":"nota","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -447,9 +447,9 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Propietario","visible":false,"render":function (data, type, full, meta) {
+                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"empresa","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.owner.attributes.null"}];
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
     };
     this.$methods = {
 listEditButton: function (data, type, row, meta){
