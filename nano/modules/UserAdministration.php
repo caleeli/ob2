@@ -891,7 +891,7 @@
                         "name": "owner",
                         "label": "Propietario",
                         "model": "user",
-                        "textField": null,
+                        "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.User"),
                         "default": "",

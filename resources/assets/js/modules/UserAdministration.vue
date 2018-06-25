@@ -343,9 +343,7 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Firma de auditoria","data":"attributes.representante_legal"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Propietario","visible":true,"render":function (data, type, full, meta) {
-                            return data ? data : '';
-                        },"data":"relationships.owner.attributes.null"}];
+                        }},{"title":"Firma de auditoria","data":"attributes.representante_legal"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Propietario","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
     };
     this.$methods = {
 listEditButton: function (data, type, row, meta){
