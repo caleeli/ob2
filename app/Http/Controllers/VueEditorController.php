@@ -49,7 +49,29 @@ class VueEditorController extends Controller
             ['titulo'=>'5. Revisión'],
             ['titulo'=>'6. Documento Aprobado'],
             ['titulo'=>'7. Remisión de Informe de Evaluación de Auditoría de Confiabilidad a Despacho'],
-        ]
+        ],
+        'SUP'=>[
+            ['titulo'=>'Solicitud / Denuncia / Requerimiento de la SCEP'],
+            [
+                'titulo'=>'Programa de Trabajo',
+                'buttons'=>[
+                    'Programa de Trabajo'=>[
+                        'template'=>'1NZWQq66t6XQGHT22t-U8q7BI0b-Q0TSSAotf_lMe6Ow',
+                        'name'=>'programaDeTrabajo',
+                    ],
+                ]
+            ],
+            [
+                'titulo'=>'Informe',
+                'buttons'=>[
+                    'Informe Supervisión'=>[
+                    ],
+                ]
+            ],
+            ['titulo'=>'Revisión / Inspección'],
+            ['titulo'=>'Documento Aprobado'],
+            ['titulo'=>'Remisión de Informe de Evaluación de Supervisión a Despacho'],
+        ],
     ];
 
     public function edit($templeta, HojaTrabajo $hojaTrabajo = null)
