@@ -60,6 +60,10 @@ if (!empty($_REQUEST['destinatario'])) {
     $params['destinatario'] = '%' . str_replace(' ', '%', $_REQUEST['destinatario']) . '%';
     $addDerivacion = true;
 }
+if (!empty($_REQUEST['tipoTarea'])) {
+    $query[] = ' hoja_ruta.tipo_tarea = :tipo_tarea';
+    $params['tipo_tarea'] = $_REQUEST['tipoTarea'];
+}
 $addDerivacion = true;
 $select = 'hoja_ruta.*, derivacion.fecha as derivacion_fecha, derivacion.destinatario as derivacion_destinatario';
 

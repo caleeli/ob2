@@ -1025,6 +1025,45 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-2 control-label">Tipo</label>
+                                <div class="col-md-10">
+                                    <div class="btn-group btn-block">
+                                        <select class="form-control" v-model="reporte.tipoTarea">
+                                            <option value="EDC">
+                                                    1. Evaluación de consistencia
+                                            </option>
+                                            <option value="AUD">
+                                                    2. Auditorías
+                                            </option>
+                                            <option value="SUP">
+                                                    3. Supervisiones
+                                            </option>
+                                            <option value="RDI">
+                                                    4. Relevamientos de Información
+                                            </option>
+                                            <option value="COD">
+                                                    5. Contrataciones Directas
+                                            </option>
+                                            <option value="EIU">
+                                                    6. Evaluación de Informes de UAI's
+                                            </option>
+                                            <option value="EIP">
+                                                    7. Evaluación de Informes de POA y PE de UAI
+                                            </option>
+                                            <option value="SYD">
+                                                    8. Solicitudes y denuncias
+                                            </option>
+                                            <option value="TAD">
+                                                    9. Tareas administrativas
+                                            </option>
+                                            <option value="OTR">
+                                                    10. Otros
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
                                 <div class="col-md-10">
                                     <input type="radio" name="reporteForma" value="SoloHojas" v-model="reporte.forma" /> Por hojas de ruta
@@ -1451,6 +1490,7 @@
                             destinatario: '',
                             forma: 'Combinado',
                             todasLasDerivaciones: false,
+                            tipoTarea: '',
                         },
                         reporteExterna: [],
                         notaReporte: new NotaReporte(),
