@@ -64,8 +64,8 @@ class VueEditorController extends Controller
             [
                 'titulo'=>'Informe',
                 'buttons'=>[
-                    'Informe Supervisión'=>[
-                    ],
+                    //'Informe Supervisión'=>[
+                    //],
                 ]
             ],
             ['titulo'=>'Revisión / Inspección'],

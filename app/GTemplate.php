@@ -19,7 +19,7 @@ class GTemplate
         '&#10004;/&#10005;' => '[check*=check(✔|✕|N/A)]',
         '[texto()]' => '[texto*=texto()]',
     ];
-    const REGEXP_VARIABLE = '/\[([\w\*]+)=(\w+)\s*\(([^\]]*)\)\]/';
+    const REGEXP_VARIABLE = '/\[([\w\*\.]+)=(\w+)\s*\(([^\]]*)\)\]/';
 
     private $rawContent = '';
 
@@ -43,7 +43,16 @@ class GTemplate
                 $multiples[$varName] = isset($multiples[$varName]) ? $multiples[$varName] + 1 : 1;
                 $varName = $varName . $multiples[$varName];
             }
-            $variables[$varName] = isset($valores[$varName]) ? $valores[$varName] : '';
+            if (strpos($varName, '.')>-1) {
+                $plural = $this->plural($varName);
+                $attribute = explode('.', $varName)[1];
+                if (!isset($variables[$plural])) $variables[$plural] = isset($valores[$plural]) ? $valores[$plural] : [];
+                if (!isset($valores[$plural])) {
+                    $variables[$plural][0][$attribute] = '';
+                }
+            } else {
+                $variables[$varName] = isset($valores[$varName]) ? $valores[$varName] : '';
+            }
             $params = $match[3];
             if ($params && strpos($params, '|')!==false) {
                 $params = htmlentities(json_encode(explode('|', $params)), ENT_QUOTES);
@@ -52,8 +61,28 @@ class GTemplate
                 ($params ? "v-bind:data=\"{$params}\"" : "")
                 . " title='{$varName}'></{$match[2]}>";
         }, $html);
+        $html = $this->addMultipleButtons($html);
         $html .= '<script>var variables = ' . json_encode($variables) . ';parent && parent.app && parent.app.variablesCargadas ? parent.app.variablesCargadas(variables):null;</script>';
         return $html;
+    }
+    
+    private function addMultipleButtons($html)
+    {
+        return preg_replace_callback(
+            '/\{\+(\w+)\}/',
+            function ($match) {
+                return '<button class="button" v-on:click="addRow(' . $match[1] . ', i)">+</button>' .
+                    '<button v-if="' . $match[1] . '.length>1" class="button" v-on:click="removeRow(' . $match[1] . ', i)">x</button>';
+            },
+            $html
+        );
+    }
+
+    private function plural($model)
+    {
+        $singular = explode('.', $model)[0];
+        $lastLetter = strtolower(substr($singular, -1));
+        return in_array($lastLetter, ['a', 'e', 'i', 'o', 'u']) ? $singular . 's' : $singular . 'es';
     }
 
     public function parseValores(array $valores = [])

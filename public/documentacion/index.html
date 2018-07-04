@@ -1613,7 +1613,11 @@
                         this.pasosGuardarDB();
                     },
                     pasosTitulo: function (paso) {
-                        return this.definicionPasos[this.tipoTarea] ? this.definicionPasos[this.tipoTarea][paso].titulo : '';
+                        try {
+                            return this.definicionPasos[this.tipoTarea] ? this.definicionPasos[this.tipoTarea][paso].titulo : '';
+                        } catch(e) {
+                            return '';
+                        }
                     },
                     setTipoTarea: function (tipoTarea) {
                         this.tipoTarea = tipoTarea;

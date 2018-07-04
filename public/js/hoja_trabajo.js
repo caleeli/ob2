@@ -12,6 +12,21 @@ function moveContentIntoDiv() {
         div.appendChild(ch);
     }
     document.body.insertBefore(div, document.body.firstChild);
+    convertMultipleRows();
+}
+function convertMultipleRows() {
+    document.querySelectorAll("[v-model]").forEach(function (e) {
+        var model = e.getAttribute("v-model"),
+            isMultiple = model.indexOf(".") !== -1,
+            tr = isMultiple ? e.parentElement : null;
+        while (tr && tr.nodeName !== 'TR') tr = tr.parentElement;
+        if (tr) {
+            var singular = model.split(".")[0];
+            var lastLetter = singular.substr(singular.length - 1).toLowerCase();
+            var plural = ['a', 'e', 'i', 'o', 'u'].indexOf(lastLetter) === -1 ? singular + 'es' : singular + 's';
+            tr.setAttribute("v-for", "(" + singular + ", i) in " + plural);
+        };
+    });
 }
 window.linksSelected = {};
 moveContentIntoDiv();
@@ -313,6 +328,18 @@ var app = new Vue({
         }, window.variables);
     },
     methods: {
+        /**
+         * Agrega una fila a una variable multiple
+         */
+        addRow: function (multiple, index) {
+            multiple.splice(index, 0, JSON.parse(JSON.stringify(multiple[index])));
+        },
+        /**
+         * Agrega una fila a una variable multiple
+         */
+        removeRow: function (multiple, index) {
+            multiple.splice(index, 1);
+        },
         loadList: function (url, text, bind) {
             $.ajax({
                 url: url,

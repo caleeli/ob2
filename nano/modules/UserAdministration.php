@@ -1381,7 +1381,7 @@
                     "-getDiasOtorgadosAttribute()": <?php
                         function () {
                             $asignacion = $this->asignaciones()->orderBy('created_at', 'desc')->first();
-                            return $asignacion ? $asignacion->dias_plazo : 0;
+                            return $asignacion ? $asignacion->dias_plazo * 1 : 0;
                         }
                     ?>,
                     "-getAvanceAttribute()": <?php
