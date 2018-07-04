@@ -71,8 +71,9 @@ class GTemplate
         return preg_replace_callback(
             '/\{\+(\w+)\}/',
             function ($match) {
-                return '<button class="button" v-on:click="addRow(' . $match[1] . ', i)">+</button>' .
-                    '<button v-if="' . $match[1] . '.length>1" class="button" v-on:click="removeRow(' . $match[1] . ', i)">x</button>';
+                $plural = $this->plural($match[1].'.attribute');
+                return '<button class="button" v-on:click="addRow(' . $plural . ', i)">+</button>' .
+                    '<button v-if="' . $plural . '.length>1" class="button" v-on:click="removeRow(' . $match[1] . ', i)">x</button>';
             },
             $html
         );
