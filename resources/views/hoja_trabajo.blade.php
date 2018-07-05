@@ -126,7 +126,7 @@
 </script>
 <script type='text/x-template' id='texto'>
     <div class="editable" >
-        <span v-html="innerValue.split('\n').join('<br>')"></span>
+        <span v-html="innerValue ? innerValue.split('\n').join('<br>') : ''"></span>
         <textarea v-model="innerValue" v-if="editable()"></textarea>
     </div>
 </script>
@@ -136,7 +136,7 @@
 </script>
 <script type='text/x-template' id='enlace'>
     <div class="editable link-button">
-        <span v-on:click="abrirEnlace">@{{innerValue.text}}</span>
+        <span v-on:click="abrirEnlace">@{{innerValue ? innerValue.text : ''}}</span>
         <button type="button" v-on:click="editarEnlace" v-if="editable()">&#128279;</button>
     </div>
 </script>
