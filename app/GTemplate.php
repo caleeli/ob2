@@ -73,7 +73,7 @@ class GTemplate
             function ($match) {
                 $plural = $this->plural($match[1].'.attribute');
                 return '<button class="button" v-on:click="addRow(' . $plural . ', i)">+</button>' .
-                    '<button v-if="' . $plural . '.length>1" class="button" v-on:click="removeRow(' . $match[1] . ', i)">x</button>';
+                    '<button v-if="' . $plural . '.length>1" class="button" v-on:click="removeRow(' . $plural . ', i)">x</button>';
             },
             $html
         );
