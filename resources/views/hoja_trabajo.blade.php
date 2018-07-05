@@ -111,6 +111,12 @@
     .pdfselect {
         background-color: #f00;
     }
+    .abutton {
+        border: 1px solid lightblue;
+        background-color: lightcyan;
+        border-radius: 2em;
+        cursor: pointer;
+    }
 </style>
 <script type='text/x-template' id='gtemplate'>
     <div>

@@ -72,8 +72,8 @@ class GTemplate
             '/\{\+(\w+)\}/',
             function ($match) {
                 $plural = $this->plural($match[1].'.attribute');
-                return '<button class="button" v-on:click="addRow(' . $plural . ', i)">+</button>' .
-                    '<button v-if="' . $plural . '.length>1" class="button" v-on:click="removeRow(' . $plural . ', i)">x</button>';
+                return '<a class="abutton" v-on:click="addRow(' . $plural . ', i)">+</a>' .
+                    '<a class="abutton" v-if="' . $plural . '.length>1" class="button" v-on:click="removeRow(' . $plural . ', i)">x</a>';
             },
             $html
         );
