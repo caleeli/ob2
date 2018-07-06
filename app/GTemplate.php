@@ -44,20 +44,44 @@ class GTemplate
                 $varName = $varName . $multiples[$varName];
             }
             if (strpos($varName, '.')>-1) {
-                $plural = $this->plural($varName);
-                $attribute = explode('.', $varName)[1];
-                if (!isset($variables[$plural])) $variables[$plural] = isset($valores[$plural]) ? $valores[$plural] : [];
-                if (!isset($valores[$plural])) {
-                    $variables[$plural][0][$attribute] = '';
+                $names = explode('.', $varName);
+                $last = count($names) - 1;
+                $ref = '$variables';
+                $refRef = '$variables';
+                $valRef = '$valores';
+                foreach($names as $i=>$singular) {
+                    if ($i === 0) {
+                        $plural = $this->plural($singular);
+                        $ref.='['. var_export($plural, true).'][0]';
+                        $refRef.='['. var_export($plural, true).']';
+                        $valRef.='['. var_export($plural, true).']';
+                        $child = $singular;
+                        $owner = $last > 1 ? $singular : $plural;
+                    } elseif ($i < $last) {
+                        $plural = $this->plural($singular);
+                        $ref.='['. var_export($plural, true).'][0]';
+                        $child = $singular;
+                        if ($i < $last - 1) {
+                            $owner = $singular;
+                        } else {
+                            $owner = $owner . '.' . $plural;
+                        }
+                    } else {
+                        $ref.='['. var_export($singular, true).']';
+                        $varName = $child . '.' . $singular;
+                    }
                 }
+                eval('if (isset(' . $valRef . ') && !isset(' . $refRef . ')) ' . $refRef . '= ' . $valRef . ';');
+                eval('if (!isset(' . $ref . ')) ' . $ref . '= "";');
             } else {
                 $variables[$varName] = isset($valores[$varName]) ? $valores[$varName] : '';
+                $owner = null;
             }
             $params = $match[3];
             if ($params && strpos($params, '|')!==false) {
                 $params = htmlentities(json_encode(explode('|', $params)), ENT_QUOTES);
             }
-            return "<{$match[2]} v-model='{$varName}' ".
+            return "<{$match[2]} v-model='{$varName}' ". ($owner ? "w-owner='{$owner}' w-child='{$child}' " : '') .
                 ($params ? "v-bind:data=\"{$params}\"" : "")
                 . " title='{$varName}'></{$match[2]}>";
         }, $html);
@@ -69,9 +93,9 @@ class GTemplate
     private function addMultipleButtons($html)
     {
         return preg_replace_callback(
-            '/\{\+(\w+)\}/',
+            '/\{\+([\w\.]+)\}/',
             function ($match) {
-                $plural = $this->plural($match[1].'.attribute');
+                $plural = $this->plural($match[1]);
                 return '<a class="abutton" v-on:click="addRow(' . $plural . ', i)">+</a>' .
                     '<a class="abutton" v-if="' . $plural . '.length>1" class="button" v-on:click="removeRow(' . $plural . ', i)">x</a>';
             },
@@ -79,9 +103,8 @@ class GTemplate
         );
     }
 
-    private function plural($model)
+    private function plural($singular)
     {
-        $singular = explode('.', $model)[0];
         $lastLetter = strtolower(substr($singular, -1));
         return in_array($lastLetter, ['a', 'e', 'i', 'o', 'u']) ? $singular . 's' : $singular . 'es';
     }

@@ -15,15 +15,18 @@ function moveContentIntoDiv() {
     convertMultipleRows();
 }
 function convertMultipleRows() {
-    document.querySelectorAll("[v-model]").forEach(function (e) {
-        var model = e.getAttribute("v-model"),
-            isMultiple = model.indexOf(".") !== -1,
-            tr = isMultiple ? e.parentElement : null;
+    document.querySelectorAll("[w-owner]").forEach(function (e) {
+        //var model = e.getAttribute("v-model"),
+        //    isMultiple = model.indexOf(".") !== -1,
+        //    tr = isMultiple ? e.parentElement : null;
+        var plural = e.getAttribute("w-owner"),
+            singular = e.getAttribute("w-child"),
+            tr = e.parentElement;
         while (tr && tr.nodeName !== 'TR') tr = tr.parentElement;
         if (tr) {
-            var singular = model.split(".")[0];
-            var lastLetter = singular.substr(singular.length - 1).toLowerCase();
-            var plural = ['a', 'e', 'i', 'o', 'u'].indexOf(lastLetter) === -1 ? singular + 'es' : singular + 's';
+//            var singular = model.split(".")[0];
+//            var lastLetter = singular.substr(singular.length - 1).toLowerCase();
+//            var plural = ['a', 'e', 'i', 'o', 'u'].indexOf(lastLetter) === -1 ? singular + 'es' : singular + 's';
             tr.setAttribute("v-for", "(" + singular + ", i) in " + plural);
         };
     });
