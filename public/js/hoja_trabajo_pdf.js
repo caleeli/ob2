@@ -555,6 +555,16 @@ var app = new Vue({
             };
             window.open('/pdfhl/edit/' + path + '?sp=' + encodeURIComponent(self.storagePath), name);
         },
+        editMarks: function (meta) {
+            this.markMetaCurrent = this.markMetas.indexOf(meta);
+            this.markMeta.id = this.markMetaCurrent;
+            this.markMeta.title = meta.title;
+            this.markMeta.description = meta.description;
+            this.markMeta.file = meta.file;
+            this.markMeta.reference = meta.reference;
+            $("#container").addClass('highlight');
+            this.highlightMode = $("#container").hasClass('highlight');
+        },
         marcarDiv: function (div) {
             var self = this;
             if (self.markActive && $(div.parentNode).hasClass('textLayer') && !$(div).hasClass('endOfContent')) {

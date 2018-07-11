@@ -33,9 +33,10 @@
             <div class="container bg_logo" style='position: fixed'>
                 <div v-bind:class="{message:1, information:ii!==markMetaCurrent, success:ii===markMetaCurrent}" v-for='(meta,ii) in markMetas'>
                     <p>
-                        <a v-show='metaEditTitle!==ii' href='javascript:void(0)' v-on:click='gotoMark(meta.id)'>@{{meta.title}}</a>
+                        <a v-show='metaEditTitle!==ii' href='javascript:void(0)' v-on:click='gotoMark(meta.id)'>@{{meta.title?meta.title:'(sin nombre)'}}</a>
                         <input v-show='metaEditTitle===ii' v-model='meta.title'>
                         <span class='message-button' v-show='metaEditTitle!==ii' v-on:click='metaEditTitle=ii'>[editar]</span>
+                        <span class='message-button' v-show='metaEditTitle!==ii' v-on:click='editMarks(meta)'>[editar marcas]</span>
                         <span class='message-button' v-show='metaEditTitle===ii' v-on:click='metaEditTitle=-1'>[ok]</span>
                         <span class='message-button' v-show='metaEditTitle!==ii' v-on:click='openLinkedPDF(meta)'>[enlace]</span>
                     </p>
