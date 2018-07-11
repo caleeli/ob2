@@ -2,7 +2,7 @@ function moveContentIntoDiv() {
     var div = document.createElement("div");
     var ch;
     div.setAttribute('id', 'app');
-    div.setAttribute('style', 'width: 765px;');
+    div.setAttribute('style', 'width: 617px;');
     var i = 0;
     while (ch = document.body.childNodes.item(i)) {
         if (ch.nodeName === 'SCRIPT' || ch.nodeName === 'STYLE') {
