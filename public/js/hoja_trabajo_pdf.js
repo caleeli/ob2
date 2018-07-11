@@ -565,6 +565,22 @@ var app = new Vue({
             $("#container").addClass('highlight');
             this.highlightMode = $("#container").hasClass('highlight');
         },
+        removeMarks: function (meta) {
+            var self = this;
+            if (!confirm('¿Deseas eliminar las marcas?')) {
+                return;
+            }
+            $("#container .pdfselect").each(function () {
+                var metaI = $(this).data('markMeta');
+                if (meta.id===metaI.id) {
+                    $(this).removeClass('pdfselect');
+                    $(this).removeData('markMeta');
+                }
+            });
+            self.updateMarksFromDOM();
+            var index = self.markMetas.indexOf(meta);
+            self.markMetas.splice(index, 1);
+        },
         marcarDiv: function (div) {
             var self = this;
             if (self.markActive && $(div.parentNode).hasClass('textLayer') && !$(div).hasClass('endOfContent')) {
@@ -603,6 +619,10 @@ var app = new Vue({
                 }
             }
             self.markActive = false;
+            self.updateMarksFromDOM();
+        },
+        updateMarksFromDOM: function () {
+            var self = this;
             var baseLength = $("#container").getPath().length;
             self.marks.splice(0);
             self.markIds.splice(0);

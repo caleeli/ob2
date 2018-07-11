@@ -39,6 +39,7 @@
                         <span class='message-button' v-show='metaEditTitle!==ii' v-on:click='editMarks(meta)'>[editar marcas]</span>
                         <span class='message-button' v-show='metaEditTitle===ii' v-on:click='metaEditTitle=-1'>[ok]</span>
                         <span class='message-button' v-show='metaEditTitle!==ii' v-on:click='openLinkedPDF(meta)'>[enlace]</span>
+                        <span class='message-button' v-show='metaEditTitle!==ii' v-on:click='removeMarks(meta)'>[x]</span>
                     </p>
                     <p v-if='meta.description'>@{{meta.description}}</p>
                 </div>
