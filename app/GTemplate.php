@@ -130,7 +130,7 @@ class GTemplate
             $valor = $variables[$varName];
             if ($match[2] === 'lista') {
                 $lista = $this->loadLista($match[3]);
-                $valor = $lista[$valor];
+                $valor = @$lista[$valor];
             }
             if ($match[2] === 'enlace') {
                 $enlace = json_decode($valor);
