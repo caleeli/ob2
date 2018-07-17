@@ -736,8 +736,9 @@
                                                                     <br>
                                                                     <button
                                                                         v-for="(botonPaso, formName) in botonesDePasoActual()"
+                                                                        v-show="botonHabilitadoPaso(formName, botonPaso, pasos.actual)"
                                                                         class="btn btn-primary btn-block" type="button"
-                                                                        v-on:click='abrirPasoAuditoria(formName, botonPaso, pasos.actual)'><i class="fa fa-save"></i> {{formName}}</button>
+                                                                        v-on:click='abrirPasoAuditoria(formName, botonPaso, pasos.actual)'><i class="fa fa-save"></i> {{botonPaso.buttonTitle ? botonPaso.buttonTitle : formName}}</button>
                                                                     <button class="btn btn-primary btn-block" type="button" v-on:click='guardarPaso'><i class="fa fa-save"></i> Guardar</button>
                                                                 </folder-viewer>
                                                                 <div class="col-md-12" style="background: white;" v-show="estaPasoAuditoriaAbierta()">
@@ -1332,12 +1333,33 @@
                                     buttons:{
                                         'F-3007': {
                                             template:'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
-                                            name:'hojaTrabajo',
+                                            name: 'hojaTrabajo',
+                                            condition: 'pendienteRevision'
                                         }
                                     }
                                 },
-                                {titulo:'5. Informe/Nota de Evaluación de Consistencias'},
-                                {titulo:'6. Revisión'},
+                                {
+                                    titulo:'5. Informe/Nota de Evaluación de Consistencias',
+                                    buttons:{
+                                        'revisar': {
+                                            template: null,
+                                            action: 'revisarHoja',
+                                            buttonTitle: 'Pasar a revisor',
+                                            condition: 'pendienteRevision'
+                                        }
+                                    }
+                                },
+                                {
+                                    titulo:'6. Revisión',
+                                    buttons:{
+                                        'volverEdicion': {
+                                            template: null,
+                                            action: 'volverEdicionHoja',
+                                            buttonTitle: 'Volver a editar',
+                                            condition: 'noPendienteRevision'
+                                        }
+                                    }
+                                },
                                 {titulo:'7. Documento Aprobado'},
                                 {titulo:'8. Remisión de Informe de Evaluación de Consistencia a Despacho'},
                             ],
@@ -1559,9 +1581,43 @@
                     estaPasoAuditoriaAbierta: function () {
                         return this.pasos.subpaso4 === 1 && this.pasos.actual === 3;
                     },
+                    /**
+                     * Se activa cuando se le da click en el boton "Pasar a revision"
+                     */
+                    revisarHoja: function () {
+                        this.pasos.listoParaRevision = true;
+                        this.guardarPaso();
+                    },
+                    /**
+                     * True si this.pasos.listoParaRevision !== true
+                     */
+                    pendienteRevision: function () {
+                        return this.pasos.listoParaRevision !== true;
+                    },
+                    noPendienteRevision: function () {
+                        return !this.pendienteRevision();
+                    },
+                    /**
+                     * Se activa cuando se le da click en el boton "Volver a editar"
+                     */
+                    volverEdicionHoja: function () {
+                        this.pasos.listoParaRevision = false;
+                        this.pasos.actual--;
+                        this.guardarPaso();
+                    },
+                    botonHabilitadoPaso: function (name, def, paso) {
+                        var self = this;
+                        if (def.condition) {
+                            return this[def.condition]();
+                        }
+                        return true;
+                    },
                     abrirPasoAuditoria: function (name, def, paso) {
                         var self = this;
                         var hoja = def.name;
+                        if (def.action) {
+                            return this[def.action]();
+                        }
                         self.pasos.data[paso].template = def.template;
                         if (self.pasos.data[paso][hoja]===undefined) {
                             self.pasos.data[paso][hoja] = {
