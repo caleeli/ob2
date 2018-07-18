@@ -408,16 +408,17 @@
                                                         ">
                                                         <h5>Normativa</h5>
                                                         <select v-model="biblioteca_normativa" class="form-control">
-                                                            <option></option>
-                                                            <option>Leyes Financiales</option>
-                                                            <option>Reglamento Leyes Financiales</option>
-                                                            <option>Clasificador Presupuestario</option>
-                                                            <option>Lineamientos del COSSEP</option>
-                                                            <option>Creación de Empresas Públicas</option>
-                                                            <option>Interno SCEP</option>
+                                                            <option value=""></option>
+                                                            <option value="Ley_Financial">Leyes Financiales</option>
+                                                            <option value="Reg._LF.">Reglamento Leyes Financiales</option>
+                                                            <option value="Clasificador">Clasificador Presupuestario</option>
+                                                            <option value="LINEAMIENTOS">Lineamientos del COSSEP</option>
+                                                            <option value="dl_crea">Creación de Empresas Públicas</option>
+                                                            <option value="SCEP">Interno SCEP</option>
                                                         </select>
                                                         <h5>Criterio de busqueda</h5>
                                                         <input v-model="biblioteca_busqueda" class="form-control">
+                                                        <br>
                                                     </folder-viewer>
                                                 </div>
                                             </div>
