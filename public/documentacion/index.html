@@ -403,7 +403,8 @@
                                                         v-bind:canupload='esAdmin'
                                                         v-bind:candelete='esAdmin'
                                                         v-bind:filter="
-                                                                (biblioteca_busqueda ? '%' + biblioteca_busqueda + '%' : '')
+                                                                (biblioteca_normativa ? biblioteca_normativa + '%' : '')
+                                                                + (biblioteca_busqueda ? '%' + biblioteca_busqueda + '%' : '')
                                                                 + ('.%')
                                                         ">
                                                         <h5>Normativa</h5>
