@@ -16,7 +16,7 @@ class FolderController extends Controller
     {
         $path = '/' . implode('/', $pathArray);
         $filter = $request->input('filter', '');
-        $regexp = $filter ? '/' . str_replace('%', '.*', preg_quote($filter, '/')) . '/' : '';
+        $regexp = $filter ? '/' . str_replace('%', '.*', preg_quote($filter, '/')) . '/i' : '';
         $list = $this->listFiles($storage, $regexp, [], '', $path);
         if ($storage==='tareas') {
 
