@@ -29,9 +29,9 @@
         <div class="preview" style='width: 765px'>
             <div id="container"></div>
         </div>
-        <div style='position: relative'>
-            <div class="container bg_logo" style='position: fixed'>
-                <div v-bind:class="{message:1, information:ii!==markMetaCurrent, success:ii===markMetaCurrent}" v-for='(meta,ii) in markMetas'>
+        <div style='position: relative; margin-top: -20px;'>
+            <div class="container bg_logo">
+                <div v-bind:class="{message:1, information:ii!==markMetaCurrent, success:ii===markMetaCurrent}" v-for='(meta,ii) in markMetas' :style="position(marks[markIds.indexOf(meta.id)], redraw)">
                     <p>
                         <a v-show='metaEditTitle!==ii' href='javascript:void(0)' v-on:click='gotoMark(meta.id)'>@{{meta.title?meta.title:'(sin nombre)'}}</a>
                         <input v-show='metaEditTitle===ii' v-model='meta.title'>

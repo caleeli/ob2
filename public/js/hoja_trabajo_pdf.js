@@ -300,6 +300,7 @@ var app = new Vue({
                 file: '',
                 reference: '',
             },
+            markPositions: [],
             metaEditTitle: -1,
             showPDF: false,
             pdfEditMode: true,
@@ -307,7 +308,8 @@ var app = new Vue({
             selectedLinkName: selectedLink ? selectedLink.getText() : '',
             editMode: true,
             storagePath: window.storePath,
-            uploadAux: ''
+            uploadAux: '',
+            redraw: 0,
         }, window.variables);
     },
     methods: {
@@ -448,6 +450,7 @@ var app = new Vue({
                                             $(mark).data('markMeta', meta);
                                         });
                                         if (rightMark) self.focusOn(rightMark);
+                                        self.redraw++;
                                     };
                                     setTimeout(hlMarks, 100);
                                 });
@@ -506,6 +509,7 @@ var app = new Vue({
         },
         completarSeleccion: function () {
             var self = this;
+            self.redraw++;
             $.ajax({
                 method: 'put',
                 data: JSON.stringify({
@@ -660,6 +664,15 @@ var app = new Vue({
                 self.selectedFile = file.url;
                 self.loadPDF(self.selectedFile);
             });
+        },
+        position: function (ref, redraw) {
+            var $e = $(ref), pos = {};
+            if($e.length) {
+                pos.top = $e.offset().top + 'px';
+                pos.position = 'absolute';
+                pos.width = '100%';
+            }
+            return pos;
         }
     },
     watch: {
