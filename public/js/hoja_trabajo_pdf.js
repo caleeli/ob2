@@ -699,21 +699,25 @@ var app = new Vue({
             this.markMetas.forEach(function (meta) {
                 meta.position = self.calculatePosition(meta);
             });
+            var lastPosi=0, lastPosj=0;
             for (var i = 0, l = this.markMetas.length; i < l; i++) {
-                if (!this.markMetas[i].position) continue;
-                var posi = this.markMetas[i].position;
+                //if (!this.markMetas[i].position) continue;
+                var posi = (!this.markMetas[i].position) ? lastPosi : this.markMetas[i].position;
                 var maxY = posi - 45;
                 var minY = posi + 45;
+                lastPosj = minY;
                 for (var j = i+1; j < l; j++) {
-                    if (!this.markMetas[j].position) continue;
-                    var posj = this.markMetas[j].position;
+                    //if (!this.markMetas[j].position) continue;
+                    var posj = (!this.markMetas[j].position) ? lastPosj : this.markMetas[j].position;
                     if (posj>=posi) {
                         posj = Math.max(minY, posj);
                     } else {
                         posj = Math.min(maxY, posj);
                     }
                     this.markMetas[j].position = posj;
+                    lastPosj = posj;
                 }
+                lastPosi = posi;
             }
         }
     },
