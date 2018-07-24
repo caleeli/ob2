@@ -652,10 +652,21 @@ var app = new Vue({
             });
         },
         focusOn: function ($el) {
+            var self = this;
             if ($el[0]) {
                 $('#app').css('margin-top', '-4em');
                 $el[0].scrollIntoView();
                 $('#app').css('margin-top', '0em');
+                //Highlight more the selected mark
+                $('.pdfselected').removeClass('pdfselected');
+                var meta = $el.data('markMeta');
+                if (meta) {
+                    self.marks.forEach(function (mark, i) {
+                        if (self.markIds[i]===meta.id) {
+                            $(mark).addClass('pdfselected');
+                        }
+                    });
+                }
             }
         },
         fileUploaded: function (file) {
@@ -665,14 +676,45 @@ var app = new Vue({
                 self.loadPDF(self.selectedFile);
             });
         },
-        position: function (ref, redraw) {
-            var $e = $(ref), pos = {};
-            if($e.length) {
-                pos.top = $e.offset().top + 'px';
+        position: function (meta, redraw) {
+            this.calculatePositions();
+            var pos = {};
+            if (meta.position) {
+                pos.top = meta.position + 'px';
                 pos.position = 'absolute';
                 pos.width = '100%';
             }
             return pos;
+        },
+        calculatePosition: function (meta) {
+            var ref = this.marks[this.markIds.indexOf(meta.id)];
+            var $e = $(ref);
+            if ($e.length) {
+                return $e.offset().top;
+            }
+            return null;
+        },
+        calculatePositions: function () {
+            var self = this;
+            this.markMetas.forEach(function (meta) {
+                meta.position = self.calculatePosition(meta);
+            });
+            for (var i = 0, l = this.markMetas.length; i < l; i++) {
+                if (!this.markMetas[i].position) continue;
+                var posi = this.markMetas[i].position;
+                var maxY = posi - 45;
+                var minY = posi + 45;
+                for (var j = i+1; j < l; j++) {
+                    if (!this.markMetas[j].position) continue;
+                    var posj = this.markMetas[j].position;
+                    if (posj>=posi) {
+                        posj = Math.max(minY, posj);
+                    } else {
+                        posj = Math.min(maxY, posj);
+                    }
+                    this.markMetas[j].position = posj;
+                }
+            }
         }
     },
     watch: {

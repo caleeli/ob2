@@ -31,7 +31,7 @@
         </div>
         <div style='position: relative; margin-top: -20px;'>
             <div class="container bg_logo">
-                <div v-bind:class="{message:1, information:ii!==markMetaCurrent, success:ii===markMetaCurrent}" v-for='(meta,ii) in markMetas' :style="position(marks[markIds.indexOf(meta.id)], redraw)">
+                <div v-bind:class="{message:1, information:ii!==markMetaCurrent, success:ii===markMetaCurrent}" v-for='(meta,ii) in markMetas' :style="position(meta, redraw)">
                     <p>
                         <a v-show='metaEditTitle!==ii' href='javascript:void(0)' v-on:click='gotoMark(meta.id)'>@{{meta.title?meta.title:'(sin nombre)'}}</a>
                         <input v-show='metaEditTitle===ii' v-model='meta.title'>
@@ -135,6 +135,13 @@
     }
     .pdfselect {
         background-color: #f00;
+        opacity: 0.2;
+    }
+    .pdfselected {
+        opacity: 0.4;
+    }
+    .textLayer {
+        opacity: 1;
     }
 </style>
 <script type='text/x-template' id='gtemplate'>
