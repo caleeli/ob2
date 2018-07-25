@@ -318,6 +318,8 @@ var app = new Vue({
         return Object.assign({
             message: 'Hello Vue2!',
             empresas: [],
+            firmas: [],
+            usuarios: [],
             files: [],
             selectedFile: '',
             selectedLink: '',
@@ -549,6 +551,8 @@ var app = new Vue({
     mounted: function () {
         var self = this;
         self.loadList('/api/UserAdministration/empresas', 'nombre_empresa', self.empresas);
+        self.loadList('/api/UserAdministration/firmas', 'representante_legal', self.firmas);
+        //self.loadObject('/api/UserAdministration/users', self.user);
         self.loadPDFList();
         $("#container").mousedown(function (event) {
             self.iniMarcarDiv(event.target);

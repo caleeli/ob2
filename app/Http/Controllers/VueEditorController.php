@@ -25,7 +25,15 @@ class VueEditorController extends Controller
                 ]
             ],
             ['titulo'=>'5. Informe/Nota de Evaluación de Consistencias'],
-            ['titulo'=>'6. Revisión'],
+            [
+                'titulo'=>'6. Revisión',
+                'buttons'=>[
+                    'anexo4'=> [
+                        'template'=>'1zxuEWTosPwlNSUapfg8KfaZr8d-GYohsRrFqjNKrXtU',
+                        'name'=>'anexo4',
+                    ]
+                ]
+            ],
             ['titulo'=>'7. Documento Aprobado'],
             ['titulo'=>'8. Remisión de Informe de Evaluación de Consistencia a Despacho'],
         ],
