@@ -677,7 +677,7 @@ var app = new Vue({
             });
         },
         position: function (meta, redraw) {
-            this.calculatePositions();
+            //this.calculatePositions();
             var pos = {};
             if (meta.position) {
                 pos.top = meta.position + 'px';
@@ -737,6 +737,9 @@ var app = new Vue({
         $("#container").mousemove(function (event) {
             self.marcarDiv(event.target);
         });
+        setInterval(function () {
+            self.calculatePositions();
+        }, 1000);
     }
 });
 window.guardarHoja = function (callback) {
