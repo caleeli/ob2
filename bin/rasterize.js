@@ -20,7 +20,6 @@ function waitFor(testFx, onReady, timeOutMillis) {
         start = new Date().getTime(),
         condition = false,
         interval = setInterval(function() {
-            console.log([new Date().getTime() - start, maxtimeOutMillis, condition]);
             if ( (new Date().getTime() - start < maxtimeOutMillis) && !condition ) {
                 // If not time-out yet and condition not yet fulfilled
                 condition = (typeof(testFx) === "string" ? eval(testFx) : testFx()); //< defensive code
@@ -82,11 +81,15 @@ if (system.args.length < 3 || system.args.length > 5) {
             //}, 200);
             waitFor(
                 function () {
-                    return page.evaluate(function() {
+                    var abcd = 1;
+                    var res = page.evaluate(function() {
+                        abcd = 2;
                         console.log(window.printPDF);
                         return typeof window.printPDF !== 'undefined'
                             ? window.printPDF===true : false;
                     });
+                    console.log(res, abcd);
+                    return res;
                 },
                 function () {
                     page.render(output);
