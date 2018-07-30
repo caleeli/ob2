@@ -91,7 +91,7 @@ if (system.args.length < 3 || system.args.length > 5) {
                     page.render(output);
                     phantom.exit();
                 },
-                10000
+                20000
             );
         }
     });
