@@ -24,7 +24,7 @@ class ReportController extends Controller
     {
         $url = $request->input('url');
         $format = $request->input('format', null);
-        return $this->toPDF($url, $format);
+        return $this->toPDF($url, $format, true);
     }
 
     private function toPDF($url, $format=null)
@@ -37,7 +37,7 @@ class ReportController extends Controller
             ? '"'.$format.'"'
             : self::FORMAT;
         $cmd = env('PHANTOMJS') . " $rasterize $url1 $target $format";
-        exec($cmd);
+        passthru($cmd);die;
         return redirect('/storage/report/' . basename($target0));
     }
 }
