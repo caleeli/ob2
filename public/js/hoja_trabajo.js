@@ -563,6 +563,9 @@ var app = new Vue({
         $("#container").mousemove(function (event) {
             self.marcarDiv(event.target);
         });
+        setTimeout(function () {
+            window.printPDF = true;
+        }, 1200);
     }
 });
 window.guardarHoja = function (callback) {
