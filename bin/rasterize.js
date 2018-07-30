@@ -82,7 +82,7 @@ if (system.args.length < 3 || system.args.length > 5) {
             waitFor(
                 function () {
                     var res = page.evaluate(function() {
-                        return JSON.stringify([window.printPDF, document.URL]);
+                        return JSON.stringify([window.printPDF, window.tipoTarea]);
                         return typeof window.printPDF !== 'undefined'
                             ? window.printPDF===true : false;
                     });
