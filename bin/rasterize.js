@@ -81,13 +81,10 @@ if (system.args.length < 3 || system.args.length > 5) {
             //}, 200);
             waitFor(
                 function () {
-                    var res = page.evaluate(function() {
-                        return JSON.stringify([window.printPDF, window.tipoTarea]);
+                    return page.evaluate(function() {
                         return typeof window.printPDF !== 'undefined'
                             ? window.printPDF===true : false;
                     });
-                    console.log(res);
-                    return false;
                 },
                 function () {
                     page.render(output);
