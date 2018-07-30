@@ -81,21 +81,19 @@ if (system.args.length < 3 || system.args.length > 5) {
             //}, 200);
             waitFor(
                 function () {
-                    var abcd = 1;
                     var res = page.evaluate(function() {
-                        abcd = 2;
-                        console.log(window.printPDF);
+                        return JSON.stringify([window.printPDF, document.URL]);
                         return typeof window.printPDF !== 'undefined'
                             ? window.printPDF===true : false;
                     });
-                    console.log(res, abcd);
-                    return res;
+                    console.log(res);
+                    return false;
                 },
                 function () {
                     page.render(output);
                     phantom.exit();
                 },
-                20000
+                10000
             );
         }
     });
