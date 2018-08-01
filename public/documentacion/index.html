@@ -599,6 +599,9 @@
                                                                     </table>
                                                                 </div>
                                                                 <div class="col-md-2 col-xs-4 project-completion">
+                                                                    <div class="progress progress-striped active m-b-sm">
+                                                                        <div v-bind:style="{width: avancePasosPorcentaje(tareaI, definicionPasos[tareaI.attributes.tipo])+'%'}" class="progress-bar progress-bar-primary"></div>
+                                                                    </div>
                                                                     <span class="tarea-paso tarea-paso1 label label-primary">1</span>
                                                                     <span v-show='definicionPasos[tareaI.attributes.tipo].length>=2' v-bind:class="{'tarea-paso':1, 'tarea-paso2':pasoPorTarea(tareaI, 2), label:1, 'label-primary': pasoPorTarea(tareaI, 2), 'label-default': !pasoPorTarea(tareaI, 2)}">2</span>
                                                                     <span v-show='definicionPasos[tareaI.attributes.tipo].length>=3' v-bind:class="{'tarea-paso':1, 'tarea-paso3':pasoPorTarea(tareaI, 3), label:1, 'label-primary': pasoPorTarea(tareaI, 3), 'label-default': !pasoPorTarea(tareaI, 3)}">3</span>
@@ -1327,11 +1330,21 @@
                         hojaTrabajoLocalSave: false,
                         definicionPasos: {
                             'EDC': [
-                                {titulo:'1. Nota de solicitud y remisión de documentación a la empresa'},
-                                {titulo:'2. Notas de solicitud y remisión de papeles de trabajo'},
-                                {titulo:'3. Análisis de tendencia'},
+                                {
+                                    titulo: '1. Nota de solicitud y remisión de documentación a la empresa',
+                                    porcentaje: 5,
+                                },
+                                {
+                                    titulo: '2. Notas de solicitud y remisión de papeles de trabajo',
+                                    porcentaje: 5,
+                                },
+                                {
+                                    titulo:'3. Análisis de tendencia',
+                                    porcentaje: 15,
+                                },
                                 {
                                     titulo:'4. Trabajo de campo',
+                                    porcentaje: 40,
                                     buttons:{
                                         'F-3007': {
                                             template:'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
@@ -1342,6 +1355,7 @@
                                 },
                                 {
                                     titulo:'5. Informe/Nota de Evaluación de Consistencias',
+                                    porcentaje: 20,
                                     buttons:{
                                         'revisar': {
                                             template: null,
@@ -1353,6 +1367,7 @@
                                 },
                                 {
                                     titulo:'6. Revisión',
+                                    porcentaje: 5,
                                     buttons:{
                                         'anexo4': {
                                             template: '1zxuEWTosPwlNSUapfg8KfaZr8d-GYohsRrFqjNKrXtU',
@@ -1368,8 +1383,14 @@
                                         }
                                     }
                                 },
-                                {titulo:'7. Documento Aprobado'},
-                                {titulo:'8. Remisión de Informe de Evaluación de Consistencia a Despacho'},
+                                {
+                                    titulo:'7. Documento Aprobado',
+                                    porcentaje: 5,
+                                },
+                                {
+                                    titulo:'8. Remisión de Informe de Evaluación de Consistencia a Despacho',
+                                    porcentaje: 5,
+                                },
                             ],
                             'AUD': [
                                 {titulo:'1. Recepción y Solicitud a Empresas y/o Firmas'},
@@ -1436,6 +1457,30 @@
                     },
                 },
                 methods: {
+                    avancePasosPorcentaje: function (tarea, definicion) {
+                        if (!tarea.attributes.datos) {
+                            return 0;
+                        }
+                        var pendiente=100, pendientes=0, avance=0;
+                        definicion.forEach(function (def) {
+                            if (def.porcentaje!==undefined) {
+                                pendiente-=def.porcentaje;
+                                pendientes++;
+                            }
+                        });
+                        definicion.forEach(function (def) {
+                            if (def.porcentaje===undefined) {
+                                def.porcentaje =pendiente / pendientes;
+                            }
+                        });
+                        definicion.forEach(function (def, i) {
+                            //maximo o actual
+                            if (i<tarea.attributes.datos.maximo) {
+                                avance+=def.porcentaje;
+                            }
+                        });
+                        return avance;
+                    },
                     botonesDePasoActual: function () {
                         return this.definicionPasos[this.tarea.tipo] &&
                             this.definicionPasos[this.tarea.tipo][this.pasos.actual] ? 
