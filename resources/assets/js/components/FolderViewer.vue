@@ -13,7 +13,23 @@
         <div v-bind:class="colDef2()">
             <div class="row">
                 <div class="col-sm-12">
-                    <div v-for="file in listOfFiles" class="file-box">
+                    <table v-if="mode==='list'" width="100%" class="table table-striped table-hover">
+                        <tbody>
+                            <tr v-if="mode==='list'" v-for="file in listOfFiles">
+                                <td>
+                                    <i v-bind:class="icon(file).icon" v-bind:style="{color:icon(file).color}"></i>
+                                    <a v-bind:href="file.attributes.url" target='_blank'>{{file.attributes.name}}</a>
+                                </td>
+                                <td>
+                                    {{formatDate(file.attributes.updated_at)}}
+                                </td>
+                                <td>
+                                    <span v-if='candelete'><a href="javascript:void(0)" style="color:red" v-on:click="deleteFile(file)"><i class="fa fa-times"></i></a></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div v-else v-for="file in listOfFiles" class="file-box">
                         <div class="file">
                             <a href="javascript:void(0)">
                                 <span class="corner"></span>
@@ -25,7 +41,7 @@
                                 <div class="file-name">
                                     <a v-bind:href="file.attributes.url" target='_blank'>{{file.attributes.name}}</a>
                                     <br/>
-                                    <small>{{file.attributes.updated_at}}</small>
+                                    <small>{{formatDate(file.attributes.updated_at)}}</small>
                                 </div>
                             </a>
                         </div>
@@ -57,6 +73,7 @@
             "candelete": Boolean,
             "canupload": Boolean,
             "col": String,
+            "mode": String,
         },
         watch: {
             'upload': function (value) {
@@ -115,6 +132,9 @@
                         }
                     }
                 });
+            },
+            formatDate(unixTimestamp) {
+                return new Date(unixTimestamp*1000).toLocaleDateString();
             },
             deleteFile: function (file) {
                 var self = this;

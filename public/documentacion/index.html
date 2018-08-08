@@ -402,6 +402,7 @@
                                                         v-bind:target='"normativa"'
                                                         v-bind:canupload='esAdmin'
                                                         v-bind:candelete='esAdmin'
+                                                        mode='list'
                                                         v-bind:filter="
                                                                 (biblioteca_normativa ? biblioteca_normativa + '%' : '')
                                                                 + (biblioteca_busqueda ? '%' + biblioteca_busqueda + '%' : '')
@@ -1220,7 +1221,7 @@
         </div>
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.143"></script>
+        <script src="../js/server.js?v0.144"></script>
         <script>
         $(document).ready(function () {
             var app;
