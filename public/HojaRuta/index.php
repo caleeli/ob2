@@ -1097,6 +1097,7 @@
                                 <th>Fecha Recepción</th>
                                 <th>Conclusión</th>
                                 <th v-if="reporte.forma==='SoloDerivaciones'">Referencia</th>
+                                <th>Instrucción</th>
                             </tr>
                         </thead>
                         <tbody v-for='(rep, r) in reporteExterna'>
@@ -1109,6 +1110,7 @@
                                 <td>{{rep.procedencia}}</td>
                                 <td style="white-space: pre;">{{rep.fecha}}</td>
                                 <td style="white-space: pre;">{{rep.conclusion}}</td>
+                                <td>{{rep.instruccion}}</td>
                             </tr>
                             <tr v-if="reporte.forma==='Combinado'">
                                 <th>#</th>
@@ -1117,6 +1119,7 @@
                                 <th>Fecha Derivación</th>
                                 <th>Referencia</th>
                                 <th>Destinatario</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -1131,6 +1134,7 @@
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.fecha : ''}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.conclusion : ''}}</td>
                                 <td v-if="reporte.forma==='SoloDerivaciones'">{{rep.referencia}}</td>
+                                <td>{{rep.instruccion}}</td>
                             </tr>
                         </tbody>
                     </table>

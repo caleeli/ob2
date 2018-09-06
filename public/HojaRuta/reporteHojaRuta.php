@@ -65,7 +65,7 @@ if (!empty($_REQUEST['tipoTarea'])) {
     $params['tipo_tarea'] = $_REQUEST['tipoTarea'];
 }
 $addDerivacion = true;
-$select = 'hoja_ruta.*, derivacion.fecha as derivacion_fecha, derivacion.destinatario as derivacion_destinatario';
+$select = 'hoja_ruta.*, derivacion.fecha as derivacion_fecha, derivacion.destinatario as derivacion_destinatario, derivacion.instruccion';
 
 if ($_REQUEST['todasLasDerivaciones'] === 'true') {
     $query = 'select ' . $select . ' from hoja_ruta '
