@@ -158,6 +158,13 @@ class GTemplate
             }
             return $this->listas[$name];
         }
+        if ($name==='firmas') {
+            $this->listas[$name] = [];
+            foreach (DB::select('select id, nombre_empresa from adm_firmas') as $row) {
+                $this->listas[$name][$row->id * 1] = $row->nombre_empresa;
+            }
+            return $this->listas[$name];
+        }
     }
 
     /**
