@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['hr_user'])) {
+    header('Location: login.php');
+    return;
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
