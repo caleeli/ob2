@@ -9,10 +9,6 @@ use App\Models\SaveUserTrait;
 class AdmFirma extends Model
 {
 
-    use SoftDeletes,
-        Notifiable,
-        SaveUserTrait;
-
     protected $table = 'adm_firmas';
 
 }
