@@ -74,11 +74,11 @@ if ($_REQUEST['todasLasDerivaciones'] === 'true') {
         . '(select hoja_ruta.id from hoja_ruta left join derivacion on (derivacion.hoja_ruta_id=hoja_ruta.id) where '
         . implode(' and ', $query) . ')' : '');
 } else {
+    $esElUltimoDestinatario = 'derivacion.id = (select max(id) from derivacion d2 where d2.hoja_ruta_id=hoja_ruta.id)';
     $query = 'select ' . $select . ' from hoja_ruta '
-        . ($addDerivacion ? 'left join derivacion on (derivacion.hoja_ruta_id=hoja_ruta.id) ' : '')
+        . ($addDerivacion ? 'left join derivacion on (derivacion.hoja_ruta_id=hoja_ruta.id and '.$esElUltimoDestinatario.') ' : '')
         . ($query ? ' where ' . implode(' and ', $query) : '');
 }
-
 
 $stmt = $connection->prepare($query);
 foreach($params as $p) {

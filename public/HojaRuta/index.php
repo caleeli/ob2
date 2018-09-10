@@ -1091,6 +1091,23 @@ if (!isset($_SESSION['hr_user'])) {
                             </div>
                         </fieldset>
                     </form>
+                    <a href="javascript:void(0)" v-on:click="mostrarResumen=!mostrarResumen">Mostrar resumen</a>
+                    <table v-if="mostrarResumen" class="table-striped table-hover " cellpadding="1em 0em">
+                        <thead>
+                          <tr>
+                            <th>Usuario</th>
+                            <th>Concluidos</th>
+                            <th>Pendientes</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="row in resumen(reporteExterna)">
+                            <td style="padding-right:1em">{{row.usuario}}</td>
+                            <td style="padding-right:1em">{{row.concluidos.length}}</td>
+                            <td style="padding-right:1em">{{row.pendientes.length}}</td>
+                          </tr>
+                        </tbody>
+                    </table>
                     <table id="reporteExterna" class="table table-striped table-hover ">
                         <thead>
                             <tr>
@@ -1099,11 +1116,11 @@ if (!isset($_SESSION['hr_user'])) {
                                 <th>Tipo</th>
                                 <th>Nº Control</th>
                                 <th>{{reporte.forma==='SoloDerivaciones' ? 'Fecha Derivación' : 'Gestión' }}</th>
-                                <th>{{reporte.forma==='SoloDerivaciones' ? 'Destinatario' : 'Referencia' }}</th>
+                                <th>Referencia</th>
+                                <th>Destinatario</th>
                                 <th>Procedencia</th>
                                 <th>Fecha Recepción</th>
                                 <th>Conclusión</th>
-                                <th v-if="reporte.forma==='SoloDerivaciones'">Referencia</th>
                                 <th>Instrucción</th>
                             </tr>
                         </thead>
@@ -1114,6 +1131,7 @@ if (!isset($_SESSION['hr_user'])) {
                                 <td>{{rep.nro_de_control}}</td>
                                 <td>{{rep.gestion}}</td>
                                 <td>{{rep.referencia}}</td>
+                                <td>{{rep.derivacion_destinatario}}</td>
                                 <td>{{rep.procedencia}}</td>
                                 <td style="white-space: pre;">{{rep.fecha}}</td>
                                 <td style="white-space: pre;">{{rep.conclusion}}</td>
@@ -1136,11 +1154,11 @@ if (!isset($_SESSION['hr_user'])) {
                                 <td>{{rep.tipo_tarea}}</td>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
-                                <td style="white-space: pre">{{reporte.forma==='SoloDerivaciones' ? derivacion.destinatario : rep.referencia}}</td>
-                                <td>{{reporte.forma==='SoloDerivaciones' ? rep.procedencia : derivacion.destinatario}}</td>
+                                <td>{{rep.referencia}}</td>
+                                <td style="white-space: pre">{{derivacion.destinatario}}</td>
+                                <td>{{reporte.forma==='SoloDerivaciones' ? rep.procedencia : ''}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.fecha : ''}}</td>
                                 <td>{{reporte.forma==='SoloDerivaciones' ? rep.conclusion : ''}}</td>
-                                <td v-if="reporte.forma==='SoloDerivaciones'">{{rep.referencia}}</td>
                                 <td>{{rep.instruccion}}</td>
                             </tr>
                         </tbody>
@@ -1515,9 +1533,25 @@ if (!isset($_SESSION['hr_user'])) {
                             nroDeControl: false,
                         },
                         procedencias: [],
+                        mostrarResumen: false,
                     };
                 },
                 methods: {
+                    resumen: function () {
+                        var res = {};
+                        for(var i=0,l=this.reporteExterna.length; i<l; i++) {
+                            var usuario = this.reporteExterna[i].derivacion_destinatario;
+                            if (res[usuario]===undefined) {
+                                res[usuario]={usuario:usuario, pendientes:[], concluidos:[]};
+                            }
+                            if (this.reporteExterna[i].conclusion==='0000-00-00') {
+                                res[usuario].pendientes.push(this.reporteExterna[i]);
+                            } else {
+                                res[usuario].concluidos.push(this.reporteExterna[i]);
+                            }
+                        }
+                        return res;
+                    },
                     cargarProcedencias : function () {
                         var self = this;
                         $.ajax({
