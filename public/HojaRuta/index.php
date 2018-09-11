@@ -208,7 +208,7 @@ if (!isset($_SESSION['hr_user'])) {
                                     <div class="btn-group btn-block">
                                         <input required type="text" v-model="hoja.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
                                         <ul class="dropdown-menu">
-                                            <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
+                                            <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf((hoja.destinatario?hoja.destinatario:'').toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
                                         </ul>
                                     </div>
                                 <!-- tags v-bind:model="hoja" v-bind:property="'destinatario'" v-bind:domain="destinatarios" v-bind:field="{textField:'nombres'}" / -->
@@ -631,7 +631,7 @@ if (!isset($_SESSION['hr_user'])) {
                                     <div class="btn-group btn-block">
                                         <input type="text" v-model="hoja.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
                                         <ul class="dropdown-menu">
-                                            <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
+                                            <li v-for="dest in destinatarios" v-on:click="hoja.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf((hoja.destinatario?hoja.destinatario:'').toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -1026,7 +1026,7 @@ if (!isset($_SESSION['hr_user'])) {
                                     <div class="btn-group btn-block">
                                         <input type="text" v-model="reporte.destinatario" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
                                         <ul class="dropdown-menu">
-                                            <li v-for="dest in destinatarios" v-on:click="reporte.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf(hoja.destinatario.toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
+                                            <li v-for="dest in destinatarios" v-on:click="reporte.destinatario=dest.attributes.nombres+' '+dest.attributes.apellidos" v-if="(dest.attributes.nombres+' '+dest.attributes.apellidos).toLowerCase().indexOf((hoja.destinatario?hoja.destinatario:'').toLowerCase())>-1"><a href="javascript:void(0)">{{dest.attributes.nombres}} {{dest.attributes.apellidos}}</a></li>
                                         </ul>
                                     </div>
                                 </div>
