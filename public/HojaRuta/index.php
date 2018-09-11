@@ -2104,6 +2104,7 @@ if (!isset($_SESSION['hr_user'])) {
                                         nroDeControl: o.nro_de_control,
                                         anexoHojas: o.anexo_hojas,
                                         destinatario: o.destinatario,
+                                        derivacion_destinatario: o.derivacion_destinatario,
                                         conclusion: o.conclusion,
                                         numero: o.numero,
                                     }));
