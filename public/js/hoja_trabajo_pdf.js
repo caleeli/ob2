@@ -534,7 +534,7 @@ var app = new Vue({
             window.close();
         },
         /**
-         * Abre otro PDF para enalzarlo con el actual.
+         * Abre otro PDF para enlazarlo con el actual.
          *
          * @param {object} meta
          */
