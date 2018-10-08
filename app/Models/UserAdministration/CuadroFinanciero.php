@@ -29,7 +29,9 @@ class CuadroFinanciero extends Model
     );
     public function calculate($empresaId, $gestion, $html, $grafico='{}')
     {
-        $ev = new \App\Evaluator($empresaId, $gestion);
+        $ev = new \App\Evaluator($empresaId, $gestion, ['Balance General', 'Estado de Resultados y Gastos']);
+        $ev2 = new \App\Evaluator($empresaId, $gestion, ['Estado de Ejecución Presupuestaria de Gastos']);
+        
         $ppto = '<p class="desc-ind">La empresa cuenta con un presupuesto de Bs. {{$uf("Presup%Vig%")}}</p>
         <table style="height: 223px;" width="100%">
 		<tbody>
@@ -44,6 +46,6 @@ class CuadroFinanciero extends Model
 		</tr>
 		</tbody>
 		</table>';
-        return [$ev->calculate($html), $ev->calculate($ppto), $ev->calculate($grafico, true)];
+        return [$ev->calculate($html), $ev2->calculate($ppto), $ev->calculate($grafico, true)];
     }
 }

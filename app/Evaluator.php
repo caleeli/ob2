@@ -24,15 +24,19 @@ class Evaluator
     private $gestion = '';
     private $empresaId = '';
 
-    public function __construct($empresaId, $gestion)
+    public function __construct($empresaId, $gestion, $tipos = null)
     {
         /* @var $ef EstadoFinanciero */
         $this->gestion = $gestion;
         $this->empresaId = $empresaId;
         $estados_financieros = EstadoFinanciero
             ::where('gestion', '=', $gestion)
-            ->where('empresa_id', '=', $empresaId)
-            ->whereIn('tipo_estado_financiero', ['Balance General', 'Estado de Resultados y Gastos'])
+            ->where('empresa_id', '=', $empresaId);
+        if ($tipos) {
+            $estados_financieros = $estados_financieros
+                ->whereIn('tipo_estado_financiero', $tipos);
+        }
+        $estados_financieros = $estados_financieros
             ->get();
         foreach ($estados_financieros as $ef) {
             if (empty($ef->tablas) || !is_array($ef->tablas)) {
@@ -44,8 +48,12 @@ class Evaluator
         }
         $estados_financieros_pre = EstadoFinanciero
             ::where('gestion', '=', $gestion-1)
-            ->where('empresa_id', '=', $empresaId)
-            ->whereIn('tipo_estado_financiero', ['Balance General', 'Estado de Resultados y Gastos'])
+            ->where('empresa_id', '=', $empresaId);
+        if ($tipos) {
+            $estados_financieros_pre = $estados_financieros_pre
+                ->whereIn('tipo_estado_financiero');
+        }
+        $estados_financieros_pre = $estados_financieros_pre
             ->get();
         foreach ($estados_financieros_pre as $ef) {
             if (empty($ef->tablas) || !is_array($ef->tablas)) {
