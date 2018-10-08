@@ -32,6 +32,7 @@ class Evaluator
         $estados_financieros = EstadoFinanciero
             ::where('gestion', '=', $gestion)
             ->where('empresa_id', '=', $empresaId)
+            ->whereIn('tipo_estado_financiero', ['Balance General', 'Estado de Resultados y Gastos'])
             ->get();
         foreach ($estados_financieros as $ef) {
             if (empty($ef->tablas) || !is_array($ef->tablas)) {
@@ -44,6 +45,7 @@ class Evaluator
         $estados_financieros_pre = EstadoFinanciero
             ::where('gestion', '=', $gestion-1)
             ->where('empresa_id', '=', $empresaId)
+            ->whereIn('tipo_estado_financiero', ['Balance General', 'Estado de Resultados y Gastos'])
             ->get();
         foreach ($estados_financieros_pre as $ef) {
             if (empty($ef->tablas) || !is_array($ef->tablas)) {
