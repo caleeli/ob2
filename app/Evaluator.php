@@ -162,8 +162,7 @@ class Evaluator
                 $row = $query->first();
                 if ($row) {
                     $rows = DB::table($t['table_name'])->select($col)
-                        ->where('id','>',$row->id)->get()->toArray();
-                    $rows = array_reverse($rows);
+                        ->where('id','>',$row->id)->orderBy('id', 'desc')->get()->toArray();
                     foreach ($rows as $rowVal) {
                         $val = $rowVal->$col;
                         $num = $this->toNumber($val);
