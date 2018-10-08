@@ -51,7 +51,7 @@ class Evaluator
             ->where('empresa_id', '=', $empresaId);
         if ($tipos) {
             $estados_financieros_pre = $estados_financieros_pre
-                ->whereIn('tipo_estado_financiero');
+                ->whereIn('tipo_estado_financiero', $tipos);
         }
         $estados_financieros_pre = $estados_financieros_pre
             ->get();
