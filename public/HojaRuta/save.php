@@ -37,7 +37,10 @@ if (empty($_REQUEST['id'])) {
     ]);
 }
 if (!$guardo) {
-    echo '{"error": "No se pudo guardar el registro, por favor revise los datos introducidos"}';
+    echo json_encode([
+        'error' => 'No se pudo guardar el registro, por favor revise los datos introducidos. ' .
+        json_encode($stmt->errorInfo())
+    ]);
 } else {
     echo '{"success": true}';
 }
