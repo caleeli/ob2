@@ -91,14 +91,17 @@ class VueEditorController extends Controller
 
     public function editTarea($templeta, Tarea $tarea, $paso, $nombre)
     {
-        $drive = new GDrive;
-        $gTemplate = new \App\GTemplate($drive, $templeta);
         $hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
         if (!isset($tarea->datos['data'][$paso][$hoja])) {
             $valores = [];
+            $templetaActual = $templeta;
         } else {
             $valores = $tarea->datos['data'][$paso][$hoja]['valores'];
+            $templetaActual = empty($tarea->datos['data'][$paso][$hoja]['templeta'])
+                ? $templeta : $tarea->datos['data'][$paso][$hoja]['templeta'];
         }
+        $drive = new GDrive;
+        $gTemplate = new \App\GTemplate($drive, $templetaActual);
         return view('hoja_trabajo', [
             'document' => $gTemplate->parseVariables($valores ?: []),
             'autoSave'=>'saveTarea',
