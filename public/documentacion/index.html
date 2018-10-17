@@ -1623,7 +1623,9 @@
                         self.pasos.data[step][hoja].titulo = fileName;
                         self.pasos.data[step][hoja].valores = valores;
                         self.pasos.data[step][hoja].gestion = self.gestionAuditoria;
-                        self.pasos.data[step][hoja].templeta = templeta;
+                        if (!self.pasos.data[step][hoja].templeta) {
+                          self.pasos.data[step][hoja].templeta = templeta;
+                        }
                         self.pasosGuardarDB(function () {
                         });
                     },
