@@ -36,3 +36,31 @@ Artisan::command(
     }
     Artisan::call('migrate', ['--seed' => true]);
 })->describe('Instala la aplicacion de 0');
+
+Artisan::command(
+    'backup',
+    function () {
+// How to connect to the process
+    $descriptorspec = array(
+        0 => array("pipe", "r"),
+        1 => array("pipe", "w")
+    );
+
+// Create connection
+    $process = proc_open("pg_dump -U ".env('DB_USERNAME')." -h 127.0.0.1 --password ".env('DB_DATABASE'), $descriptorspec, $pipes);
+    if (!is_resource($process)) {
+        die('Could not execute pg_dump');
+    }
+
+// Sleep & send something to it:
+    sleep(1);
+    fwrite($pipes[0], env('DB_PASSWORD'));
+
+// You can read the output through the handle $pipes[1].
+// Reading 1 byte looks like this:
+    $result = fread($pipes[1], 1);
+    echo $result;
+// Close the connection to the process
+// This most likely causes the process to stop, depending on its signal handlers
+    proc_close($process);
+})->describe('backup');
