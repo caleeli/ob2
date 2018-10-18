@@ -22,7 +22,7 @@ class ManagerController extends Controller
         }
         //copy($url, base_path('backup.tar.gz'));
         chdir(base_path());
-        passthru('tar xfz backup.tar.gz ./  2>&1');
-        passthru('psql ' . env('DB_DATABASE') . ' < backup/backup.pgsql  2>&1');
+        passthru('tar xfz backup.tar.gz 2>&1');
+        passthru('psql ' . env('DB_DATABASE') . ' < backup/backup.pgsql 2>&1');
     }
 }
