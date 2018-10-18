@@ -54,7 +54,7 @@ Artisan::command(
 
 // Sleep & send something to it:
     sleep(1);
-    fwrite($pipes[0], env('DB_PASSWORD'));
+    fwrite($pipes[0], env('DB_PASSWORD').'\n');
 
 // You can read the output through the handle $pipes[1].
 // Reading 1 byte looks like this:
