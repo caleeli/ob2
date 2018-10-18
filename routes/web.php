@@ -54,3 +54,6 @@ Route::put('/pdfhl/mark/{storage}/{path1?}/{path2?}/{path3?}/{path4?}', 'VueEdit
 
 Route::get('/report', 'ReportController@report')->name('report');
 Route::get('/pdf', 'ReportController@pdf')->name('pdf');
+
+Route::get('/manager', 'ManagerController@index')->name('manager');
+Route::post('/manager/restorebk', 'ManagerController@restoreBK')->name('restorebk');
