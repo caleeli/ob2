@@ -686,10 +686,20 @@
                                                                     <span><i v-bind:class="{'fa fa-circle':true, 'text-danger':tarea.prioridad=='Alta', 'text-warning':tarea.prioridad=='Media', 'text-primary':tarea.prioridad=='Baja'}"></i> {{tarea.prioridad}}</span>
                                                                 </p>
                                                             </dd>
-                                                            <dt>Creado por:</dt> <dd>{{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}</dd>
-                                                            <dt>Asignado a:</dt> <dd style="white-space: pre-line">{{tarea.usuarios && typeof tarea.usuarios.map==='function' ? usuariosAsignados(tarea.usuarios).map(function(u){return u.attributes.nombres+' '+u.attributes.apellidos}).join('\n') : ''}}</dd>
+                                                            <dt>Creado por:</dt>
+                                                            <dd>
+                                                              <avatar :user="tarea.creador"></avatar>
+                                                              {{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}
+                                                            </dd>
+                                                            <dt>Asignado a:</dt>
+                                                            <dd v-if="tarea.usuarios && typeof tarea.usuarios.map==='function'">
+                                                              <template v-for="usuario in usuariosAsignados(tarea.usuarios)">
+                                                              <avatar :user="usuario"></avatar>
+                                                              {{usuario ? usuario.attributes.nombres + ' ' + usuario.attributes.apellidos : ''}}
+                                                              </template>
+                                                            </dd>
                                                         </dl>
-                                                        <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-link"></i> Enlazar</button>
+                                                        <!-- button class="btn btn-primary btn-sm" type="button"><i class="fa fa-link"></i> Enlazar</button -->
                                                     </div>
                                                     <div class="col-lg-7" id="cluster_info">
                                                         <dl class="dl-horizontal">
