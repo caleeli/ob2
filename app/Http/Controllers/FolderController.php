@@ -73,10 +73,10 @@ class FolderController extends Controller
     /**
      * /api/folder/normativa/filename
      */
-    public function remove($storage, $file)
+    public function remove($storage, ...$file)
     {
-        Storage::disk($storage)->delete($file);
-        return response()->json([]);
+        Storage::disk($storage)->delete(implode('/', $file));
+        return response()->json([$storage, implode('/', $file)]);
     }
 
     /**

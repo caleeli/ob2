@@ -74,6 +74,7 @@
             "canupload": Boolean,
             "col": String,
             "mode": String,
+            "refresh": null,
         },
         watch: {
             'upload': function (value) {
@@ -84,6 +85,9 @@
                 this.loadFiles();
             },
             'target': function () {
+                this.loadFiles();
+            },
+            'refresh': function () {
                 this.loadFiles();
             },
         },
@@ -140,7 +144,10 @@
                 var self = this;
                 if (confirm('¿Desea eliminar el archivo '+file.attributes.name+'?')) {
                     $.ajax({
-                        'url': self.api + '/' + file.id,
+                        //Obtiene la direccion solo hasta el {storage}
+                        // /api/folder/{storage}/{...}
+                        'url': (self.api.split('/').length > 4 ? self.api.split('/').slice(0,4).join('/') : self.api)
+                                + '/' + file.id,
                         'method': 'DELETE',
                         'dataType': 'json',
                         'success': function (data) {
