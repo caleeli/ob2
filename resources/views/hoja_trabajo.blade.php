@@ -193,7 +193,8 @@
         for (var a in variables) {
             variables[a] = app[a];
         }
-        window.opener.app.pasosFileAuditoriaAutoSave(variables, tipoTarea, step, fileName);
+        //window.opener.app.pasosFileAuditoriaAutoSave(variables, tipoTarea, step, fileName);
+        window.opener.gtemplates.saveData(window.name, variables, fileName);
     }
     function saveTarea() {
         saveLast = true;

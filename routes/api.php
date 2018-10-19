@@ -37,9 +37,11 @@ Route::post('/uploadfile', array('as' => 'api', 'uses' => 'UploadFileController@
 Route::post('/uploaddocument/{disk}/{path1?}/{path2?}/{path3?}/{path4?}', array('as' => 'api', 'uses' => 'UploadFileController@uploadDocument'));
 Route::get('/ping', array('as' => 'api', 'uses' => 'PingController@ping'));
 Route::get('/empty', array('as' => 'api', 'uses' => 'PingController@data'));
+Route::get('/seguimiento/{model}/{path}', array('as' => 'api', 'uses' => 'SeguimientoController@show'));
+Route::put('/seguimiento/{model}/{path}', array('as' => 'api', 'uses' => 'SeguimientoController@update'));
 
-Route::get('/folder/{storage}/{path1?}/{path2?}/{path3?}/{path4?}', array('as' => 'api', 'uses' => 'FolderController@index'));
-Route::delete('/folder/{storage}/{file}', array('as' => 'api', 'uses' => 'FolderController@remove'));
+Route::get('/folder/{storage}/{path1?}/{path2?}/{path3?}/{path4?}/{path5?}/{path6?}/{path7?}', array('as' => 'api', 'uses' => 'FolderController@index'));
+Route::delete('/folder/{storage}/{path1?}/{path2?}/{path3?}/{path4?}/{path5?}/{path6?}/{path7?}', array('as' => 'api', 'uses' => 'FolderController@remove'));
 
 Route::get('/pivot/{table}/{aggregator}/{measure}/{rows}/{cols}/{variables}',
            array('as' => 'api', 'uses' => 'PivotController@index'));
