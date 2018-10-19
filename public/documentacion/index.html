@@ -1315,7 +1315,7 @@
                                     templeta : '',
                                 }},
                                 {fecha: '', descripcion: ''},
-                                {fecha: '', descripcion: '', hojaTrabajo: {
+                                {fecha: '', descripcion: '', anexo4: {
                                         titulo : '',
                                         valores : {},
                                         gestion : '',
@@ -1544,7 +1544,7 @@
                                         templeta : '',
                                     }},
                                     {fecha: '', descripcion: ''},
-                                    {fecha: '', descripcion: '', hojaTrabajo: {
+                                    {fecha: '', descripcion: '', anexo4: {
                                         titulo : '',
                                         valores : {},
                                         gestion : '',
@@ -1558,6 +1558,9 @@
                                 maximo: 1,
                                 listoParaRevision: false,
                             });
+                        }
+                        if (!self.pasos.data[5]|| !self.pasos.data[5].anexo4) {
+                            console.log('Falta anexo4 ', self.pasos.data[5]);
                         }
                     },
                     /**
