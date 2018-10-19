@@ -114,7 +114,8 @@ class VueEditorController extends Controller
     public function viewTarea($templeta, Tarea $tarea, $paso, $nombre)
     {
         $hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
-        $valores = $tarea->datos['data'][$paso][$hoja]['valores'];
+        $valores = !empty($tarea->datos['data'][$paso][$hoja]['valores']) ? $tarea->datos['data'][$paso][$hoja]['valores']
+            : [];
         $templetaActual = empty($tarea->datos['data'][$paso][$hoja]['templeta'])
             ? $templeta : $tarea->datos['data'][$paso][$hoja]['templeta'];
         $drive = new GDrive;
