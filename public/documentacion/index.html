@@ -580,16 +580,16 @@
                                                                                 <small>Estado</small><br>
                                                                                 <span v-bind:class="{
                                                                                         'label': true,
-                                                                                        'label-danger': tareaI.attributes.avance*1 <= 30,
-                                                                                        'label-warning': 30 < tareaI.attributes.avance*1 && tareaI.attributes.avance*1 < 70,
-                                                                                        'label-primary': 70 <= tareaI.attributes.avance*1
+                                                                                        'label-danger': avancePasosPorcentaje(tareaI, definicionPasos[tareaI.attributes.tipo]) <= 30,
+                                                                                        'label-warning': 30 < avancePasosPorcentaje(tareaI, definicionPasos[tareaI.attributes.tipo]) && avancePasosPorcentaje(tareaI, definicionPasos[tareaI.attributes.tipo]) < 100,
+                                                                                        'label-primary': 100 <= avancePasosPorcentaje(tareaI, definicionPasos[tareaI.attributes.tipo])
                                                                                     }">
                                                                                     <i v-bind:class="{
                                                                                        'fa':true,
-                                                                                       'fa-clock-o':tareaI.attributes.estado!=='Completado',
-                                                                                       'fa-check':tareaI.attributes.estado==='Completado'
+                                                                                       'fa-clock-o':avancePasosPorcentaje(tareaI, definicionPasos[tareaI.attributes.tipo])<100,
+                                                                                       'fa-check':avancePasosPorcentaje(tareaI, definicionPasos[tareaI.attributes.tipo])>=100
                                                                                     }"></i>
-                                                                                    <span class="hidden-xs hidden-sm hidden-md">{{tareaI.attributes.estado}}</span>
+                                                                                    <span class="hidden-xs hidden-sm hidden-md">{{avancePasosPorcentaje(tareaI, definicionPasos[tareaI.attributes.tipo])<100?'Pendiente': 'Completado'}}</span>
                                                                                 </span>
                                                                             </td>
                                                                             <td class="project-title" width="65%">
@@ -694,8 +694,9 @@
                                                             <dt>Asignado a:</dt>
                                                             <dd v-if="tarea.usuarios && typeof tarea.usuarios.map==='function'">
                                                               <template v-for="usuario in usuariosAsignados(tarea.usuarios)">
-                                                              <avatar :user="usuario"></avatar>
-                                                              {{usuario ? usuario.attributes.nombres + ' ' + usuario.attributes.apellidos : ''}}
+                                                                <avatar :user="usuario"></avatar>
+                                                                {{usuario ? usuario.attributes.nombres + ' ' + usuario.attributes.apellidos : ''}}
+                                                                <br />
                                                               </template>
                                                             </dd>
                                                         </dl>
@@ -1492,7 +1493,7 @@
                                 avance+=def.porcentaje;
                             }
                         });
-                        return avance;
+                        return avance*1;
                     },
                     botonesDePasoActual: function () {
                         return this.definicionPasos[this.tarea.tipo] &&
