@@ -183,6 +183,7 @@
 <script src="/js/pdf.js"></script>
 <script>
     var autoSave = {!! json_encode(empty($autoSave) ? null : $autoSave) !!};
+    var tarea = {!! json_encode($tarea) !!};
     var tipoTarea = {!! json_encode($tipoTarea) !!};
     var step = {!! json_encode($step) !!};
     var fileName = {!! json_encode($fileName) !!};

@@ -14,7 +14,7 @@
     <div class='popup'>
         <div class="header" style='width: 765px;'>
             <input placeholder="Ingrese el texto del enlace" size="30" v-model="selectedLinkName"/>
-            <upload v-model="uploadAux" type="singlefile" v-bind:small="true" disk="referencias" v-on:uploaded="fileUploaded"></upload>
+            <upload v-model="uploadAux" type="singlefile" v-bind:small="true" :disk="storagePath" v-on:uploaded="fileUploaded"></upload>
             <select v-model="selectedFile" v-on:change="selectPDF(selectedFile)">
                 <option value=""></option>
                 <option v-for="file in files" v-bind:value="file.url">@{{file.name}}</option>

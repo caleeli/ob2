@@ -105,6 +105,7 @@ class VueEditorController extends Controller
         return view('hoja_trabajo', [
             'document' => $gTemplate->parseVariables($valores ?: []),
             'autoSave'=>'saveTarea',
+            'tarea'=>$tarea->getKey(),
             'tipoTarea'=>$tarea->tipo,
             'step'=>$paso,
             'fileName'=>$nombre,
@@ -122,6 +123,7 @@ class VueEditorController extends Controller
         $gTemplate = new \App\GTemplate($drive, $templetaActual);
         return view('hoja_trabajo', [
             'document' => $gTemplate->parseValores($valores),
+            'tarea'=>$tarea->getKey(),
             'tipoTarea'=>$tarea->tipo,
             'step'=>$paso,
             'fileName'=>$nombre,

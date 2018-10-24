@@ -307,7 +307,7 @@ var app = new Vue({
             highlightMode: false,
             selectedLinkName: selectedLink ? selectedLink.getText() : '',
             editMode: true,
-            storagePath: window.storePath,
+            storagePath: opener.tarea ? ('tareas/' + opener.tarea + '/' + (opener.step*1+1)) : window.storePath,
             uploadAux: '',
             redraw: 0,
         }, window.variables);
