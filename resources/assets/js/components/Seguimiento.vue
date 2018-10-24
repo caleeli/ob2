@@ -53,13 +53,11 @@
           <a v-for="enlace in tarea.enlaces" class="text-info"><i class="fa fa-book"></i> {{enlace.attributes.nombre_tarea}}</a>
         </div>
       </div>
-
-      <div class="tabs-container">
+      <div class="tabs-container" v-if="tarea.datos">
         <ul class="nav nav-tabs">
-          <li v-for="(tab, index) in definicion" :class="{active: index == tarea.datos.actual}" @click="tarea.datos.actual=index">
+          <li v-for="(tab, index) in definicion" :class="{active: index == tarea.datos.actual, done: index < tarea.datos.maximo}" @click="tarea.datos.actual=index">
               <a data-toggle="tab" :href="'#paso-' + index">
              <span class="tab-ellipsis">{{tab.titulo}}</span>
-              <i v-show="index < tarea.datos.maximo" class="fa fa-check-square text-success" aria-hidden="true"></i>
             </a>
           </li>
         </ul>
@@ -68,7 +66,19 @@
                class="tab-pane" :class="{active: index == tarea.datos.actual}"
                :id="'paso-' + index">
                <div class="panel-body">
-              <h3>{{tab.titulo}}</h3>
+              <h3>
+                {{tab.titulo}}
+                <span style="float: right;">
+                  <button class="btn btn-primary dim" type="button" v-if="index < tarea.datos.maximo">
+                    Completado
+                    <i class="fa fa-check-square-o"></i>
+                  </button>
+                  <button class="btn btn-primary dim" type="button" v-else @click="completarPaso(index)">
+                    Completar {{tarea.datos.maximo + '=>' + (index + 1)}}
+                    <i class="fa fa-square-o"></i>
+                  </button>
+                </span>
+              </h3>
 
               <folder-viewer v-bind:api="'/api/folder/tareas/' + tarea.id + '/' + (index+1)"
                              v-bind:target="'tareas/' + tarea.id + '/' + (index+1)"
@@ -120,7 +130,45 @@
           tarea: Object,
           definicion: Array
       },
+      watch: {
+          tarea: {
+              deep: true,
+              handler: function(tarea) {
+                  this.completarTarea(tarea);
+              }
+          }
+      },
       methods: {
+          completarPaso: function(index) {
+              //delete this.tarea.datos.maximo;
+              Vue.set(this.tarea.datos, 'maximo', index + 1);
+              //console.log(this.tarea.datos);
+              this.reativeSet(this.tarea.datos, 'maximo', index + 1);
+          },
+          completarTarea: function(tarea) {
+              this.reactiveSet(tarea, 'datos', tarea.datos, {});
+              this.reactiveSet(tarea.datos, 'data', tarea.datos.data, []);
+              this.reactiveSet(tarea.datos, 'actual', tarea.datos.actual, 0);
+              this.reactiveSet(tarea.datos, 'subpaso4', tarea.datos.subpaso4, 0);
+              this.reactiveSet(tarea.datos, 'maximo', tarea.datos.maximo, 1);
+              this.reactiveSet(tarea.datos, 'listoParaRevision', tarea.datos.listoParaRevision, false);
+              for (var i in this.definicion) {
+                  tarea.datos.data[i] = !tarea.datos.data[i] ? {
+                      fecha: '',
+                      descripcion: ''
+                  } : tarea.datos.data[i];
+              }
+          },
+          reactiveSet: function(obj, prop, value, defaultValue) {
+              const descriptor = Object.getOwnPropertyDescriptor(obj, prop);
+              value = value !== undefined ? value : (descriptor ? obj[prop] : defaultValue);
+              if (descriptor && !(descriptor.get instanceof Function)) {
+                  delete obj[prop];
+                  Vue.set(obj, prop, value);
+              } else if (descriptor && obj[prop] !== value) {
+                  Vue.set(obj, prop, value);
+              }
+          },
           save: function(path, data) {
               $.ajax({
                   method: 'put',
@@ -177,5 +225,8 @@
       overflow: hidden;
       display: inline-block;
       white-space: nowrap;
+  }
+  .done a {
+      background-color: rgba(26, 179, 148, 0.2)!important;
   }
 </style>
