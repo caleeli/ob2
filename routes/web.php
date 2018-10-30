@@ -41,7 +41,7 @@ Route::get(
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/vue-editor/file/{templeta}/{hojaTrabajo?}', 'VueEditorController@edit')->name('vue-editor');
 Route::get('/vue-editor/list/{path}', 'VueEditorController@index')->name('vue-editor-list');
 Route::get('/vue-editor/references', 'VueEditorController@listPDFs')->name('vue-editor-references');
@@ -88,3 +88,13 @@ Route::get('/angie/procesar', function () {
     dump($pdo->query('select count(*) as "Total registros" from ' . $tabla)->fetch(PDO::FETCH_ASSOC));
     echo '<a href="../angie">Volver</a>';
 });
+
+Route::get('/entidad/{entidad}', function ($entidad) {
+    $folder = 'entidades/' . $entidad;
+    $path = public_path($folder);
+    if (!file_exists($path)) {
+        mkdir($path, 0777);
+    }
+    return view('subir_entidades', compact('path', 'folder'));
+});
+

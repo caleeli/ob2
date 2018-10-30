@@ -72,6 +72,12 @@ return [
             'urlBase' => 'documentacion/tareas/',
         ],
 
+        'entidades' => [
+            'driver' => 'local',
+            'root' => public_path('entidades'),
+            'urlBase' => 'entiddes/',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
