@@ -51,6 +51,8 @@ class Xls2Csv2Db2
         $handle = fopen($target, 'r');
         $nextIsSheet = false;
         $sheets = [];
+        $sheet = new \stdClass();
+        $sheet->rows = 0;
         while (!feof($handle)) {
             $line0 = fgets($handle);
             $line = substr($line0, 0, -1);

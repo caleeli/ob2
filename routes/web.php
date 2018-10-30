@@ -65,14 +65,7 @@ Route::get('/angie', function () {
     if (!file_exists($path)) {
         mkdir($path, 0777);
     }
-    echo '<form action="angie/procesar">';
-    echo '<h2>Archivos a ser cargados</h2>';
-    echo '<h4>Carpeta: ',$folder,'</h4>';
-    dump(glob($path.'/*'));
-    echo '<h2>Tabla destino</h2>';
-    echo '<input name="tabla">';
-    echo '<button>Procesar</button>';
-    echo '</form>';
+    return view('join_excel', compact('path', 'folder'));
 });
 
 Route::get('/angie/procesar', function () {
@@ -86,7 +79,7 @@ Route::get('/angie/procesar', function () {
     $path = public_path($folder);
 
     $pdo = \DB::getPdo();
-    $pdo->exec('drop table ' . $tabla);
+    $pdo->exec('drop table if exists ' . $tabla);
     foreach (glob($path . '/*') as $file) {
         $excelLoader = new \App\Xls2Csv2Db2($tabla);
         $excelLoader->import($tabla, $file);
