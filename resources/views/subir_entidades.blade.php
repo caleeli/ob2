@@ -4,7 +4,11 @@
     <head>
         <script src="../js/server.js?v0.148"></script>
         <link href="../documentacion/font-awesome/css/font-awesome.css" rel="stylesheet">
-
+        <style>
+            .file-manager .btn {
+                padding: 1em;
+            }
+        </style>
     </head>
 
     <body>
