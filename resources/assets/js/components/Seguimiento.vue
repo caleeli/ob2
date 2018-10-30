@@ -100,20 +100,26 @@
                            @change="save('data.'+tarea.datos.actual+'.descripcion', tarea.datos.data[tarea.datos.actual].descripcion)"/>
                 </div>
                 <br>
-                <g-template
-                    v-for="(botonPaso, formName) in botonesDePasoActual()"
-                    v-show="botonHabilitadoPaso(formName, botonPaso, tarea.datos.actual)"
-                    :templeta="botonPaso.template"
-                    :name="botonPaso.name"
-                    :tarea-id="tarea.id"
-                    :paso="tarea.datos.actual"
-                    :form="formName"
-                    v-model="tarea.datos.data[tarea.datos.actual]"
-                    v-on:click='abrirPasoAuditoria(formName, botonPaso, tarea.datos.actual)'
-                    @change="saveGTemplate(botonPaso.name, $event)">
-                  <i class="fa fa-save"></i> {{botonPaso.buttonTitle ? botonPaso.buttonTitle : formName}}
-                </g-template>
-
+                <template v-for="(botonPaso, formName) in botonesDePasoActual()">
+                  <g-template
+                      v-if="botonPaso.template"
+                      v-show="botonHabilitadoPaso(formName, botonPaso, tarea.datos.actual)"
+                      :templeta="botonPaso.template"
+                      :name="botonPaso.name"
+                      :tarea-id="tarea.id"
+                      :paso="tarea.datos.actual"
+                      :form="formName"
+                      v-model="tarea.datos.data[tarea.datos.actual]"
+                      v-on:click='abrirPasoAuditoria(formName, botonPaso, tarea.datos.actual)'
+                      @change="saveGTemplate(botonPaso.name, $event)">
+                    <i class="fa fa-save"></i> {{botonPaso.buttonTitle ? botonPaso.buttonTitle : formName}}
+                  </g-template>
+                  <button v-else
+                          type="button" class="btn btn-primary btn-block"
+                          v-on:click='ejecutarAccion(formName, botonPaso, tarea.datos.actual)'>
+                    {{botonPaso.buttonTitle ? botonPaso.buttonTitle : formName}}
+                  </button>
+                </template>
               </folder-viewer>
 
             </div>
@@ -139,6 +145,13 @@
           }
       },
       methods: {
+          ejecutarAccion: function(name, def, paso) {
+              if (def.action && this[def.action] instanceof Function) {
+                  return this[def.action]();
+              } else {
+                throw JSON.stringify(typeof this[def.action]) + ' is not a function';
+              }
+          },
           completarPaso: function(index) {
               //delete this.tarea.datos.maximo;
               Vue.set(this.tarea.datos, 'maximo', index + 1);

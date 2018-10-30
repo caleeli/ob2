@@ -57,3 +57,41 @@ Route::get('/pdf', 'ReportController@pdf')->name('pdf');
 
 Route::get('/manager', 'ManagerController@index')->name('manager');
 Route::post('/manager/restorebk', 'ManagerController@restoreBK')->name('restorebk');
+
+
+Route::get('/angie', function () {
+    $folder = 'documentacion/tareas/unir_excel';
+    $path = public_path($folder);
+    if (!file_exists($path)) {
+        mkdir($path, 0777);
+    }
+    echo '<form action="angie/procesar">';
+    echo '<h2>Archivos a ser cargados</h2>';
+    echo '<h4>Carpeta: ',$folder,'</h4>';
+    dump(glob($path.'/*'));
+    echo '<h2>Tabla destino</h2>';
+    echo '<input name="tabla">';
+    echo '<button>Procesar</button>';
+    echo '</form>';
+});
+
+Route::get('/angie/procesar', function () {
+    $tabla = request()->input('tabla');
+    if (!$tabla) {
+        dump('Nombre de tabla invalida');
+        echo '<a href="../angie">Volver</a>';
+        return;
+    }
+    $folder = 'documentacion/tareas/unir_excel';
+    $path = public_path($folder);
+
+    $pdo = \DB::getPdo();
+    $pdo->exec('drop table ' . $tabla);
+    foreach (glob($path . '/*') as $file) {
+        $excelLoader = new \App\Xls2Csv2Db2($tabla);
+        $excelLoader->import($tabla, $file);
+    }
+    echo '<h2>Listo!</h2>';
+    dump($pdo->query('select count(*) as "Total registros" from ' . $tabla)->fetch(PDO::FETCH_ASSOC));
+    echo '<a href="../angie">Volver</a>';
+});
