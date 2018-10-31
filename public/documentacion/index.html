@@ -660,7 +660,7 @@
                         Visualizar detalle de tarea
                     -->
                     <carouselitem id="detalleTarea">
-                      <seguimiento :definicion="definicionPasos[tarea.tipo]" :tarea="tarea"></seguimiento>
+                      <seguimiento :definicion="definicionPasos[tarea.tipo]" :tarea="tarea" @salir="listarTareas"></seguimiento>
                     </carouselitem>
                     <!--
                         Asignar una nueva tarea
@@ -1121,7 +1121,7 @@
       
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.148"></script>
+        <script src="../js/server.js?v0.150"></script>
         <script>
         $(document).ready(function () {
             var app;

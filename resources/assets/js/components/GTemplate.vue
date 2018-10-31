@@ -3,9 +3,10 @@
 </template>
 <script>
   window.gtemplates = {
-      saveData(uuid, valores, titulo) {
+      saveData(uuid, valores, titulo, templeta) {
           this[uuid].value['titulo'] = titulo;
           this[uuid].value['valores'] = valores;
+          this[uuid].value['templeta'] = templeta;
           this[uuid].self.$emit('change', this[uuid].value);
       }
   };
@@ -18,12 +19,18 @@
           form: String,
           name: String
       },
+      window: null,
       methods: {
           click() {
               if (this.templeta) {
                   this.open(this.templeta, this.tareaId, this.paso, this.form, this.name);
               } else {
                   this.$emit('click');
+              }
+          },
+          close: function() {
+              if (this.window) {
+                  this.window.close();
               }
           },
           open: function(templeta, tareaId, paso, form, name) {
@@ -40,7 +47,7 @@
                 self: this,
                 value: this.value[name]
               }
-              window.open(
+              this.window = window.open(
                       "/vue-editor/tarea/" +
                       encodeURIComponent(templeta) + "/" +
                       encodeURIComponent(tareaId) + "/" +

@@ -109,6 +109,7 @@ class VueEditorController extends Controller
             'tipoTarea'=>$tarea->tipo,
             'step'=>$paso,
             'fileName'=>$nombre,
+            'templetaActual' => $templetaActual,
         ]);
     }
 
@@ -127,6 +128,7 @@ class VueEditorController extends Controller
             'tipoTarea'=>$tarea->tipo,
             'step'=>$paso,
             'fileName'=>$nombre,
+            'templetaActual' => $templetaActual,
         ]);
     }
 

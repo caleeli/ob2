@@ -187,6 +187,7 @@
     var tipoTarea = {!! json_encode($tipoTarea) !!};
     var step = {!! json_encode($step) !!};
     var fileName = {!! json_encode($fileName) !!};
+    var templetaActual = {!! json_encode($templetaActual) !!};
     var saveLast = false;
     function doAutoSave() {
         if (!saveLast) return;
@@ -195,7 +196,7 @@
             variables[a] = app[a];
         }
         //window.opener.app.pasosFileAuditoriaAutoSave(variables, tipoTarea, step, fileName);
-        window.opener.gtemplates.saveData(window.name, variables, fileName);
+        window.opener.gtemplates.saveData(window.name, variables, fileName, templetaActual);
     }
     function saveTarea() {
         saveLast = true;
