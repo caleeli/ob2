@@ -121,16 +121,23 @@ class Xls2Csv2Db
         return static::columnName($num);
     }
 
+    /**
+     * Convierte en notacion de letras
+     * 0=A, 1=B, ... 25=Z 26=AA, 27=AB
+     *
+     * @param int $num
+     *
+     * @return string
+     */
     private static function columnName($num)
     {
-        $numeric = ($num /* - 1 */) % 26;
-        $letter = chr(65 + $numeric);
-        $num2 = intval(($num - 1) / 26);
-        if ($num2 > 0) {
-            return static::columnName($num2).$letter;
-        } else {
-            return $letter;
+        $base = base_convert($num + floor($num / 26) + 1, 10, 27);
+        $name = '';
+        for ($i = 0, $l = strlen($base); $i < $l; $i++) {
+            $c = ord($base[$i]);
+            $name .= $c >= 48 && $c <= 57 ? chr($c - 48 + 64) : chr($c - 97 + 10 + 64);
         }
+        return $name;
     }
 
     public static function import(

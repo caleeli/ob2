@@ -111,7 +111,7 @@
                             <div class="dropdown profile-element">
                                     <span class="clear">
                                         <span class="block m-t-xs" style="margin-top: 0px;padding: 8px 13px; text-align: left;">
-                                            <a href="javascript:void(0)"><img class="navbar-minimalize" src="img/logo.png?4" style="height: 44px;"></a>
+                                            <a href="javascript:void(0)"><img class="navbar-minimalize" src="/images/logo-white.png" style="height: 44px;"></a>
                                             <span style="color: white; display: inline-table; margin-left: 2em;">
                                                 <strong>{{user.username}}</strong><br />
                                                 <span>Usuario</span>
@@ -120,7 +120,7 @@
                                     </span>
                             </div>
                             <div class="logo-element" style="margin-top: 0px;padding: 8px 0px;">
-                                <a href="javascript:void(0)" class="navbar-minimalize"><img src="img/logo.png?4" style="height: 44px;"></a>
+                                <a href="javascript:void(0)" class="navbar-minimalize"><img src="/images/logo-white.png" style="height: 44px;"></a>
                             </div>
                         </li>
                         <li class="active"><a href="#empresasPublicas"><img class="fa fa-th-large menu-icon" src="img/empresas.png"> <span class="nav-label">Empresas públicas</span></a></li>
@@ -660,126 +660,7 @@
                         Visualizar detalle de tarea
                     -->
                     <carouselitem id="detalleTarea">
-                        <div class="row wrapper border-bottom page-heading">
-                            <div class="wrapper wrapper-content">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="ibox">
-                                            <div class="ibox-content">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="m-b-md">
-                                                            <a v-if="puedeRegistrarAvance(tarea)" href="#registrarAvance" class="btn btn-success btn-xs pull-right" v-on:click="crearAvance">Registrar avance</a>
-                                                            <a href="#seguimientoDeTareas" class="btn btn-default btn-xs pull-right">Volver</a>
-                                                            <h2>{{tarea.nombre_tarea}}</h2>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-5">
-                                                        <dl class="dl-horizontal">
-                                                            <dt>Estado:</dt> <dd><span class="label label-primary">{{tarea.estado}}</span></dd>
-                                                            <div style="height: 4px;"></div>
-                                                            <dt>Prioridad:</dt>
-                                                            <dd>
-                                                                <p class="small font-bold">
-                                                                    <span><i v-bind:class="{'fa fa-circle':true, 'text-danger':tarea.prioridad=='Alta', 'text-warning':tarea.prioridad=='Media', 'text-primary':tarea.prioridad=='Baja'}"></i> {{tarea.prioridad}}</span>
-                                                                </p>
-                                                            </dd>
-                                                            <dt>Creado por:</dt>
-                                                            <dd>
-                                                              <avatar :user="tarea.creador"></avatar>
-                                                              {{tarea.creador ? tarea.creador.attributes.nombres + ' ' + tarea.creador.attributes.apellidos : ''}}
-                                                            </dd>
-                                                            <dt>Asignado a:</dt>
-                                                            <dd v-if="tarea.usuarios && typeof tarea.usuarios.map==='function'">
-                                                              <template v-for="usuario in usuariosAsignados(tarea.usuarios)">
-                                                                <avatar :user="usuario"></avatar>
-                                                                {{usuario ? usuario.attributes.nombres + ' ' + usuario.attributes.apellidos : ''}}
-                                                                <br />
-                                                              </template>
-                                                            </dd>
-                                                        </dl>
-                                                        <!-- button class="btn btn-primary btn-sm" type="button"><i class="fa fa-link"></i> Enlazar</button -->
-                                                    </div>
-                                                    <div class="col-lg-7" id="cluster_info">
-                                                        <dl class="dl-horizontal">
-
-                                                            <dt>Creación:</dt> <dd>{{tarea.created_at}}</dd>
-                                                            <dt>Última actualización:</dt> <dd>{{tarea.updated_at}}</dd>
-                                                            <dt>Tiempo asignado:</dt> <dd>{{tarea.dias_otorgados}} días</dd>
-                                                            <dt>Tiempo restante:</dt> <dd>{{Math.max(0, tarea.dias_otorgados - tarea.dias_pasados)}} días</dd>
-                                                        </dl>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <a v-for="enlace in tarea.enlaces" class="text-info"><i class="fa fa-book"></i> {{enlace.attributes.nombre_tarea}}</a>
-                                                    </div>
-                                                </div>
-                                                <div class="row m-t-sm">
-                                                    <div class="col-lg-12">
-                                                        <div class=" wizard-big wizard clearfix">
-                                                            <div class="steps clearfix">
-                                                                <ul role="tablist">
-                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=1' v-on:click="pasos.maximo>=1?pasos.actual=0:null" role="tab" v-bind:class="{'current': pasos.maximo>=1, 'disabled': pasos.maximo<1, 'active': pasos.actual==0}" aria-disabled="true"><a aria-controls="form-p-1">Paso 1</a></li>
-                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=2' v-on:click="pasos.maximo>=2?pasos.actual=1:null" role="tab" v-bind:class="{'current': pasos.maximo>=2, 'disabled': pasos.maximo<2, 'active': pasos.actual==1}" aria-disabled="true"><a aria-controls="form-p-1">Paso 2</a></li>
-                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=3' v-on:click="pasos.maximo>=3?pasos.actual=2:null" role="tab" v-bind:class="{'current': pasos.maximo>=3, 'disabled': pasos.maximo<3, 'active': pasos.actual==2}" aria-disabled="true"><a aria-controls="form-p-1">Paso 3</a></li>
-                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=4' v-on:click="pasos.maximo>=4?pasos.actual=3:null" role="tab" v-bind:class="{'current': pasos.maximo>=4, 'disabled': pasos.maximo<4, 'active': pasos.actual==3}" aria-disabled="true"><a aria-controls="form-p-1">Paso 4</a></li>
-                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=5' v-on:click="pasos.maximo>=5?pasos.actual=4:null" role="tab" v-bind:class="{'current': pasos.maximo>=5, 'disabled': pasos.maximo<5, 'active': pasos.actual==4}" aria-disabled="true"><a aria-controls="form-p-1">Paso 5</a></li>
-                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=6' v-on:click="pasos.maximo>=6?pasos.actual=5:null" role="tab" v-bind:class="{'current': pasos.maximo>=6, 'disabled': pasos.maximo<6, 'active': pasos.actual==5}" aria-disabled="true"><a aria-controls="form-p-1">Paso 6</a></li>
-                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=7' v-on:click="pasos.maximo>=7?pasos.actual=6:null" role="tab" v-bind:class="{'current': pasos.maximo>=7, 'disabled': pasos.maximo<7, 'active': pasos.actual==6}" aria-disabled="true"><a aria-controls="form-p-1">Paso 7</a></li>
-                                                                    <li v-show='definicionPasos[tarea.tipo] && definicionPasos[tarea.tipo].length>=8' v-on:click="pasos.maximo>=8?pasos.actual=7:null" role="tab" v-bind:class="{'current': pasos.maximo>=8, 'disabled': pasos.maximo<8, 'active': pasos.actual==7}" aria-disabled="true"><a aria-controls="form-p-1">Paso 8</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                        <div class="panel blank-panel">
-                                                            <div class="panel-body">
-                                                                <folder-viewer v-bind:api="'/api/folder/tareas/' + tarea.id + '/' + (pasos.actual+1)"
-                                                                    v-bind:target="'tareas/' + tarea.id + '/' + (pasos.actual+1)"
-                                                                    v-bind:canupload='true'
-                                                                    v-bind:candelete='true'
-                                                                    v-bind:filter="''"
-                                                                    col="8"
-                                                                    v-show="!estaPasoAuditoriaAbierta()">
-                                                                    <h3>{{pasosTitulo(pasos.actual)}}</h3>
-                                                                    <div>
-                                                                        <label>Fecha</label>
-                                                                        <fecha v-model="pasos.data[pasos.actual].fecha"/>
-                                                                    </div>
-                                                                    <div>
-                                                                        <label>Descripción</label>
-                                                                        <tinymce v-model='pasos.data[pasos.actual].descripcion' plugins="table" height="10em" />
-                                                                    </div>
-                                                                    <br>
-                                                                    <button
-                                                                        v-for="(botonPaso, formName) in botonesDePasoActual()"
-                                                                        v-show="botonHabilitadoPaso(formName, botonPaso, pasos.actual)"
-                                                                        class="btn btn-primary btn-block" type="button"
-                                                                        v-on:click='abrirPasoAuditoria(formName, botonPaso, pasos.actual)'><i class="fa fa-save"></i> {{botonPaso.buttonTitle ? botonPaso.buttonTitle : formName}}</button>
-                                                                    <button class="btn btn-primary btn-block" type="button" v-on:click='guardarPaso'><i class="fa fa-save"></i> Guardar</button>
-                                                                </folder-viewer>
-                                                                <div class="col-md-12" style="background: white;" v-show="estaPasoAuditoriaAbierta()">
-                                                                    <iframe id="pasosEditorAuditoria" v-bind:src="auditoriaUrl" style="width:100%;height:60vh;border:1px solid black;"></iframe>
-                                                                    <div class="form-group">
-                                                                        <div>
-                                                                            <input class="form-control" v-model="auditoriaFileName" v-show="false">
-                                                                            <button class="btn btn-primary" type="button" v-on:click="pasosRecargarFileAuditoria">Recargar</button>
-                                                                            <button class="btn btn-primary" type="button" v-on:click="pasosGuardarFileAuditoria">Guardar</button>
-                                                                            <button class="btn btn-white" type="button" v-on:click="pasosCerrarFileAuditoria">Cerrar</button>
-                                                                        </div>
-                                                                    </div>		
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      <seguimiento :definicion="definicionPasos[tarea.tipo]" :tarea="tarea" @salir="listarTareas"></seguimiento>
                     </carouselitem>
                     <!--
                         Asignar una nueva tarea
@@ -1240,7 +1121,7 @@
       
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.147"></script>
+        <script src="../js/server.js?v0.150"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1478,6 +1359,24 @@
                     },
                 },
                 methods: {
+                    savePasosTarea: function (api, value) {
+                        console.log(value);
+                        if (!value || !value.tarea || !value.tarea.id) {
+                          return false;
+                        }
+                        if (!value || !value.datos) {
+                          return false;
+                        }
+                        api.url='/api/UserAdministration/tareas/' + value.tarea.id;
+                        api.data = {
+                            datos: JSON.stringify(value.datos)
+                        };
+                        console.log(api);
+                        return api;
+                    },
+                    loadPasosTarea: function (data) {
+                        
+                    },
                     avancePasosPorcentaje: function (tarea, definicion) {
                         if (!tarea.attributes.datos) {
                             return 0;

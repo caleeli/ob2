@@ -41,7 +41,7 @@ Route::get(
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/vue-editor/file/{templeta}/{hojaTrabajo?}', 'VueEditorController@edit')->name('vue-editor');
 Route::get('/vue-editor/list/{path}', 'VueEditorController@index')->name('vue-editor-list');
 Route::get('/vue-editor/references', 'VueEditorController@listPDFs')->name('vue-editor-references');
@@ -54,3 +54,47 @@ Route::put('/pdfhl/mark/{storage}/{path1?}/{path2?}/{path3?}/{path4?}', 'VueEdit
 
 Route::get('/report', 'ReportController@report')->name('report');
 Route::get('/pdf', 'ReportController@pdf')->name('pdf');
+
+Route::get('/manager', 'ManagerController@index')->name('manager');
+Route::post('/manager/restorebk', 'ManagerController@restoreBK')->name('restorebk');
+
+
+Route::get('/angie', function () {
+    $folder = 'documentacion/tareas/unir_excel';
+    $path = public_path($folder);
+    if (!file_exists($path)) {
+        mkdir($path, 0777);
+    }
+    return view('join_excel', compact('path', 'folder'));
+});
+
+Route::get('/angie/procesar', function () {
+    $tabla = request()->input('tabla');
+    if (!$tabla) {
+        dump('Nombre de tabla invalida');
+        echo '<a href="../angie">Volver</a>';
+        return;
+    }
+    $folder = 'documentacion/tareas/unir_excel';
+    $path = public_path($folder);
+
+    $pdo = \DB::getPdo();
+    $pdo->exec('drop table if exists ' . $tabla);
+    foreach (glob($path . '/*') as $file) {
+        $excelLoader = new \App\Xls2Csv2Db2($tabla);
+        $excelLoader->import($tabla, $file);
+    }
+    echo '<h2>Listo!</h2>';
+    dump($pdo->query('select count(*) as "Total registros" from ' . $tabla)->fetch(PDO::FETCH_ASSOC));
+    echo '<a href="../angie">Volver</a>';
+});
+
+Route::get('/entidad/{entidad}', function ($entidad) {
+    $folder = 'entidades/' . $entidad;
+    $path = public_path($folder);
+    if (!file_exists($path)) {
+        mkdir($path, 0777);
+    }
+    return view('subir_entidades', compact('path', 'folder'));
+});
+

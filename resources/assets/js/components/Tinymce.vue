@@ -21,7 +21,6 @@
                 var self = this;
                 if (value===self.innerValue) return;
                 self.innerValue = value;
-                //console.log([self.editorPromise, value, self.value]);
                 self.editorPromise.then(function(editor){
                     try {
                         editor[0].setContent(value);
@@ -52,6 +51,7 @@
                         var html = e.target.getContent();
                         self.innerValue = html;
                         self.$emit('input', html);
+                        self.$emit('change', html);
                     });
                 },
             });

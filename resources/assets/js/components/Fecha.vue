@@ -32,6 +32,9 @@
         watch: {
             'innerValue': function (value) {
                 this.$emit('input', value);
+                if (this.innerValue!=this.value) {
+                  this.$emit('change', value);
+                }
             },
             'value': function (value) {
                 this.innerValue = value;
