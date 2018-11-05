@@ -143,6 +143,8 @@ class GTemplate
             }
             return $valor;
         }, $html);
+        $html = $this->addMultipleButtons($html);
+        $html .= '<script>var variables = ' . json_encode($variables) . ';parent && parent.app && parent.app.variablesCargadas ? parent.app.variablesCargadas(variables):null;</script>';
         return $html;
     }
 
