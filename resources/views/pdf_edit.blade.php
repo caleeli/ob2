@@ -26,6 +26,13 @@
             <button type="button" v-on:click="cerrarPDF" style="position:absolute; right:0px;">X</button>
         </div>
     </div>
+    @else
+    <div class='popup'>
+        <div class="header" style='width: 765px;'>
+            <button type="button" v-on:click="zoomPlus">+</button>
+            <button type="button" v-on:click="zoomMinus">-</button>
+        </div>
+    </div>
     @endif
     <div style='display: flex;'>
         <div class="preview" style='width: 765px'>
