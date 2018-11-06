@@ -21,6 +21,8 @@
             </select>
             <button type="button" v-on:click="modoResaltar" v-bind:style="{backgroundColor:highlightMode?'green':''}">&#128221;</button>
             <button type="button" v-on:click="completarSeleccion">&#128190;</button>
+            <button type="button" v-on:click="zoomPlus">+</button>
+            <button type="button" v-on:click="zoomMinus">-</button>
             <button type="button" v-on:click="cerrarPDF" style="position:absolute; right:0px;">X</button>
         </div>
     </div>

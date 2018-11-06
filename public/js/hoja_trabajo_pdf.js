@@ -310,9 +310,22 @@ var app = new Vue({
             storagePath: opener.tarea ? ('tareas/' + opener.tarea + '/' + (opener.step*1+1)) : window.storePath,
             uploadAux: '',
             redraw: 0,
+            zoom: 1.25,
         }, window.variables);
     },
     methods: {
+        zoomPlus: function () {
+            if (this.zoom > 3)
+                return;
+            this.zoom++;
+            this.loadPDF(this.selectedFile);
+        },
+        zoomMinus: function () {
+            if (this.zoom < 2)
+                return;
+            this.zoom--;
+            this.loadPDF(this.selectedFile);
+        },
         loadList: function (url, text, bind) {
             $.ajax({
                 url: url,
@@ -370,7 +383,7 @@ var app = new Vue({
                         // Get desired page
                         pdf.getPage(i).then(function (page) {
 
-                            var scale = 1.25;
+                            var scale = self.zoom;
                             var viewport = page.getViewport(scale);
                             var div = document.createElement("div");
 
