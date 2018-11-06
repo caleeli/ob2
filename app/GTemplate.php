@@ -207,6 +207,7 @@ class GTemplate
             $html = $this->parseMultipleRows($htmlBase, $valores2, $variables, $multiples, 'loadXML');
             $html =  $this->parseInnerValores($valores2, $html, $variables, $multiples);
             $container = new \DOMDocument;
+            $html = html_entity_decode($html);
             $container->loadXML($html);
             $tr->parentNode->insertBefore(
                 $tr->ownerDocument->importNode($container->documentElement, true),
