@@ -226,7 +226,8 @@
                     var att = prop.shift();
                     if (prop.length === 0) {
                         const descriptor = Object.getOwnPropertyDescriptor(obj, att);
-                        value = value !== undefined && value !== null ? value : (descriptor ? obj[att] : defaultValue);
+                        value = value !== undefined ? value : (descriptor ? obj[att] : defaultValue);
+                        value = value === null ? defaultValue : value;
                         if (descriptor && !(descriptor.get instanceof Function)) {
                             delete obj[att];
                             Vue.set(obj, att, value);
