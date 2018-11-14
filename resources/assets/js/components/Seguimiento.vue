@@ -233,6 +233,8 @@
                             Vue.set(obj, att, value);
                         } else if (descriptor && obj[att] !== value) {
                             Vue.set(obj, att, value);
+                        } else if (!descriptor) {
+                            Vue.set(obj, att, value);
                         }
                     } else {
                         this.reactiveSet(obj, att, isNaN(prop[0]) ? {} : []);
