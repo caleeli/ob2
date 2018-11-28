@@ -12,7 +12,7 @@
 <div id='app'>
     @if($mode==='edit')
     <div class='popup'>
-        <div class="header" style='width: 795px;'>
+        <div class="header" style='width: 815px;'>
             <input placeholder="Ingrese el texto del enlace" size="30" v-model="selectedLinkName"/>
             <span class="modeContainer">
                 <button v-if="mode==='PDF'" type="button" v-on:click="modoPDF" class="modeButton" style="color: red;" :class="{disabledMode:mode!=='PDF'}">PDF</button>
@@ -29,6 +29,7 @@
                 <button type="button" v-on:click="completarSeleccion">&#128190;</button>
                 <button type="button" v-on:click="zoomPlus">+</button>
                 <button type="button" v-on:click="zoomMinus">-</button>
+                <button type="button" v-on:click="search">&#128269;</button>
             </template>
             <template v-if="mode==='GOOGLE'">
                 <select v-model="selectedGoogleDoc" v-on:change="selectGoogleDoc(selectedGoogleDoc)">
@@ -44,6 +45,7 @@
         <div class="header" style='width: 765px;'>
             <button type="button" v-on:click="zoomPlus">+</button>
             <button type="button" v-on:click="zoomMinus">-</button>
+            <button type="button" v-on:click="search">&#128269;</button>
         </div>
     </div>
     @endif

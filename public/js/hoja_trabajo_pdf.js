@@ -314,9 +314,14 @@ var app = new Vue({
             mode: 'PDF',
             googleDocFiles: [],
             selectedGoogleDoc: '',
+            searchText: '',
         }, window.variables);
     },
     methods: {
+        search: function () {
+            this.searchText = prompt("Texto a buscar", this.searchText);
+            window.find(this.searchText);
+        },
         guardarEnlaceAGoogleDoc: function () {
             if (opener.linksSelected && opener.linksSelected[window.name]) {
                 var selectedLink = opener.linksSelected[window.name];
