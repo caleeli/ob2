@@ -130,8 +130,9 @@ class GDrive {
         }
     }
 
-    public function files($path)
+    public function files($path, $returnObjects = false)
     {
+        /* @var $file \Google_Service_Drive_DriveFile*/
         if ($path === 'root') {
             $id = $path;
         } else {
@@ -144,13 +145,33 @@ class GDrive {
             if ($file->id=='1a4xoTiEzNrtCnjoLKxcO0mE7hzYgPkJySRkxe9b-WIc') {
                 continue;
             }
-            $list[$file->name] =[
-                "id"   => $file->id,
-                "name" => $file->name,
-                "path" => "$path/" . $file->name,
-            ];
+            if ($returnObjects) {
+                $list[$file->name] = $file;
+            } else {
+                $list[$file->name] =[
+                    "id"   => $file->id,
+                    "name" => $file->name,
+                    "path" => "$path/" . $file->name,
+                ];
+            }
         }
         ksort($list);
         return array_values($list);
+    }
+    
+    public function getEditLinkFor(Google_Service_Drive_DriveFile $file)
+    {
+        switch($file->mimeType)
+        {
+            case 'application/vnd.google-apps.document':
+                return 'https://docs.google.com/document/d/' . $file->id . '/edit';
+            case 'application/vnd.google-apps.spreadsheet':
+                return 'https://docs.google.com/spreadsheets/d/' . $file->id . '/edit';
+            default:
+                //return 'https://drive.google.com/open?id=' . $file->id;
+        }
+        //https://docs.google.com/document/d/19Ts5TwOMmi7DRaNsiTz8TeQBbN4enyV-Wd36qPFJtLI/edit
+        //https://docs.google.com/spreadsheets/d/1_B_JnQDuk5sHQDbmXCwUgK8MBA7B9wciT0xFe-sli2w/edit
+        //https://drive.google.com/open?id=1NZWQq66t6XQGHT22t-U8q7BI0b-Q0TSSAotf_lMe6Ow
     }
 }

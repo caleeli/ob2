@@ -311,9 +311,48 @@ var app = new Vue({
             uploadAux: '',
             redraw: 0,
             zoom: 1.25,
+            mode: 'PDF',
+            googleDocFiles: [],
+            selectedGoogleDoc: '',
         }, window.variables);
     },
     methods: {
+        guardarEnlaceAGoogleDoc: function () {
+            if (opener.linksSelected && opener.linksSelected[window.name]) {
+                var selectedLink = opener.linksSelected[window.name];
+                selectedLink.setFile(self.selectedGoogleDoc);
+                selectedLink.setMarks([]);
+                selectedLink.setText(self.selectedLinkName);
+            }
+        },
+        selectGoogleDoc: function (selectedGoogleDoc) {
+            Vue.nextTick(function () {
+                //$("#vistaGoogleDoc").attr('src', selectedGoogleDoc);
+            });
+        },
+        loadGoogleDocList: function (callback) {
+            var self = this;
+            $.ajax({
+                url: '/googledocs/list/' + self.storagePath,
+                method: 'get',
+                dataType: 'json',
+                success: function (res) {
+                    self.googleDocFiles.splice(0);
+                    res.forEach(function (row) {
+                        self.googleDocFiles.push(row);
+                    });
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                }
+            });
+        },
+        modoGoogleDocs: function () {
+            this.mode = this.mode !== 'GOOGLE' ? 'GOOGLE' : 'PDF';
+        },
+        modoPDF: function () {
+            this.mode = this.mode !== 'PDF' ? 'PDF' : 'GOOGLE';
+        },
         zoomPlus: function () {
             if (this.zoom > 3)
                 return;
@@ -738,9 +777,10 @@ var app = new Vue({
     },
     mounted: function () {
         var self = this;
+        self.loadPDF(window.selectedFile);
         self.loadList('/api/UserAdministration/empresas', 'nombre_empresa', self.empresas);
         self.loadPDFList();
-        self.loadPDF(window.selectedFile);
+        self.loadGoogleDocList();
         $("#container").mousedown(function (event) {
             self.iniMarcarDiv(event.target);
         });

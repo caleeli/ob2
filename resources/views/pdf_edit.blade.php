@@ -12,17 +12,30 @@
 <div id='app'>
     @if($mode==='edit')
     <div class='popup'>
-        <div class="header" style='width: 765px;'>
+        <div class="header" style='width: 795px;'>
             <input placeholder="Ingrese el texto del enlace" size="30" v-model="selectedLinkName"/>
-            <upload v-model="uploadAux" type="singlefile" v-bind:small="true" :disk="storagePath" v-on:uploaded="fileUploaded"></upload>
-            <select v-model="selectedFile" v-on:change="selectPDF(selectedFile)">
-                <option value=""></option>
-                <option v-for="file in files" v-bind:value="file.url">@{{file.name}}</option>
-            </select>
-            <button type="button" v-on:click="modoResaltar" v-bind:style="{backgroundColor:highlightMode?'green':''}">&#128221;</button>
-            <button type="button" v-on:click="completarSeleccion">&#128190;</button>
-            <button type="button" v-on:click="zoomPlus">+</button>
-            <button type="button" v-on:click="zoomMinus">-</button>
+            <span class="modeContainer">
+                <button v-if="mode==='PDF'" type="button" v-on:click="modoPDF" class="modeButton" style="color: red;" :class="{disabledMode:mode!=='PDF'}">PDF</button>
+                <button type="button" v-on:click="modoGoogleDocs" class="modeButton" style="color: blue;" :class="{disabledMode:mode!=='GOOGLE'}">Goggle</button>
+                <button v-if="mode!=='PDF'" type="button" v-on:click="modoPDF" class="modeButton" style="color: red;" :class="{disabledMode:mode!=='PDF'}">PDF</button>
+            </span>
+            <template v-if="mode==='PDF'">
+                <upload v-model="uploadAux" type="singlefile" v-bind:small="true" :disk="storagePath" v-on:uploaded="fileUploaded"></upload>
+                <select v-model="selectedFile" v-on:change="selectPDF(selectedFile)">
+                    <option value=""></option>
+                    <option v-for="file in files" v-bind:value="file.url">@{{file.name}}</option>
+                </select>
+                <button type="button" v-on:click="modoResaltar" v-bind:style="{backgroundColor:highlightMode?'green':''}">&#128221;</button>
+                <button type="button" v-on:click="completarSeleccion">&#128190;</button>
+                <button type="button" v-on:click="zoomPlus">+</button>
+                <button type="button" v-on:click="zoomMinus">-</button>
+            </template>
+            <template v-if="mode==='GOOGLE'">
+                <select v-model="selectedGoogleDoc" v-on:change="selectGoogleDoc(selectedGoogleDoc)">
+                    <option value=""></option>
+                    <option v-for="file in googleDocFiles" v-bind:value="file.url">@{{file.name}}</option>
+                </select>
+            </template>
             <button type="button" v-on:click="cerrarPDF" style="position:absolute; right:0px;">X</button>
         </div>
     </div>
@@ -34,7 +47,7 @@
         </div>
     </div>
     @endif
-    <div style='display: flex;'>
+    <div v-if="mode==='PDF'" style='display: flex;'>
         <div class="preview" style='width: 765px'>
             <div id="container"></div>
         </div>
@@ -55,6 +68,7 @@
             </div>
         </div>
     </div>
+    <iframe v-if="mode==='GOOGLE' && selectedGoogleDoc" id="vistaGoogleDoc" src="about:blank" style="width:100%; height:90vh;"></iframe>
 </div>
 <style>
     .noedit .editable {
@@ -151,6 +165,21 @@
     }
     .textLayer {
         opacity: 1;
+    }
+    .modeButton {
+        width:4em!important;
+    }
+    .disabledMode {
+        opacity: 0.5;
+    }
+    .modeContainer {
+        display: inline-block;
+        width: 4em;
+        overflow: hidden;
+        white-space: nowrap;
+        vertical-align: bottom;
+        background-color: silver;
+        border: 1px solid gray;
     }
 </style>
 <script type='text/x-template' id='gtemplate'>

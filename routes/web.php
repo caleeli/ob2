@@ -52,6 +52,9 @@ Route::get('/pdfhl/view/{storage?}/{path1?}/{path2?}/{path3?}/{path4?}', 'VueEdi
 Route::get('/pdfhl/list/{storage}/{path1?}/{path2?}/{path3?}/{path4?}', 'VueEditorController@listPDFStorage')->name('vue-edit-pdf');
 Route::put('/pdfhl/mark/{storage}/{path1?}/{path2?}/{path3?}/{path4?}', 'VueEditorController@markPDF')->name('vue-mark-pdf');
 
+//googledocs/list
+Route::get('/googledocs/list/{storage}/{path1?}/{path2?}/{path3?}/{path4?}', 'GoogleDocsController@listDocs')->name('vue-edit-google-docs');
+
 Route::get('/report', 'ReportController@report')->name('report');
 Route::get('/pdf', 'ReportController@pdf')->name('pdf');
 
