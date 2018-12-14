@@ -38,19 +38,15 @@ class VueEditorController extends Controller
             ['titulo'=>'8. Remisión de Informe de Evaluación de Consistencia a Despacho'],
         ],
         'AUD'=> [
-            ['titulo'=>'1. Recepción y Solicitud a Empresas y/o Firmas'],
-            ['titulo'=>'2. Análisis de Tendencia'],
+            ['titulo'=>'1. Recepción y Solicitud de documentación a la Empresa'],
+            ['titulo'=>'2. Planificación de auditoría'],
             [
-                'titulo'=>'3. Trabajos de Campo',
+                'titulo'=>'3. Programa de trabajo',
                 'buttons'=>[
-                    'Form 1'=>[
-                        'template'=>'1NBz72qVQzCIxrvXdHppUHSM6LLdFnBVeGHPgQqh8Hik',
-                        'name'=>'hojaTrabajo1',
+                    'Programa de trabajo'=>[
+                        'template'=>'1Hx0u3pCJe7890ckcdcY1gMs5R5niI0EpA-GPXR4qstw',
+                        'name'=>'ProgramaDeTrabajo',
                     ],
-                    'Form 2'=>[
-                        'template'=>'1OIHs2pa9pqHvSxDFk6wMkwLs2Jbr2KHHONec6dFuWqU',
-                        'name'=>'hojaTrabajo2',
-                    ]
                 ]
             ],
             ['titulo'=>'4. Informe'],
