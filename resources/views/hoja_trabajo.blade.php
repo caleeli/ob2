@@ -111,17 +111,44 @@
     .pdfselect {
         background-color: #f00;
     }
+@if (@$readOnly)
+    .abutton {
+        display: none;
+    }
+@else
     .abutton {
         border: 1px solid lightblue;
         background-color: lightcyan;
         border-radius: 2em;
         cursor: pointer;
     }
+@endif
 </style>
 <script type='text/x-template' id='gtemplate'>
     <div>
     </div>
 </script>
+@if (@$readOnly)
+<script type='text/x-template' id='lista'>
+    <div>
+        @{{text(innerValue)}}
+    </div>
+</script>
+<script type='text/x-template' id='texto'>
+    <div>
+        <span v-html="innerValue ? innerValue.split('\n').join('<br>') : ''"></span>
+    </div>
+</script>
+<script type='text/x-template' id='check'>
+    <div v-html="fixEmpty(innerValue)">
+    </div>
+</script>
+<script type='text/x-template' id='enlace'>
+    <div class="link-button">
+        <span v-on:click="abrirEnlace">@{{innerValue ? innerValue.text : ''}}</span>
+    </div>
+</script>
+@else
 <script type='text/x-template' id='lista'>
     <div class="editable" >
         @{{text(innerValue)}}
@@ -146,6 +173,7 @@
         <button type="button" v-on:click="editarEnlace" v-if="editable()">&#128279;</button>
     </div>
 </script>
+@endif
 <script type='text/x-template' id='upload'>
     <div style="
     display: inline-block;

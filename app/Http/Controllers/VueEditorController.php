@@ -111,7 +111,7 @@ class VueEditorController extends Controller
 
     public function viewTarea($templeta, Tarea $tarea, $paso, $nombre)
     {
-        $hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
+        /*$hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
         $valores = !empty($tarea->datos['data'][$paso][$hoja]['valores']) ? $tarea->datos['data'][$paso][$hoja]['valores']
             : [];
         $templetaActual = empty($tarea->datos['data'][$paso][$hoja]['templeta'])
@@ -125,6 +125,27 @@ class VueEditorController extends Controller
             'step'=>$paso,
             'fileName'=>$nombre,
             'templetaActual' => $templetaActual,
+        ]);*/
+        $hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
+        if (!isset($tarea->datos['data'][$paso][$hoja])) {
+            $valores = [];
+            $templetaActual = $templeta;
+        } else {
+            $valores = $tarea->datos['data'][$paso][$hoja]['valores'];
+            $templetaActual = empty($tarea->datos['data'][$paso][$hoja]['templeta'])
+                ? $templeta : $tarea->datos['data'][$paso][$hoja]['templeta'];
+        }
+        $drive = new GDrive;
+        $gTemplate = new \App\GTemplate($drive, $templetaActual);
+        return view('hoja_trabajo', [
+            'document' => $gTemplate->parseVariables($valores ?: []),
+            'autoSave'=>false, //'saveTarea',
+            'tarea'=>$tarea->getKey(),
+            'tipoTarea'=>$tarea->tipo,
+            'step'=>$paso,
+            'fileName'=>$nombre,
+            'templetaActual' => $templetaActual,
+            'readOnly' => true,
         ]);
     }
 
