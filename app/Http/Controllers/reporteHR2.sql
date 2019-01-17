@@ -1,5 +1,5 @@
 SELECT
-    'Edgar Andrade' as usuario,
+    derivacion.destinatario as usuario_actual,
     concat(hoja_ruta.nro_de_control,' / ',hoja_ruta.gestion,' ', hoja_ruta.referencia) as titulo,
     hoja_ruta.nro_de_control,
     hoja_ruta.gestion,
@@ -38,6 +38,4 @@ FROM
    inner join hoja_ruta on (ultimos.hoja_ruta_id=hoja_ruta.id)
    inner join derivacion on (ultimos.id=derivacion.id)
 --   inner join derivacion as asignacion on (asignacion.id=(select max(id) from derivacion d2 where d2.hoja_ruta_id=hoja_ruta.id and d2.destinatario like '%Edgar%Andrade%'))
-WHERE 
-   derivacion.hoja_ruta_id in (select distinct hoja_ruta_id from derivacion where destinatario like '%Edgar%Andrade%')
 

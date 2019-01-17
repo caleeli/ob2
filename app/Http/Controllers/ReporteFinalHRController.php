@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\DB;
 class ReporteFinalHRController
 {
 
+    private function getReporteQuery2()
+    {
+        return file_get_contents(__DIR__ . '/reporteHR2.sql');
+    }
+
     private function getReporteQueryMultiple(array $usuarios)
     {
         $sql = '';
@@ -58,7 +63,7 @@ class ReporteFinalHRController
             'Edgar Andrade',
         ];
 
-        $sql = $this->getReporteQueryMultiple($usuarios);
+        $sql = $this->getReporteQuery2(); //$this->getReporteQueryMultiple($usuarios);
         $connection = DB::connection('hr');
 
         $connection->select("SET lc_time_names = 'es_ES';");
@@ -67,7 +72,8 @@ class ReporteFinalHRController
         foreach ($connection->select($sql) as $obj) {
             $row = [];
             foreach ($obj as $key => $value) {
-                $row[utf8_decode($key)] = str_replace("\n", ' & ', utf8_decode($value));
+                $row[utf8_decode($key)] = str_replace("\n", ' & ',
+                    utf8_decode($value));
             }
             if ($first) {
                 $first = false;
