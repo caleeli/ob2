@@ -39,6 +39,22 @@ $connections = array_merge($additionalConnections, [
             'sslmode' => 'prefer',
         ],
 
+        'hr' => [
+            'driver' => 'mysql',
+            'host' => env('HR_DB_HOST', '127.0.0.1'),
+            'port' => env('HR_DB_PORT', '3306'),
+            'database' => env('HR_DB_DATABASE', 'forge'),
+            'username' => env('HR_DB_USERNAME', 'forge'),
+            'password' => env('HR_DB_PASSWORD', ''),
+            'unix_socket' => env('HR_DB_SOCKET', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+            \PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone = '+00:00'",
+        ],
+
     ]);
 return [
 
