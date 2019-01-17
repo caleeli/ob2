@@ -67,7 +67,7 @@ class ReporteFinalHRController
         foreach ($connection->select($sql) as $obj) {
             $row = [];
             foreach ($obj as $key => $value) {
-                $row[utf8_decode($key)] = utf8_decode($value);
+                $row[utf8_decode($key)] = str_replace("\n", ' & ', utf8_decode($value));
             }
             if ($first) {
                 $first = false;
