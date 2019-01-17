@@ -33,6 +33,11 @@ class ReporteFinalHRController
 
     public function index()
     {
+        echo '<a href="/reporteHR/excel" target="_blank">Descargar EXCEL</a>';
+    }
+
+    public function excel()
+    {
         header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
         header("Content-Disposition: attachment; filename=consolidado.xls");
         header("Expires: 0");
@@ -59,8 +64,11 @@ class ReporteFinalHRController
         $connection->select("SET lc_time_names = 'es_ES';");
         $first = true;
         echo '<table>', "\n";
-        foreach ($connection->select($sql) as $row) {
-            $row = (array) $row;
+        foreach ($connection->select($sql) as $obj) {
+            $row = [];
+            foreach ($obj as $key => $value) {
+                $row[utf8_decode($key)] = utf8_decode($value);
+            }
             if ($first) {
                 $first = false;
                 echo '<tr><th>', implode('</th><th>', array_keys($row)), '</th></tr>', "\n";

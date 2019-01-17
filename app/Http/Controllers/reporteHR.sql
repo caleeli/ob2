@@ -22,7 +22,9 @@ SELECT
 
     if(asignacion.fecha='0000-00-00', '', asignacion.fecha) as fecha_asignacion,
     if(asignacion.fecha='0000-00-00', '', monthname(asignacion.fecha)) as mes_asignacion,
-    if(asignacion.fecha='0000-00-00', '', year(asignacion.fecha)) as año_asignacion
+    if(asignacion.fecha='0000-00-00', '', year(asignacion.fecha)) as año_asignacion,
+    if (hoja_ruta.conclusion!='0000-00-00', '1', '') as concluido,
+    if (hoja_ruta.conclusion!='0000-00-00', '', '1') as pendiente
 
 FROM
    (select hoja_ruta_id, max(id) as id from derivacion group by hoja_ruta_id) ultimos

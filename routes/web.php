@@ -60,6 +60,7 @@ Route::get('/pdf', 'ReportController@pdf')->name('pdf');
 
 //Reporte de HR
 Route::get('/reporteHR', 'ReporteFinalHRController@index');
+Route::get('/reporteHR/excel', 'ReporteFinalHRController@excel');
 
 Route::get('/manager', 'ManagerController@index')->name('manager');
 Route::post('/manager/restorebk', 'ManagerController@restoreBK')->name('restorebk');
