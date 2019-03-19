@@ -1143,7 +1143,7 @@ if (!isset($_SESSION['hr_user'])) {
                         </thead>
                         <tbody>
                           <tr v-for="row in resumen(reporteExterna)">
-                            <td style="padding-right:1em" class="data-box">{{row.usuario}}</td>
+                            <td style="padding-right:1em; text-align:right;" class="data-box">{{row.usuario}}</td>
                             <td style="padding-right:1em" class="data-box green-data-box">{{row.concluidos.length}}</td>
                             <td style="padding-right:1em" class="data-box red-data-box">{{row.pendientes.length}}</td>
                             <td style="padding-right:1em" class="data-box">{{row.concluidos.length + row.pendientes.length}}</td>
