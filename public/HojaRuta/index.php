@@ -46,9 +46,6 @@ if (!isset($_SESSION['hr_user'])) {
     }
     .data-box {
         font-size:16px;
-        display:inline-block;
-        height: 36px;
-        line-height: 36px;
         text-align: center;
         border: 1px solid #979797;
         overflow: hidden;
@@ -56,7 +53,6 @@ if (!isset($_SESSION['hr_user'])) {
         width: 60px;
     }
     .data-box span {
-        display: inline-block;
         vertical-align: middle;
         line-height: normal;
     }
@@ -81,7 +77,6 @@ if (!isset($_SESSION['hr_user'])) {
     }
     .space-box.lg {
         font-size:16px;
-        display:inline-block;
         border: 1px solid rgba(255,255,255,0);
         height: 36px;
         width: 180px;
