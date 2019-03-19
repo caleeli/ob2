@@ -41,6 +41,51 @@ if (!isset($_SESSION['hr_user'])) {
         .btn-success{
             background-color: #428442;
         }
+    .base {
+        font-size:0px;
+    }
+    .data-box {
+        font-size:16px;
+        display:inline-block;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        border: 1px solid #979797;
+        overflow: hidden;
+        color: #000000;
+        width: 60px;
+    }
+    .data-box span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+    }
+    .data-box.red-data-box {
+        color: #D0021B;
+        border-color: #D0021B;
+        background-color: rgba(208,2,27,.3);
+    }
+    .data-box.green-data-box {
+        color: #417505;
+        border-color: #417505;
+        background-color: rgba(65,117,5,.3);
+    }
+    .data-box.bold-data-box {
+        font-weight: bold;
+    }
+    .data-box.lg {
+        width: 180px;
+    }
+    .data-box.md {
+        width: 120px;
+    }
+    .space-box.lg {
+        font-size:16px;
+        display:inline-block;
+        border: 1px solid rgba(255,255,255,0);
+        height: 36px;
+        width: 180px;
+    }
         </style>
         <link rel="shortcut icon" href="/HojaRuta/images/logo1.png">
     </head>
@@ -1105,6 +1150,7 @@ if (!isset($_SESSION['hr_user'])) {
                             <td style="padding-right:1em">{{row.usuario}}</td>
                             <td style="padding-right:1em">{{row.concluidos.length}}</td>
                             <td style="padding-right:1em">{{row.pendientes.length}}</td>
+                            <td style="padding-right:1em">{{row.concluidos.length + row.pendientes.length}}</td>
                           </tr>
                         </tbody>
                     </table>
