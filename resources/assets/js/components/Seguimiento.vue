@@ -83,7 +83,7 @@
                             <h3>
                                 {{tab.titulo}}
                                 <span style="float: right;">
-                                    <button class="btn btn-primary dim" type="button" v-if="index < tarea.datos.maximo" @click="descompletarPaso(index)">
+                                    <button class="btn btn-primary dim" :disabled="readonly" type="button" v-if="index < tarea.datos.maximo" @click="descompletarPaso(index)">
                                         Completado
                                         <i class="fa fa-check-square-o"></i>
                                     </button>
