@@ -27,7 +27,7 @@
             },
             redraw: function (dontDestroy) {
                 var self = this;
-                var toolbar = (this.toolbar=='empty') ? [] : (this.toolbar?this.toolbar:'new,search').split(",");
+                var toolbar = (this.toolbar=='empty') ? [] : (this.toolbar?this.toolbar:(this.editable ? 'new,search' : 'search')).split(",");
                 var dom = ['','','rtp'];
                 var buttons = [];
                 var agent = navigator.userAgent.toLowerCase();
