@@ -102,13 +102,13 @@
 
                             <folder-viewer v-bind:api="'/api/folder/tareas/' + tarea.id + '/' + (index+1)"
                                            v-bind:target="'tareas/' + tarea.id + '/' + (index+1)"
-                                           v-bind:canupload='true'
-                                           v-bind:candelete='true'
+                                           v-bind:canupload='!readonly'
+                                           v-bind:candelete='!readonly'
                                            v-bind:filter="''"
                                            col="8"
                                            v-bind:refresh="tarea.datos.actual != index"
                                            >
-
+                                <div :class='dataStepClass'>
                                 <div>
                                     <label>Fecha</label>
                                     <fecha v-model="tarea.datos.data[tarea.datos.actual].fecha"
@@ -118,6 +118,7 @@
                                     <label>Descripción</label>
                                     <tinymce v-model='tarea.datos.data[tarea.datos.actual].descripcion' plugins="table" height="10em"
                                              @change="save('data.'+tarea.datos.actual+'.descripcion', tarea.datos.data[tarea.datos.actual].descripcion)"/>
+                                </div>
                                 </div>
                                 <br>
                                 <template v-for="(botonPaso, formName) in botonesDePasoActual()">
@@ -130,12 +131,14 @@
                                         :tarea-id="tarea.id"
                                         :paso="tarea.datos.actual"
                                         :form="formName"
+                                        :disabled="readonly"
                                         v-model="tarea.datos.data[tarea.datos.actual]"
                                         v-on:click='abrirPasoAuditoria(formName, botonPaso, tarea.datos.actual)'
                                         @change="saveGTemplate(botonPaso.name, $event)">
                                         <i class="fa fa-save"></i> {{botonPaso.buttonTitle ? botonPaso.buttonTitle : formName}}
                                     </g-template>
                                     <button v-else
+                                            :disabled="readonly"
                                             v-show="botonHabilitadoPaso(formName, botonPaso, tarea.datos.actual)"
                                             type="button" class="btn btn-primary btn-block"
                                             v-on:click='ejecutarAccion(formName, botonPaso, tarea.datos.actual)'>
@@ -156,7 +159,13 @@
     export default {
         props: {
             tarea: Object,
-            definicion: Array
+            definicion: Array,
+            readonly: Boolean,
+        },
+        computed: {
+            dataStepClass: function () {
+                return this.readonly ? 'disableEdition' : '';
+            }
         },
         watch: {
             tarea: {
@@ -354,5 +363,9 @@
     }
     .active.actual a {
         background-color: rgba(28, 132, 198, 0.5)!important;
+    }
+    .disableEdition {
+        pointer-events: none;
+        opacity: 0.8;
     }
 </style>

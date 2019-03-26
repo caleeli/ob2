@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="btn btn-primary btn-block" @click="click"><slot></slot></button>
+  <button type="button" class="btn btn-primary btn-block" @click="click" :disabled="disabled"><slot></slot></button>
 </template>
 <script>
   window.gtemplates = {
@@ -17,7 +17,8 @@
           tareaId: Number,
           paso: Number,
           form: String,
-          name: String
+          name: String,
+          disabled: Boolean,
       },
       window: null,
       methods: {
