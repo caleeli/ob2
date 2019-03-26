@@ -488,7 +488,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
-                                                    <abm id="abmContratacionesDirectas" v-bind:model="contratacion_directa" v-bind:editable="esAdmin || esUsuarioGerente() || esUsuarioAuxiliar()" buttons="close,save,delete" ></abm>
+                                                    <abm id="abmContratacionesDirectas" v-bind:model="contratacion_directa" v-bind:editable="esAdmin || esUsuarioGerente() || esUsuarioAuxiliar()" buttons="close,save,delete" :toolbar="contratacionesDirectasToolbar"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -1135,8 +1135,14 @@
                     for (var y=(new Date()).getFullYear(); y>=2015; y--) {
                         gestiones.push(y);
                     }
+                    $.ajaxSetup({
+                        async: false,
+                    });
                     var userInstance = new UserAdministration.User("/api/UserAdministration/users", localStorage.user_id);
-                    userInstance.role_id=2;
+                    $.ajaxSetup({
+                        async: true,
+                    });
+                    //userInstance.role_id=2;
                     return {
                         documento : {
                             pagina:1, numPages:0,
@@ -1345,6 +1351,9 @@
                     };
                 },
                 computed: {
+                    contratacionesDirectasToolbar: function () {
+                        return (this.esAdmin || this.esGerente || this.esAuxiliar) ? 'new,search' : 'search';
+                    },
                     esAdmin: function () {
                         return this.user.role_id==1;
                     },
