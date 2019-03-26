@@ -210,12 +210,12 @@
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/js/pdf.js"></script>
 <script>
-    var autoSave = {!! json_encode(empty($autoSave) ? null : $autoSave) !!};
-    var tarea = {!! json_encode(@$tarea) !!};
-    var tipoTarea = {!! json_encode($tipoTarea) !!};
-    var step = {!! json_encode($step) !!};
-    var fileName = {!! json_encode($fileName) !!};
-    var templetaActual = {!! json_encode($templetaActual) !!};
+    var autoSave = {!! @json_encode(empty($autoSave) ? null : $autoSave) !!};
+    var tarea = {!! @json_encode($tarea) !!};
+    var tipoTarea = {!! @json_encode($tipoTarea) !!};
+    var step = {!! @json_encode($step) !!};
+    var fileName = {!! @json_encode($fileName) !!};
+    var templetaActual = {!! @json_encode($templetaActual) !!};
     var saveLast = false;
     function doAutoSave() {
         if (!saveLast) return;
