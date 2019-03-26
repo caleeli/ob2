@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use App\Models\SaveUserTrait;
+use Illuminate\Support\Facades\Auth;
 
 class Tarea extends Model
 {
@@ -136,6 +137,11 @@ class Tarea extends Model
                                     if ($ownerId!='1') {
                                         $query->where('user_id', $userId)
                                             ->orWhere('creador_id', $ownerId);
+                                        $user = User::find($userId);
+                                        if ($user->role_id==5) {
+                                            // El invitado puede ver las tareas del usuario delfin
+                                            $query->orWhere('user_id', 5);
+                                        }
                                     }
                                 });
         });
