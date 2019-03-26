@@ -488,7 +488,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
-                                                    <abm id="abmContratacionesDirectas" v-bind:model="contratacion_directa" v-bind:editable="esUsuarioGerente() || esUsuarioAuxiliar()" buttons="close,save,delete" ></abm>
+                                                    <abm id="abmContratacionesDirectas" v-bind:model="contratacion_directa" v-bind:editable="esAdmin || esUsuarioGerente() || esUsuarioAuxiliar()" buttons="close,save,delete" ></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -1121,7 +1121,7 @@
       
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.154"></script>
+        <script src="../js/server.js?v0.155"></script>
         <script>
         $(document).ready(function () {
             var app;
