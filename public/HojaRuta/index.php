@@ -325,7 +325,7 @@ if (!isset($_SESSION['hr_user'])) {
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button v-if="!userReadOnly" type="submit" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
                         </fieldset>
@@ -474,7 +474,7 @@ if (!isset($_SESSION['hr_user'])) {
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="button" v-on:click="generarNota" class="btn btn-primary">Guardar</button>
+                                    <button v-if="!userReadOnly" type="button" v-on:click="generarNota" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
                         </fieldset>
@@ -617,7 +617,7 @@ if (!isset($_SESSION['hr_user'])) {
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="button" v-on:click="generarComunicacion" class="btn btn-primary">Guardar</button>
+                                    <button v-if="!userReadOnly" type="button" v-on:click="generarComunicacion" class="btn btn-primary">Guardar</button>
                                 </div>
                             </div>
                         </fieldset>
@@ -747,7 +747,7 @@ if (!isset($_SESSION['hr_user'])) {
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="button" v-on:click="actualizarHR" class="btn btn-primary">Guardar cambios</button>
+                                    <button v-if="!userReadOnly" type="button" v-on:click="actualizarHR" class="btn btn-primary">Guardar cambios</button>
                                 </div>
                             </div>
                             <div v-if="!concluido()">
