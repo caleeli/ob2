@@ -103,7 +103,7 @@ if (!isset($_SESSION['hr_user'])) {
                         </button>
 
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
-                            <li><a href="#recepcion" v-on:click='nuevaExterna' v-if="!window.isManager">Registrar</a></li>
+                            <li v-if="!userReadOnly"><a href="#recepcion" v-on:click='nuevaExterna' v-if="!window.isManager">Registrar</a></li>
                             <li><a href="#busqueda" v-on:click='filtroTipo="externa";filtrar()'>Búsqueda</a></li>
                             <li><a href="#reporte_hoja_ruta" v-on:click="initReporte('externa')">Reporte</a></li>
                         </ul>
@@ -117,7 +117,7 @@ if (!isset($_SESSION['hr_user'])) {
                         </button>
 
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
-                            <li><a href="#recepcion" v-on:click='nuevaInterna' v-if="!window.isManager">Registrar</a></li>
+                            <li v-if="!userReadOnly"><a href="#recepcion" v-on:click='nuevaInterna' v-if="!window.isManager">Registrar</a></li>
                             <li><a href="#busqueda" v-on:click='filtroTipo="interna";filtrar()'>Búsqueda</a></li>
                             <li><a href="#reporte_hoja_ruta" v-on:click="initReporte('interna')">Reporte</a></li>
                         </ul>
@@ -132,7 +132,7 @@ if (!isset($_SESSION['hr_user'])) {
                         </button>
 
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
-                            <li><a href="#nota_oficio" v-on:click='nuevaNota' v-if="!window.isManager">Registrar</a></li>
+                            <li v-if="!userReadOnly"><a href="#nota_oficio" v-on:click='nuevaNota' v-if="!window.isManager">Registrar</a></li>
                             <li><a href="#nota_busqueda">Búsqueda</a></li>
                             <li><a href="#nota_reporte">Reporte</a></li>
                         </ul>
@@ -146,7 +146,7 @@ if (!isset($_SESSION['hr_user'])) {
                         </button>
 
                         <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
-                            <li><a href="#com_interna" v-on:click='nuevaComunicacion' v-if="!window.isManager">Registrar</a></li>
+                            <li v-if="!userReadOnly"><a href="#com_interna" v-on:click='nuevaComunicacion' v-if="!window.isManager">Registrar</a></li>
                             <li><a href="#com_busqueda">Búsqueda</a></li>
                             <li><a href="#reporte_com">Reporte</a></li>
                         </ul>
@@ -1530,6 +1530,7 @@ if (!isset($_SESSION['hr_user'])) {
                 data: function () {
                     var self = this;
                     return {
+                        userReadOnly: <?=json_encode(isset($_SESSION['hr_readonly']) && $_SESSION['hr_readonly'])?>,
                         menu: 'recepcion',
                         hojasDeRuta: [],
                         hoja: new Recepcion(),
