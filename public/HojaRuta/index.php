@@ -81,6 +81,9 @@ if (!isset($_SESSION['hr_user'])) {
         height: 36px;
         width: 180px;
     }
+    .row-selected {
+        background-color: rgba(0, 123, 255, 0.3)!important;
+    }
         </style>
         <link rel="shortcut icon" href="/HojaRuta/images/logo1.png">
     </head>
@@ -830,6 +833,53 @@ if (!isset($_SESSION['hr_user'])) {
                     </table>
 
                 </div>
+                <div class="col-md-10" v-if="menu=='derivacionMultiple'">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <h2>Derivación multiple</h2>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Fecha</label>
+                                <div class="col-lg-10">
+                                    <fecha v-model="derivacionMultiple.fecha"></fecha>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="textArea" class="col-lg-2 control-label">Comentarios</label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" v-model="derivacionMultiple.comentarios" rows="3" id="textArea"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Destinatario</label>
+                                <div class="col-lg-10">
+                                    <div v-bind:class='{"has-error": errores.derivacion_destinatarios}'>
+                                        <tags v-model="derivacionMultiple.destinatarios" v-bind:domain="destinatarios" v-bind:field="{textField:function(item){return item.nombres+' '+item.apellidos}}" v-on:change="sincronizaDestinatarioDerivacionMultiple"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Instrucción</label>
+                                <div class="col-lg-10">
+                                    <input type="text" v-model="derivacionMultiple.instruccion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Días plazo</label>
+                                <div class="col-lg-10">
+                                    <div class="btn-group btn-block">
+                                        <input type="number" v-model="derivacionMultiple.dias_plazo" class="form-control dropdown-toggle" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <button v-if="!userReadOnly" type="button" v-on:click="envioMultiple" class="btn btn-primary">Enviar</button>
+                                    <button v-if="!userReadOnly" type="button" v-on:click="cancelarMultiple" class="btn btn-warning">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="col-md-10" v-if="menu=='hoja'">
                     <p><img src="http://subcep.com/images/logoCGE.png?1" width="212" height="64" /></p>
                     <p align="center" style="font-size: 18px;"><b>HOJA DE RUTA</b></p>
@@ -899,12 +949,16 @@ if (!isset($_SESSION['hr_user'])) {
                         </div>
                     </div>
                     <div class="input-group">
+                        <a :href="hojasSeleccionadas.length===0 ? 'javascript:void(0)' : '#derivacionMultiple'" class="btn input-group-addon btn-secondary" v-on:click='derivarHojasSeleccionadas' :disabled="hojasSeleccionadas.length===0">
+                            <i class="glyphicon glyphicon-send"></i> Derivar {{hojasSeleccionadas.length}} Seleccionadas
+                        </a>
                         <input class="form-control" v-model='filtro' placeholder="busqueda">
                         <a href="javascript:void(0)" class="btn input-group-addon" v-on:click='filtrar'>Buscar</a>
                     </div>
                     <table class="table table-striped table-hover ">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
                                 <th>Nº Control</th>
                                 <th>Referencia</th>
@@ -916,7 +970,8 @@ if (!isset($_SESSION['hr_user'])) {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for='hoja in hojasDeRutaBusqueda'>
+                            <tr v-for='hoja in hojasDeRutaBusqueda' :class="{'row-selected':hojaSeleccionada(hoja)}">
+                                <td><input type="checkbox" :checked="hojaSeleccionada(hoja)" @input="seleccionarHoja(hoja)"></td>
                                 <td>{{hoja.numero}}</td>
                                 <td>{{hoja.nroDeControl}}</td>
                                 <td>{{hoja.referencia}}</td>
@@ -1530,6 +1585,15 @@ if (!isset($_SESSION['hr_user'])) {
                 data: function () {
                     var self = this;
                     return {
+                        derivacionMultiple: {
+                            fecha: '',
+                            comentarios: '',
+                            destinatario: '',
+                            destinatarios: '',
+                            instruccion: '',
+                            dias_plazo: '',
+                        },
+                        hojasSeleccionadas: [],
                         userReadOnly: <?=json_encode(isset($_SESSION['hr_readonly']) && $_SESSION['hr_readonly'])?>,
                         menu: 'recepcion',
                         hojasDeRuta: [],
@@ -1580,6 +1644,54 @@ if (!isset($_SESSION['hr_user'])) {
                     };
                 },
                 methods: {
+                    sincronizaDestinatarioDerivacionMultiple: function (destinatarios) {
+                        var self = this;
+                        var destinatario = [];
+                        destinatarios.forEach(function (dest) {
+                            destinatario.push(dest.text);
+                        });
+                        self.derivacionMultiple.destinatario = destinatario.join('\n');
+                    },
+                    envioMultiple: function () {
+                        var self = this;
+                        $.ajax({
+                            method: 'post',
+                            url: 'envioMultiple.php',
+                            data: {
+                                data: JSON.stringify(this.derivacionMultiple),
+                                selected: JSON.stringify(this.hojasSeleccionadas),
+                            },
+                            success: function (response) {
+                                self.hojasSeleccionadas.splice(0);
+                                self.filtrar();
+                                window.history.back();
+                            }
+                        });
+                    },
+                    cancelarMultiple: function () {
+                        this.hojasSeleccionadas.splice(0);
+                        window.history.back();
+                    },
+                    derivarHojasSeleccionadas: function () {
+                        this.derivacionMultiple.fecha = '';
+                        this.derivacionMultiple.comentarios = '';
+                        this.derivacionMultiple.destinatario = '';
+                        this.derivacionMultiple.destinatarios = '';
+                        this.derivacionMultiple.instruccion = '';
+                        this.derivacionMultiple.dias_plazo = '';
+                        return this.hojasSeleccionadas.length >0;
+                    },
+                    hojaSeleccionada: function (hoja) {
+                        return this.hojasSeleccionadas.indexOf(hoja.id) !== -1;
+                    },
+                    seleccionarHoja: function (hoja) {
+                        if(!this.hojaSeleccionada(hoja)) {
+                            this.hojasSeleccionadas.push(hoja.id);
+                        } else {
+                            var index = this.hojasSeleccionadas.indexOf(hoja.id);
+                            this.hojasSeleccionadas.splice(index, 1);
+                        }
+                    },
                     resumen: function () {
                         var res = {};
                         for(var i=0,l=this.reporteExterna.length; i<l; i++) {
