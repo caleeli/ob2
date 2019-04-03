@@ -1477,6 +1477,7 @@ if (!isset($_SESSION['hr_user'])) {
                             fecha: o.fecha,
                             comentarios: o.comentarios,
                             destinatario: o.destinatario,
+                            destinatarios: o.destinatarios,
                             instruccion: o.instruccion,
                         }));
                     });
@@ -2408,6 +2409,7 @@ if (!isset($_SESSION['hr_user'])) {
                             id:'',
                             fecha: '',
                             destinatario: '',
+                            destinatarios: '',
                             comentarios: '',
                             instruccion: '',
                         });
