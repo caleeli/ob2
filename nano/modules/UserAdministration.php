@@ -1050,33 +1050,8 @@
                     new Module.Model.Field({
                         "name": "tipo_de_informes",
                         "label": "Tipo de Informes",
-                        "type": "array",
-                        "ui": "file",
-                        "textField": function(data,type,row){
-                            if (!data) {
-                                return '';
-                            }
-                            var time = row.attributes.updated_at
-                                ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
-                                    'yyyy-mm-dd hh:MM:ss'
-                                )
-                                : '';
-                            var owner = typeof row.relationships.owner==='undefined' || !row.relationships.owner
-                                ? ''
-                                : row.relationships.owner.attributes.nombres + ' '
-                                    + row.relationships.owner.attributes.apellidos;
-                            var $a = $('&lt;a&gt;&lt;/a&gt;');
-                            $a.text(data.name);
-                            $a.attr('href', data.url);
-                            $a.attr('target', '_blank');
-                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
-                            return $("&lt;div /&gt;").append($a).html()
-                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
-                              + time
-                              + '&lt;br&gt;&lt;i class="fa fa-user-o"&gt;&lt;/i&gt; '
-                              + owner;
-                        },
+                        "type": "string",
+                        "default": "",
                         "list": true,
                     }),
                     new Module.Model.Field({
