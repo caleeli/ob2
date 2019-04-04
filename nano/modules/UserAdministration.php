@@ -900,6 +900,19 @@
                         "form": true,
                         "list": true,
                         "visible": true
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "supervisor",
+                        "label": "Supervisor",
+                        "model": "user",
+                        "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "nullable": true,
+                        "form": true,
+                        "list": true,
+                        "visible": true
                     })
                 ],
                 "methods": {
@@ -1109,18 +1122,18 @@
                     }),
                     new Module.Model.BelongsTo({
                         "name": "owner",
-                        "label": "Propietario",
+                        "label": "Elaborado por",
                         "model": "user",
                         "textField": null,
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.User"),
                         "default": "",
                         "nullable": true,
-                        "form": false,
+                        "form": true,
                         "list": true,
-                        "visible": false
+                        "visible": true
                     }),
-                    new Module.Model.BelongsTo({
+                    /*new Module.Model.BelongsTo({
                         "name": "elaborado",
                         "label": "Elaborado por",
                         "model": "user",
@@ -1130,7 +1143,7 @@
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.User"),
                         "form": true
-                    }),
+                    }),*/
                 ],
                 "methods": {
                     "listEditButton(data, type, row, meta)": function(data, type, row, meta){

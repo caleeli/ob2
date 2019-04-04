@@ -242,7 +242,7 @@ UserAdministration.Firma = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/firmas";
     Model.call(this, url, id, "UserAdministration.Firma");
     this.$list = function () {
-        return "fields=cod_firma,documento_firma,empresa,informes,informe_dictamen,representante_legal,gestion,owner";
+        return "fields=cod_firma,documento_firma,empresa,informes,informe_dictamen,representante_legal,gestion,owner,supervisor";
     };
     this.$name = "Firma";
     this.$pluralName = "Firmas";
@@ -292,7 +292,7 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"informe_dictamen","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
+                        },"value":"informe_dictamen","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -343,7 +343,7 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Firma de auditoria","data":"attributes.representante_legal"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
+                        }},{"title":"Firma de auditoria","data":"attributes.representante_legal"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Supervisor","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
     };
     this.$methods = {
 listEditButton: function (data, type, row, meta){
@@ -468,7 +468,7 @@ UserAdministration.Uai = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/uais";
     Model.call(this, url, id, "UserAdministration.Uai");
     this.$list = function () {
-        return "fields=cod_uai,gestion_uai,empresa,estructura_uai,tipo_de_informes,informes_emitidos_scep,owner,elaborado";
+        return "fields=cod_uai,gestion_uai,empresa,estructura_uai,tipo_de_informes,informes_emitidos_scep,owner";
     };
     this.$name = "Uai";
     this.$pluralName = "Uais";
@@ -498,7 +498,7 @@ UserAdministration.Uai = function (url, id) {
                               + time
                               + '<br><i class="fa fa-user-o"></i> '
                               + owner;
-                        },"value":"informes_emitidos_scep","isAssociation":false},"elaborado":{"name":"elaborado","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":"username","value":"elaborado","isAssociation":true,"isMultiple":false}};
+                        },"value":"informes_emitidos_scep","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":null,"value":"owner","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -529,11 +529,9 @@ UserAdministration.Uai = function (url, id) {
                               + time
                               + '<br><i class="fa fa-user-o"></i> '
                               + owner;
-                        }},{"title":"Propietario","visible":false,"render":function (data, type, full, meta) {
+                        }},{"title":"Elaborado por","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.owner.attributes.null"},{"title":"Elaborado por","visible":true,"render":function (data, type, full, meta) {
-                            return data ? data : '';
-                        },"data":"relationships.elaborado.attributes.username"}];
+                        },"data":"relationships.owner.attributes.null"}];
     };
     this.$methods = {
 listEditButton: function (data, type, row, meta){
