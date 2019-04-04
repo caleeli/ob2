@@ -856,12 +856,6 @@
                         "list": true,
                     }),
                     new Module.Model.Field({
-                        "name": "representante_legal",
-                        "label": "Firma de auditoria",
-                        "type": "string",
-                        "default": ""
-                    }),
-                    new Module.Model.Field({
                         "name": "gestion",
                         "label": "Gestión",
                         "type": "string",
@@ -887,6 +881,18 @@
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
                         "form": true,
                         "position": 2,
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "representante_legal",
+                        "model": "firma",
+                        "label": "Firma de auditoria",
+                        "nullable": true,
+                        "list": true,
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Firma"),
+                        "form": true,
+                        "position": 3,
                     }),
                     new Module.Model.BelongsTo({
                         "name": "owner",
