@@ -1041,7 +1041,7 @@
                         "type": "string",
                         "default": ""
                     }),
-                    new Module.Model.Field({
+                    /*new Module.Model.Field({
                         "name": "titular_uai",
                         "label": "Elaborado por",
                         "model": "user",
@@ -1051,7 +1051,7 @@
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.User"),
                         "form": true
-                    }),
+                    }),*/
                     new Module.Model.Field({
                         "name": "tipo_de_informes",
                         "label": "Tipo de Informes",
@@ -1119,6 +1119,17 @@
                         "form": false,
                         "list": true,
                         "visible": false
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "elaborado",
+                        "label": "Elaborado por",
+                        "model": "user",
+                        "nullable": true,
+                        "list": true,
+                        "textField": "username",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "form": true
                     }),
                 ],
                 "methods": {

@@ -468,13 +468,13 @@ UserAdministration.Uai = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/uais";
     Model.call(this, url, id, "UserAdministration.Uai");
     this.$list = function () {
-        return "fields=cod_uai,gestion_uai,empresa,estructura_uai,titular_uai,tipo_de_informes,informes_emitidos_scep,owner";
+        return "fields=cod_uai,gestion_uai,empresa,estructura_uai,tipo_de_informes,informes_emitidos_scep,owner,elaborado";
     };
     this.$name = "Uai";
     this.$pluralName = "Uais";
     this.$title = "UAI";
     this.$pluralTitle = "UAIs";
-    this.$ = {"cod_uai":{"name":"cod_uai","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_uai","isAssociation":false},"gestion_uai":{"name":"gestion_uai","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion_uai","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"estructura_uai":{"name":"estructura_uai","label":"Estructura UAI","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"estructura_uai","isAssociation":false},"titular_uai":{"name":"titular_uai","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"titular_uai","isAssociation":false},"tipo_de_informes":{"name":"tipo_de_informes","label":"Tipo de Informes","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_de_informes","isAssociation":false},"informes_emitidos_scep":{"name":"informes_emitidos_scep","label":"Informes emitidos SCEP","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"cod_uai":{"name":"cod_uai","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_uai","isAssociation":false},"gestion_uai":{"name":"gestion_uai","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion_uai","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"estructura_uai":{"name":"estructura_uai","label":"Estructura UAI","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"estructura_uai","isAssociation":false},"tipo_de_informes":{"name":"tipo_de_informes","label":"Tipo de Informes","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_de_informes","isAssociation":false},"informes_emitidos_scep":{"name":"informes_emitidos_scep","label":"Informes emitidos SCEP","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -498,14 +498,14 @@ UserAdministration.Uai = function (url, id) {
                               + time
                               + '<br><i class="fa fa-user-o"></i> '
                               + owner;
-                        },"value":"informes_emitidos_scep","isAssociation":false}};
+                        },"value":"informes_emitidos_scep","isAssociation":false},"elaborado":{"name":"elaborado","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":"username","value":"elaborado","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Código","data":"attributes.cod_uai"},{"title":"Gestión","data":"attributes.gestion_uai"},{"title":"Empresa","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Estructura UAI","data":"attributes.estructura_uai"},{"title":"Elaborado por","data":"attributes.titular_uai","render":function (data){return data?data.nombres + ' ' +data.apellidos:''}},{"title":"Tipo de Informes","data":"attributes.tipo_de_informes"},{"title":"Informes emitidos SCEP","data":"attributes.informes_emitidos_scep","render":function (data,type,row){
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Estructura UAI","data":"attributes.estructura_uai"},{"title":"Tipo de Informes","data":"attributes.tipo_de_informes"},{"title":"Informes emitidos SCEP","data":"attributes.informes_emitidos_scep","render":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -531,7 +531,9 @@ UserAdministration.Uai = function (url, id) {
                               + owner;
                         }},{"title":"Propietario","visible":false,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.owner.attributes.null"}];
+                        },"data":"relationships.owner.attributes.null"},{"title":"Elaborado por","visible":true,"render":function (data, type, full, meta) {
+                            return data ? data : '';
+                        },"data":"relationships.elaborado.attributes.username"}];
     };
     this.$methods = {
 listEditButton: function (data, type, row, meta){
