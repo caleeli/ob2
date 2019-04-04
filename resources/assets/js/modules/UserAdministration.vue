@@ -498,7 +498,7 @@ UserAdministration.Uai = function (url, id) {
                               + time
                               + '<br><i class="fa fa-user-o"></i> '
                               + owner;
-                        },"value":"informes_emitidos_scep","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":null,"value":"owner","isAssociation":true,"isMultiple":false}};
+                        },"value":"informes_emitidos_scep","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -529,9 +529,7 @@ UserAdministration.Uai = function (url, id) {
                               + time
                               + '<br><i class="fa fa-user-o"></i> '
                               + owner;
-                        }},{"title":"Elaborado por","visible":true,"render":function (data, type, full, meta) {
-                            return data ? data : '';
-                        },"data":"relationships.owner.attributes.null"}];
+                        }},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
     };
     this.$methods = {
 listEditButton: function (data, type, row, meta){

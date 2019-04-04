@@ -1126,6 +1126,7 @@
                         "model": "user",
                         "textField": null,
                         "ui": "select",
+                        "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
                         "source": new Module.View.ModelInstance("UserAdministration.User"),
                         "default": "",
                         "nullable": true,
