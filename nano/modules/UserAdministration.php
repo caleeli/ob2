@@ -1043,9 +1043,14 @@
                     }),
                     new Module.Model.Field({
                         "name": "titular_uai",
-                        "label": "Titular UAI",
-                        "type": "string",
-                        "default": ""
+                        "label": "Elaborado por",
+                        "model": "user",
+                        "nullable": true,
+                        "list": true,
+                        "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "form": true
                     }),
                     new Module.Model.Field({
                         "name": "tipo_de_informes",
