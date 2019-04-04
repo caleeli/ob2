@@ -467,7 +467,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
-                                                    <abm id="abmFirmasDeAuditoria" v-bind:model="firma_auditoria" v-bind:editable="true" buttons="close,save,delete"></abm>
+                                                    <abm id="abmFirmasDeAuditoria" v-bind:model="firma_auditoria" v-bind:editable="esAdmin || noEsDoctorMari()" buttons="close,save,delete" :toolbar="contratacionesDirectasToolbar"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -490,7 +490,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
-                                                    <abm id="abmContratacionesDirectas" v-bind:model="contratacion_directa" v-bind:editable="esAdmin || esUsuarioGerente() || esUsuarioAuxiliar()" buttons="close,save,delete" :toolbar="contratacionesDirectasToolbar"></abm>
+                                                    <abm id="abmContratacionesDirectas" v-bind:model="contratacion_directa" v-bind:editable="esAdmin || noEsDoctorMari()" buttons="close,save,delete" :toolbar="contratacionesDirectasToolbar"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -513,7 +513,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
-                                                    <abm id="abmUAI" v-bind:model="uai" v-bind:editable="true" toolbar='new,search' buttons="close,save,delete"></abm>
+                                                    <abm id="abmUAI" v-bind:model="uai" v-bind:editable="esAdmin || noEsDoctorMari()"  :toolbar="contratacionesDirectasToolbar" buttons="close,save,delete"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -1354,7 +1354,8 @@
                 },
                 computed: {
                     contratacionesDirectasToolbar: function () {
-                        return (this.esAdmin || this.esGerente || this.esAuxiliar) ? 'new,search' : 'search';
+                        //return (this.esAdmin || this.esGerente || this.esAuxiliar) ? 'new,search' : 'search';
+                        return (this.esAdmin || this.noEsDoctorMari()) ? 'new,search' : 'search';
                     },
                     esAdmin: function () {
                         return this.user.role_id==1;
@@ -1370,6 +1371,9 @@
                     },
                 },
                 methods: {
+                    noEsDoctorMari: function () {
+                        return this.user_id!=2 && this.user_id!=12;
+                    },
                     savePasosTarea: function (api, value) {
                         console.log(value);
                         if (!value || !value.tarea || !value.tarea.id) {
