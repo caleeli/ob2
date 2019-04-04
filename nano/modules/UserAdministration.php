@@ -1052,6 +1052,8 @@
                         "name": "estructura_uai",
                         "label": "Estructura UAI",
                         "type": "string",
+                        "list": false,
+                        "form": false,
                         "default": ""
                     }),
                     /*new Module.Model.Field({
