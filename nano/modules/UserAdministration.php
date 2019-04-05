@@ -778,10 +778,32 @@
              *
              */
             new Module.Model({
+                "name": "lafirma",
+                "title": "Lafirma",
+                "table": "adm_firmas",
+                "pluralTitle": "Firmas de auditoria",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "cod_firma",
+                        "type": "string",
+                        "label": "Código",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "nombre_empresa",
+                        "type": "string",
+                        "label": "Nombre empresa",
+                        "default": ""
+                    }),
+                ],
+                "associations": [
+                ]
+            }),
+            new Module.Model({
                 "name": "firma",
                 "title": "Firma",
                 "table": "adm_evaluacion_consistencias",
-                "pluralTitle": "Firmas de auditoria",
+                "pluralTitle": "Consistencias",
                 "fields": [
                     new Module.Model.Field({
                         "name": "cod_firma",
@@ -856,12 +878,6 @@
                         "list": true,
                     }),
                     new Module.Model.Field({
-                        "name": "representante_legal",
-                        "label": "Firma de auditoria",
-                        "type": "string",
-                        "default": ""
-                    }),
-                    new Module.Model.Field({
                         "name": "gestion",
                         "label": "Gestión",
                         "type": "string",
@@ -887,6 +903,18 @@
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
                         "form": true,
                         "position": 2,
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "representante_legal",
+                        "model": "firma",
+                        "label": "Firma de auditoria",
+                        "nullable": true,
+                        "list": true,
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Lafirma"),
+                        "form": true,
+                        "position": 3,
                     }),
                     new Module.Model.BelongsTo({
                         "name": "owner",
@@ -920,7 +948,16 @@
                         var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
                         var canEdit = owner_id == localStorage.user_id;
                         return canEdit ? true : '';
-                    }
+                    },
+                    "procedencias()": <?php
+                        function () {
+                            $sql = "select nombre_empresa as nombre from adm_empresas
+                                union
+                                select nombre_empresa as nombre from adm_firmas";
+                            $res = \DB::select($sql);
+                            return ["data"=>$res];
+                        }
+                    ?>
                 }
             }),
             /**
