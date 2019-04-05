@@ -906,7 +906,7 @@
                     }),
                     new Module.Model.BelongsTo({
                         "name": "representante_legal",
-                        "model": "firma",
+                        "model": "lafirma",
                         "label": "Firma de auditoria",
                         "nullable": true,
                         "list": true,
