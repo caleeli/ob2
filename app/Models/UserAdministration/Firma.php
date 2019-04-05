@@ -6,40 +6,40 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use App\Models\SaveUserTrait;
 
+
 class Firma extends Model
 {
     use SoftDeletes, Notifiable, SaveUserTrait;
     protected $table = 'adm_evaluacion_consistencias';
-    protected $fillable = array(
+    protected $fillable = array (
       0 => 'cod_firma',
       1 => 'documento_firma',
       2 => 'informes',
       3 => 'informe_dictamen',
-      4 => 'representante_legal',
-      5 => 'gestion',
-      6 => 'detalle',
-      7 => 'empresa_id',
+      4 => 'gestion',
+      5 => 'detalle',
+      6 => 'empresa_id',
+      7 => 'representante_legal_id',
       8 => 'owner_id',
+      9 => 'supervisor_id',
     );
-    protected $attributes = array(
+    protected $attributes = array (
       'cod_firma' => '',
-      'documento_firma' => null,
-      'informes' => null,
-      'informe_dictamen' => null,
-      'representante_legal' => '',
+      'documento_firma' => NULL,
+      'informes' => NULL,
+      'informe_dictamen' => NULL,
       'gestion' => '',
       'detalle' => '',
     );
-    protected $casts = array(
+    protected $casts = array (
       'cod_firma' => 'string',
       'documento_firma' => 'array',
       'informes' => 'array',
       'informe_dictamen' => 'array',
-      'representante_legal' => 'string',
       'gestion' => 'string',
       'detalle' => 'string',
     );
-    protected $events = array(
+    protected $events = array (
     );
     public function empresa()
     {
@@ -47,8 +47,29 @@ class Firma extends Model
     }
 
 
+    public function representante_legal()
+    {
+        return $this->belongsTo('App\Models\UserAdministration\Firma');
+    }
+
+
     public function owner()
     {
         return $this->belongsTo('App\Models\UserAdministration\User');
     }
+
+
+    public function supervisor()
+    {
+        return $this->belongsTo('App\Models\UserAdministration\User');
+    }
+
+
+    function procedencias () {
+                            $sql = "select nombre_empresa as nombre from adm_empresas
+                                union
+                                select nombre_empresa as nombre from adm_firmas";
+                            $res = \DB::select($sql);
+                            return ["data"=>$res];
+                        }
 }
