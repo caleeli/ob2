@@ -49,7 +49,7 @@ class Firma extends Model
 
     public function representante_legal()
     {
-        return $this->belongsTo('App\Models\UserAdministration\Firma');
+        return $this->belongsTo('App\Models\UserAdministration\Lafirma');
     }
 
 
