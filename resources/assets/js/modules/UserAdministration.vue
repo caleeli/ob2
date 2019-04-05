@@ -242,7 +242,7 @@ UserAdministration.Firma = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/firmas";
     Model.call(this, url, id, "UserAdministration.Firma");
     this.$list = function () {
-        return "fields=cod_firma,documento_firma,empresa,representante_legal,informes,informe_dictamen,gestion,owner,supervisor";
+        return "fields=cod_firma,documento_firma,empresa,informes,informe_dictamen,representante_legal,gestion,owner,supervisor";
     };
     this.$name = "Firma";
     this.$pluralName = "Firmas";
@@ -266,7 +266,7 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"documento_firma","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa auditada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"select","enum":[],"source":new UserAdministration.Firma(),"textField":"nombre_empresa","value":"representante_legal","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informes SCEP","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"documento_firma","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa auditada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informes SCEP","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -292,7 +292,7 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"informe_dictamen","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
+                        },"value":"informe_dictamen","isAssociation":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"representante_legal","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -317,9 +317,7 @@ UserAdministration.Firma = function (url, id) {
                               + time;
                         }},{"title":"Empresa auditada","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Firma de auditoria","visible":true,"render":function (data, type, full, meta) {
-                            return data ? data : '';
-                        },"data":"relationships.representante_legal.attributes.nombre_empresa"},{"title":"Informes SCEP","data":"attributes.informes","render":function (data,type,row){
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Informes SCEP","data":"attributes.informes","render":function (data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -345,7 +343,7 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Supervisor","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
+                        }},{"title":"Firma de auditoria","data":"attributes.representante_legal"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Supervisor","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
     };
     this.$methods = {
 listEditButton: function (data, type, row, meta){
