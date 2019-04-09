@@ -407,7 +407,7 @@ UserAdministration.Contratacion = function (url, id) {
                             }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
+                                    new Date(row.attributes.updated_at),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
@@ -425,7 +425,7 @@ UserAdministration.Contratacion = function (url, id) {
                             }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
+                                    new Date(row.attributes.updated_at),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
@@ -448,7 +448,7 @@ UserAdministration.Contratacion = function (url, id) {
                             }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
+                                    new Date(row.attributes.updated_at),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
@@ -466,7 +466,7 @@ UserAdministration.Contratacion = function (url, id) {
                             }
                             var time = row.attributes.updated_at
                                 ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
+                                    new Date(row.attributes.updated_at),
                                     'yyyy-mm-dd hh:MM:ss'
                                 )
                                 : '';
