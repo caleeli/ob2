@@ -973,13 +973,13 @@
                     new Module.Model.Field({
                         "name": "cod_firma",
                         "type": "string",
-                        "label": "Código",
+                        "label": "Número de Informe",
                         "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "informe_scep",
                         "type": "array",
-                        "label": "Informe SCEP",
+                        "label": "Documento adjunto informe",
                         "ui": "file",
                         "textField": function(data,type,row){
                             if (!data) {
@@ -1004,7 +1004,7 @@
                     new Module.Model.Field({
                         "name": "nota",
                         "type": "array",
-                        "label": "Nota emitida a la empresa",
+                        "label": "Documento adjunto nota emitida",
                         "ui": "file",
                         "textField": function(data,type,row){
                             if (!data) {
@@ -1037,6 +1037,7 @@
                     new Module.Model.BelongsTo({
                         "name": "empresa",
                         "model": "empresa",
+                        "label": "Empresa",
                         "nullable": true,
                         "list": true,
                         "textField": "nombre_empresa",

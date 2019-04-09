@@ -401,7 +401,7 @@ UserAdministration.Contratacion = function (url, id) {
     this.$pluralName = "Contratacions";
     this.$title = "Contratación";
     this.$pluralTitle = "Contrataciones directas";
-    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"informe_scep":{"name":"informe_scep","label":"Informe SCEP","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"cod_firma":{"name":"cod_firma","label":"Número de Informe","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"informe_scep":{"name":"informe_scep","label":"Documento adjunto informe","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -419,7 +419,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"informe_scep","isAssociation":false},"nota":{"name":"nota","label":"Nota emitida a la empresa","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"informe_scep","isAssociation":false},"nota":{"name":"nota","label":"Documento adjunto nota emitida","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -437,12 +437,12 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"nota","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
+                        },"value":"nota","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Informe SCEP","data":"attributes.informe_scep","render":function (data,type,row){
+        return [{"title":"Número de Informe","data":"attributes.cod_firma"},{"title":"Documento adjunto informe","data":"attributes.informe_scep","render":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -460,7 +460,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Nota emitida a la empresa","data":"attributes.nota","render":function (data,type,row){
+                        }},{"title":"Documento adjunto nota emitida","data":"attributes.nota","render":function (data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -478,7 +478,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"empresa","visible":true,"render":function (data, type, full, meta) {
+                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Empresa","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
                         },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
     };
