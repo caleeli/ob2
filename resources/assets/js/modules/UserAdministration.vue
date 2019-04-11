@@ -485,7 +485,7 @@ UserAdministration.Contratacion = function (url, id) {
     this.$methods = {
 listEditButton: function (data, type, row, meta){
                         var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
-                        var canEdit = owner_id == localStorage.user_id;
+                        var canEdit = owner_id == localStorage.user_id || localStorage.user_id == 1;
                         return canEdit ? true : '';
                     }    };
     this.$initFields();
