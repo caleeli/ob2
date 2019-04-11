@@ -1061,7 +1061,9 @@
                 ],
                 "methods": {
                     "listEditButton(data, type, row, meta)": function(data, type, row, meta){
-                        return true;
+                        var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
+                        var canEdit = owner_id == localStorage.user_id;
+                        return canEdit ? true : '';
                     }
                 }
             }),
