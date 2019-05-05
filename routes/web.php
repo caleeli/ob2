@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\GDrive;
+use function GuzzleHttp\json_encode;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,17 @@ Route::post('/manager/restorebk', 'ManagerController@restoreBK')->name('restoreb
 Route::get('/convert', function () {
     $pdo = \DB::connection('hr')->getPdo();
     foreach($pdo->query('select * from hoja_ruta') as $row) {
-        dd($row);
+        $conv = [
+            'name' => $row['nro_de_control'],
+            'data' => json_encode([
+                'referencia' => $row['referencia'],
+                'procedencia' => $row['procedencia'],
+                'anexo_hojas' => $row['anexo_hojas'],
+                'destinatario' => $row['destinatario'],
+                'conclusion' => $row['conclusion'],
+            ]),
+        ];
+        dd($conv);
     }
 })->name('convert');
 
