@@ -65,7 +65,7 @@ Route::get('/reporteHR/excel', 'ReporteFinalHRController@excel');
 Route::get('/manager', 'ManagerController@index')->name('manager');
 Route::post('/manager/restorebk', 'ManagerController@restoreBK')->name('restorebk');
 
-Route::post('/convert', function () {
+Route::get('/convert', function () {
     $pdo = \DB::connection('hr')->getPdo();
     foreach($pdo->query('select * from hoja_ruta') as $row) {
         dd($row);
