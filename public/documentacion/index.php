@@ -132,7 +132,6 @@ require('../../vendor/autoload.php');
                         <li class="active" v-if="esUsuarioAuxiliar()">
                             <a href="index.html"><i class="fa fa-th-large menu-icon"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li class="active"><a href="#estadosFinancierosAdmin">Estados financieros ADM</a></li>
                                 <li class="active"><a href="#usuariosAdmin">Administración de usuarios</a></li>
                             </ul>
                         </li>
