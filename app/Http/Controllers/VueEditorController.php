@@ -23,25 +23,17 @@ class VueEditorController extends Controller
                     ]
                 ],
             ],
-            ['titulo'=>'2. Respuesta de la Agencia'],
-            ['titulo'=>'3. Informe Final'],
             [
-                'titulo'=>'4. Conclusión',
-            ],
-        ],
-        'EDC' => [
-            [
-                'titulo'=>'1. Plantilla de revisión',
+                'titulo'=>'2. Respuesta de la Agencia',
                 'porcentaje' => 30,
                 'buttons'=>[
                     'revision'=> [
-                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
-                        'buttonTitle' => 'Plantilla de Revisión',
+                        'template'=>'1UfSniy8r9-T4umisvhd9z7cLTdeG6Q8bQyEvstRF5jE',
+                        'buttonTitle' => 'Responder Revisión',
                         'name'=>'revision',
                     ]
                 ],
             ],
-            ['titulo'=>'2. Respuesta de la Agencia'],
             ['titulo'=>'3. Informe Final'],
             [
                 'titulo'=>'4. Conclusión',
@@ -204,7 +196,7 @@ class VueEditorController extends Controller
     {
         $hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
         if (!isset($tarea->datos['data'][$paso][$hoja])) {
-            $valores = [];
+            $valores = $this->valorPrevio($tarea, $paso, $hoja);
             $templetaActual = $templeta;
         } else {
             $valores = $tarea->datos['data'][$paso][$hoja]['valores'];
@@ -243,7 +235,7 @@ class VueEditorController extends Controller
         ]);*/
         $hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
         if (!isset($tarea->datos['data'][$paso][$hoja])) {
-            $valores = [];
+            $valores = $this->valorPrevio($tarea, $paso, $hoja);
             $templetaActual = $templeta;
         } else {
             $valores = $tarea->datos['data'][$paso][$hoja]['valores'];
@@ -262,6 +254,17 @@ class VueEditorController extends Controller
             'templetaActual' => $templetaActual,
             'readOnly' => true,
         ]);
+    }
+
+    private function valorPrevio($tarea, $paso, $hoja)
+    {
+        while($paso>0) {
+            $paso--;
+            if (isset($tarea->datos['data'][$paso][$hoja])) {
+                return $tarea->datos['data'][$paso][$hoja]['valores'];
+            }
+        }
+        return [];
     }
 
     public function index($path)
