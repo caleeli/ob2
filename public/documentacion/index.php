@@ -388,7 +388,7 @@ require('../../vendor/autoload.php');
                                     <div class="col-lg-12">
                                         <div class="ibox">
                                             <div class="ibox-title">
-                                                <h5>BIBLIOTECA SCEP</h5>
+                                                <h5>DOCUMENTOS</h5>
                                             </div>
                                             <div class="ibox-content">
                                                 <!-- (biblioteca_normativa ? biblioteca_normativa + '_' : '') -->
