@@ -462,7 +462,7 @@ require('../../vendor/autoload.php');
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
-                                                    <abm id="abmFirmasDeAuditoria" v-bind:model="firma_auditoria" v-bind:editable="esAdmin || noEsDoctorMari()" buttons="close,save,delete" :toolbar="contratacionesDirectasToolbar"></abm>
+                                                    <!-- abm id="abmFirmasDeAuditoria" v-bind:model="firma_auditoria" v-bind:editable="esAdmin || noEsDoctorMari()" buttons="close,save,delete" :toolbar="contratacionesDirectasToolbar"></abm -->
                                                 </div>
                                             </div>
                                         </div>
@@ -1160,7 +1160,7 @@ require('../../vendor/autoload.php');
                         empresa_estado: new UserAdministration.EmpresaEstado(),
                         estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
                         estado_financiero_adm: new UserAdministration.EstadoFinanciero(),
-                        firma_auditoria: new UserAdministration.Firma(function(){return "/api/UserAdministration/firmas";}),
+                        //firma_auditoria: new UserAdministration.Firma(function(){return "/api/UserAdministration/firmas";}),
                         contratacion_directa: new UserAdministration.Contratacion(function(){return "/api/UserAdministration/contratacions";}),
                         //uai: new UserAdministration.Uai(function(){return "/api/UserAdministration/users/"+localStorage.user_id+"/uais";}),
                         uai: new UserAdministration.Uai(function(){return "/api/UserAdministration/uais";}),
