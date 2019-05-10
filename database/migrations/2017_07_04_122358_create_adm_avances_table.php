@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
 class CreateAdmAvancesTable extends Migration
 {
+
+    
     public function up()
     {
         Schema::create('adm_avances', function (Blueprint $table) {
@@ -26,4 +29,5 @@ class CreateAdmAvancesTable extends Migration
     {
         Schema::dropIfExists('adm_avances');
     }
+
 }

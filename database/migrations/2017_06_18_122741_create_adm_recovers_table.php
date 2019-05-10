@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
 class CreateAdmRecoversTable extends Migration
 {
+
+    
     public function up()
     {
         Schema::create('adm_recovers', function (Blueprint $table) {
@@ -24,4 +27,5 @@ class CreateAdmRecoversTable extends Migration
     {
         Schema::dropIfExists('adm_recovers');
     }
+
 }

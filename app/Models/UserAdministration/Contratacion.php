@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use App\Models\SaveUserTrait;
 
+
 class Contratacion extends Model
 {
     use SoftDeletes, Notifiable, SaveUserTrait;
     protected $table = 'contrataciones';
-    protected $fillable = array(
+    protected $fillable = array (
       0 => 'cod_firma',
       1 => 'informe_scep',
       2 => 'nota',
@@ -18,19 +19,19 @@ class Contratacion extends Model
       4 => 'empresa_id',
       5 => 'owner_id',
     );
-    protected $attributes = array(
+    protected $attributes = array (
       'cod_firma' => '',
-      'informe_scep' => null,
-      'nota' => null,
+      'informe_scep' => NULL,
+      'nota' => NULL,
       'gestion' => '',
     );
-    protected $casts = array(
+    protected $casts = array (
       'cod_firma' => 'string',
       'informe_scep' => 'array',
       'nota' => 'array',
       'gestion' => 'string',
     );
-    protected $events = array(
+    protected $events = array (
     );
     public function empresa()
     {
@@ -42,4 +43,5 @@ class Contratacion extends Model
     {
         return $this->belongsTo('App\Models\UserAdministration\User');
     }
+
 }

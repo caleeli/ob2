@@ -6,20 +6,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use App\Models\SaveUserTrait;
 
+
 class CargaEstado extends Model
 {
     use SoftDeletes, Notifiable, SaveUserTrait;
     protected $table = 'adm_carga_estados';
-    protected $fillable = array(
+    protected $fillable = array (
       0 => 'files',
     );
-    protected $attributes = array(
-      'files' => null,
+    protected $attributes = array (
+      'files' => NULL,
     );
-    protected $casts = array(
+    protected $casts = array (
       'files' => 'array',
     );
-    protected $events = array(
+    protected $events = array (
       'saving' => 'App\\Events\\UserAdministration\\CargaEstadoSaving',
     );
+
 }

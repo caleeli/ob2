@@ -8,17 +8,12 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Models\UserAdministration\Tarea;
 
+
 class TareaSaved implements ShouldBroadcast
 {
     use InteractsWithSockets;
-    public $tarea = null;
-    public function __construct(Tarea $model)
-    {
-        $this->tarea=$model;
-    }
+    public $tarea = NULL;
+public function __construct(Tarea $model){$this->tarea=$model;}
 
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
-    }
+public function broadcastOn(){return new PrivateChannel('channel-name');}
 }

@@ -1,3 +1,6 @@
+<?php
+require('../../vendor/autoload.php');
+?>
 <!DOCTYPE html>
 <html>
 
@@ -111,7 +114,6 @@
                             <div class="dropdown profile-element">
                                     <span class="clear">
                                         <span class="block m-t-xs" style="margin-top: 0px;padding: 8px 13px; text-align: left;">
-                                            <a href="javascript:void(0)"><img class="navbar-minimalize" src="/images/logo-white.png" style="height: 44px;"></a>
                                             <span style="color: white; display: inline-table; margin-left: 2em;">
                                                 <strong>{{user.username}}</strong><br />
                                                 <span>Usuario</span>
@@ -123,16 +125,9 @@
                                 <a href="javascript:void(0)" class="navbar-minimalize"><img src="/images/logo-white.png" style="height: 44px;"></a>
                             </div>
                         </li>
-                        <li class="active"><a href="#empresasPublicas"><img class="fa fa-th-large menu-icon" src="img/empresas.png"> <span class="nav-label">Empresas públicas</span></a></li>
                         <li class="active"><a href="#estadosFinancieros"><img class="fa fa-th-large menu-icon" src="img/eeff.png"> <span class="nav-label">Estados financieros</span></a></li>
-                        <li class="active"><a href="#UAI" v-on:click="abrirUAI"><img class="fa fa-th-large menu-icon" src="img/uai.png"> <span class="nav-label">UAI</span></a></li>
-                        <li class="active"><a href="#firmasDeAuditoria" v-on:click="abrirFirmasDeAuditoria"><img class="fa fa-th-large menu-icon" src="img/firmas.png"> <span class="nav-label">Evaluaciones de Consistencia</span></a></li>
-                        <li class="active"><a href="#contratacionesDirectas" v-on:click="abrirContratacionesDirectas"><img class="fa fa-th-large menu-icon" src="img/firmas.png"> <span class="nav-label">Contrataciones Directas</span></a></li>
-                        <li class="active"><a href="#PEIyPOA"><img class="fa fa-th-large menu-icon" src="img/calendar.png"> <span class="nav-label">PEI y POA</span></a></li>
-                        <li class="active"><a href="#seguimientoDeTareas"><img class="fa fa-th-large menu-icon" src="img/tasks.png"> <span class="nav-label">Seguimiento de tareas</span></a></li>
+                        <li class="active"><a href="#seguimientoDeTareas"><img class="fa fa-th-large menu-icon" src="img/tasks.png"> <span class="nav-label">Revisión de carpetas</span></a></li>
                         <li class="active"><a href="#cambio_password"><img class="fa fa-th-large menu-icon" src="img/candado.png"> <span class="nav-label">Cambio de contraseña</span></a></li>
-                        <li class="active"><a href="#hojas_de_trabajo"><img class="fa fa-th-large menu-icon" src="img/candado.png"> <span class="nav-label">Trabajos SCEP</span></a></li>
-                        <li class="active"><a href="#ClasificacionEmpresas"><img class="fa fa-th-large menu-icon" src="img/fideicomiso.png"> <span class="nav-label">Clasificacion de Empresas</span></a></li>
                         <li class="active"><a href="#bibliotecaScep"><img class="fa fa-th-large menu-icon" src="img/fideicomiso.png"> <span class="nav-label">Biblioteca SCEP</span></a></li>
                         <li class="active" v-if="esUsuarioAuxiliar()">
                             <a href="index.html"><i class="fa fa-th-large menu-icon"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a>
@@ -532,7 +527,7 @@
                                     <div class="col-lg-12">
                                         <div class="ibox">
                                             <div class="ibox-title">
-                                                <h5>TAREAS</h5>
+                                                <h5>Revisión de carpetas</h5>
                                                 <div class="ibox-tools" v-if="esUsuarioGerente()">
                                                     <a href="#asignarTarea" class="btn btn-primary btn-xs" v-on:click='crearTarea'>Asignar tarea</a>
                                                 </div>
@@ -542,16 +537,15 @@
                                                             <div class="">
                                                                 <div class="panel-options">
                                                                     <ul class="nav nav-tabs small">
-                                                                        <li class="active"><a v-on:click="setTipoTarea('EDC')" data-toggle="tab">1. Evaluación de consistencia</a></li>
-                                                                        <li class=""><a v-on:click="setTipoTarea('AUD')" data-toggle="tab">2. Auditorías Especiales</a></li>
-                                                                        <li class=""><a v-on:click="setTipoTarea('SUP')" data-toggle="tab">3. Supervisiones</a></li>
-                                                                        <li class=""><a v-on:click="setTipoTarea('RDI')" data-toggle="tab">4. Relevamientos de Información</a></li>
-                                                                        <li class=""><a v-on:click="setTipoTarea('COD')" data-toggle="tab">5. Contrataciones Directas</a></li>
-                                                                        <li class=""><a v-on:click="setTipoTarea('EIU')" data-toggle="tab">6. Evaluación de Informaciones de UAI's</a></li>
-                                                                        <li class=""><a v-on:click="setTipoTarea('EIP')" data-toggle="tab">7. Evaluación de Informes de POA y PE de UAI</a></li>
-                                                                        <li class=""><a v-on:click="setTipoTarea('SYD')" data-toggle="tab">8. Solicitudes y denuncias</a></li>
-                                                                        <li class=""><a v-on:click="setTipoTarea('TAD')" data-toggle="tab">9. Tareas administrativas</a></li>
-                                                                        <li class=""><a v-on:click="setTipoTarea('OTR')" data-toggle="tab">10. Otros</a></li>
+                                                                        <li class="active"><a v-on:click="setTipoTarea('EDC')" data-toggle="tab">Crédito Individual</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('AUD')" data-toggle="tab">Crédito Veloz</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('SUP')" data-toggle="tab">Crédito Temporada</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('RDI')" data-toggle="tab">Crédito Verde</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('COD')" data-toggle="tab">Crediestudio</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('EIU')" data-toggle="tab">Crédito Agropecuario</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('EIP')" data-toggle="tab">Crédito Solidario</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('SYD')" data-toggle="tab">Bancos de Emprendimiento</a></li>
+                                                                        <li class=""><a v-on:click="setTipoTarea('TAD')" data-toggle="tab">Crédito Socia Adicional</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -1239,118 +1233,7 @@
                         },
                         //pasosAuditoriaAbierta: false,
                         hojaTrabajoLocalSave: false,
-                        definicionPasos: {
-                            'EDC': [
-                                {
-                                    titulo: '1. Nota de solicitud y remisión de documentación a la empresa',
-                                    porcentaje: 5,
-                                },
-                                {
-                                    titulo: '2. Notas de solicitud y remisión de papeles de trabajo',
-                                    porcentaje: 5,
-                                },
-                                {
-                                    titulo:'3. Análisis de tendencia',
-                                    porcentaje: 15,
-                                },
-                                {
-                                    titulo:'4. Trabajo de campo',
-                                    porcentaje: 40,
-                                    buttons:{
-                                        'F-3007': {
-                                            template:'1G0m6aF9W7dkD5eaSZsMjKt_cGmYTMbjaVgg5q0qCZUo',
-                                            name: 'hojaTrabajo',
-                                            condition: 'pendienteRevision'
-                                        }
-                                    }
-                                },
-                                {
-                                    titulo:'5. Informe/Nota de Evaluación de Consistencias',
-                                    porcentaje: 20,
-                                    buttons:{
-                                        'revisar': {
-                                            template: null,
-                                            action: 'revisarHoja',
-                                            buttonTitle: 'Pasar a revisor',
-                                            condition: 'pendienteRevision'
-                                        }
-                                    }
-                                },
-                                {
-                                    titulo:'6. Revisión',
-                                    porcentaje: 5,
-                                    buttons:{
-                                        'anexo4': {
-                                            template: '1zxuEWTosPwlNSUapfg8KfaZr8d-GYohsRrFqjNKrXtU',
-                                            name: 'anexo4',
-                                            buttonTitle: 'Anexo 4 Revisión de consistencia',
-                                            condition: 'noPendienteRevision'
-                                        },
-                                        'volverEdicion': {
-                                            template: null,
-                                            action: 'volverEdicionHoja',
-                                            buttonTitle: 'Volver a editar',
-                                            condition: 'noPendienteRevision'
-                                        }
-                                    }
-                                },
-                                {
-                                    titulo:'7. Documento Aprobado',
-                                    porcentaje: 5,
-                                },
-                                {
-                                    titulo:'8. Remisión de Informe de Evaluación de Consistencia a Despacho',
-                                    porcentaje: 5,
-                                },
-                            ],
-                            'AUD': [
-                                {titulo:'1. Recepción y Solicitud de documentación a la Empresa'},
-                                {titulo:'2. Planificación de auditoría'},
-                                {
-                                    titulo:'3. Programa de trabajo',
-                                    buttons:{
-                                        'Programa de trabajo':{
-                                            template:'1Hx0u3pCJe7890ckcdcY1gMs5R5niI0EpA-GPXR4qstw',
-                                            name:'ProgramaDeTrabajo',
-                                        },
-                                    }
-                                },
-                                {titulo:'4. Informe'},
-                                {titulo:'5. Revisión'},
-                                {titulo:'6. Documento Aprobado'},
-                                {titulo:'7. Remisión de Informe de Evaluación de Auditoría de Confiabilidad a Despacho'},
-                            ],
-                            'SUP':[
-                                {titulo:'1. Solicitud / Denuncia / Requerimiento de la SCEP'},
-                                {
-                                    titulo:'2. Programa de Trabajo',
-                                    buttons:{
-                                        'Programa de Trabajo':{
-                                            template:'1NZWQq66t6XQGHT22t-U8q7BI0b-Q0TSSAotf_lMe6Ow',
-                                            name:'programaDeTrabajo',
-                                        },
-                                    }
-                                },
-                                {titulo:'3. Otros documentos'},
-                                {
-                                    titulo:'4. Informe',
-                                    buttons:{
-                                        'Informe Supervisión':{
-                                        },
-                                    }
-                                },
-                                {titulo:'5. Revisión / Inspección'},
-                                {titulo:'6. Documento Aprobado'},
-                                {titulo:'7. Remisión de Informe de Evaluación de Supervisión a Despacho'},
-                            ],
-                            'RDI':[{titulo:''}],
-                            'COD':[{titulo:''}],
-                            'EIU':[{titulo:''}],
-                            'EIP':[{titulo:''}],
-                            'SYD':[{titulo:''}],
-                            'TAD':[{titulo:''}],
-                            'OTR':[{titulo:''}],
-                        }
+                        definicionPasos: <?= json_encode(\App\Http\Controllers\VueEditorController::pasos ) ?>
                     };
                 },
                 computed: {

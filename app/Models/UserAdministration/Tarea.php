@@ -5,13 +5,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use App\Models\SaveUserTrait;
-use Illuminate\Support\Facades\Auth;
+
 
 class Tarea extends Model
 {
     use SoftDeletes, Notifiable, SaveUserTrait;
     protected $table = 'adm_tareas';
-    protected $fillable = array(
+    protected $fillable = array (
       0 => 'cod_tarea',
       1 => 'nombre_tarea',
       2 => 'descripcion',
@@ -31,7 +31,7 @@ class Tarea extends Model
       16 => 'revisor2_id',
       17 => 'aprobacion2_id',
     );
-    protected $attributes = array(
+    protected $attributes = array (
       'cod_tarea' => '',
       'nombre_tarea' => '',
       'descripcion' => '',
@@ -41,12 +41,12 @@ class Tarea extends Model
       'avance' => '0',
       'prioridad' => 'Media',
       'dias_otorgados' => '0',
-      'nro_de_control' => null,
-      'gestion' => null,
-      'tipo' => null,
-      'datos' => null,
+      'nro_de_control' => NULL,
+      'gestion' => NULL,
+      'tipo' => NULL,
+      'datos' => NULL,
     );
-    protected $casts = array(
+    protected $casts = array (
       'cod_tarea' => 'string',
       'nombre_tarea' => 'string',
       'descripcion' => 'string',
@@ -61,10 +61,10 @@ class Tarea extends Model
       'tipo' => 'string',
       'datos' => 'array',
     );
-    protected $events = array(
+    protected $events = array (
       'saved' => 'App\\Events\\UserAdministration\\TareaSaved',
     );
-    protected $appends = array(
+    protected $appends = array (
       0 => 'dias_pasados',
       1 => 'ultima_asignacion',
     );
@@ -128,62 +128,53 @@ class Tarea extends Model
     }
 
 
-    public function scopeWhereUserAssigned($query, $userId, $ownerId)
-    {
-        return $query->whereIn('id', function ($query) use ($userId, $ownerId) {
-            $query->select('tarea_id')
+    function scopeWhereUserAssigned ($query, $userId, $ownerId) {
+                            return $query->whereIn('id', function($query) use($userId, $ownerId) {
+                                $query->select('tarea_id')
                                 ->from('tarea_user')
-                                ->where(function ($query) use ($userId, $ownerId) {
+                                ->where(function ($query) use($userId, $ownerId) {
                                     if ($ownerId!='1') {
                                         $query->where('user_id', $userId)
                                             ->orWhere('creador_id', $ownerId);
-                                        $user = User::find($userId);
-                                        if ($user->role_id==5) {
-                                            // El invitado puede ver las tareas del usuario delfin
-                                            $query->orWhere('user_id', 5);
-                                        }
                                     }
                                 });
-        });
-    }
+                            });
+                        }
 
-    public function getDiasPasadosAttribute()
-    {
-        return $this->created_at->diff(\Carbon\Carbon::now())->days;
-    }
+    function getDiasPasadosAttribute () {
+                            return $this->created_at->diff(\Carbon\Carbon::now())->days;
+                        }
 
-    public function getDiasOtorgadosAttribute()
-    {
-        $asignacion = $this->asignaciones()->orderBy('created_at', 'desc')->first();
-        return $asignacion ? $asignacion->dias_plazo * 1 : 0;
-    }
+    function getDiasOtorgadosAttribute () {
+                            $asignacion = $this->asignaciones()->orderBy('created_at', 'desc')->first();
+                            return $asignacion ? $asignacion->dias_plazo * 1 : 0;
+                        }
 
-    public function getAvanceAttribute()
-    {
-        $avancesPorPersona = [];
-        $lastAsignation = $this->asignaciones()->max('nro_asignacion');
-        $avances = $this->avances()->with('asignacion')->orderBy('id', 'asc')->get();
-        foreach ($avances as $avance) {
-            if ($avance->asignacion && $avance->asignacion->nro_asignacion==$lastAsignation) {
-                $avancesPorPersona[$avance->usuario_abm_id] = $avance->avance;
-            }
-        }
-        $total = array_sum($avancesPorPersona);
-        $count = $this->asignaciones()->where('nro_asignacion', $lastAsignation)->count();
-        return $count> 0 ? $total / $count : 0;
-    }
+    function getAvanceAttribute () {
+                            $avancesPorPersona = [];
+                            $lastAsignation = $this->asignaciones()->max('nro_asignacion');
+                            $avances = $this->avances()->with('asignacion')->orderBy('id', 'asc')->get();
+                            foreach ($avances as $avance) {
+                                if ($avance->asignacion && $avance->asignacion->nro_asignacion==$lastAsignation) {
+                                    $avancesPorPersona[$avance->usuario_abm_id] = $avance->avance;
+                                }
+                            }
+                            $total = array_sum($avancesPorPersona);
+                            $count = $this->asignaciones()->where('nro_asignacion', $lastAsignation)->count();
+                            return $count> 0 ? $total / $count : 0;
+                        }
 
-    public function getUltimaAsignacionAttribute()
-    {
-        $asignaciones = $this->asignaciones()->orderBy('id', 'desc')->get();
-        $ultimos = [];
-        $first = false;
-        foreach ($asignaciones as $asignacion) {
-            $first = $first ?: $asignacion->nro_asignacion;
-            if ($first==$asignacion->nro_asignacion) {
-                $ultimos[$asignacion->user_id]=$asignacion->id;
-            }
-        }
-        return $ultimos;
-    }
+    function getUltimaAsignacionAttribute () {
+                            $asignaciones = $this->asignaciones()->orderBy('id', 'desc')->get();
+                            $ultimos = [];
+                            $first = false;
+                            foreach($asignaciones as $asignacion)
+                            {
+                                $first = $first ?: $asignacion->nro_asignacion;
+                                if ($first==$asignacion->nro_asignacion) {
+                                    $ultimos[$asignacion->user_id]=$asignacion->id;
+                                }
+                            }
+                            return $ultimos;
+                        }
 }

@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
 class CreateAdmHojaTrabajosTable extends Migration
 {
+
+    
     public function up()
     {
         Schema::create('adm_hoja_trabajos', function (Blueprint $table) {
@@ -25,4 +28,5 @@ class CreateAdmHojaTrabajosTable extends Migration
     {
         Schema::dropIfExists('adm_hoja_trabajos');
     }
+
 }

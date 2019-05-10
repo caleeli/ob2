@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
 class CreateAdmContratacionsTable extends Migration
 {
+
+    
     public function up()
     {
         Schema::create('contrataciones', function (Blueprint $table) {
@@ -27,4 +30,5 @@ class CreateAdmContratacionsTable extends Migration
     {
         Schema::dropIfExists('contrataciones');
     }
+
 }

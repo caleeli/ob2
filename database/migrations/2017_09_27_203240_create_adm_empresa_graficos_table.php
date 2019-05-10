@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
 class CreateAdmEmpresaGraficosTable extends Migration
 {
+
+    
     public function up()
     {
         Schema::create('adm_empresa_graficos', function (Blueprint $table) {
@@ -26,4 +29,5 @@ class CreateAdmEmpresaGraficosTable extends Migration
     {
         Schema::dropIfExists('adm_empresa_graficos');
     }
+
 }

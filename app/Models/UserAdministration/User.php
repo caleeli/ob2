@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use App\Models\SaveUserTrait;
 
+
 class User extends \Illuminate\Foundation\Auth\User
 {
     use SoftDeletes, Notifiable, SaveUserTrait;
     protected $table = 'adm_users';
-    protected $fillable = array(
+    protected $fillable = array (
       0 => 'username',
       1 => 'password',
       2 => 'nombres',
@@ -42,38 +43,38 @@ class User extends \Illuminate\Foundation\Auth\User
       28 => 'remember_token',
       29 => 'role_id',
     );
-    protected $attributes = array(
+    protected $attributes = array (
       'username' => '',
       'password' => '',
       'nombres' => '',
       'apellidos' => '',
-      'fotografia' => null,
+      'fotografia' => NULL,
       'numero_ci' => 0,
       'tipo_doc_ci' => 0,
       'ext_doc' => 0,
       'cod_estado_civil' => '',
-      'fecha_nac' => null,
-      'dep_cod' => null,
-      'cod_ciudad' => null,
-      'tipo_persona' => null,
-      'cod_nac' => null,
-      'nivel_edu' => null,
-      'cod_cliente' => null,
-      'fec_ven_cliente' => null,
+      'fecha_nac' => NULL,
+      'dep_cod' => NULL,
+      'cod_ciudad' => NULL,
+      'tipo_persona' => NULL,
+      'cod_nac' => NULL,
+      'nivel_edu' => NULL,
+      'cod_cliente' => NULL,
+      'fec_ven_cliente' => NULL,
       'email' => '',
-      'nro_dependientes' => null,
-      'calificacion' => null,
-      'direccion' => null,
-      'ubicacion' => null,
-      'fec_registro' => null,
-      'hora_registro' => null,
-      'cod_mun' => null,
-      'cod_prov' => null,
+      'nro_dependientes' => NULL,
+      'calificacion' => NULL,
+      'direccion' => NULL,
+      'ubicacion' => NULL,
+      'fec_registro' => NULL,
+      'hora_registro' => NULL,
+      'cod_mun' => NULL,
+      'cod_prov' => NULL,
       'cod_zona' => 'Codigo Zona',
       'unidad' => '',
       'remember_token' => '',
     );
-    protected $casts = array(
+    protected $casts = array (
       'username' => 'string',
       'password' => 'string',
       'nombres' => 'string',
@@ -104,7 +105,7 @@ class User extends \Illuminate\Foundation\Auth\User
       'unidad' => 'string',
       'remember_token' => 'string',
     );
-    protected $events = array(
+    protected $events = array (
     );
     public function logins()
     {
@@ -130,25 +131,23 @@ class User extends \Illuminate\Foundation\Auth\User
     }
 
 
-    public function setPasswordAttribute($value)
-    {
-        if ($this->attributes['password']!=$value) {
-            $this->attributes['password'] = md5($value);
-        }
-    }
+    function setPasswordAttribute ($value) {
+                        if ($this->attributes['password']!=$value) {
+                            $this->attributes['password'] = md5($value);
+                        }
+                    }
 
-    public function registrar($data)
-    {
-        $userExists = User::where('username', '=', $data['username'])
+    function registrar ($data) {
+                            $userExists = User::where('username', '=', $data['username'])
                                 ->first();
-        if ($userExists) {
-            throw new \Exception("Usuario ya existe");
-        }
-        $data['role_id'] = 2;
-        $user = new \App\Models\UserAdministration\User($data);
-        \Mail::to($data['email'])
+                            if ($userExists) {
+                                throw new \Exception("Usuario ya existe");
+                            }
+                            $data['role_id'] = 2;
+                            $user = new \App\Models\UserAdministration\User($data);
+                            \Mail::to($data['email'])
                                 ->send(new \App\Mail\RegistroUsuario($user));
-        $user->save();
-        return $data;
-    }
+                            $user->save();
+                            return $data;
+                        }
 }

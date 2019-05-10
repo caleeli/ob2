@@ -8,17 +8,12 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Models\UserAdministration\EstadoFinanciero;
 
+
 class EstadoFinancieroSaving implements ShouldBroadcast
 {
     use InteractsWithSockets;
-    public $estadoFinanciero = null;
-    public function __construct(EstadoFinanciero $model)
-    {
-        $this->estadoFinanciero=$model;
-    }
+    public $estadoFinanciero = NULL;
+public function __construct(EstadoFinanciero $model){$this->estadoFinanciero=$model;}
 
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
-    }
+public function broadcastOn(){return new PrivateChannel('channel-name');}
 }

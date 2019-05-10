@@ -6,24 +6,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use App\Models\SaveUserTrait;
 
+
 class Recover extends Model
 {
     use SoftDeletes, Notifiable, SaveUserTrait;
     protected $table = 'adm_recovers';
-    protected $fillable = array(
+    protected $fillable = array (
       0 => 'account',
       1 => 'key',
       2 => 'user_id',
     );
-    protected $attributes = array(
+    protected $attributes = array (
       'account' => '',
       'key' => '',
     );
-    protected $casts = array(
+    protected $casts = array (
       'account' => 'string',
       'key' => 'string',
     );
-    protected $events = array(
+    protected $events = array (
     );
     public function user()
     {
@@ -31,34 +32,33 @@ class Recover extends Model
     }
 
 
-    public function sendEmail($account)
-    {
-        $enviado = false;
-        $usersByUsername = User::where('username', '=', $account)->get();
-        $usersByEmail = User::where('email', '=', $account)->get();
-        foreach ($usersByUsername as $user) {
-            $recover = Recover::create([
+    function sendEmail ($account) {
+                            $enviado = false;
+                            $usersByUsername = User::where('username', '=', $account)->get();
+                            $usersByEmail = User::where('email', '=', $account)->get();
+                            foreach($usersByUsername as $user) {
+                                $recover = Recover::create([
                                     'account'=> $account,
                                     'key'=> uniqid('', true),
                                 ]);
-            $recover->user()->associate($user);
-            \Mail::to($user->email)
+                                $recover->user()->associate($user);
+                                \Mail::to($user->email)
                                     ->send(new \App\Mail\RecoverPassword($user, $recover));
-            $enviado = true;
-        }
-        foreach ($usersByEmail as $user) {
-            if ($user->username===$user->email) {
-                continue;
-            }
-            $recover = Recover::create([
+                                $enviado = true;
+                            }
+                            foreach($usersByEmail as $user) {
+                                if($user->username===$user->email) {
+                                    continue;
+                                }
+                                $recover = Recover::create([
                                     'account'=> $account,
                                     'key'=> uniqid('', true),
                                 ]);
-            $recover->user()->associate($user);
-            \Mail::to($user->email)
+                                $recover->user()->associate($user);
+                                \Mail::to($user->email)
                                     ->send(new \App\Mail\RecoverPassword($user, $recover));
-            $enviado = true;
-        }
-        return $enviado;
-    }
+                                $enviado = true;
+                            }
+                            return $enviado;
+                        }
 }

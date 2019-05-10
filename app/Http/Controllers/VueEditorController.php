@@ -12,30 +12,22 @@ class VueEditorController extends Controller
 {
     const pasos = [
         'EDC'=> [
-            ['titulo'=>'1. Nota de solicitud y remisión de documentación a la empresa'],
-            ['titulo'=>'2. Notas de solicitud y remisión de papeles de trabajo'],
-            ['titulo'=>'3. Análisis de tendencia'],
             [
-                'titulo'=>'4. Trabajo de campo',
+                'titulo'=>'1. Plantilla de revisión',
+                'porcentaje' => 30,
                 'buttons'=>[
-                    'F-3007'=> [
-                        'template'=>'1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI',
-                        'name'=>'hojaTrabajo',
+                    'revision'=> [
+                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                        'buttonTitle' => 'Plantilla de Revisión',
+                        'name'=>'revision',
                     ]
-                ]
+                ],
             ],
-            ['titulo'=>'5. Informe/Nota de Evaluación de Consistencias'],
+            ['titulo'=>'2. Respuesta de la Agencia'],
+            ['titulo'=>'3. Informe Final'],
             [
-                'titulo'=>'6. Revisión',
-                'buttons'=>[
-                    'anexo4'=> [
-                        'template'=>'1zxuEWTosPwlNSUapfg8KfaZr8d-GYohsRrFqjNKrXtU',
-                        'name'=>'anexo4',
-                    ]
-                ]
+                'titulo'=>'4. Conclusión',
             ],
-            ['titulo'=>'7. Documento Aprobado'],
-            ['titulo'=>'8. Remisión de Informe de Evaluación de Consistencia a Despacho'],
         ],
         'AUD'=> [
             ['titulo'=>'1. Recepción y Solicitud de documentación a la Empresa'],

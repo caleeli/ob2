@@ -8,17 +8,12 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Models\UserAdministration\Avance;
 
+
 class AvanceSaved implements ShouldBroadcast
 {
     use InteractsWithSockets;
-    public $avance = null;
-    public function __construct(Avance $model)
-    {
-        $this->avance=$model;
-    }
+    public $avance = NULL;
+public function __construct(Avance $model){$this->avance=$model;}
 
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
-    }
+public function broadcastOn(){return new PrivateChannel('channel-name');}
 }

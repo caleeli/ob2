@@ -28,9 +28,8 @@
                 <h1 class="logo-name"><img style="width:300px;" src="/images/logo2.png?3"></h1>
 
             </div>
-            <h3 style="color:#010080;">Subcontraloría de Empresas Públicas</h3>
             <p>Ingrese su nombre de usuario y contraseña para ingresar al sistema</p>
-            <form class="m-t" role="form" action="index.html">
+            <form class="m-t" role="form" action="index.php">
                 <div class="form-group">
                     <input class="form-control" placeholder="Username" v-model="login.username" required="">
                 </div>
@@ -70,7 +69,7 @@
                             if (valido) {
                                 localStorage.user_id = valido.user_id
                                 localStorage.token = valido.token
-                                location.href = 'index.html';
+                                location.href = 'index.php';
                             } else {
                                 Notification.success("Usuario o contraseña incorrecta");
                             }

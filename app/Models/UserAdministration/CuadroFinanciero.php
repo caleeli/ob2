@@ -6,33 +6,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use App\Models\SaveUserTrait;
 
+
 class CuadroFinanciero extends Model
 {
     use SoftDeletes, Notifiable, SaveUserTrait;
     protected $table = 'adm_cuadro_financieros';
-    protected $fillable = array(
+    protected $fillable = array (
       0 => 'titulo',
       1 => 'contenido',
       2 => 'grafico',
     );
-    protected $attributes = array(
+    protected $attributes = array (
       'titulo' => '',
       'contenido' => '',
       'grafico' => '',
     );
-    protected $casts = array(
+    protected $casts = array (
       'titulo' => 'string',
       'contenido' => 'string',
       'grafico' => 'string',
     );
-    protected $events = array(
+    protected $events = array (
     );
-    public function calculate($empresaId, $gestion, $html, $grafico='{}')
-    {
-        $ev = new \App\Evaluator($empresaId, $gestion, ['Balance General', 'Estado de Resultados y Gastos']);
-        $ev2 = new \App\Evaluator($empresaId, $gestion, ['Estado de Ejecución Presupuestaria de Gastos']);
-        
-        $ppto = '<p class="desc-ind">La empresa cuenta con un presupuesto de Bs. {{$uf("Presup%Vig%")}}</p>
+    function calculate ($empresaId, $gestion, $html, $grafico='{}') {
+                            $ev = new \App\Evaluator($empresaId, $gestion, ['Balance General', 'Estado de Resultados y Gastos']);
+                            $ev2 = new \App\Evaluator($empresaId, $gestion, ['Estado de Ejecución Presupuestaria de Gastos']);
+                            $ppto = '<p class="desc-ind">La empresa cuenta con un presupuesto de Bs. {{$uf("Presup%Vig%")}}</p>
         <table style="height: 223px;" width="100%">
 		<tbody>
 		<tr>
@@ -46,6 +45,6 @@ class CuadroFinanciero extends Model
 		</tr>
 		</tbody>
 		</table>';
-        return [$ev->calculate($html), $ev2->calculate($ppto), $ev->calculate($grafico, true)];
-    }
+                            return [$ev->calculate($html), $ev2->calculate($ppto), $ev->calculate($grafico, true)];
+                        }
 }
