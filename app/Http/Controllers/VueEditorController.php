@@ -29,44 +29,167 @@ class VueEditorController extends Controller
                 'titulo'=>'4. Conclusión',
             ],
         ],
-        'AUD'=> [
-            ['titulo'=>'1. Recepción y Solicitud de documentación a la Empresa'],
-            ['titulo'=>'2. Planificación de auditoría'],
+        'EDC' => [
             [
-                'titulo'=>'3. Programa de trabajo',
+                'titulo'=>'1. Plantilla de revisión',
+                'porcentaje' => 30,
                 'buttons'=>[
-                    'Programa de trabajo'=>[
-                        'template'=>'1Hx0u3pCJe7890ckcdcY1gMs5R5niI0EpA-GPXR4qstw',
-                        'name'=>'ProgramaDeTrabajo',
-                    ],
-                ]
+                    'revision'=> [
+                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                        'buttonTitle' => 'Plantilla de Revisión',
+                        'name'=>'revision',
+                    ]
+                ],
             ],
-            ['titulo'=>'4. Informe'],
-            ['titulo'=>'5. Revisión'],
-            ['titulo'=>'6. Documento Aprobado'],
-            ['titulo'=>'7. Remisión de Informe de Evaluación de Auditoría de Confiabilidad a Despacho'],
+            ['titulo'=>'2. Respuesta de la Agencia'],
+            ['titulo'=>'3. Informe Final'],
+            [
+                'titulo'=>'4. Conclusión',
+            ],
         ],
-        'SUP'=>[
-            ['titulo'=>'Solicitud / Denuncia / Requerimiento de la SCEP'],
+        'AUD' => [
             [
-                'titulo'=>'Programa de Trabajo',
+                'titulo'=>'1. Plantilla de revisión',
+                'porcentaje' => 30,
                 'buttons'=>[
-                    'Programa de Trabajo'=>[
-                        'template'=>'1NZWQq66t6XQGHT22t-U8q7BI0b-Q0TSSAotf_lMe6Ow',
-                        'name'=>'programaDeTrabajo',
-                    ],
-                ]
+                    'revision'=> [
+                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                        'buttonTitle' => 'Plantilla de Revisión',
+                        'name'=>'revision',
+                    ]
+                ],
             ],
+            ['titulo'=>'2. Respuesta de la Agencia'],
+            ['titulo'=>'3. Informe Final'],
             [
-                'titulo'=>'Informe',
-                'buttons'=>[
-                    //'Informe Supervisión'=>[
-                    //],
-                ]
+                'titulo'=>'4. Conclusión',
             ],
-            ['titulo'=>'Revisión / Inspección'],
-            ['titulo'=>'Documento Aprobado'],
-            ['titulo'=>'Remisión de Informe de Evaluación de Supervisión a Despacho'],
+        ],
+        'SUP' => [
+            [
+                'titulo'=>'1. Plantilla de revisión',
+                'porcentaje' => 30,
+                'buttons'=>[
+                    'revision'=> [
+                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                        'buttonTitle' => 'Plantilla de Revisión',
+                        'name'=>'revision',
+                    ]
+                ],
+            ],
+            ['titulo'=>'2. Respuesta de la Agencia'],
+            ['titulo'=>'3. Informe Final'],
+            [
+                'titulo'=>'4. Conclusión',
+            ],
+        ],
+        'RDI' => [
+            [
+                'titulo'=>'1. Plantilla de revisión',
+                'porcentaje' => 30,
+                'buttons'=>[
+                    'revision'=> [
+                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                        'buttonTitle' => 'Plantilla de Revisión',
+                        'name'=>'revision',
+                    ]
+                ],
+            ],
+            ['titulo'=>'2. Respuesta de la Agencia'],
+            ['titulo'=>'3. Informe Final'],
+            [
+                'titulo'=>'4. Conclusión',
+            ],
+        ],
+        'COD' => [
+            [
+                'titulo'=>'1. Plantilla de revisión',
+                'porcentaje' => 30,
+                'buttons'=>[
+                    'revision'=> [
+                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                        'buttonTitle' => 'Plantilla de Revisión',
+                        'name'=>'revision',
+                    ]
+                ],
+            ],
+            ['titulo'=>'2. Respuesta de la Agencia'],
+            ['titulo'=>'3. Informe Final'],
+            [
+                'titulo'=>'4. Conclusión',
+            ],
+        ],
+        'EIU' => [
+            [
+                'titulo'=>'1. Plantilla de revisión',
+                'porcentaje' => 30,
+                'buttons'=>[
+                    'revision'=> [
+                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                        'buttonTitle' => 'Plantilla de Revisión',
+                        'name'=>'revision',
+                    ]
+                ],
+            ],
+            ['titulo'=>'2. Respuesta de la Agencia'],
+            ['titulo'=>'3. Informe Final'],
+            [
+                'titulo'=>'4. Conclusión',
+            ],
+        ],
+        'EIP' => [
+            [
+                'titulo'=>'1. Plantilla de revisión',
+                'porcentaje' => 30,
+                'buttons'=>[
+                    'revision'=> [
+                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                        'buttonTitle' => 'Plantilla de Revisión',
+                        'name'=>'revision',
+                    ]
+                ],
+            ],
+            ['titulo'=>'2. Respuesta de la Agencia'],
+            ['titulo'=>'3. Informe Final'],
+            [
+                'titulo'=>'4. Conclusión',
+            ],
+        ],
+        'SYD' => [
+            [
+                'titulo'=>'1. Plantilla de revisión',
+                'porcentaje' => 30,
+                'buttons'=>[
+                    'revision'=> [
+                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                        'buttonTitle' => 'Plantilla de Revisión',
+                        'name'=>'revision',
+                    ]
+                ],
+            ],
+            ['titulo'=>'2. Respuesta de la Agencia'],
+            ['titulo'=>'3. Informe Final'],
+            [
+                'titulo'=>'4. Conclusión',
+            ],
+        ],
+        'TAD' => [
+            [
+                'titulo'=>'1. Plantilla de revisión',
+                'porcentaje' => 30,
+                'buttons'=>[
+                    'revision'=> [
+                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                        'buttonTitle' => 'Plantilla de Revisión',
+                        'name'=>'revision',
+                    ]
+                ],
+            ],
+            ['titulo'=>'2. Respuesta de la Agencia'],
+            ['titulo'=>'3. Informe Final'],
+            [
+                'titulo'=>'4. Conclusión',
+            ],
         ],
     ];
 
