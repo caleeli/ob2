@@ -1105,7 +1105,7 @@ require('../../vendor/autoload.php');
               
               <div class="footer">
                 <div>
-                  <strong>Copyright</strong> coredump.com.bo © 2017-2019. Site designed by <a href="mailto:davidcallizaya@gmail.com">coredump.com.bo</a>
+                    <strong>Copyright</strong> coredump.com.bo © 2017-2019. Site designed by <a href="coredump.com.bo">coredump.com.bo</a>
                 </div>
               </div>
             </div>
