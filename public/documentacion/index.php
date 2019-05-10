@@ -1108,7 +1108,7 @@ require('../../vendor/autoload.php');
               
               <div class="footer">
                 <div>
-                  <strong>Copyright</strong> subcep.com © 2017-2019. Site designed by <a href="mailto:angelitacc27@gmail.com">Angela Choque</a> <a href="https://wa.me/59173241591?text=Estoy%20interesado%20en%20el%20sistema%20subcep.com" target="_blank">(+591 73241591)</a>
+                  <strong>Copyright</strong> coredump.com.bo © 2017-2019. Site designed by <a href="mailto:davidcallizaya@gmail.com">coredump.com.bo</a>
                 </div>
               </div>
             </div>
