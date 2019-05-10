@@ -14,11 +14,11 @@ $connections = array_merge($additionalConnections, [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DB_HOST_MY', '127.0.0.1'),
+            'port' => env('DB_PORT_MY', '3306'),
+            'database' => env('DB_DATABASE_MY', 'forge'),
+            'username' => env('DB_USERNAME_MY', 'forge'),
+            'password' => env('DB_PASSWORD_MY', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
