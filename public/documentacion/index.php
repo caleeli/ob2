@@ -10,7 +10,7 @@ require('../../vendor/autoload.php');
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <title>SCEP</title>
+        <title>DEMO para Diaconia</title>
         <link rel="shortcut icon" type="image/png" href="../favicon.png"/>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
