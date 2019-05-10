@@ -405,12 +405,9 @@ require('../../vendor/autoload.php');
                                                         <h5>Normativa</h5>
                                                         <select v-model="biblioteca_normativa" class="form-control">
                                                             <option value=""></option>
-                                                            <option value="Ley_Financial">Leyes Financiales</option>
-                                                            <option value="Reg._LF.">Reglamento Leyes Financiales</option>
-                                                            <option value="Clasificador">Clasificador Presupuestario</option>
-                                                            <option value="LINEAMIENTOS">Lineamientos del COSSEP</option>
-                                                            <option value="dl_crea">Creación de Empresas Públicas</option>
-                                                            <option value="SCEP">Interna SCEP</option>
+                                                            <option value="asfi">Normativa ASFI</option>
+                                                            <option value="reglamento">Reglamento</option>
+                                                            <option value="Clasificador">Auditoria Riesgo</option>
                                                             <option value="NORMAS_AUDIT">Normas de Auditoría</option>
                                                             <option value="NORMAS_CONT">Normas de Contabilidad</option>
                                                             
