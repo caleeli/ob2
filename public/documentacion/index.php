@@ -1588,6 +1588,7 @@ require('../../vendor/autoload.php');
                                 self.pintarTareas();
                             },
                             {
+                                per_page: 30,
                                 filter:[
                                     'where,tipo,'+JSON.stringify(self.tipoTarea),
                                     'whereUserAssigned,'+localStorage.user_id+','+localStorage.user_id,
