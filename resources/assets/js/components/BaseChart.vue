@@ -224,6 +224,9 @@
                                 ticks: {
                                     scaleStartValue: 0,
                                     beginAtZero: true,
+                                    callback: function(label, index, labels) {
+                                        return isNaN(label) ? label : self.formatNumber(label);
+                                    },
                                 }
                             }],
                         }
@@ -346,6 +349,11 @@
                 var self = this;
                 $(self.$el).find(".canvasOwner").html('');
                 self.drawChart();
+            },
+            formatNumber: function (n) {
+                return n.toFixed(2).replace(/./g, function(c, i, a) {
+                    return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+                });
             },
         }
     });
