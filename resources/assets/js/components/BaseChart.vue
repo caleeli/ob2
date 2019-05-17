@@ -193,14 +193,22 @@
                         self.ys.push(data.series[rowId][a]);
                         self.ys_label.push(yl);
                         var colorData = colors.pop();
-                        chartData.datasets.push({
+                        var dataset = {
                             label: a,
                             borderColor: colorData,
                             backgroundColor: self.colorToRgba(colorData, 0.7),
                             fill: false,
                             data: data.series[rowId][a],
                             //yAxisID: axis[1],
-                        });
+                        };
+                        if (data.series[rowId][a] && data.series[rowId][a].forEach instanceof Function) {
+                            var dotColors = [];
+                            data.series[rowId][a].forEach(function(item) {
+                                dotColors.push(isNaN(item) ? '#FFFFFF' : (item >= 0 ? '#FFFFFF' : '#FF6060'));
+                            });
+                            dataset.pointBackgroundColor = dotColors;
+                        }
+                        chartData.datasets.push(dataset);
                     }
                     var chartType = 'bar';
                     var options = {
