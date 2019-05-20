@@ -16,7 +16,7 @@ var page = require('webpage').create(),
  * @param timeOutMillis the max amount of time to wait. If not specified, 3 sec is used.
  */
 function waitFor(testFx, onReady, timeOutMillis) {
-    var maxtimeOutMillis = timeOutMillis ? timeOutMillis : 9000, //< Default Max Timout is 3s
+    var maxtimeOutMillis = timeOutMillis ? timeOutMillis : 6000, //< Default Max Timout is 3s
         start = new Date().getTime(),
         condition = false,
         interval = setInterval(function() {
@@ -90,7 +90,7 @@ if (system.args.length < 3 || system.args.length > 5) {
                     page.render(output);
                     phantom.exit();
                 },
-                12000
+                10000
             );
         }
     });
