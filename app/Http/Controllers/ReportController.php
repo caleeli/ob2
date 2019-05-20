@@ -27,17 +27,17 @@ class ReportController extends Controller
         return $this->toPDF($url, $format);
     }
 
-    private function toPDF($url, $format=null)
+    private function toPDF($url, $format = null)
     {
         $url1 = escapeshellarg($url);
         $rasterize = escapeshellarg(base_path('bin/rasterize.js'));
         $target0 = storage_path('app/public/report/' . uniqid('rep') . '.pdf');
         $target = escapeshellarg($target0);
         $format = !empty($format)
-            ? '"'.$format.'"'
+            ? '"' . $format . '"'
             : self::FORMAT;
         $cmd = env('PHANTOMJS') . " $rasterize $url1 $target $format";
-        exec($cmd);
-        return redirect('/storage/report/' . basename($target0));
+        passthru($cmd);
+        //return redirect('/storage/report/' . basename($target0));
     }
 }
