@@ -220,6 +220,14 @@
                             display: addTitle,
                             text: rowId,
                         },
+                        tooltips: {
+                            callbacks: {
+                                label: function(tooltipItem, data) {
+                                    var label = tooltipItem.yLabel;
+                                    return isNaN(label) ? label : self.formatNumber(label);
+                                }
+                            }
+                        },
                         scales: {
                             xAxes: [{
                                 position: 'bottom'
