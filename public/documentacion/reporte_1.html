@@ -283,6 +283,20 @@
                                     <br>
                                 </div>
 
+                                <div class="col-xs-12">
+                                    <b>Resultado antes del ajuste:</b>
+                                    <small>
+                                        {{empresa.resultado_antes_ajuste}}
+                                    </small>
+                                    <br>
+                                    <br>
+                                    <b>Resultado del ejercicio:</b>
+                                    <small>
+                                        {{empresa.resultado_del_ejercicio}}
+                                    </small>
+                                    <br>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -684,6 +698,8 @@
                                         'endeudamiento_financiero' : "{{$uc('2.1.2.3')/$uc('2')}}",
                                         'rotacion_activos_totales' : "{{$uc('5.2')/$uc('1')}}",
                                         'rotacion_activos_fijos' : "{{$uc('5.2')/$uc('1.2.3')}}",
+                                        'resultado_antes_ajuste': "{{$uc('Resultado antes del Ajuste:')}}",
+                                        'resultado_del_ejercicio': "{{$uc('Resultado del Ejercicio:')}}",
                                         //grafico
                                         'chart1': '[\
     {\
