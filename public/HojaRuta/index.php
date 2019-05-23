@@ -1226,7 +1226,7 @@ if (!isset($_SESSION['hr_user'])) {
                             <tr v-if="reporte.forma!='SoloDerivaciones'">
                                 <th>{{r+1}}</th>
                                 <td>{{rep.tipo_tarea}}</td>
-                                <td>{{rep.id}}</td>
+                                <td>{{rep.numero}}</td>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td>{{rep.gestion}}</td>
                                 <td>{{rep.referencia}}</td>
@@ -1239,7 +1239,7 @@ if (!isset($_SESSION['hr_user'])) {
                             <tr v-if="reporte.forma==='Combinado'">
                                 <th>#</th>
                                 <th></th>
-                                <th>Número HR</th>
+                                <th>Número</th>
                                 <th>Nº Control</th>
                                 <th>Fecha Derivación</th>
                                 <th>Referencia</th>
@@ -1252,7 +1252,7 @@ if (!isset($_SESSION['hr_user'])) {
                                 <th v-if="reporte.forma==='SoloDerivaciones'">{{r+1}}</th>
                                 <td>{{d+1}}</td>
                                 <td>{{rep.tipo_tarea}}</td>
-                                <td>{{rep.id}}</td>
+                                <td>{{rep.numero}}</td>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
                                 <td>{{rep.referencia}}</td>
