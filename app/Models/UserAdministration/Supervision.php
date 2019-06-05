@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use App\Models\SaveUserTrait;
 
-
 class Supervision extends Model
 {
     use SoftDeletes, Notifiable, SaveUserTrait;
     protected $table = 'adm_supervisiones';
-    protected $fillable = array (
+    protected $fillable = array(
       0 => 'cod_supervision',
       1 => 'documento',
       2 => 'informes',
@@ -23,15 +22,15 @@ class Supervision extends Model
       8 => 'owner_id',
       9 => 'supervisor_id',
     );
-    protected $attributes = array (
+    protected $attributes = array(
       'cod_supervision' => '',
-      'documento' => NULL,
-      'informes' => NULL,
-      'informe_dictamen' => NULL,
+      'documento' => null,
+      'informes' => null,
+      'informe_dictamen' => null,
       'gestion' => '',
       'detalle' => '',
     );
-    protected $casts = array (
+    protected $casts = array(
       'cod_supervision' => 'string',
       'documento' => 'array',
       'informes' => 'array',
@@ -39,7 +38,7 @@ class Supervision extends Model
       'gestion' => 'string',
       'detalle' => 'string',
     );
-    protected $events = array (
+    protected $events = array(
     );
     public function empresa()
     {
@@ -65,11 +64,12 @@ class Supervision extends Model
     }
 
 
-    function procedencias () {
-                            $sql = "select nombre_empresa as nombre from adm_empresas
+    public function procedencias()
+    {
+        $sql = "select nombre_empresa as nombre from adm_empresas
                                 union
                                 select nombre_empresa as nombre from adm_firmas";
-                            $res = \DB::select($sql);
-                            return ["data"=>$res];
-                        }
+        $res = \DB::select($sql);
+        return ["data"=>$res];
+    }
 }
