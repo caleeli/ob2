@@ -390,6 +390,131 @@ listEditButton: function (data, type, row, meta){
 UserAdministration.Firma.prototype = Object.create(Model.prototype);
 UserAdministration.Firma.prototype.constructor = Model;
 
+UserAdministration.Supervision = function (url, id) {
+    var self = this;
+    this.$defaultUrl = "/api/UserAdministration/supervisions";
+    Model.call(this, url, id, "UserAdministration.Supervision");
+    this.$list = function () {
+        return "fields=cod_supervision,documento,empresa,representante_legal,informes,informe_dictamen,gestion,owner,supervisor";
+    };
+    this.$name = "Supervision";
+    this.$pluralName = "Supervisions";
+    this.$title = "Supervision";
+    this.$pluralTitle = "Supervisiones";
+    this.$ = {"cod_supervision":{"name":"cod_supervision","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_supervision","isAssociation":false},"documento":{"name":"documento","label":"Resumen Ejecutivo","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        },"value":"documento","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa auditada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"select","enum":[],"source":new UserAdministration.Lafirma(),"textField":"nombre_empresa","value":"representante_legal","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informes SCEP","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
+                        },"value":"informes","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Dictamen o Informe","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        },"value":"informe_dictamen","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
+    this.$fields = function () {
+        return this.object2array(this.$, "item");
+    };
+    this.$columns = function () {
+        return [{"title":"Código","data":"attributes.cod_supervision"},{"title":"Resumen Ejecutivo","data":"attributes.documento","render":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        }},{"title":"Empresa auditada","visible":true,"render":function (data, type, full, meta) {
+                            return data ? data : '';
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Firma de auditoria","visible":true,"render":function (data, type, full, meta) {
+                            return data ? data : '';
+                        },"data":"relationships.representante_legal.attributes.nombre_empresa"},{"title":"Informes SCEP","data":"attributes.informes","render":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
+                        }},{"title":"Dictamen o Informe","data":"attributes.informe_dictamen","render":function (data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('<a></a>');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('<i class="fa fa-download"></i> ');
+                            return $("<div />").append($a).html()
+                              + '<br><i class="fa fa-clock-o"></i> '
+                              + time;
+                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Supervisor","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
+    };
+    this.$methods = {
+listEditButton: function (data, type, row, meta){
+                        var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
+                        var canEdit = owner_id == localStorage.user_id;
+                        return canEdit ? true : '';
+                    },
+        procedencias:function(methodCallback,childrenAssociation){self.$call("procedencias",{}, childrenAssociation, methodCallback)}    };
+    this.$initFields();
+    if(id) {
+        this.$load(id);
+    }
+}
+UserAdministration.Supervision.prototype = Object.create(Model.prototype);
+UserAdministration.Supervision.prototype.constructor = Model;
+
 UserAdministration.Contratacion = function (url, id) {
     var self = this;
     this.$defaultUrl = "/api/UserAdministration/contratacions";

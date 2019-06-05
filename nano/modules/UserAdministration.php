@@ -961,6 +961,170 @@
                 }
             }),
             /**
+             * Supervisiones
+             */
+            new Module.Model({
+                "name": "supervision",
+                "title": "Supervision",
+                "table": "adm_supervisiones",
+                "pluralTitle": "Supervisiones",
+                "fields": [
+                    new Module.Model.Field({
+                        "name": "cod_supervision",
+                        "type": "string",
+                        "label": "Código",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "documento",
+                        "type": "array",
+                        "label": "Resumen Ejecutivo",
+                        "ui": "file",
+                        "textField": function(data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('&lt;a&gt;&lt;/a&gt;');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
+                            return $("&lt;div /&gt;").append($a).html()
+                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
+                              + time;
+                        },
+                    }),
+                    new Module.Model.Field({
+                        "name": "informes",
+                        "type": "array",
+                        "label": "Informes SCEP",
+                        "ui": "multiplefile",
+                        "textField": function(data,type,row){
+                            var res = [];
+                            if (data &amp;&amp; typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('&lt;a href="' + item.url + '" target="_blank"&gt;' + item.name + '&lt;/a&gt;');
+                                });
+                            }
+                            return res.join("&lt;br&gt; ");
+                        }
+                    }),
+                    new Module.Model.Field({
+                        "name": "informe_dictamen",
+                        "label": "Dictamen o Informe",
+                        "type": "array",
+                        "ui": "file",
+                        "textField": function(data,type,row){
+                            if (!data) {
+                                return '';
+                            }
+                            var time = row.attributes.updated_at
+                                ? dateFormat(
+                                    new Date(row.attributes.updated_at+'Z'),
+                                    'yyyy-mm-dd hh:MM:ss'
+                                )
+                                : '';
+                            var $a = $('&lt;a&gt;&lt;/a&gt;');
+                            $a.text(data.name);
+                            $a.attr('href', data.url);
+                            $a.attr('target', '_blank');
+                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
+                            return $("&lt;div /&gt;").append($a).html()
+                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
+                              + time;
+                        },
+                        "list": true,
+                    }),
+                    new Module.Model.Field({
+                        "name": "gestion",
+                        "label": "Gestión",
+                        "type": "string",
+                        "default": ""
+                    }),
+                    new Module.Model.Field({
+                        "name": "detalle",
+                        "label": "Detalle",
+                        "type": "string",
+                        "default": "",
+                        "list": false
+                    }),
+                ],
+                "associations": [
+                    new Module.Model.BelongsTo({
+                        "name": "empresa",
+                        "model": "empresa",
+                        "label": "Empresa auditada",
+                        "nullable": true,
+                        "list": true,
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
+                        "form": true,
+                        "position": 2,
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "representante_legal",
+                        "model": "lafirma",
+                        "label": "Firma de auditoria",
+                        "nullable": true,
+                        "list": true,
+                        "textField": "nombre_empresa",
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.Lafirma"),
+                        "form": true,
+                        "position": 3,
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "owner",
+                        "label": "Elaborado por",
+                        "model": "user",
+                        "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "nullable": true,
+                        "form": true,
+                        "list": true,
+                        "visible": true
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "supervisor",
+                        "label": "Supervisor",
+                        "model": "user",
+                        "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "nullable": true,
+                        "form": true,
+                        "list": true,
+                        "visible": true
+                    })
+                ],
+                "methods": {
+                    "listEditButton(data, type, row, meta)": function(data, type, row, meta){
+                        var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
+                        var canEdit = owner_id == localStorage.user_id;
+                        return canEdit ? true : '';
+                    },
+                    "procedencias()": <?php
+                        function () {
+                            $sql = "select nombre_empresa as nombre from adm_empresas
+                                union
+                                select nombre_empresa as nombre from adm_firmas";
+                            $res = \DB::select($sql);
+                            return ["data"=>$res];
+                        }
+                    ?>
+                }
+            }),
+            /**
              * Contrataciones directas.
              *
              */
