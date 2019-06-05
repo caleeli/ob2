@@ -480,7 +480,7 @@
                     <!--
                         SUPERVISIONES
                     -->
-                    <carouselitem id="supervisiones">
+                    <carouselitem>
                         <div class="row wrapper border-bottom page-heading">
                             <div class="wrapper wrapper-content">
                                 <div class="row">
@@ -491,7 +491,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow: auto;">
-                                                    <abm id="supervisiones" v-bind:model="supervisiones" v-bind:editable="esAdmin || noEsDoctorMari()" buttons="close,save,delete" :toolbar="contratacionesDirectasToolbar"></abm>
+                                                    <abm ref="supervisionesABM" v-bind:model="supervisiones" v-bind:editable="esAdmin || noEsDoctorMari()" buttons="close,save,delete" :toolbar="contratacionesDirectasToolbar"></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -1907,7 +1907,7 @@
                         $("#abmUAI").get(0).__vue__.goto(0);
                     },
                     abrirSupervisiones: function () {
-                        $("#supervisiones").get(0).__vue__.goto(0);
+                        this.$refs.supervisionesABM.goto(0);
                     },
                     abrirFirmasDeAuditoria: function () {
                         $("#abmFirmasDeAuditoria").get(0).__vue__.goto(0);
