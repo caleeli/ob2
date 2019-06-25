@@ -14,19 +14,16 @@ class Supervision extends Model
       0 => 'cod_supervision',
       1 => 'documento',
       2 => 'informes',
-      3 => 'informe_dictamen',
-      4 => 'gestion',
-      5 => 'detalle',
-      6 => 'empresa_id',
-      7 => 'representante_legal_id',
-      8 => 'owner_id',
-      9 => 'supervisor_id',
+      3 => 'gestion',
+      4 => 'detalle',
+      5 => 'empresa_id',
+      6 => 'owner_id',
+      7 => 'supervisor_id',
     );
     protected $attributes = array(
       'cod_supervision' => '',
       'documento' => null,
       'informes' => null,
-      'informe_dictamen' => null,
       'gestion' => '',
       'detalle' => '',
     );
@@ -34,7 +31,6 @@ class Supervision extends Model
       'cod_supervision' => 'string',
       'documento' => 'array',
       'informes' => 'array',
-      'informe_dictamen' => 'array',
       'gestion' => 'string',
       'detalle' => 'string',
     );
@@ -43,12 +39,6 @@ class Supervision extends Model
     public function empresa()
     {
         return $this->belongsTo('App\Models\UserAdministration\Empresa');
-    }
-
-
-    public function representante_legal()
-    {
-        return $this->belongsTo('App\Models\UserAdministration\Lafirma');
     }
 
 

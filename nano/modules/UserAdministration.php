@@ -1016,32 +1016,6 @@
                         }
                     }),
                     new Module.Model.Field({
-                        "name": "informe_dictamen",
-                        "label": "Dictamen o Informe",
-                        "type": "array",
-                        "ui": "file",
-                        "textField": function(data,type,row){
-                            if (!data) {
-                                return '';
-                            }
-                            var time = row.attributes.updated_at
-                                ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
-                                    'yyyy-mm-dd hh:MM:ss'
-                                )
-                                : '';
-                            var $a = $('&lt;a&gt;&lt;/a&gt;');
-                            $a.text(data.name);
-                            $a.attr('href', data.url);
-                            $a.attr('target', '_blank');
-                            $a.prepend('&lt;i class="fa fa-download"&gt;&lt;/i&gt; ');
-                            return $("&lt;div /&gt;").append($a).html()
-                              + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
-                              + time;
-                        },
-                        "list": false,
-                    }),
-                    new Module.Model.Field({
                         "name": "gestion",
                         "label": "Gestión",
                         "type": "string",
@@ -1067,18 +1041,6 @@
                         "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
                         "form": true,
                         "position": 2,
-                    }),
-                    new Module.Model.BelongsTo({
-                        "name": "representante_legal",
-                        "model": "lafirma",
-                        "label": "Firma de auditoria",
-                        "nullable": true,
-                        "list": false,
-                        "textField": "nombre_empresa",
-                        "ui": "select",
-                        "source": new Module.View.ModelInstance("UserAdministration.Lafirma"),
-                        "form": true,
-                        "position": 3,
                     }),
                     new Module.Model.BelongsTo({
                         "name": "owner",

@@ -419,7 +419,7 @@ UserAdministration.Supervision = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"documento","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa auditada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"select","enum":[],"source":new UserAdministration.Lafirma(),"textField":"nombre_empresa","value":"representante_legal","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informes SCEP","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"documento","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa auditada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informes SCEP","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -427,25 +427,7 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        },"value":"informes","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Dictamen o Informe","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
-                            if (!data) {
-                                return '';
-                            }
-                            var time = row.attributes.updated_at
-                                ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
-                                    'yyyy-mm-dd hh:MM:ss'
-                                )
-                                : '';
-                            var $a = $('<a></a>');
-                            $a.text(data.name);
-                            $a.attr('href', data.url);
-                            $a.attr('target', '_blank');
-                            $a.prepend('<i class="fa fa-download"></i> ');
-                            return $("<div />").append($a).html()
-                              + '<br><i class="fa fa-clock-o"></i> '
-                              + time;
-                        },"value":"informe_dictamen","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
+                        },"value":"informes","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
