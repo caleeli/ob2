@@ -395,7 +395,7 @@ UserAdministration.Supervision = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/supervisions";
     Model.call(this, url, id, "UserAdministration.Supervision");
     this.$list = function () {
-        return "fields=cod_supervision,documento,empresa,informes,gestion,owner,supervisor";
+        return "fields=cod_supervision,documento,empresa,informes,gestion,owner,owner2,supervisor";
     };
     this.$name = "Supervision";
     this.$pluralName = "Supervisions";
@@ -427,7 +427,7 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        },"value":"informes","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
+                        },"value":"informes","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"owner2":{"name":"owner2","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner2","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -460,7 +460,7 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Supervisor","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
+                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner2.attributes"},{"title":"Supervisor","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
     };
     this.$methods = {
 listEditButton: function (data, type, row, meta){

@@ -18,6 +18,7 @@ class CreateAdmSupervisionsTable extends Migration
             $table->string('detalle')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();
             $table->integer('owner_id')->unsigned()->nullable();
+            $table->integer('owner2_id')->unsigned()->nullable();
             $table->integer('supervisor_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();

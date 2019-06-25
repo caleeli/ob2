@@ -18,7 +18,8 @@ class Supervision extends Model
       4 => 'detalle',
       5 => 'empresa_id',
       6 => 'owner_id',
-      7 => 'supervisor_id',
+      7 => 'owner2_id',
+      8 => 'supervisor_id',
     );
     protected $attributes = array(
       'cod_supervision' => '',
@@ -43,6 +44,12 @@ class Supervision extends Model
 
 
     public function owner()
+    {
+        return $this->belongsTo('App\Models\UserAdministration\User');
+    }
+
+
+    public function owner2()
     {
         return $this->belongsTo('App\Models\UserAdministration\User');
     }
