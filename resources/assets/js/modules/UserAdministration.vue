@@ -395,7 +395,7 @@ UserAdministration.Supervision = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/supervisions";
     Model.call(this, url, id, "UserAdministration.Supervision");
     this.$list = function () {
-        return "fields=cod_supervision,documento,empresa,representante_legal,informes,informe_dictamen,gestion,owner,supervisor";
+        return "fields=cod_supervision,documento,empresa,informes,gestion,owner,supervisor";
     };
     this.$name = "Supervision";
     this.$pluralName = "Supervisions";
@@ -470,9 +470,7 @@ UserAdministration.Supervision = function (url, id) {
                               + time;
                         }},{"title":"Empresa auditada","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Firma de auditoria","visible":true,"render":function (data, type, full, meta) {
-                            return data ? data : '';
-                        },"data":"relationships.representante_legal.attributes.nombre_empresa"},{"title":"Informes SCEP","data":"attributes.informes","render":function (data,type,row){
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Informes SCEP","data":"attributes.informes","render":function (data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -480,24 +478,6 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        }},{"title":"Dictamen o Informe","data":"attributes.informe_dictamen","render":function (data,type,row){
-                            if (!data) {
-                                return '';
-                            }
-                            var time = row.attributes.updated_at
-                                ? dateFormat(
-                                    new Date(row.attributes.updated_at+'Z'),
-                                    'yyyy-mm-dd hh:MM:ss'
-                                )
-                                : '';
-                            var $a = $('<a></a>');
-                            $a.text(data.name);
-                            $a.attr('href', data.url);
-                            $a.attr('target', '_blank');
-                            $a.prepend('<i class="fa fa-download"></i> ');
-                            return $("<div />").append($a).html()
-                              + '<br><i class="fa fa-clock-o"></i> '
-                              + time;
                         }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Supervisor","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
     };
     this.$methods = {

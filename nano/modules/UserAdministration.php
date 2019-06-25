@@ -1039,7 +1039,7 @@
                               + '&lt;br&gt;&lt;i class="fa fa-clock-o"&gt;&lt;/i&gt; '
                               + time;
                         },
-                        "list": true,
+                        "list": false,
                     }),
                     new Module.Model.Field({
                         "name": "gestion",
@@ -1073,7 +1073,7 @@
                         "model": "lafirma",
                         "label": "Firma de auditoria",
                         "nullable": true,
-                        "list": true,
+                        "list": false,
                         "textField": "nombre_empresa",
                         "ui": "select",
                         "source": new Module.View.ModelInstance("UserAdministration.Lafirma"),
