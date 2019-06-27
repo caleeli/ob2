@@ -142,9 +142,9 @@
                                     <h4>Bs. {{empresa.gastos}}</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-warning">{{empresa.utilidad_c}}% <i v-bind:class="{'fa fa-level-up': empresa.utilidad_c>0 , 'fa fa-level-down': empresa.utilidad_c<0}"></i></div>
-                                    <small class="stats-label">Utilidad</small>
-                                    <h4>Bs. {{empresa.utilidad}}</h4>
+                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-warning">{{empresa.recursos_c}}% <i v-bind:class="{'fa fa-level-up': empresa.recursos_c>0 , 'fa fa-level-down': empresa.recursos_c<0}"></i></div>
+                                    <small class="stats-label">Recursos</small>
+                                    <h4>Bs. {{empresa.recursos}}</h4>
                                 </div>
                                 <div v-for="data in empresa.chart2" class="col-xs-6">
                                     <br>
@@ -676,14 +676,14 @@
                                         'presupuesto': '{{$uf("Presup%Vig%")}}',
                                         'ingresos' : "{{$uc('5')}}",
                                         'gastos' : "{{$uca('6')}}",
-                                        'utilidad' : "{{$uc('5')-$uca('6')+$uc('4')*1}}",
+                                        'recursos' : "{{$uc('5')-$uca('6')+$uc('4')*1}}",
                                         //%
                                         'activo_c' : "{{($uc('1')-$ucp('1'))/abs($ucp('1'))*100}}",
                                         'pasivo_c' : "{{($uc('2')-$ucp('2'))/abs($ucp('2'))*100}}",
                                         'patrimonio_c' : "{{($uc('3')-$ucp('3'))/abs($ucp('3'))*100}}",
                                         'ingresos_c' : "{{($uc('5')-$ucp('5'))/abs($ucp('5'))*100}}",
                                         'gastos_c' : "{{($uca('6')-$ucpa('6'))/abs($ucpa('6'))*100}}",
-                                        'utilidad_c' : "{{(($uc('5')-$uca('6')+$uc('4')*1)-($ucp('5')-$ucpa('6')+$ucp('4')*1))/abs($ucp('5')-$ucpa('6')+$ucp('4')*1)*100}}",
+                                        'recursos_c' : "{{(($uc('5')-$uca('6')+$uc('4')*1)-($ucp('5')-$ucpa('6')+$ucp('4')*1))/abs($ucp('5')-$ucpa('6')+$ucp('4')*1)*100}}",
                                         //ratios
                                         'liquidez' : "{{$uc('1.1')/$uc('2.1')}}",
                                         'p_acida' : "{{($uc('1.1')-$uc('1.1.5') )/ $uc('2.1')}}",
@@ -733,7 +733,7 @@
     ]',
     'chart2': '[{\
         "type": "bar",\
-        "x": ["ingresos","gastos","utilidad"],\
+        "x": ["ingresos","gastos","recursos"],\
         "series": {\
             "erg": {\
                 "{{$gestion}}": [{{$uc("5")*1}},{{$uca("6")*1}},{{$uc("5")-$uca("6")+$uc("4")*1}}],\
@@ -753,7 +753,7 @@
                 @endif{{$ucp("5")*1}},{{$uc("5")*1}}],\
                 "gastos": [@if($gestion-2>2014) {{$ucpa("6",-2)*1}},\n\
                 @endif{{$ucpa("6")*1}},{{$uca("6")*1}}],\
-                "utilidad": [@if($gestion-2>2014) {{$ucp("5",-2)-$ucpa("6",-2)+$ucp("4",-2)*1}},\n\
+                "recursos": [@if($gestion-2>2014) {{$ucp("5",-2)-$ucpa("6",-2)+$ucp("4",-2)*1}},\n\
                 @endif{{$ucp("5")-$ucpa("6")+$ucp("4")*1}},{{$uc("5")-$uca("6")+$uc("4")*1}}]\
             }\
         }\
