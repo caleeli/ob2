@@ -14,6 +14,8 @@ class CreateAdmSupervisionsTable extends Migration
             $table->string('cod_supervision')->nullable();
             $table->text('documento')->nullable();
             $table->text('informes')->nullable();
+            $table->text('anexos')->nullable();
+            $table->text('nota_emitida')->nullable();
             $table->string('gestion')->nullable();
             $table->string('detalle')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();
