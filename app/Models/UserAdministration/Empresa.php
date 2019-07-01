@@ -74,7 +74,7 @@ class Empresa extends Model
                                     $span->getAttribute('title')==='patrimonio'
                                 ) {
                 //$htmlWithTag = str_replace($dom->saveXML($span), '<span class="calculado" title="patrimonio">{{$uc(\'3\')}}</span>' , $htmlWithTag);
-                                    $htmlWithTag = str_replace($dom->saveXML($span), '{{$uc(\'3\')}}', $htmlWithTag);
+                $htmlWithTag = str_replace($dom->saveXML($span), '{{$uc(\'3\')}}', $htmlWithTag);
             }
         }
 
