@@ -12,3 +12,5 @@ dump.php
 /config/connections.php
 /nbproject
 /public/HojaRuta/connection.php
+client_secret*
+chrome.exe
