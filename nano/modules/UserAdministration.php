@@ -931,7 +931,7 @@
                     }),
                     new Module.Model.BelongsTo({
                         "name": "supervisor",
-                        "label": "Supervisor",
+                        "label": "Supervisor Evaluador",
                         "model": "user",
                         "textField": function(data){return data?data.nombres + ' ' +data.apellidos:''},
                         "ui": "select",
