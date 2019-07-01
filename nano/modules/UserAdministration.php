@@ -1003,7 +1003,37 @@
                     new Module.Model.Field({
                         "name": "informes",
                         "type": "array",
-                        "label": "Informes SCEP",
+                        "label": "Informe de supervisión",
+                        "ui": "multiplefile",
+                        "textField": function(data,type,row){
+                            var res = [];
+                            if (data &amp;&amp; typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('&lt;a href="' + item.url + '" target="_blank"&gt;' + item.name + '&lt;/a&gt;');
+                                });
+                            }
+                            return res.join("&lt;br&gt; ");
+                        }
+                    }),
+                    new Module.Model.Field({
+                        "name": "anexos",
+                        "type": "array",
+                        "label": "Anexos",
+                        "ui": "multiplefile",
+                        "textField": function(data,type,row){
+                            var res = [];
+                            if (data &amp;&amp; typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('&lt;a href="' + item.url + '" target="_blank"&gt;' + item.name + '&lt;/a&gt;');
+                                });
+                            }
+                            return res.join("&lt;br&gt; ");
+                        }
+                    }),
+                    new Module.Model.Field({
+                        "name": "nota_emitida",
+                        "type": "array",
+                        "label": "Nota emitida a la Empresa",
                         "ui": "multiplefile",
                         "textField": function(data,type,row){
                             var res = [];
@@ -1033,7 +1063,7 @@
                     new Module.Model.BelongsTo({
                         "name": "empresa",
                         "model": "empresa",
-                        "label": "Empresa auditada",
+                        "label": "Empresa supervisada",
                         "nullable": true,
                         "list": true,
                         "textField": "nombre_empresa",

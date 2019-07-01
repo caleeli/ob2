@@ -395,7 +395,7 @@ UserAdministration.Supervision = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/supervisions";
     Model.call(this, url, id, "UserAdministration.Supervision");
     this.$list = function () {
-        return "fields=cod_supervision,documento,empresa,informes,gestion,owner,owner2,supervisor";
+        return "fields=cod_supervision,documento,empresa,informes,anexos,nota_emitida,gestion,owner,owner2,supervisor";
     };
     this.$name = "Supervision";
     this.$pluralName = "Supervisions";
@@ -419,7 +419,7 @@ UserAdministration.Supervision = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"documento","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa auditada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informes SCEP","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"documento","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa supervisada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informe de supervisión","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -427,7 +427,23 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        },"value":"informes","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"owner2":{"name":"owner2","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner2","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
+                        },"value":"informes","isAssociation":false},"anexos":{"name":"anexos","label":"Anexos","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
+                        },"value":"anexos","isAssociation":false},"nota_emitida":{"name":"nota_emitida","label":"Nota emitida a la Empresa","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
+                        },"value":"nota_emitida","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"owner2":{"name":"owner2","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner2","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -450,9 +466,25 @@ UserAdministration.Supervision = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Empresa auditada","visible":true,"render":function (data, type, full, meta) {
+                        }},{"title":"Empresa supervisada","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Informes SCEP","data":"attributes.informes","render":function (data,type,row){
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Informe de supervisión","data":"attributes.informes","render":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
+                        }},{"title":"Anexos","data":"attributes.anexos","render":function (data,type,row){
+                            var res = [];
+                            if (data && typeof data.forEach==='function') {
+                                data.forEach(function (item) {
+                                    res.push('<a href="' + item.url + '" target="_blank">' + item.name + '</a>');
+                                });
+                            }
+                            return res.join("<br> ");
+                        }},{"title":"Nota emitida a la Empresa","data":"attributes.nota_emitida","render":function (data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
