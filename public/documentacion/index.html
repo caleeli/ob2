@@ -257,9 +257,15 @@
                                                         </select>
                                                       </div>
                                                       <div class="col-lg-4" v-show="eeffModo=='graficos'">
-                                                        <select class="form-control" v-model='cuadroSeleccionado' v-on:change="cargarEstadosFinancieros">
-                                                            <option v-for="cua in cuadros_financieros_completo" v-bind:value='cua.id'>{{cua.attributes.titulo}}</option>
-                                                        </select>
+                                                        <div class="input-group">
+                                                            <select class="form-control" v-model='cuadroSeleccionado' v-on:change="cargarEstadosFinancieros">
+                                                                <option v-for="cua in cuadros_financieros_completo" v-bind:value='cua.id'>{{cua.attributes.titulo}}</option>
+                                                            </select>
+                                                            <a class="input-group-addon" v-on:click="cuentaAbrir">
+                                                                <i class="fa fa-table"></i>
+                                                                Datos para indicadores
+                                                            </a>
+                                                        </div>
                                                       </div>
                                                     </div>
                                                     <div id="cuadros_financieros" class="row" v-show="eeffModo=='graficos'">
@@ -348,6 +354,38 @@
                                                                     </table>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" v-show="eeffModo=='cargas'">
+                                                        <div class="col-lg-6">
+                                                            <select class="form-control" v-model="cuentaSeleccionada" v-on:change="cargarEstadosFinancieros">
+                                                                <option value='bg'>para cuentas de Balance General</option>
+                                                                <option value='erg'>para cuentas de Estado de Recursos y Gastos Corrientes</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <table class="table table-striped table-bordered dataTable no-footer">
+                                                                <tr>
+                                                                    <th>Cuenta</th>
+                                                                    <th>Valor</th>
+                                                                </tr>
+                                                                <tr v-for="row in valoresCuenta[cuentaSeleccionada]" :key="row.nro">
+                                                                    <td>{{row.cuenta}}</td>
+                                                                    <td>
+                                                                        <input v-if="cuentaEdit" class="form-control" v-model="row.valor">
+                                                                        <template v-else>
+                                                                            {{row.valor}}
+                                                                        </template>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <button type="button" :disabled="cuentaEdit" class="btn btn-white" @click="cuentaGuardar">Guardar</button>
+                                                            <button v-if="!cuentaEdit" type="button" class="btn btn-white" @click="cuentaEdit=true">Editar campos</button>
+                                                            <button v-if="cuentaEdit" type="button" class="btn btn-white" @click="cuentaEdit=false">Guardar cambios</button>
+                                                            <button type="button" :disabled="cuentaEdit" class="btn btn-white" @click="cuentaEliminar">Eliminar Registro</button>
+                                                            <button type="button" :disabled="cuentaEdit" class="btn btn-white" @click="eeffModo='graficos'">Salir</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1147,7 +1185,7 @@
       
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.182"></script>
+        <script src="../js/server.js?v0.183"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1170,6 +1208,59 @@
                     });
                     //userInstance.role_id=2;
                     return {
+                        cuentaEdit: false,
+                        cuentaSeleccionada: 'bg',
+                        valoresCuenta: {
+                            bg: [
+                                {
+                                    nro: '1',
+                                    cuenta: 'Activo',
+                                    valor: '',
+                                },
+                                {
+                                    nro: '1.1',
+                                    cuenta: 'Activo Corriente',
+                                    valor: '',
+                                },
+                                {
+                                    nro: '1.1.1.2',
+                                    cuenta: 'Disponible',
+                                    valor: '',
+                                },
+                                {
+                                    nro: '1.1.5',
+                                    cuenta: 'Bienes de Cambio',
+                                    valor: '',
+                                },
+                                {
+                                    nro: '2',
+                                    cuenta: 'Pasivo',
+                                    valor: '',
+                                },
+                                {
+                                    nro: '2.1',
+                                    cuenta: 'Pasivo Corriente',
+                                    valor: '',
+                                },
+                            ],
+                            erg: [
+                                {
+                                    nro: '5',
+                                    cuenta: 'Recursos',
+                                    valor: '',
+                                },
+                                {
+                                    nro: '6',
+                                    cuenta: 'Gastos',
+                                    valor: '',
+                                },
+                                {
+                                    nro: 'Resultado del Ejercicio:',
+                                    cuenta: 'Resultado del Ejercicio:',
+                                    valor: '',
+                                },
+                            ],
+                        },
                         documento : {
                             pagina:1, numPages:0,
                             onload: function (numPages) {
@@ -1397,6 +1488,38 @@
                     },
                 },
                 methods: {
+                    cuentaAbrir: function () {
+                        var self = this;
+                        self.cuadro_financiero.$methods.cuentaAbrir(this.empresaSeleccionada, this.empresaSeleccionadaGestion, function (datos) {
+                            for(var k in datos) {
+                                if(self.valoresCuenta[k]) {
+                                    for(var i in self.valoresCuenta[k]) {
+                                        var cuenta = self.valoresCuenta[k][i];
+                                        datos[k][cuenta.nro] !== undefined ? self.valoresCuenta[k][i].valor = datos[k][cuenta.nro] : null;
+                                    }
+                                }
+                            }
+                            self.eeffModo = 'cargas';
+                        });
+                    },
+                    cuentaGuardar: function () {
+                        var self = this;
+                        self.cuadro_financiero.$methods.cuentaGuardar(
+                            this.empresaSeleccionada,
+                            this.empresaSeleccionadaGestion,
+                            this.cuentaSeleccionada,
+                            this.valoresCuenta[this.cuentaSeleccionada],
+                            function (estado) {
+                                console.log(estado);
+                            }
+                        );
+                    },
+                    /**
+                     * El botón ELIMINAR REGISTRO elimina el registro que se seleccionó
+                     */
+                    cuentaEliminar: function () {
+
+                    },
                     noEsDoctorMari: function () {
                         return this.user_id!=2 && this.user_id!=12;
                     },

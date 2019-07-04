@@ -13,6 +13,9 @@ class EstadoFinancieroSavingListener
     {
         if (empty($event->estadoFinanciero->prefix)) {
             $event->estadoFinanciero->prefix = uniqid('tmp_');
+        } elseif (substr($event->estadoFinanciero->prefix, 0, 4) !== 'tmp_') {
+            // Cargado de forma manual
+            return;
         }
         $ext = @array_pop(explode('.', $event->estadoFinanciero->archivo['name']));
         if ($ext === 'xls' || $ext === 'xlsx') {
