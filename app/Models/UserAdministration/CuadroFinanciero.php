@@ -86,10 +86,10 @@ class CuadroFinanciero extends Model
         $estado->archivo = [
                                 'name' => $filename,
                                 'mime' => 'application/vnd.ms-excel',
-                                'path' => '',
-                                'url' => '',
+                                'path' => storage_path('app/public/' . $filename),
+                                'url' => url('storage/' . $filename),
                             ];
-        \Storage::put($filename, view('estadofinanciero', ['valores'=>$valores])->render());
+        \Storage::put('public/' . $filename, view('estadofinanciero', ['valores'=>$valores])->render());
         $table = $estado->prefix . '_1';
         \DB::statement('DROP TABLE IF EXISTS "' . $table . '"');
         \DB::statement('CREATE TABLE "public"."' . $table . '" ("Columna_A" text, "Columna_B" text, "id" serial NOT NULL) WITH (oids = false)');
