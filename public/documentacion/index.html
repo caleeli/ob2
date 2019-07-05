@@ -381,9 +381,8 @@
                                                             </table>
                                                         </div>
                                                         <div class="col-lg-12">
-                                                            <button type="button" :disabled="cuentaEdit" class="btn btn-white" @click="cuentaGuardar">Guardar</button>
                                                             <button v-if="!cuentaEdit" type="button" class="btn btn-white" @click="cuentaEdit=true">Editar campos</button>
-                                                            <button v-if="cuentaEdit" type="button" class="btn btn-white" @click="cuentaEdit=false">Guardar cambios</button>
+                                                            <button v-if="cuentaEdit" type="button" class="btn btn-white" @click="cuentaEdit=false;cuentaGuardar()">Guardar cambios</button>
                                                             <button type="button" :disabled="cuentaEdit" class="btn btn-white" @click="cuentaEliminar">Eliminar Registro</button>
                                                             <button type="button" :disabled="cuentaEdit" class="btn btn-white" @click="eeffModo='graficos'">Salir</button>
                                                         </div>
@@ -1488,6 +1487,9 @@
                     },
                 },
                 methods: {
+                    cuentaEliminar: function () {
+
+                    },
                     cuentaAbrir: function () {
                         var self = this;
                         self.cuadro_financiero.$methods.cuentaAbrir(this.empresaSeleccionada, this.empresaSeleccionadaGestion, function (datos) {
