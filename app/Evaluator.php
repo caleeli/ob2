@@ -31,7 +31,8 @@ class Evaluator
         $this->empresaId = $empresaId;
         $estados_financieros = EstadoFinanciero
             ::where('gestion', '=', $gestion)
-            ->where('empresa_id', '=', $empresaId);
+            ->where('empresa_id', '=', $empresaId)
+            ->orderBy('updated_at', 'desc');
         if ($tipos) {
             $estados_financieros = $estados_financieros
                 ->whereIn('tipo_estado_financiero', $tipos);
