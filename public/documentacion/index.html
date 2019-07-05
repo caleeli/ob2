@@ -2355,6 +2355,16 @@
                     }
                 },
                 watch: {
+                    empresaSeleccionada: function () {
+                        if (this.eeffModo === 'cargas') {
+                            this.cuentaAbrir();
+                        }
+                    },
+                    empresaSeleccionadaGestion: function () {
+                        if (this.eeffModo === 'cargas') {
+                            this.cuentaAbrir();
+                        }
+                    },
                     tipoAuditoria: function () {
                         this.abrirAuditoria();
                     }
