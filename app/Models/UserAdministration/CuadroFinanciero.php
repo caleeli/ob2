@@ -59,6 +59,7 @@ class CuadroFinanciero extends Model
                                     '1.1.5' => $ev->calculate('{{$uc("1.1.5")}}'),
                                     '2' => $ev->calculate('{{$uc("2")}}'),
                                     '2.1' => $ev->calculate('{{$uc("2.1")}}'),
+                                    '3' => $ev->calculate('{{$uc("3")}}'),
                                 ],
                                 'erg' => [
                                     '5' => $ev->calculate('{{$uc("5")}}'),
