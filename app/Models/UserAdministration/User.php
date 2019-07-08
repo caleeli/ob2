@@ -130,6 +130,12 @@ class User extends \Illuminate\Foundation\Auth\User
     }
 
 
+    public function empresas()
+    {
+        return $this->belongsToMany('App\Models\UserAdministration\Empresa');
+    }
+
+
     public function setPasswordAttribute($value)
     {
         if ($this->attributes['password']!=$value) {

@@ -3,7 +3,7 @@
         <div style="position:absolute;left:0px;top:0px;min-width:100%;height:100%; padding: 11px; ">
             <select :placeholder="placeholder" style="position:absolute;left:0px;top:0px;width:100%;height:100%;opacity:0;"
                     v-on:change="select">
-                <option v-for="option in domain" v-bind:value="typeof option=='object'?option.id:option" :hidden="isSelected(typeof option=='object'?option.id:option)">{{typeof option=='object'?option.attributes[field.textField]:option}}</option>
+                <option v-for="option in domain" v-bind:value="typeof option=='object'?option.id:option" :hidden="isSelected(typeof option=='object'?option.id:option)">{{getTextField(option.attributes, field.textField)}}</option>
                 <option value="" hidden=""></option>
             </select>
             <span v-for="option in selected" class="label label-tag" :value="option.value" style="position:relative;" v-on:click="remove">{{option.text}} <i class="glyphicon glyphicon-remove"></i></span>
@@ -35,7 +35,7 @@
                 if(this.domain && typeof this.domain.forEach==='function') {
                     this.domain.forEach(function(option){
                         if(typeof option=='object') {
-                            options[option.id] = option.attributes[self.field.textField];
+                            options[option.id] = self.getTextField(option.attributes, self.field.textField);
                         } else {
                             options[option] = option;
                         }
@@ -52,6 +52,9 @@
             }
         },
         methods: {
+            getTextField: function (data, textField) {
+                return typeof textField==='function' ? textField(data) : data[textField];
+            },
             clickControl: function (event) {
                 if(event.target.nodeName==='DIV') {
                     $(event.target.previousElementSibling).click();
@@ -139,3 +142,13 @@
         }
     }
 </script>
+
+<style>
+.form-control-tags {
+    height: auto!important;
+    position:relative;
+    min-height: 45px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+</style>

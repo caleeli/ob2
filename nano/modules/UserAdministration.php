@@ -268,6 +268,19 @@
                         "foreignKey": "owner_id",
                         "localKey": "id"
                     }),
+                    new Module.Model.BelongsToMany({
+                        "name": "empresas",
+                        "label": "Empresas",
+                        "model": "empresa",
+                        "textField": function(data){return data?data.cod_empresa + ' ' + data.nombre_empresa : ':o'},
+                        "ui": "tags",
+                        "source": new Module.View.ModelInstance("UserAdministration.Empresa"),
+                        "default": "",
+                        //"position": 1,
+                        "nullable": true,
+                        "form": true,
+                        "list": false
+                    }),
                 ],
                 "methods": {
                     "-setPasswordAttribute()": <?php function ($value) {
