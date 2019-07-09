@@ -24,13 +24,13 @@ function renderAndExit()
 function waitFor(testFx, onReady, timeOutMillis) {
     setTimeout(function () {
         console.log('timeout');
-        renderAndExit();
+        onReady();
     }, timeOutMillis);
     setInterval(function () {
-        var condition = onReady();
+        var condition = testFx();
         if (condition) {
             console.log('window.printPDF');
-            renderAndExit();
+            onReady();
         }
     }, 200);
 };
