@@ -37,8 +37,7 @@ class ReportController extends Controller
             ? '"' . $format . '"'
             : self::FORMAT;
         $cmd = env('PHANTOMJS') . " $rasterize $url1 $target $format";
-        die($cmd);
-        //exec($cmd);
+        exec($cmd);
         return redirect('/storage/report/' . basename($target0));
     }
 }
