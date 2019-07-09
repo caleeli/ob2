@@ -3,6 +3,12 @@ var page = require('webpage').create(),
     system = require('system'),
     address, output, size, pageWidth, pageHeight;
 
+
+function renderAndExit()
+{
+    page.render(output);
+    phantom.exit();
+}
 /**
  * Wait until the test condition is true or a timeout occurs. Useful for waiting
  * on a server response or for a ui change (fadeIn, etc.) to occur.
@@ -16,7 +22,14 @@ var page = require('webpage').create(),
  * @param timeOutMillis the max amount of time to wait. If not specified, 3 sec is used.
  */
 function waitFor(testFx, onReady, timeOutMillis) {
-    var maxtimeOutMillis = timeOutMillis ? timeOutMillis : 6000, //< Default Max Timout is 3s
+    setTimeout(renderAndExit, timeOutMillis);
+    setInterval(function () {
+        var condition = onReady();
+        if (condition) {
+            renderAndExit();
+        }
+    }, 200);
+    /*var maxtimeOutMillis = timeOutMillis ? timeOutMillis : 6000, //< Default Max Timout is 3s
         start = new Date().getTime(),
         condition = false,
         interval = setInterval(function() {
@@ -36,6 +49,7 @@ function waitFor(testFx, onReady, timeOutMillis) {
                 }
             }
         }, 200); //< repeat check every 250ms
+        */
 };
 
 if (system.args.length < 3 || system.args.length > 5) {
@@ -82,14 +96,11 @@ if (system.args.length < 3 || system.args.length > 5) {
             waitFor(
                 function () {
                     return page.evaluate(function() {
-                        return typeof window.printPDF !== 'undefined'
-                            ? window.printPDF===true : false;
-                    });
+                        return (typeof window.printPDF !== 'undefined'
+                            ? window.printPDF===true : false) ? 'true' : 'false';
+                    }) === 'true';
                 },
-                function () {
-                    page.render(output);
-                    phantom.exit();
-                },
+                renderAndExit,
                 10000
             );
         }
