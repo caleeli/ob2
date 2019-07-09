@@ -22,10 +22,14 @@ function renderAndExit()
  * @param timeOutMillis the max amount of time to wait. If not specified, 3 sec is used.
  */
 function waitFor(testFx, onReady, timeOutMillis) {
-    setTimeout(renderAndExit, timeOutMillis);
+    setTimeout(function () {
+        console.log('timeout');
+        renderAndExit();
+    }, timeOutMillis);
     setInterval(function () {
         var condition = onReady();
         if (condition) {
+            console.log('window.printPDF');
             renderAndExit();
         }
     }, 200);
