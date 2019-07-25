@@ -1864,10 +1864,11 @@
                         var self = this;
                         var filtros = [
                                     'where,tipo,'+JSON.stringify(self.tipoTarea),
-                                    'whereUserAssigned,'+localStorage.user_id+','+localStorage.user_id,
                                 ];
                         if (self.esInvitado) {
                             filtros.push('where,datos->maximo,>=,7');
+                        } else {
+                            filtros.push('whereUserAssigned,'+localStorage.user_id+','+localStorage.user_id);
                         }
                         this.tarea.$select(
                             function (data) {
