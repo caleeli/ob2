@@ -1,16 +1,22 @@
 <?php
 session_start();
+$connection = require('connection.php');
+
 $username = $_REQUEST['username'];
 $password = $_REQUEST['password'];
 
-if (($username === 'mtorrez' && $password === 'm2018') || ($username === 'wvargas' && $password === 'wvargas123') || ($username === 'mvargas' && $password === '1234567')) {
+// Carga $usuario de la base de datos
+$stmt = $connection->prepare('select * from usuarios where nombre=:nombre and password=:password limit 1');
+$stmt->execute([
+    'nombre' => $username,
+    'password' => md5($password),
+]);
+$usuario =  $stmt->fetch();
+
+if ($usuario) {
     $_SESSION['hr_user'] = $username;
-    $_SESSION['hr_readonly'] = false;
-    header('Location: index.php');
-} elseif (($username === 'svelasquez' && $password === 'svelasquez123')) {
-    $_SESSION['hr_user'] = $username;
-    $_SESSION['hr_readonly'] = true;
-    header('Location: index.php#busqueda');
+    $_SESSION['hr_readonly'] = $usuario['invitado'] ? true : false;
+    header($_SESSION['hr_readonly'] ? 'Location: index.php#busqueda' : 'Location: index.php');
 } else {
     header('Location: login.php?e');
 }

@@ -84,6 +84,14 @@ if (!isset($_SESSION['hr_user'])) {
     .row-selected {
         background-color: rgba(0, 123, 255, 0.3)!important;
     }
+    .avatar {
+        font-size: 2.5em;
+        border: 1px solid black;
+        background-color: white;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-top: 0.1em;
+    }
         </style>
         <link rel="shortcut icon" href="/HojaRuta/images/logo1.png">
     </head>
@@ -96,7 +104,7 @@ if (!isset($_SESSION['hr_user'])) {
                 <!--
                   Botones principales
                 -->
-                <div class="col-md-11" style="padding-top: 8px;padding-bottom: 8px;">
+                <div class="col-md-10" style="padding-top: 8px;padding-bottom: 8px;">
                     <div class="btn-group" v-if="!window.isManager">
                         <a href="#recepcion" class="btn btn-primary" v-on:click='nuevaExterna'>Hoja de ruta externa</a>
 
@@ -154,6 +162,9 @@ if (!isset($_SESSION['hr_user'])) {
                             <li><a href="#reporte_com">Reporte</a></li>
                         </ul>
                     </div>
+                </div>
+                <div class="col-md-1 text-right">
+                    <a href="#usuario"><i class="glyphicon glyphicon-user avatar"></i></a>
                 </div>
             </div>
             <div class="row justify-content-md-center">
@@ -1405,6 +1416,45 @@ if (!isset($_SESSION['hr_user'])) {
                         </tbody>
                     </table>
                 </div>
+                <div class="col-md-10" v-if="menu=='usuario'">
+                    <form class="form-horizontal">
+                        <legend>Cambio de contraseña</legend>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Contraseña</label>
+                            <div class="col-lg-10">
+                                <div class="btn-group btn-block">
+                                    <input v-model="newPassword" type="password" data-toggle="dropdown" placeholder="" class="form-control dropdown-toggle">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Repetir Contraseña</label>
+                            <div class="col-lg-10">
+                                <div class="btn-group btn-block">
+                                    <input v-model="newPassword2" type="password" data-toggle="dropdown" placeholder="" class="form-control dropdown-toggle">
+                                    <small v-show="newPassword != newPassword2" class="text-danger">Contraseñas no coinciden</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"></label>
+                            <div class="col-lg-10">
+                                <button type="button" :disabled="!newPassword || newPassword != newPassword2" class="btn btn-primary" @click="changePassword">
+                                    Cambiar Contraseña
+                                    <i v-if="newPassword && (lastPassword!=newPassword)" class="glyphicon glyphicon-edit"></i>
+                                    <i v-if="newPassword && (lastPassword==newPassword)" class="glyphicon glyphicon-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <legend>Salir</legend>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"></label>
+                            <div class="col-lg-10">
+                                <a type="button" class="btn btn-primary" href="login.php">Salir de hojas de ruta</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
            </div>
         </div>
         <script type='text/x-template' id='template-fecha'>
@@ -1590,6 +1640,9 @@ if (!isset($_SESSION['hr_user'])) {
                 data: function () {
                     var self = this;
                     return {
+                        lastPassword: '',
+                        newPassword: '',
+                        newPassword2: '',
                         derivacionMultiple: {
                             fecha: '',
                             comentarios: '',
@@ -1649,6 +1702,21 @@ if (!isset($_SESSION['hr_user'])) {
                     };
                 },
                 methods: {
+                    changePassword: function () {
+                        var self = this;
+                        $.ajax({
+                            method:'POST',
+                            url: 'cambiarPassword.php',
+                            data: {
+                                password: self.newPassword,
+                            },
+                            dataType: 'json',
+                            success: function (res) {
+                                console.log('llego!!');
+                                self.lastPassword = self.newPassword;
+                            }
+                        });
+                    },
                     sincronizaDestinatarioDerivacionMultiple: function (destinatarios) {
                         var self = this;
                         var destinatario = [];
