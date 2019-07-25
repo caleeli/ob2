@@ -3,7 +3,7 @@ session_start();
 $username = $_REQUEST['username'];
 $password = $_REQUEST['password'];
 
-if (($username === 'mary' && $password === 'm2018') || ($username === 'wvargas' && $password === 'wvargas123')) {
+if (($username === 'mtorrez' && $password === 'm2018') || ($username === 'wvargas' && $password === 'wvargas123') || ($username === 'mvargas' && $password === '1234567')) {
     $_SESSION['hr_user'] = $username;
     $_SESSION['hr_readonly'] = false;
     header('Location: index.php');
