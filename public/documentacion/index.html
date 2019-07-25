@@ -1862,6 +1862,13 @@
                     },
                     listarTareas: function () {
                         var self = this;
+                        var filtros = [
+                                    'where,tipo,'+JSON.stringify(self.tipoTarea),
+                                    'whereUserAssigned,'+localStorage.user_id+','+localStorage.user_id,
+                                ];
+                        if (self.esInvitado) {
+                            filtros.push('where,datos->maximo,>=,7');
+                        }
                         this.tarea.$select(
                             function (data) {
                                 self.tareasTodas.splice(0);
@@ -1871,10 +1878,7 @@
                                 self.pintarTareas();
                             },
                             {
-                                filter:[
-                                    'where,tipo,'+JSON.stringify(self.tipoTarea),
-                                    'whereUserAssigned,'+localStorage.user_id+','+localStorage.user_id,
-                                ],
+                                filter: filtros,
                                 sort: '-updated_at'
                             }
                         );
