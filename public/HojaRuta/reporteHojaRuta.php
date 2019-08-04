@@ -5,8 +5,10 @@ $connection = require('connection.php');
 $query = [];
 $params = [];
 $addDerivacion = false;
-$query[] = ' hoja_ruta.tipo = :tipo';
-$params['tipo'] = $_REQUEST['tipo'];
+if ($_REQUEST['tipo']) {
+    $query[] = ' hoja_ruta.tipo = :tipo';
+    $params['tipo'] = $_REQUEST['tipo'];
+}
 if (!empty($_REQUEST['fecha_recepcion1'])) {
     $query[] = ' hoja_ruta.fecha >= :fecha_recepcion1';
     $params['fecha_recepcion1'] = $_REQUEST['fecha_recepcion1'];

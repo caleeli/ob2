@@ -133,6 +133,20 @@ if (!isset($_SESSION['hr_user'])) {
                             <li><a href="#reporte_hoja_ruta" v-on:click="initReporte('interna')">Reporte</a></li>
                         </ul>
                     </div>
+                    <div class="btn-group" v-if="!window.isManager">
+                        <a href="#reporte_hoja_ruta" class="btn btn-info" v-on:click="initReporte('')">Reporte Hoja de Ruta</a>
+
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span> <!-- caret -->
+                            <span class="sr-only">Reporte Hoja de Ruta</span>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu"> <!-- class dropdown-menu -->
+                            <li><a href="#reporte_hoja_ruta" v-on:click="initReporte('')">Ambos</a></li>
+                            <li><a href="#reporte_hoja_ruta" v-on:click="initReporte('externa')">Externa</a></li>
+                            <li><a href="#reporte_hoja_ruta" v-on:click="initReporte('interna')">Interna</a></li>
+                        </ul>
+                    </div>
                     <a href='#busqueda' class='btn btn-info' v-if="window.isManager">Dashboard</a>
                     <div class="btn-group">
                         <a href="#nota_oficio" class="btn btn-success" v-on:click='nuevaNota' v-if="!window.isManager">Notas oficio</a>
@@ -810,6 +824,9 @@ if (!isset($_SESSION['hr_user'])) {
                                 <div class="col-lg-10 col-lg-offset-2">
                                     <button v-if="!userReadOnly" type="button" :disabled="concluido()" v-on:click="saveDerivation(derivacion)" class="btn btn-primary">Registrar</button>
                                     <button v-if="!userReadOnly" type="button" :disabled="concluido()" v-on:click="terminarHoja" class="btn btn-warning">Terminar</button>
+                                    <!--
+                                    <button v-if="!userReadOnly" type="button" :disabled="!concluido()" v-on:click="habilitarHoja" class="btn btn-warning">Habilitar Hoja</button>
+                                    -->
                                 </div>
                             </div>
                             </div>
@@ -1074,7 +1091,7 @@ if (!isset($_SESSION['hr_user'])) {
                  <div class="col-md-12" v-if="menu=='reporte_hoja_ruta'">
                     <form class="form-horizontal">
                         <fieldset>
-                            <legend>Reporte - Hojas de Ruta ({{reporte.tipo}})</legend>
+                            <legend>Reporte - Hojas de Ruta ({{reporte.tipo ? reporte.tipo : 'interna y externa'}})</legend>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Fecha recepción</label>
                                 <div class="col-md-5">
@@ -1097,24 +1114,12 @@ if (!isset($_SESSION['hr_user'])) {
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Nº de control</label>
-                                <div class="col-md-10">
-                                    <input v-model="reporte.nroDeControl" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-md-2 control-label">Fecha de Conclusión</label>
                                 <div class="col-md-5">
                                     <fecha v-model="reporte.fecha_conclusion1"></fecha>
                                 </div>
                                 <div class="col-md-5">
                                     <fecha v-model="reporte.fecha_conclusion2"></fecha>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Gestión</label>
-                                <div class="col-md-10">
-                                    <input v-model="reporte.gestion" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -1179,20 +1184,26 @@ if (!isset($_SESSION['hr_user'])) {
                             <div class="form-group">
                                 <label class="col-md-2 control-label"></label>
                                 <div class="col-md-10">
-                                    <input type="radio" name="reporteForma" value="SoloHojas" v-model="reporte.forma" /> Por hojas de ruta
-                                    <input type="radio" name="reporteForma" value="SoloDerivaciones" v-model="reporte.forma" /> Por derivaciones
+                                
+                                    <input type="radio" name="tipoReporte" value="hojas_ruta_pendientes" v-model="tipoReporte" /> Hojas de ruta pendientes<br />
+                                    <input type="radio" name="tipoReporte" value="hojas_ruta_completados" v-model="tipoReporte" /> Hojas de ruta concluidas<br />
+                                    <input type="radio" name="tipoReporte" value="hojas_ruta_derivaciones" v-model="tipoReporte" /> Todas las hojas de ruta con detalle de derivación<br />
+                                    <!-- input type="radio" name="reporteForma" value="SoloHojas" v-model="reporte.forma" /> Hojas de ruta pendientes<br />
+                                    <input type="radio" name="reporteForma" value="SoloDerivaciones" v-model="reporte.forma" /> Todas las hojas de ruta con detalle de derivación
+                                    <!-- @click="reporte.forma==='SoloDerivaciones' ? reporte.todasLasDerivaciones = true : null"  -->
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!-- div class="form-group">
                                 <label class="col-md-2 control-label"></label>
                                 <div class="col-md-10">
                                     <input type="checkbox" value='1' v-model="reporte.todasLasDerivaciones" /> Mostrar todas las derivaciones
                                 </div>
-                            </div>
+                            </!-->
                             <div class="form-group">
                                 <div class="col-md-10 col-lg-offset-2">
                                     <button type="button" v-on:click="generarReporteExterna" class="btn btn-primary">Generar Reporte</button>
                                     <button type="button" v-on:click="exportarExcel('reporteExterna', 'Hojas de Ruta Externas')" class="btn btn btn-default">Exportar Excel</button>
+                                    <button type="button" v-on:click="initReporte(reporte.tipo)" class="btn btn-default">Limpieza</button>
                                 </div>
                             </div>
                         </fieldset>
@@ -1223,10 +1234,10 @@ if (!isset($_SESSION['hr_user'])) {
                                 <th v-if="reporte.forma==='SoloDerivaciones'"></th>
                                 <th>Tipo</th>
                                 <th>Correlativo</th>
+                                <th>Tipo HR</th>
                                 <th>Nº Control</th>
                                 <th>{{reporte.forma==='SoloDerivaciones' ? 'Fecha Derivación' : 'Gestión' }}</th>
                                 <th>Referencia</th>
-                                <th>Destinatario</th>
                                 <th>Procedencia</th>
                                 <th>Fecha Recepción</th>
                                 <th>Conclusión</th>
@@ -1238,10 +1249,10 @@ if (!isset($_SESSION['hr_user'])) {
                                 <th>{{r+1}}</th>
                                 <td>{{rep.tipo_tarea}}</td>
                                 <td>{{rep.numero}}</td>
+                                <td>{{rep.tipo}}</td>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td>{{rep.gestion}}</td>
                                 <td>{{rep.referencia}}</td>
-                                <td>{{rep.derivacion_destinatario}}</td>
                                 <td>{{rep.procedencia}}</td>
                                 <td style="white-space: pre;">{{rep.fecha}}</td>
                                 <td style="white-space: pre;">{{rep.conclusion}}</td>
@@ -1251,6 +1262,7 @@ if (!isset($_SESSION['hr_user'])) {
                                 <th>#</th>
                                 <th></th>
                                 <th>Correlativo</th>
+                                <th>Tipo HR</th>
                                 <th>Nº Control</th>
                                 <th>Fecha Derivación</th>
                                 <th>Referencia</th>
@@ -1264,6 +1276,7 @@ if (!isset($_SESSION['hr_user'])) {
                                 <td>{{d+1}}</td>
                                 <td>{{rep.tipo_tarea}}</td>
                                 <td>{{rep.numero}}</td>
+                                <td>{{rep.tipo}}</td>
                                 <td>{{rep.nro_de_control}}</td>
                                 <td style="white-space: pre;">{{derivacion.fecha}}</td>
                                 <td>{{rep.referencia}}</td>
@@ -1669,8 +1682,9 @@ if (!isset($_SESSION['hr_user'])) {
                         destinatarios : [],
                         reservedNumber : '',
                         filtroTipo : 'externa',
+                        tipoReporte: '',
                         reporte: {
-                            tipo: 'externa',
+                            tipo: '',
                             fecha_recepcion1: '',
                             fecha_recepcion2: '',
                             referencia: '',
@@ -1678,12 +1692,12 @@ if (!isset($_SESSION['hr_user'])) {
                             nroDeControl: '',
                             fecha_conclusion1: '',
                             fecha_conclusion2: '',
-                            gestion: String(new Date().getFullYear()),
+                            gestion: '',
                             fecha_derivacion1: '',
                             fecha_derivacion2: '',
                             destinatario: '',
                             forma: 'Combinado',
-                            todasLasDerivaciones: false,
+                            todasLasDerivaciones: true,
                             tipoTarea: '',
                         },
                         reporteExterna: [],
@@ -2065,6 +2079,69 @@ if (!isset($_SESSION['hr_user'])) {
                             });
                         });
                     },
+                    eliminaDerivation: function(callback, o) {
+                        // todo
+                        var self = this;
+                        if (typeof o==='undefined') o = this.derivacion;
+                        self.errores.derivacion_fecha = !o.fecha;
+                        self.errores.derivacion_destinatarios = !o.destinatarios;
+                        if (self.errores.derivacion_fecha || self.errores.derivacion_destinatarios) {
+                            return;
+                        }
+                        $.ajax({
+                            method: 'get',
+                            url: 'saveDerivacion.php',
+                            data: {
+                                id: o.id ? o.id: '',
+                                hoja_ruta_id: self.hoja.id,
+                                fecha: o.fecha,
+                                comentarios: o.comentarios,
+                                destinatario: o.destinatario,
+                                destinatarios: o.destinatarios,
+                                instruccion: o.instruccion,
+                                //tipo: o.tipo,
+                                dias_plazo: o.dias_plazo,
+                                t: new Date().getTime()
+                            },
+                            dataType: 'json',
+                            success: function () {
+                            }
+                        }).done(function() {
+                            var gestion = String(new Date().getFullYear());
+                            var nroDerivacion = self.derivaciones.length + 1;
+                            var usuarios=[];
+                            var destinatarios_ids = o.destinatarios.split(",");
+                            self.destinatarios.forEach(function (d) {
+                                if (destinatarios_ids.find(function(ii){return ii==d.id;})) {
+                                    usuarios.push(d);
+                                }
+                            });
+                            self.findTask(
+                                self.hoja.nroDeControl, gestion,
+                                function (tarea) {
+                                    self.crearAsignacion(o, tarea, usuarios, nroDerivacion, function () {});
+                                },
+                                function () {
+                                    self.createTask(o, gestion, usuarios, nroDerivacion, function (tarea) {
+                                        self.crearAsignacion(o, tarea.data, usuarios, nroDerivacion, function () {});
+                                    });
+                                }
+                            );
+                            self.filtroDerivacion = '';
+                            self.hoja.selectDerivations(self.derivaciones, self.filtroDerivacion);
+                            if (typeof callback==='function') {
+                                callback();
+                            }
+                            self.derivacion.load({
+                                id:'',
+                                fecha: '',
+                                destinatario: '',
+                                destinatarios: '',
+                                comentarios: '',
+                                instruccion: '',
+                            });
+                        });
+                    },
                     createTask: function (derivacion, gestion, usuarios, nro_asignacion, callback) {
                         var self = this;
                         var asignaciones = [];
@@ -2160,7 +2237,22 @@ if (!isset($_SESSION['hr_user'])) {
                             }
                         });
                     },
-                    terminarHoja: function() {
+                    eliminarAsignacion: function (derivacion, tarea, usuarios, nro_asignacion, callback) {
+                        var asignaciones = [];
+                        usuarios.forEach(function(user){
+                            asignaciones.push({
+                                "type": "UserAdministration.Asignacion",
+                                "attributes": {
+                                    "nro_asignacion": nro_asignacion,
+                                    "user_id": user.id,
+                                    "tarea_id": tarea.id,
+                                    //"tipo": derivacion.tipo,
+                                    "dias_plazo": derivacion.dias_plazo,
+                                }
+                            });
+                        });
+                    },
+                    terminarHoja: function () {
                         var self = this;
                         self.saveDerivation(function () {
                             var fecha = new Date;
@@ -2170,7 +2262,14 @@ if (!isset($_SESSION['hr_user'])) {
                             self.save(function(){
                                 self.filtrar();
                             });
-                            
+                        });
+                    },
+                    habilitarHoja: function() {
+                        var self = this;
+                        var fecha = new Date;
+                        self.hoja.conclusion = null;
+                        self.save(function(){
+                            self.filtrar();
                         });
                     },
                     generar: function() {
@@ -2600,10 +2699,11 @@ if (!isset($_SESSION['hr_user'])) {
                         this.reporte.nroDeControl = '';
                         this.reporte.fecha_conclusion1 = '';
                         this.reporte.fecha_conclusion2 = '';
-                        this.reporte.gestion = String(new Date().getFullYear());
+                        this.reporte.gestion = '';
                         this.reporte.fecha_derivacion1 = '';
                         this.reporte.fecha_derivacion2 = '';
                         this.reporte.destinatario = '';
+                        this.reporte.tipoTarea = '';
                         this.reporteExterna.splice(0);
                     }
                 },
@@ -2619,6 +2719,33 @@ if (!isset($_SESSION['hr_user'])) {
                     self.cargarDestinatarios();
                     self.cargarProcedencias();
                     self.nueva();
+                },
+                watch: {
+                    tipoReporte: {
+                        handler: function (tipo) {
+                            switch(tipo) {
+                                case "hojas_ruta_pendientes":
+                                    this.reporte.forma = 'SoloHojas';
+                                    this.reporte.todasLasDerivaciones = true;
+                                    this.reporte.fecha_conclusion1 = '';
+                                    this.reporte.fecha_conclusion2 = this.reporte.fecha_conclusion2 ? this.reporte.fecha_conclusion2 : '2017-01-01';
+                                    break;
+                                case "hojas_ruta_completados":
+                                    this.reporte.forma = 'SoloHojas';
+                                    this.reporte.todasLasDerivaciones = true;
+                                    this.reporte.fecha_conclusion1 = this.reporte.fecha_conclusion1 ? this.reporte.fecha_conclusion1 : '2017-01-01';
+                                    this.reporte.fecha_conclusion2 = '';
+                                    break;
+                                case "hojas_ruta_derivaciones":
+                                    this.reporte.forma = 'SoloDerivaciones';
+                                    this.reporte.todasLasDerivaciones = true;
+                                    this.reporte.fecha_conclusion1 = '';
+                                    this.reporte.fecha_conclusion2 = '';
+                                    break;
+                            }
+                        },
+                        inmediate: true
+                    }
                 }
             });
             window.app = app;
