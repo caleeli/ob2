@@ -1216,7 +1216,7 @@ if (!isset($_SESSION['hr_user'])) {
                             <th>Usuario</th>
                             <th class="data-box">Concluidos&nbsp;</th>
                             <th class="data-box">Pendientes&nbsp;</th>
-                            <th class="data-box">Total</th>
+                            <th class="data-box">Total Asignados</th>
                           </tr>
                         </thead>
                         <tbody>
