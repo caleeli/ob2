@@ -58,7 +58,7 @@ if (!empty($_REQUEST['fecha_derivacion2'])) {
     $addDerivacion = true;
 }
 if (!empty($_REQUEST['destinatario'])) {
-    $query[] = ' derivacion.destinatario like :destinatario';
+    $query[] = ' (derivacion.destinatario like :destinatario or hoja_ruta.destinatario like :destinatario)';
     $params['destinatario'] = '%' . str_replace(' ', '%', $_REQUEST['destinatario']) . '%';
     $addDerivacion = true;
 }
