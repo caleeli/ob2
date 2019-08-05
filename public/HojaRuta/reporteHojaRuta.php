@@ -104,6 +104,9 @@ while($row = $stmt->fetch()) {
         "destinatario" => $row['derivacion_destinatario'],
         "num" => $num,
     ];
+    if (!empty($_REQUEST['destinatario'])) {
+        $res[$id]['derivacion_destinatario'] = $_REQUEST['destinatario'];
+    }
     $num++;
 }
 echo json_encode(array_values($res));

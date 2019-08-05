@@ -1208,7 +1208,8 @@ if (!isset($_SESSION['hr_user'])) {
                             </div>
                         </fieldset>
                     </form>
-                    <a href="javascript:void(0)" v-on:click="mostrarResumen=!mostrarResumen">Mostrar resumen</a>
+                    <a href="javascript:void(0)" v-on:click="mostrarResumen=!mostrarResumen">{{mostrarResumen ? 'Ocultar' : 'Mostrar'}} resumen</a>
+                    <br><br>
                     <table v-if="mostrarResumen" class="table-striped table-hover " cellpadding="1em 0em">
                         <thead>
                           <tr>
@@ -1227,6 +1228,7 @@ if (!isset($_SESSION['hr_user'])) {
                           </tr>
                         </tbody>
                     </table>
+                    <br><br>
                     <table id="reporteExterna" class="table table-striped table-hover ">
                         <thead>
                             <tr>
@@ -1712,7 +1714,7 @@ if (!isset($_SESSION['hr_user'])) {
                             nroDeControl: false,
                         },
                         procedencias: [],
-                        mostrarResumen: false,
+                        mostrarResumen: true,
                     };
                 },
                 methods: {
