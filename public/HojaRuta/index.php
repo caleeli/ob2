@@ -1226,6 +1226,12 @@ if (!isset($_SESSION['hr_user'])) {
                             <td style="padding-right:1em" class="data-box red-data-box">{{row.pendientes.length}}</td>
                             <td style="padding-right:1em" class="data-box">{{row.concluidos.length + row.pendientes.length}}</td>
                           </tr>
+                          <tr>
+                            <td style="padding-right:1em; text-align:right;" class="data-box lg">TOTALES</td>
+                            <td style="padding-right:1em" class="data-box green-data-box"><b>{{totalReporte(resumen(reporteExterna), 'concluidos')}}</b></td>
+                            <td style="padding-right:1em" class="data-box red-data-box"><b>{{totalReporte(resumen(reporteExterna), 'pendientes')}}</b></td>
+                            <td style="padding-right:1em" class="data-box"><b>{{totalReporte(resumen(reporteExterna), 'concluidos') + totalReporte(resumen(reporteExterna), 'pendientes')}}</b></td>
+                          </tr>
                         </tbody>
                     </table>
                     <br><br>
@@ -1718,6 +1724,13 @@ if (!isset($_SESSION['hr_user'])) {
                     };
                 },
                 methods: {
+                    totalReporte: function (resumen, columna) {
+                        var total = 0;
+                        for(var usuario in resumen) {
+                            total += resumen[usuario][columna].length;
+                        }
+                        return total;
+                    },
                     changePassword: function () {
                         var self = this;
                         $.ajax({

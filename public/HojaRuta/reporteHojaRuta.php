@@ -105,7 +105,10 @@ while($row = $stmt->fetch()) {
         "num" => $num,
     ];
     if (!empty($_REQUEST['destinatario'])) {
-        $res[$id]['derivacion_destinatario'] = $_REQUEST['destinatario'];
+        //$res[$id]['derivacion_destinatario'] = $_REQUEST['destinatario'];
+        if (preg_match('/' . str_replace(' ', '.+', $_REQUEST['destinatario']) . '/', $row['derivacion_destinatario'])) {
+            $res[$id]['derivacion_destinatario'] = $row['derivacion_destinatario'];
+        }
     }
     $num++;
 }
