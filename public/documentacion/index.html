@@ -132,7 +132,7 @@
                         <li class="active"><a href="#PEIyPOA"><img class="fa fa-th-large menu-icon" src="img/calendar.png"> <span class="nav-label">PEI y POA</span></a></li>
                         <li class="active"><a href="#seguimientoDeTareas"><img class="fa fa-th-large menu-icon" src="img/tasks.png"> <span class="nav-label">Seguimiento de tareas</span></a></li>
                         <li class="active"><a href="#cambio_password"><img class="fa fa-th-large menu-icon" src="img/candado.png"> <span class="nav-label">Cambio de contraseña</span></a></li>
-                        <li class="active"><a href="#hojas_de_trabajo"><img class="fa fa-th-large menu-icon" src="img/candado.png"> <span class="nav-label">Trabajos SCEP</span></a></li>
+                        <!-- li class="active"><a href="#hojas_de_trabajo"><img class="fa fa-th-large menu-icon" src="img/candado.png"> <span class="nav-label">Trabajos SCEP</span></a></li -->
                         <li class="active"><a href="#ClasificacionEmpresas"><img class="fa fa-th-large menu-icon" src="img/fideicomiso.png"> <span class="nav-label">Clasificacion de Empresas</span></a></li>
                         <li class="active"><a href="#bibliotecaScep"><img class="fa fa-th-large menu-icon" src="img/fideicomiso.png"> <span class="nav-label">Biblioteca SCEP</span></a></li>
                         <li class="active" v-if="esUsuarioAuxiliar()">
@@ -486,7 +486,7 @@
                                             </div>
                                             <div class="ibox-content">
                                                 <div style="overflow-y: scroll;">
-                                                    <abm v-bind:model="usuarios" v-bind:editable="true" buttons='close,save'></abm>
+                                                    <abm v-bind:model="usuarios" v-bind:editable="true" buttons='close,save,delete'></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -1042,10 +1042,33 @@
                                                 <h3><a href="pei_scep.pdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Plan Estrategico Institucional (PEI)</a></h3>
                                                 <p>Objetivos del Plan Estratégicos Institucional “PEI” del MEFP y su Contribución ..... el MEFP.
                                                     Hacer un seguimiento y control al PEI y al POA con incidencia en la.</p>
-                                                <br>
-                                                <h3><a href="poa_scep.pdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Plan Operativo Anual (POA)</a></h3>
-                                                <p>Objetivos del Plan Estratégicos Institucional “PEI” del MEFP y su Contribución ..... el MEFP.
-                                                    Hacer un seguimiento y control al PEI y al POA con incidencia en la.</p>
+                                                <div>
+                                                    <br>
+                                                    <h3><a href="poa_scep.pdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Plan Operativo Anual (POA)</a></h3>
+                                                    <p>Objetivos del Plan Estratégicos Institucional “PEI” del MEFP y su Contribución ..... el MEFP.
+                                                        Hacer un seguimiento y control al PEI y al POA con incidencia en la.</p>
+                                                </div>
+                                                <div v-for="(doc,i) in documentosPOAPEI" :key="i">
+                                                    <br>
+                                                    <h3>
+                                                        <a :href="doc.attributes.link.url" target="_blank">
+                                                            <i class="fa fa-file-pdf-o"></i> {{doc.attributes.link.name}}
+                                                        </a>
+                                                    </h3>
+                                                    <p>{{doc.attributes.descripcion}}</p>
+                                                </div>
+                                                <div v-if="esAdmin">
+                                                    <hr>
+                                                    <button type="button" class="btn btn-info" style="position: relative" @click="">
+                                                        <i class="fa fa-upload"></i> Subir Archivo
+                                                        <upload v-model="adjuntoPOAPEI" v-bind:multiplefile="false"/>
+                                                    </button>
+                                                    {{nombreAdjuntoPEIPOA}}
+                                                </div>
+                                                <textarea v-model="descripcionPOAPEI" class="form-control" placeholder="descripción"></textarea>
+                                                <button type="button" class="btn btn-success" @click="addPOAPEI">
+                                                    <i class="fa fa-plus"></i> Registrar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -1211,6 +1234,9 @@
                     });
                     //userInstance.role_id=2;
                     return {
+                        documentosPOAPEI: [],
+                        descripcionPOAPEI: '',
+                        adjuntoPOAPEI: '',
                         cuentaEdit: false,
                         cuentaSeleccionada: 'bg',
                         valoresCuenta: {
@@ -1478,6 +1504,16 @@
                     };
                 },
                 computed: {
+                    nombreAdjuntoPEIPOA: function () {
+                        if(this.adjuntoPOAPEI) {
+                            try {
+                                var adjuntoPOAPEI = JSON.parse(this.adjuntoPOAPEI);
+                                return adjuntoPOAPEI.name;
+                            } catch(e) {
+                            }
+                        }
+                        return '';
+                    },
                     contratacionesDirectasToolbar: function () {
                         //return (this.esAdmin || this.esGerente || this.esAuxiliar) ? 'new,search' : 'search';
                         return (this.esAdmin || this.noEsDoctorMari()) ? 'new,search' : 'search';
@@ -1496,6 +1532,44 @@
                     },
                 },
                 methods: {
+                    loadDocumentosPEIPOA: function () {
+                        var self = this;
+                        $.ajax({
+                            url: '/api/UserAdministration/poaPeiDoc?per_page=30',
+                            method: 'get',
+                            dataType: 'json',
+                            success: function (res) {
+                                self.documentosPOAPEI.splice(0);
+                                res.data.forEach(function (row) {
+                                    try {
+                                        row.attributes.link = JSON.parse(row.attributes.link);
+                                    } catch (e) {}
+                                    self.documentosPOAPEI.push(row);
+                                });
+                            }
+                        });
+                    },
+                    addPOAPEI: function () {
+                        var self = this;
+                        $.ajax({
+                            url: '/api/UserAdministration/poaPeiDoc',
+                            method: 'post',
+                            dataType: 'json',
+                            data: JSON.stringify({
+                                data: {
+                                    attributes: {
+                                        link: self.adjuntoPOAPEI,
+                                        descripcion: self.descripcionPOAPEI,
+                                    }
+                                }
+                            }),
+                            success: function (res) {
+                                self.adjuntoPOAPEI = '';
+                                self.descripcionPOAPEI = '';
+                                self.loadDocumentosPEIPOA();
+                            }
+                        });
+                    },
                     puedeCambiarDatosEmpresa: function (empresa) {
                         var user = this.user;
                         return this.esAdmin || user.empresas.find(function (e) {return empresa == e.id});
@@ -2402,6 +2476,7 @@
                     this.cargarCuadrosFinancieros();
                     this.cargarCuadrosFinancierosCompleto();
                     this.loadListTo(this.usertarea, this.users);
+                    this.loadDocumentosPEIPOA();
                     //this.hoja_trabajo.$load(0);
                     this.loadList('/vue-editor/list/Hojas%20de%20Trabajo', this.tiposAuditoria);
                 }
