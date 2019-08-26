@@ -1402,7 +1402,7 @@ if (!isset($_SESSION['hr_user'])) {
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-2">
                                     <button type="button" v-on:click="generarNotaReporte" class="btn btn-primary">Generar Reporte</button>
-                                    <button type="button" v-on:click="exportarExcel('reporteExterna', 'Hojas de Ruta Externas')" class="btn btn btn-default">Exportar Excel</button>
+                                    <button type="button" v-on:click="exportarExcel('reporteInterna', 'Hojas de Ruta Externas')" class="btn btn btn-default">Exportar Excel</button>
                                 </div>
                             </div>
                         </fieldset>
