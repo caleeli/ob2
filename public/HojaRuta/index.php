@@ -1402,12 +1402,12 @@ if (!isset($_SESSION['hr_user'])) {
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-2">
                                     <button type="button" v-on:click="generarNotaReporte" class="btn btn-primary">Generar Reporte</button>
-                                    <button type="button" v-on:click="exportarExcel('reporteInterna', 'Hojas de Ruta Externas')" class="btn btn btn-default">Exportar Excel</button>
+                                    <button type="button" v-on:click="exportarExcel('reporteNota', 'Reporte Notas Oficio')" class="btn btn btn-default">Exportar Excel</button>
                                 </div>
                             </div>
                         </fieldset>
                     </form>
-                    <table id="reporteInterna" class="table table-striped table-hover ">
+                    <table id="reporteNota" class="table table-striped table-hover ">
                         <thead>
                             <tr>
                                 <th>Hoja de Ruta</th>
@@ -1433,6 +1433,145 @@ if (!isset($_SESSION['hr_user'])) {
                                 <td>{{note.nombre_apellidos}}</td>
                                 <td>{{note.cargo}}</td>
                                 <td><span v-if="note.dias">{{note.pasaron()}}/{{note.dias}} días</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-10" v-if="menu=='reporte_com'">
+                    <form class="form-horizontal">
+                        <fieldset>
+                            <legend>Reporte - Comunicación Interna</legend>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nº Hoja de Ruta</label>
+                                <div class="col-md-10">
+                                    <input type="text" v-model="comunicacionReporte.hoja_de_ruta" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-md-2 control-label">Fecha de emisión</label>
+                                <div class="col-md-5">
+                                    <fecha v-model="comunicacionReporte.fecha_emision1">
+                                </div>
+                                <div class="col-md-5">
+                                    <fecha v-model="comunicacionReporte.fecha_emision2">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nº NOTA CGE/SCEP</label>
+                                <div class="col-md-10">
+                                    <input type="text" v-model="comunicacionReporte.nro_nota" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Reiterativa</label>
+                                <div class="col-md-10">
+                                    <select class="form-control" v-model="comunicacionReporte.reiterativa">
+                                        <option value="SI">SI</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-md-2 control-label">Fecha de entrega</label>
+                                <div class="col-md-5">
+                                    <fecha v-model="comunicacionReporte.fecha_entrega1" />
+                                </div>
+                                <div class="col-md-5">
+                                    <fecha v-model="comunicacionReporte.fecha_entrega2" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Entidad o Empresa</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="entidad_empresa" v-model="comunicacionReporte.entidad_empresa" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nombre y apellidos</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="nombre_apellidos" v-model="comunicacionReporte.nombre_apellidos" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Cargo</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="cargo" v-model="comunicacionReporte.cargo" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="textArea" class="col-md-2 control-label">Referencia</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" v-model="comunicacionReporte.referencia" rows="3" id="textArea"></textarea>
+                                </div>
+                            </div>
+                            <legend>Reporte - Nota Recibida</legend>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nº Hoja de Ruta</label>
+                                <div class="col-md-10">
+                                    <input type="text" v-model="comunicacionReporte.hoja_de_ruta_recepcion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-md-2 control-label">Fecha de recepción</label>
+                                <div class="col-md-5">
+                                    <fecha v-model="comunicacionReporte.fecha_recepcion1" />
+                                </div>
+                                <div class="col-md-5">
+                                    <fecha v-model="comunicacionReporte.fecha_recepcion2" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nº NOTA</label>
+                                <div class="col-md-10">
+                                    <input type="text" v-model="comunicacionReporte.nro_nota_recepcion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Remitente</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="remitente" v-model="comunicacionReporte.remitente_recepcion" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="textArea" class="col-md-2 control-label">Asunto o Referencia</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" v-model="comunicacionReporte.referencia_recepcion" rows="3" id="textArea"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10 col-md-offset-2">
+                                    <button type="button" v-on:click="generarComunicacionReporte" class="btn btn-primary">Generar Reporte</button>
+                                    <button type="button" v-on:click="exportarExcel('reporteComunicacion', 'Reporte Comunicacion Interna')" class="btn btn btn-default">Exportar Excel</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <table id="reporteComunicacion" class="table table-striped table-hover ">
+                        <thead>
+                            <tr>
+                                <th>Hoja de Ruta</th>
+                                <th>Fecha Emision</th>
+                                <th>Nro Nota</th>
+                                <th>Reiterativa</th>
+                                <th>Fecha Entrega</th>
+                                <th>Entidad/Empresa</th>
+                                <th>Nombre</th>
+                                <th>Cargo</th>
+                                <th>Días</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for='row in reporteComunicacion'>
+                                <td>{{row.hoja_de_ruta}}</td>
+                                <td>{{row.fecha_emision}}</td>
+                                <td>{{row.nro_nota}}</td>
+                                <td>{{row.reiterativa}}</td>
+                                <td>{{row.fecha_entrega}}</td>
+                                <td>{{row.entidad_empresa}}</td>
+                                <td>{{row.nombre_apellidos}}</td>
+                                <td>{{row.cargo}}</td>
+                                <td><span v-if="row.dias">{{row.pasaron()}}/{{row.dias}} días</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1710,7 +1849,9 @@ if (!isset($_SESSION['hr_user'])) {
                         },
                         reporteExterna: [],
                         notaReporte: new NotaReporte(),
+                        comunicacionReporte: new NotaReporte(),
                         reporteNotas: [],
+                        reporteComunicacion: [],
                         errores: {
                             derivacion_fecha: false,
                             derivacion_destinatarios: false,
@@ -2355,6 +2496,21 @@ if (!isset($_SESSION['hr_user'])) {
                                 self.reporteNotas.splice(0);
                                 res.forEach(function (row) {
                                     self.reporteNotas.push(new Nota(row));
+                                });
+                            }
+                        });
+                    },
+                    generarComunicacionReporte: function () {
+                        var self = this;
+                        $.ajax({
+                            method: 'get',
+                            url: 'reporteComunicacion.php',
+                            data: self.comunicacionReporte,
+                            dataType: 'json',
+                            success: function (res) {
+                                self.reporteComunicacion.splice(0);
+                                res.forEach(function (row) {
+                                    self.reporteComunicacion.push(new Nota(row));
                                 });
                             }
                         });
