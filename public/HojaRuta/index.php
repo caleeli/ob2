@@ -776,6 +776,7 @@ if (!isset($_SESSION['hr_user'])) {
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
                                     <button v-if="!userReadOnly" type="button" v-on:click="actualizarHR" class="btn btn-primary">Guardar cambios</button>
+                                    <button v-if="!userReadOnly && concluido()" type="button" v-on:click="habilitarHoja" class="btn btn-warning">Habilitar Hoja</button>
                                 </div>
                             </div>
                             <div v-if="!concluido()">
@@ -824,9 +825,6 @@ if (!isset($_SESSION['hr_user'])) {
                                 <div class="col-lg-10 col-lg-offset-2">
                                     <button v-if="!userReadOnly" type="button" :disabled="concluido()" v-on:click="saveDerivation(derivacion)" class="btn btn-primary">Registrar</button>
                                     <button v-if="!userReadOnly" type="button" :disabled="concluido()" v-on:click="terminarHoja" class="btn btn-warning">Terminar</button>
-                                    <!--
-                                    <button v-if="!userReadOnly" type="button" :disabled="!concluido()" v-on:click="habilitarHoja" class="btn btn-warning">Habilitar Hoja</button>
-                                    -->
                                 </div>
                             </div>
                             </div>
@@ -855,6 +853,7 @@ if (!isset($_SESSION['hr_user'])) {
                                 <td>
                                     <a v-if="!derivacion.editable" href='javascript:void(0)' class='btn btn-default glyphicon glyphicon-pencil' v-on:click='derivacion.editable=true;'></a>
                                     <a v-if="derivacion.editable" href='javascript:void(0)' class='btn btn-primary glyphicon glyphicon-floppy-disk' v-on:click='derivacion.editable=false;saveDerivation(null, derivacion);'></a>
+                                    <a v-if="!derivacion.editable" href='javascript:void(0)' class='btn btn-default glyphicon glyphicon-remove' v-on:click='deleteDerivation(derivacion)'></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -1865,6 +1864,34 @@ if (!isset($_SESSION['hr_user'])) {
                     };
                 },
                 methods: {
+                    deleteDerivation: function (derivation) {
+                        if (!confirm("¿Esta segura(o) de eliminar esta derivacion?")) {
+                            return;
+                        }
+                        var self = this;
+                        $.ajax({
+                            method:'POST',
+                            url: 'deleteDerivacion.php',
+                            data: {
+                                id: derivation.id,
+                            },
+                            dataType: 'json',
+                            success: function (res) {
+                                self.filtroDerivacion = '';
+                                self.hoja.selectDerivations(self.derivaciones, self.filtroDerivacion);
+                                res.forEach(function (o) {
+                                    list.push(new Derivacion({
+                                        id: o.id,
+                                        fecha: o.fecha,
+                                        comentarios: o.comentarios,
+                                        destinatario: o.destinatario,
+                                        destinatarios: o.destinatarios,
+                                        instruccion: o.instruccion,
+                                    }));
+                                });
+                            }
+                        });
+                    },
                     totalReporte: function (resumen, columna) {
                         var total = 0;
                         for(var usuario in resumen) {
