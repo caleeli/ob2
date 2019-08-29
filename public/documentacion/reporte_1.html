@@ -94,18 +94,15 @@
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-success">{{empresa.activo_c}}% <i v-bind:class="{'fa fa-level-up': empresa.activo_c>0 , 'fa fa-level-down': empresa.activo_c<0}"></i></div>
                                     <small class="stats-label">Activo</small>
                                     <h4>Bs. {{empresa.activo}}</h4>
                                 </div>
 
                                 <div class="col-xs-4">
-                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-info">{{empresa.pasivo_c}}% <i v-bind:class="{'fa fa-level-up': empresa.pasivo_c>0 , 'fa fa-level-down': empresa.pasivo_c<0}"></i></div>
                                     <small class="stats-label">Pasivo</small>
                                     <h4>Bs. {{empresa.pasivo}}</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-warning">{{empresa.patrimonio_c}}% <i v-bind:class="{'fa fa-level-up': empresa.patrimonio_c>0 , 'fa fa-level-down': empresa.patrimonio_c<0}"></i></div>
                                     <small class="stats-label">Patrimonio</small>
                                     <h4>Bs. {{empresa.patrimonio}}</h4>
                                 </div>
@@ -131,18 +128,15 @@
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-success">{{empresa.ingresos_c}}% <i v-bind:class="{'fa fa-level-up': empresa.ingresos_c>0 , 'fa fa-level-down': empresa.ingresos_c<0}"></i></div>
                                     <small class="stats-label">Recursos</small>
                                     <h4>Bs. {{empresa.ingresos}}</h4>
                                 </div>
 
                                 <div class="col-xs-4">
-                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-info">{{empresa.gastos_c}}% <i v-bind:class="{'fa fa-level-up': empresa.gastos_c>0 , 'fa fa-level-down': empresa.gastos_c<0}"></i></div>
                                     <small class="stats-label">Gastos</small>
                                     <h4>Bs. {{empresa.gastos}}</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-warning">{{empresa.recursos_c}}% <i v-bind:class="{'fa fa-level-up': empresa.recursos_c>0 , 'fa fa-level-down': empresa.recursos_c<0}"></i></div>
                                     <small class="stats-label">Resultados</small>
                                     <h4>Bs. {{empresa.recursos}}</h4>
                                 </div>
