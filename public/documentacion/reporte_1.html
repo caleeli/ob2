@@ -110,7 +110,7 @@
                                     <h4>Bs. {{empresa.patrimonio}}</h4>
                                 </div>
 
-                                <div v-for="data in empresa.chart1" class="col-xs-6">
+                                <div v-for="data in empresa.chart1" class="col-xs-6" style="padding-left: 2em;">
                                     <br>
                                     <basic-chart title="Balance general"
                                          v-bind:options="{animation:false}"
@@ -132,7 +132,7 @@
                             <div class="row">
                                 <div class="col-xs-4">
                                     <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-success">{{empresa.ingresos_c}}% <i v-bind:class="{'fa fa-level-up': empresa.ingresos_c>0 , 'fa fa-level-down': empresa.ingresos_c<0}"></i></div>
-                                    <small class="stats-label">Ingresos</small>
+                                    <small class="stats-label">Recursos</small>
                                     <h4>Bs. {{empresa.ingresos}}</h4>
                                 </div>
 
@@ -143,7 +143,7 @@
                                 </div>
                                 <div class="col-xs-4">
                                     <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-warning">{{empresa.recursos_c}}% <i v-bind:class="{'fa fa-level-up': empresa.recursos_c>0 , 'fa fa-level-down': empresa.recursos_c<0}"></i></div>
-                                    <small class="stats-label">Recursos</small>
+                                    <small class="stats-label">Resultados</small>
                                     <h4>Bs. {{empresa.recursos}}</h4>
                                 </div>
                                 <div v-for="data in empresa.chart2" class="col-xs-6">
@@ -728,7 +728,7 @@
     ]',
     'chart2': '[{\
         "type": "bar",\
-        "x": ["ingresos","gastos","recursos"],\
+        "x": ["recursos","gastos","resultados"],\
         "series": {\
             "erg": {\
                 "{{$gestion}}": [{{$uc("5")*1}},{{$uca("6")*1}},{{$uc("5")-$uca("6")+$uc("4")*1}}],\
@@ -744,11 +744,11 @@
         @endif"{{$gestion-1}}","{{$gestion}}"],\
         "series": {\
             "erg": {\
-                "ingresos": [@if($gestion-2>2014) {{$ucp("5",-2)*1}},\n\
+                "recursos": [@if($gestion-2>2014) {{$ucp("5",-2)*1}},\n\
                 @endif{{$ucp("5")*1}},{{$uc("5")*1}}],\
                 "gastos": [@if($gestion-2>2014) {{$ucpa("6",-2)*1}},\n\
                 @endif{{$ucpa("6")*1}},{{$uca("6")*1}}],\
-                "recursos": [@if($gestion-2>2014) {{$ucp("5",-2)-$ucpa("6",-2)+$ucp("4",-2)*1}},\n\
+                "resultados": [@if($gestion-2>2014) {{$ucp("5",-2)-$ucpa("6",-2)+$ucp("4",-2)*1}},\n\
                 @endif{{$ucp("5")-$ucpa("6")+$ucp("4")*1}},{{$uc("5")-$uca("6")+$uc("4")*1}}]\
             }\
         }\
