@@ -110,7 +110,7 @@
                                     <h4>Bs. {{empresa.patrimonio}}</h4>
                                 </div>
 
-                                <div v-for="data in empresa.chart1" class="col-xs-6" style="padding-left: 2em;">
+                                <div v-for="data in empresa.chart1" class="col-xs-6" style="padding-right: 4em;">
                                     <br>
                                     <basic-chart title="Balance general"
                                          v-bind:options="{animation:false}"
@@ -146,7 +146,7 @@
                                     <small class="stats-label">Resultados</small>
                                     <h4>Bs. {{empresa.recursos}}</h4>
                                 </div>
-                                <div v-for="data in empresa.chart2" class="col-xs-6">
+                                <div v-for="data in empresa.chart2" class="col-xs-6" style="padding-right: 4em;">
                                     <br>
                                     <basic-chart title="Estado de resultados"
                                          mcols="aprobado"
