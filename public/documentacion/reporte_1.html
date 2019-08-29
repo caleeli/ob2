@@ -266,22 +266,22 @@
                                 </div>-->
 
                                 <div class="col-xs-12">
-                                    <h5>Nivel de Endeudamiento</h5>
+                                    <h5>Endeudamiento del Total Activo</h5>
                                     <small>
-                                        De todos los recursos obtenidos, el <b> {{empresa.nivel_endeudamiento}}% </b> provienen de los acreedores.
+                                        De todos los activos de la Empresa, el {{empresa.endeudamiento_del_total_activo}}% es financiado por terceros
                                     </small>
                                     <br>
                                     <br>
                                 </div>
 
-                                <!-- <div class="col-xs-12">
+                                <div class="col-xs-12">
                                     <h5>Endeudamiento a corto plazo</h5>
                                     <small>
                                         Las deudas a corto plazo representan el <b> {{empresa.endeudamiento_a_corto_plazo}}% </b> del total pasivo.
                                     </small>
                                     <br>
                                     <br>
-                                </div>-->
+                                </div>
 
                                 <div class="col-xs-12">
                                     <b>Resultado del ejercicio:</b>
@@ -694,6 +694,7 @@
                                         'rotacion_activos_fijos' : "{{$uc('5.2')/$uc('1.2.3')}}",
                                         'resultado_antes_ajuste': "{{$uc('Resultado antes del Ajuste:')}}",
                                         'resultado_del_ejercicio': "{{$uc('Resultado del Ejercicio:')}}",
+                                        'endeudamiento_del_total_activo': "{{$uc('2')/$uc('1')*100}}",
                                         //grafico
                                         'chart1': '[\
     {\
