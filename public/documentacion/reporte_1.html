@@ -150,35 +150,6 @@
                                 </div>
                             </div>
                         </div>
-                        <br><br><br><br><br><br>
-                        <div class="ibox-title">
-
-                            <h5>Resultado del Ejercicio</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="row">
-                                <!-- div class="col-xs-4">
-                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-success">{{empresa.ingresos_c}}% <i v-bind:class="{'fa fa-level-up': empresa.ingresos_c>0 , 'fa fa-level-down': empresa.ingresos_c<0}"></i></div>
-                                    <small class="stats-label">Resultado antes del ajuste</small>
-                                    <h4>Bs. {{empresa.resultado_antes_ajuste}}</h4>
-                                </div>
-
-                                <div class="col-xs-4">
-                                    <div v-if="empresaSeleccionadaGestion>2015" class="stat-percent font-bold text-info">{{empresa.gastos_c}}% <i v-bind:class="{'fa fa-level-up': empresa.gastos_c>0 , 'fa fa-level-down': empresa.gastos_c<0}"></i></div>
-                                    <small class="stats-label">Resultado del ejercicio</small>
-                                    <h4>Bs. {{empresa.resultado_del_ejercicio}}</h4>
-                                </div -->
-
-                                <div v-for="data in empresa.chart3" class="col-xs-6">
-                                    <br>
-                                    <basic-chart title="Resultado"
-                                         mcols="aprobado"
-                                         v-bind:options="{animation:false}"
-                                         v-bind:type="data.type"
-                                         v-bind:mdata='data' />
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -705,20 +676,17 @@
     },\
     {\
         "type":"line",\
-        "x": [@if($gestion-2>2014) "{{$gestion-2}}",\n\
-        @endif"{{$gestion-1}}","{{$gestion}}"],\
+        "x": ["{{$gestion-2}}","{{$gestion-1}}","{{$gestion}}"],\
         "series": {\
             "eeff": {\
-                "activo": [@if($gestion-2>2014) {{$ucp("1",-2)*1}},\n\
-                @endif{{$ucp("1")*1}},{{$uc("1")*1}}],\
-                "pasivo": [@if($gestion-2>2014) {{$ucp("2",-2)*1}},\n\
-                @endif{{$ucp("2")*1}},{{$uc("2")*1}}],\
-                "patrimonio": [@if($gestion-2>2014) {{$ucp("3",-2)*1}},\n\
-                @endif{{$ucp("3")*1}},{{$uc("3")*1}}]\
+                "Resultado del Ejercicio": [\
+                    {{$ucp(\'Resultado del Ejercicio:\',-2)*1}},\
+                    {{$ucp(\'Resultado del Ejercicio:\')*1}},\
+                    {{$uc(\'Resultado del Ejercicio:\')*1}}\
+                ]\
             }\
         }\
     }\
-    \
     ]',
     'chart2': '[{\
         "type": "bar",\
