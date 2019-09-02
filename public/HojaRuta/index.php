@@ -423,7 +423,12 @@ if (!isset($_SESSION['hr_user'])) {
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Entidad o Empresa</label>
                                 <div class="col-lg-10">
-                                    <input type="text" name="entidad_empresa" v-model="nota.entidad_empresa" class="form-control" placeholder="">
+                                    <div class="btn-group btn-block">
+                                        <input type="text" name="entidad_empresa" v-model="nota.entidad_empresa" class="form-control dropdown-toggle" data-toggle="dropdown" placeholder="">
+                                        <ul class="dropdown-menu">
+                                            <li v-for="proc in procedencias" v-on:click="nota.entidad_empresa = proc.nombre" v-if="(proc.nombre+'').toLowerCase().indexOf(nota.entidad_empresa.toLowerCase())>-1"><a href="javascript:void(0)">{{proc.nombre}}</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
