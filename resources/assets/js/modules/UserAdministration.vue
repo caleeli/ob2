@@ -516,7 +516,7 @@ UserAdministration.Contratacion = function (url, id) {
     this.$defaultUrl = "/api/UserAdministration/contratacions";
     Model.call(this, url, id, "UserAdministration.Contratacion");
     this.$list = function () {
-        return "fields=cod_firma,informe_scep,nota,gestion,empresa,owner";
+        return "fields=cod_firma,informe_scep,nota,gestion,empresa,owner,uai_elaborado_por,evcon_elaborado_por,evcon_supervisor";
     };
     this.$name = "Contratacion";
     this.$pluralName = "Contratacions";
@@ -558,7 +558,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"nota","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
+                        },"value":"nota","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"uai_elaborado_por":{"name":"uai_elaborado_por","label":"UAI Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"uai_elaborado_por","isAssociation":true,"isMultiple":false},"evcon_elaborado_por":{"name":"evcon_elaborado_por","label":"EVCON Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"evcon_elaborado_por","isAssociation":true,"isMultiple":false},"evcon_supervisor":{"name":"evcon_supervisor","label":"EVCON Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"evcon_supervisor","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
@@ -601,7 +601,7 @@ UserAdministration.Contratacion = function (url, id) {
                               + time;
                         }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Empresa","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"UAI Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.uai_elaborado_por.attributes"},{"title":"EVCON Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.evcon_elaborado_por.attributes"},{"title":"EVCON Supervisor","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.evcon_supervisor.attributes"}];
     };
     this.$methods = {
 listEditButton: function (data, type, row, meta){

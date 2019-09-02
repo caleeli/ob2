@@ -1314,7 +1314,46 @@
                         "form": true,
                         "list": true,
                         "visible": true
-                    })
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "uai_elaborado_por",
+                        "label": "UAI Elaborado por",
+                        "model": "user",
+                        "textField":  function(data){return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "nullable": true,
+                        "form": true,
+                        "list": true,
+                        "visible": true
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "evcon_elaborado_por",
+                        "label": "EVCON Elaborado por",
+                        "model": "user",
+                        "textField":  function(data){return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "nullable": true,
+                        "form": true,
+                        "list": true,
+                        "visible": true
+                    }),
+                    new Module.Model.BelongsTo({
+                        "name": "evcon_supervisor",
+                        "label": "EVCON Supervisor",
+                        "model": "user",
+                        "textField":  function(data){return data?data.nombres + ' ' +data.apellidos:''},
+                        "ui": "select",
+                        "source": new Module.View.ModelInstance("UserAdministration.User"),
+                        "default": "",
+                        "nullable": true,
+                        "form": true,
+                        "list": true,
+                        "visible": true
+                    }),
                 ],
                 "methods": {
                     "listEditButton(data, type, row, meta)": function(data, type, row, meta){

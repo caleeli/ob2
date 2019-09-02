@@ -17,6 +17,9 @@ class Contratacion extends Model
       3 => 'gestion',
       4 => 'empresa_id',
       5 => 'owner_id',
+      6 => 'uai_elaborado_por_id',
+      7 => 'evcon_elaborado_por_id',
+      8 => 'evcon_supervisor_id',
     );
     protected $attributes = array(
       'cod_firma' => '',
@@ -39,6 +42,24 @@ class Contratacion extends Model
 
 
     public function owner()
+    {
+        return $this->belongsTo('App\Models\UserAdministration\User');
+    }
+
+
+    public function uai_elaborado_por()
+    {
+        return $this->belongsTo('App\Models\UserAdministration\User');
+    }
+
+
+    public function evcon_elaborado_por()
+    {
+        return $this->belongsTo('App\Models\UserAdministration\User');
+    }
+
+
+    public function evcon_supervisor()
     {
         return $this->belongsTo('App\Models\UserAdministration\User');
     }
