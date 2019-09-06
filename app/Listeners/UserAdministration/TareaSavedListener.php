@@ -5,7 +5,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\UserAdministration\Tarea;
 use App\Events\UserAdministration\TareaSaved;
-use Illuminate\Support\Facades\Storage;
 
 class TareaSavedListener
 {
@@ -29,14 +28,11 @@ class TareaSavedListener
                         $hoja = $event->tarea->datos['data'][$paso][$hojaTrabajo];
                         $titulo = $hoja['titulo'];
                         $filename = $event->tarea->id . '/' . ($paso + 1) . '/' . $titulo . '.link';
-                        $url = "/vue-editor/download/" . $hoja['templeta'] . "/" . $event->tarea->id . "/" . $paso . "/" . rawurlencode($hojaNombre);
                         $link = [
                                             "mime" => "application/msword",
-                                            "url" => $url,
+                                            "url" => "/vue-editor/download/" . $hoja['templeta'] . "/" . $event->tarea->id . "/" . $paso . "/" . rawurlencode($hojaNombre),
                                         ];
                         \App\Http\Controllers\FolderController::saveLink('tareas', $filename, $link);
-                        //$path = Storage::disk('tareas')->getDriver()->getAdapter()->applyPathPrefix($filename);
-                        //\App\ToPDF::toPDF(env('APP_URL') . $url, substr($path, 0, -4) . 'pdf');
                     }
                 }
             }

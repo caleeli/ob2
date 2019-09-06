@@ -75,7 +75,7 @@ eval("/*\r\n\tMIT License http://www.opensource.org/licenses/mit-license.php\r\n
 /***/ function(module, exports, __webpack_require__) {
 
 __webpack_require__(0);
-(function webpackMissingModule() { throw new Error("Cannot find module \"/Users/davidcallizaya/NetBeansProjects/nano2/app/main.js\""); }());
+(function webpackMissingModule() { throw new Error("Cannot find module \"/Users/angela/NetBeansProjects/nano2/app/main.js\""); }());
 
 
 /***/ }

@@ -123,3 +123,6 @@ Route::get('/entidad/{entidad}', function ($entidad) {
     return view('subir_entidades', compact('path', 'folder'));
 });
 
+Route::get('/descarga_documentos/{tarea}', 'DescargaDocumentosController@index');
+Route::get('/descarga_documentos/download/{file}', 'DescargaDocumentosController@file');
+Route::get('/descarga_documentos/print', 'DescargaDocumentosController@printPDF');

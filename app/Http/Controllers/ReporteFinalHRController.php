@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * Description of ReporteFinalHRController
  *
- * @author David Callizaya <davidcallizaya@gmail.com>
+ * @author angela
  */
 class ReporteFinalHRController
 {

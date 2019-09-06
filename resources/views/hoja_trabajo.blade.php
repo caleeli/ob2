@@ -236,9 +236,6 @@
         }
     };*/
     var timeoutSave = setInterval(doAutoSave , 4000);
-    setTimeout(function () {
-        window.printPDF = true;
-    }, 1000);
 </script>
 <script src="/js/hoja_trabajo.js?{{filemtime(public_path('/js/hoja_trabajo.js'))}}"></script>
 <script type="text/javascript" src="/js/text_layer_builder.js"></script>

@@ -140,6 +140,7 @@
                             <ul class="nav nav-second-level">
                                 <li class="active"><a href="#estadosFinancierosAdmin">Estados financieros ADM</a></li>
                                 <li class="active"><a href="#usuariosAdmin">Administración de usuarios</a></li>
+                                <li class="active"><a href="#empresasAdmin">Administración de empresas</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -487,6 +488,26 @@
                                             <div class="ibox-content">
                                                 <div style="overflow-y: scroll;">
                                                     <abm v-bind:model="usuarios" v-bind:editable="true" buttons='close,save,delete'></abm>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </carouselitem>
+                    <carouselitem id="empresasAdmin">
+                        <div class="row wrapper border-bottom page-heading">
+                            <div class="wrapper wrapper-content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ibox">
+                                            <div class="ibox-title">
+                                                <h5>Administración de empresas</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <div style="overflow-y: scroll;">
+                                                    <abm v-bind:model="adminEmpresas" v-bind:editable="true" buttons='close,save,delete'></abm>
                                                 </div>
                                             </div>
                                         </div>
@@ -1312,6 +1333,7 @@
                         users: [],
                         empresas: [],
                         empresa: new UserAdministration.Empresa(),
+                        adminEmpresas: new UserAdministration.Empresa(),
                         empresa_estado: new UserAdministration.EmpresaEstado(),
                         estado_financiero_aux: new UserAdministration.EstadoFinanciero(),
                         estado_financiero_adm: new UserAdministration.EstadoFinanciero(),

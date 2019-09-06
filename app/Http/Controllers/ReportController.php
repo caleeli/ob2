@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 /**
  * Description of ReportController
  *
- * @author davidcallizaya
+ * @author angela
  */
 class ReportController extends Controller
 {

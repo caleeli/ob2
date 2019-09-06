@@ -428,7 +428,7 @@ Swagger.generate = function (title, version, host, models) {
             "termsOfService": "http://openbank2.com/terms/",
             "contact": {
                 "name": "OpenBank team",
-                "email": "davidcallizaya@gmail.com",
+                "email": "angelitacc27@gmail.com ",
                 "url": "http://openbank2.com/"
             },
             "license": {

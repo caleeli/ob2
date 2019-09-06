@@ -9,7 +9,7 @@ use DB;
 /**
  * Convierte un documento google docs en una pagina dinamica con vuejs
  *
- * @author davidcallizaya
+ * @author angela
  */
 class GTemplate
 {

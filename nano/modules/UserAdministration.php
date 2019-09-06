@@ -386,6 +386,7 @@
                         "name": "detalle_empresa",
                         "type": "string",
                         "list": false,
+                        "form": false,
                         "default": ""
                     }),
                     new Module.Model.Field({

@@ -10,7 +10,7 @@ use Blade;
 /**
  * Description of Evaluator
  *
- * @author davidcallizaya
+ * @author angela
  */
 class Evaluator
 {
