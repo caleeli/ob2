@@ -367,6 +367,17 @@
                         "name": "caracter",
                         "label": "Caracter",
                         "type": "string",
+                        "ui": "select",
+                        "enum": [
+                            "Empresa Departamental",
+                            "Empresa Municipal",
+                            "Empresa Nacional",
+                            "Empresa Pública Nacional Estratégica",
+                            "Empresa Pública Nacional Social",
+                            "Empresa Pública Productiva",
+                            "Empresa Pública de Servicios Social",
+                            "Empresa Regional",
+                        ],
                         "default": ""
                     }),
                     new Module.Model.Field({
@@ -399,7 +410,17 @@
                         "name": "es_principal",
                         "type": "string",
                         "list": false,
-                        "default": "0"
+                        "ui": "select",
+                        "enum": [
+                            "Empresa Departamental",
+                            "Empresa Municipal",
+                            "Empresa Nacional",
+                            "Empresa Pública Nacional Estratégica",
+                            "Empresa Pública Nacional Social",
+                            "Empresa Pública Productiva",
+                            "Empresa Pública de Servicios Social",
+                            "Empresa Regional",
+                        ],
                     })
                 ],
                 "associations": [
