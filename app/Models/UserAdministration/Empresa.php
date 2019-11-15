@@ -30,7 +30,7 @@ class Empresa extends Model
       'tipologia' => '',
       'detalle_empresa' => '',
       'sub_empresa' => '0',
-      'es_principal' => '0',
+      'es_principal' => null,
     );
     protected $casts = array(
       'cod_empresa' => 'string',

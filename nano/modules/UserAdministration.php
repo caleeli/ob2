@@ -1337,7 +1337,7 @@
                         "list": true,
                         "visible": true
                     }),
-                    new Module.Model.BelongsTo({
+                    /*new Module.Model.BelongsTo({
                         "name": "uai_elaborado_por",
                         "label": "UAI Elaborado por",
                         "model": "user",
@@ -1375,7 +1375,7 @@
                         "form": true,
                         "list": true,
                         "visible": true
-                    }),
+                    }),*/
                 ],
                 "methods": {
                     "listEditButton(data, type, row, meta)": function(data, type, row, meta){
