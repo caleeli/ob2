@@ -15,6 +15,7 @@ class CreateAdmContratacionsTable extends Migration
             $table->text('informe_scep')->nullable();
             $table->text('nota')->nullable();
             $table->string('gestion')->nullable();
+            $table->string('observaciones')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();
             $table->integer('owner_id')->unsigned()->nullable();
             $table->timestamps();

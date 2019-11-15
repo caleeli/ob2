@@ -1311,6 +1311,12 @@
                         "type": "string",
                         "default": ""
                     }),
+                    new Module.Model.Field({
+                        "name": "observaciones",
+                        "label": "Observaciones",
+                        "type": "string",
+                        "default": ""
+                    }),
                 ],
                 "associations": [
                     new Module.Model.BelongsTo({
