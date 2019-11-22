@@ -1056,7 +1056,7 @@
                 "methods": {
                     "listEditButton(data, type, row, meta)": function(data, type, row, meta){
                         var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
-                        var canEdit = owner_id == localStorage.user_id;
+                        var canEdit = owner_id == localStorage.user_id  || window.app.user.role_id == 1;
                         return canEdit ? true : '';
                     },
                     "procedencias()": <?php
@@ -1225,7 +1225,7 @@
                 "methods": {
                     "listEditButton(data, type, row, meta)": function(data, type, row, meta){
                         var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
-                        var canEdit = owner_id == localStorage.user_id;
+                        var canEdit = owner_id == localStorage.user_id || window.app.user.role_id == 1;
                         return canEdit ? true : '';
                     },
                     "procedencias()": <?php
@@ -1386,7 +1386,7 @@
                 "methods": {
                     "listEditButton(data, type, row, meta)": function(data, type, row, meta){
                         var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
-                        var canEdit = owner_id == localStorage.user_id || localStorage.user_id == 1;
+                        var canEdit = owner_id == localStorage.user_id || localStorage.user_id == 1 || window.app.user.role_id == 1;
                         return canEdit ? true : '';
                     }
                 }
@@ -1515,7 +1515,7 @@
                 "methods": {
                     "listEditButton(data, type, row, meta)": function(data, type, row, meta){
                         var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
-                        var canEdit = owner_id == localStorage.user_id;
+                        var canEdit = owner_id == localStorage.user_id  || window.app.user.role_id == 1;
                         return canEdit ? true : '';
                     }
                 }
