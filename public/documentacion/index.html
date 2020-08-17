@@ -197,14 +197,14 @@
                                                             <a v-show="editingEmpresa" v-on:click="cancelEmpresa(empresa)" title='Salir'>
                                                                 <i class="fa fa-arrow-left"></i>
                                                             </a>
-                                                            <a v-show="editingEmpresa" v-on:click="saveEmpresa(empresa)" title='Guardar'>
+                                                            <a v-show="editingEmpresa" v-on:click="saveDetalleEmpresa(empresa)" title='Guardar'>
                                                                 <i class="fa fa-save"></i>
                                                             </a>
                                                         </div>
                                                     </div>
                                                     <div v-show="!editingEmpresa" class="ibox-content" v-html="empresa.detalle_empresa"></div>
                                                     <div v-show="editingEmpresa" class="ibox-content">
-                                                        <tinymce v-model="empresa.detalle_empresa" />
+                                                        <tinymce ref="detalle_empresa" v-model="empresa.detalle_empresa" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -2307,6 +2307,30 @@
                         var self = this;
                         self.editingEmpresa = false;
                         empresa.$save();
+                    },
+                    saveDetalleEmpresa: function (empresa) {
+                        var self = this, detalle_empresa = empresa.detalle_empresa;
+                        self.editingEmpresa = false;
+                        self.$refs.detalle_empresa.editorPromise.then(function (editor) {
+                            detalle_empresa = editor[0].getContent();
+                            empresa.detalle_empresa = detalle_empresa;
+                            $.ajax({
+                                method: 'PUT',
+                                url: '/api/UserAdministration/empresas/' + empresa.id,
+                                contentType: "application/json;charset=utf-8",
+                                dataType: 'json',
+                                data: JSON.stringify({
+                                    data: {
+                                        type: 'UserAdministration.Empresa',
+                                        attributes: {
+                                            detalle_empresa: detalle_empresa
+                                        }
+                                    }
+                                }),
+                                success: function (data) {
+                                }
+                            });
+                        });
                     },
                     cancelEmpresa: function (empresa) {
                         var self = this;
