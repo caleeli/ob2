@@ -119,7 +119,7 @@ class NanoBuildCommand extends Command
                 mkdir(dirname($filename), 0777, true);
             }
             file_put_contents($filename, $code);
-            exec('vendor/bin/php-cs-fixer fix ' . $filename . ' > /dev/null 2>&1 & echo $!');
+            exec('php-cs-fixer fix ' . $filename . ' --rules=@PSR2 > /dev/null 2>&1 & echo $!');
         };
         $v8->createMigration = function ($name) {
             try {
