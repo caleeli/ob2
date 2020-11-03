@@ -71,7 +71,7 @@ class DBDumpCommand extends Command
     {
         foreach (glob("$path/*.php") as $f) {
             $table = $this->getTableName($f);
-            if ($table) {
+            if ($table && !in_array($table, $this->tables)) {
                 $this->tables[] = $table;
             }
         }
