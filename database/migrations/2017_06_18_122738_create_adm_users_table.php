@@ -16,33 +16,17 @@ class CreateAdmUsersTable extends Migration
             $table->string('nombres')->nullable();
             $table->string('apellidos')->nullable();
             $table->text('fotografia')->nullable();
-            $table->integer('numero_ci');
-            $table->integer('tipo_doc_ci');
+            $table->integer('numero_ci')->nullable();
+            $table->integer('tipo_doc_ci')->nullable();
             $table->integer('ext_doc')->nullable();
-            $table->string('cod_estado_civil')->nullable();
             $table->date('fecha_nac')->nullable();
-            $table->integer('dep_cod')->nullable();
-            $table->integer('cod_ciudad')->nullable();
-            $table->integer('tipo_persona')->nullable();
-            $table->integer('cod_nac')->nullable();
-            $table->integer('nivel_edu')->nullable();
             $table->integer('cod_cliente')->nullable();
-            $table->integer('fec_ven_cliente')->nullable();
-            $table->string('email');
-            $table->string('nro_dependientes')->nullable();
-            $table->string('calificacion')->nullable();
-            $table->string('direccion')->nullable();
-            $table->string('ubicacion')->nullable();
-            $table->date('fec_registro')->nullable();
-            $table->date('hora_registro')->nullable();
-            $table->string('cod_mun')->nullable();
-            $table->string('cod_prov')->nullable();
-            $table->string('cod_zona')->nullable();
-            $table->string('unidad')->nullable();
-            $table->string('remember_token')->nullable();
+            $table->string('email')->nullable();
             $table->integer('role_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
+            $table->integer('posicion');
         });
     }
 

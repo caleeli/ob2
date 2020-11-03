@@ -17,11 +17,13 @@ class CreateAdmEmpresasTable extends Migration
             $table->string('caracter')->nullable();
             $table->string('rubro')->nullable();
             $table->string('tipologia')->nullable();
-            $table->string('detalle_empresa')->nullable();
-            $table->string('sub_empresa')->nullable();
-            $table->string('es_principal')->nullable();
+            $table->text('detalle_empresa')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->string('sub_empresa')->nullable();
+            $table->boolean('es_principal')->nullable();
+            $table->string('clasificacion')->default('Sin clasificar')->nullable();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

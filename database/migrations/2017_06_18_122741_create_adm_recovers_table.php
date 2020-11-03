@@ -16,6 +16,7 @@ class CreateAdmRecoversTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

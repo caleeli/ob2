@@ -15,6 +15,7 @@ class CreateAdmRolesTable extends Migration
             $table->string('status');
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

@@ -9,12 +9,12 @@ class CreateAdmEmpresaClasificacionsTable extends Migration
 {
     public function up()
     {
-        DB::statement('CREATE VIEW adm_empresa_clasificacions AS select clasificacion, count(*) conteo from adm_empresas group by clasificacion');
+        //DB::statement('CREATE VIEW adm_empresa_clasificacions AS select clasificacion, count(*) conteo from adm_empresas group by clasificacion');
     }
 
 
     public function down()
     {
-        Schema::dropIfExists('adm_empresa_clasificacions');
+        //Schema::dropIfExists('adm_empresa_clasificacions');
     }
 }

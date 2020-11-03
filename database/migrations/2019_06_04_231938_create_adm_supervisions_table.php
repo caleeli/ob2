@@ -24,6 +24,7 @@ class CreateAdmSupervisionsTable extends Migration
             $table->integer('supervisor_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

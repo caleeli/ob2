@@ -14,6 +14,7 @@ class CreateAdmCargaEstadosTable extends Migration
             $table->text('files')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

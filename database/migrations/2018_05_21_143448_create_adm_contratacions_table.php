@@ -18,8 +18,14 @@ class CreateAdmContratacionsTable extends Migration
             $table->string('observaciones')->nullable();
             $table->integer('empresa_id')->unsigned()->nullable();
             $table->integer('owner_id')->unsigned()->nullable();
+            $table->string('detalle')->nullable();
+            $table->string('representante_legal')->nullable();
+            $table->integer('uai_elaborado_por')->unsigned()->nullable();
+            $table->integer('evcon_elaborado_por')->unsigned()->nullable();
+            $table->integer('evcon_supervisor')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 
