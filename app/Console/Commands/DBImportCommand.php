@@ -84,11 +84,16 @@ class DBImportCommand extends Command
         }
     }
 
-    function chunkInsert($table, $array)
+    public function chunkInsert($table, $array)
     {
         $chunks = array_chunk($array, 1000, true);
         foreach ($chunks as $chunk) {
             DB::table($table)->insert($chunk);
+        }
+        try {
+            DB::select("SELECT setval('{$table}_id_seq', (SELECT MAX(id) FROM {$table}));");
+        } catch (\Throwable $t) {
+            echo "Updating SEQ for $table: ", $t->getMessage(),"\n";
         }
     }
 }

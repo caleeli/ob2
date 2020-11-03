@@ -34,6 +34,11 @@
             ) location.href = 'login.html';
         </script>
         <style>
+            .dv-notification {
+                position: fixed;
+                z-index: 10000;
+                right: 2em;
+            }
             .document-preview {
                 width: 8.5in;
                 border: 1px solid black;
@@ -156,6 +161,9 @@
                         </div>
                         <ul class="nav navbar-top-links navbar-right"><li></li>   <li><a href="login.html" style="color: #999C9E;"><i class="fa fa-sign-out"></i>Cerrar Sesión</a></li> </ul>
                     </nav>
+                    <div v-if="notification" class="alert dv-notification" :class="notificationVariant">
+                        {{ notification }}
+                    </div>
                 </div>
                 <carousel>
                     <!--
@@ -1232,7 +1240,7 @@
       
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.191"></script>
+        <script src="../js/server.js?v0.192"></script>
         <script>
         $(document).ready(function () {
             var app;
@@ -1255,6 +1263,9 @@
                     });
                     //userInstance.role_id=2;
                     return {
+                        notificationTimeout: null,
+                        notificationVariant: 'alert-success',
+                        notification: '',
                         documentosPOAPEI: [],
                         descripcionPOAPEI: '',
                         adjuntoPOAPEI: '',
@@ -1554,6 +1565,16 @@
                     },
                 },
                 methods: {
+                    notify: function (text, variant) {
+                        var self = this;
+                        if (this.notificationTimeout) clearTimeout(this.notificationTimeout);
+                        if (!variant) variant = 'success';
+                        this.notificationVariant = 'alert-' + variant;
+                        this.notification = text;
+                        this.notificationTimeout = setTimeout(function () {
+                            self.notification = '';
+                        } , 1500);
+                    },
                     loadDocumentosPEIPOA: function () {
                         var self = this;
                         $.ajax({

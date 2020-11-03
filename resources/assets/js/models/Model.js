@@ -282,12 +282,16 @@ export default function(uri0, id, type) {
             domain.length = 0;
             if(typeof field.enum==='object' && typeof field.enum.forEach==='function') {
                 field.enum.forEach(function(item){
-                    var attributes = {};
-                    attributes[field.textField] = item;
-                    domain.push({
-                        id: item,
-                        attributes: attributes
-                    });
+                    if (item instanceof Object && item.attributes instanceof Object) {
+                        domain.push(item);
+                    } else {
+                        var attributes = {};
+                        attributes[field.textField] = item;
+                        domain.push({
+                            id: item,
+                            attributes: attributes
+                        });
+                    }
                 });
             }
             var source;

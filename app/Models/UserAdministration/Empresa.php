@@ -41,7 +41,7 @@ class Empresa extends Model
       'tipologia' => 'string',
       'detalle_empresa' => 'string',
       'sub_empresa' => 'string',
-      'es_principal' => 'string',
+      'es_principal' => 'boolean',
     );
     protected $events = array(
     );
