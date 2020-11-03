@@ -347,12 +347,12 @@
                     new Module.Model.Field({
                         "name": "cod_empresa",
                         "type": "string",
-                        "label": "Código",
+                        "label": "Código Presupuestario",
                         "default": ""
                     }),
                     new Module.Model.Field({
                         "name": "nombre_empresa",
-                        "label": "Empresa",
+                        "label": "Razon Social de la Empresa",
                         "type": "string",
                         "default": ""
                     }),
@@ -361,7 +361,13 @@
                         "label": "Corporación",
                         "list": false,
                         "type": "string",
-                        "default": ""
+                        "default": "",
+                        "ui": "select",
+                        "textField": "name",
+                        "enum": [
+                            {"id": "", "attributes": {"name": "NO"}},
+                            {"id": "Corporativo", "attributes": {"name": "SI Corporativo"}}
+                        ]
                     }),
                     new Module.Model.Field({
                         "name": "caracter",
@@ -402,25 +408,28 @@
                     }),
                     new Module.Model.Field({
                         "name": "sub_empresa",
+                        "label": "Filial o Subsidiario",
                         "type": "string",
                         "list": false,
-                        "default": "0"
+                        "default": "0",
+                        "ui": "select",
+                        "textField": "name",
+                        "enum": [
+                            {"id": 0, "attributes": {"name": "NO"}},
+                            {"id": 1, "attributes": {"name": "SI"}}
+                        ]
                     }),
                     new Module.Model.Field({
                         "name": "es_principal",
-                        "type": "string",
+                        "label": "Empresa Corporativa",
+                        "type": "boolean",
                         "list": false,
                         "ui": "select",
+                        "textField": "name",
                         "enum": [
-                            "Empresa Departamental",
-                            "Empresa Municipal",
-                            "Empresa Nacional",
-                            "Empresa Pública Nacional Estratégica",
-                            "Empresa Pública Nacional Social",
-                            "Empresa Pública Productiva",
-                            "Empresa Pública de Servicios Social",
-                            "Empresa Regional",
-                        ],
+                            {"id": false, "attributes": {"name": "NO"}},
+                            {"id": true, "attributes": {"name": "SI"}}
+                        ]
                     })
                 ],
                 "associations": [

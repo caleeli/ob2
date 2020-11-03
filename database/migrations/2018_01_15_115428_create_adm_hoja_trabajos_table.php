@@ -14,9 +14,10 @@ class CreateAdmHojaTrabajosTable extends Migration
             $table->string('titulo')->nullable();
             $table->string('templeta')->nullable();
             $table->string('gestion')->nullable();
-            $table->text('valores')->nullable();
+            $table->text('valores')->default('{}')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

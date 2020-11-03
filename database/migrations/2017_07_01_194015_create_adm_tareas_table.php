@@ -29,8 +29,10 @@ class CreateAdmTareasTable extends Migration
             $table->integer('aprobacion1_id')->unsigned()->nullable();
             $table->integer('revisor2_id')->unsigned()->nullable();
             $table->integer('aprobacion2_id')->unsigned()->nullable();
+            $table->integer('usuario_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

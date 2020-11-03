@@ -15,6 +15,6 @@ class CreateAdmEmpresaEstadosTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('adm_empresa_estados');
+        DB::statement('DROP VIEW adm_empresa_estados');
     }
 }

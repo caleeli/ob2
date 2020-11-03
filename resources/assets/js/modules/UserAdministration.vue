@@ -15,12 +15,12 @@
     this.$pluralName = "Users";
     this.$title = "user";
     this.$pluralTitle = "users";
-    this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"apellidos":{"name":"apellidos","label":"Apellidos","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"apellidos","isAssociation":false},"fotografia":{"name":"fotografia","label":"Fotografia","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"fotografia","isAssociation":false},"numero_ci":{"name":"numero_ci","label":"Nro de CI","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"numero_ci","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"empresas":{"name":"empresas","label":"Empresas","type":"tags","enum":[],"source":new UserAdministration.Empresa(),"textField":function (data){return data?data.cod_empresa + ' ' + data.nombre_empresa : ':o'},"value":"empresas","isAssociation":true,"isMultiple":true}};
+    this.$ = {"username":{"name":"username","label":"Usuario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"username","isAssociation":false},"password":{"name":"password","label":"Contraseña","type":"password","enum":[],"source":undefined,"textField":undefined,"value":"password","isAssociation":false},"nombres":{"name":"nombres","label":"Nombres","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombres","isAssociation":false},"apellidos":{"name":"apellidos","label":"Apellidos","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"apellidos","isAssociation":false},"fotografia":{"name":"fotografia","label":"Fotografia","type":"file","enum":[],"source":undefined,"textField":function(data){return data?data.name:''},"value":"fotografia","isAssociation":false},"numero_ci":{"name":"numero_ci","label":"Nro de CI","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"numero_ci","isAssociation":false},"email":{"name":"email","label":"Correo Electronico","type":"email","enum":[],"source":undefined,"textField":undefined,"value":"email","isAssociation":false},"empresas":{"name":"empresas","label":"Empresas","type":"tags","enum":[],"source":new UserAdministration.Empresa(),"textField":function(data){return data?data.cod_empresa + ' ' + data.nombre_empresa : ':o'},"value":"empresas","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Usuario","data":"attributes.username"},{"title":"Nombres","data":"attributes.nombres"},{"title":"Apellidos","data":"attributes.apellidos"},{"title":"Fotografia","data":"attributes.fotografia","render":function (data){return data?data.name:''}},{"title":"Nro de CI","data":"attributes.numero_ci"}];
+        return [{"title":"Usuario","data":"attributes.username"},{"title":"Nombres","data":"attributes.nombres"},{"title":"Apellidos","data":"attributes.apellidos"},{"title":"Fotografia","data":"attributes.fotografia","render":function(data){return data?data.name:''}},{"title":"Nro de CI","data":"attributes.numero_ci"}];
     };
     this.$methods = {
 registrar:function(data,methodCallback,childrenAssociation){self.$call("registrar",{"data":data}, childrenAssociation, methodCallback)}    };
@@ -71,12 +71,12 @@ UserAdministration.Empresa = function (url, id) {
     this.$pluralName = "Empresas";
     this.$title = "empresa";
     this.$pluralTitle = "empresas";
-    this.$ = {"cod_empresa":{"name":"cod_empresa","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_empresa","isAssociation":false},"nombre_empresa":{"name":"nombre_empresa","label":"Empresa","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombre_empresa","isAssociation":false},"corporacion":{"name":"corporacion","label":"Corporación","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"corporacion","isAssociation":false},"caracter":{"name":"caracter","label":"Caracter","type":"select","enum":["Empresa Departamental","Empresa Municipal","Empresa Nacional","Empresa Pública Nacional Estratégica","Empresa Pública Nacional Social","Empresa Pública Productiva","Empresa Pública de Servicios Social","Empresa Regional"],"source":undefined,"textField":undefined,"value":"caracter","isAssociation":false},"rubro":{"name":"rubro","label":"Rubro","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"rubro","isAssociation":false},"tipologia":{"name":"tipologia","label":"Tipologia","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipologia","isAssociation":false},"sub_empresa":{"name":"sub_empresa","label":"sub_empresa","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"sub_empresa","isAssociation":false},"es_principal":{"name":"es_principal","label":"es_principal","type":"select","enum":["Empresa Departamental","Empresa Municipal","Empresa Nacional","Empresa Pública Nacional Estratégica","Empresa Pública Nacional Social","Empresa Pública Productiva","Empresa Pública de Servicios Social","Empresa Regional"],"source":undefined,"textField":undefined,"value":"es_principal","isAssociation":false}};
+    this.$ = {"cod_empresa":{"name":"cod_empresa","label":"Código Presupuestario","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_empresa","isAssociation":false},"nombre_empresa":{"name":"nombre_empresa","label":"Razon Social de la Empresa","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombre_empresa","isAssociation":false},"corporacion":{"name":"corporacion","label":"Corporación","type":"select","enum":[{"id":"","attributes":{"name":"NO"}},{"id":"Corporativo","attributes":{"name":"SI Corporativo"}}],"source":undefined,"textField":"name","value":"corporacion","isAssociation":false},"caracter":{"name":"caracter","label":"Caracter","type":"select","enum":["Empresa Departamental","Empresa Municipal","Empresa Nacional","Empresa Pública Nacional Estratégica","Empresa Pública Nacional Social","Empresa Pública Productiva","Empresa Pública de Servicios Social","Empresa Regional"],"source":undefined,"textField":undefined,"value":"caracter","isAssociation":false},"rubro":{"name":"rubro","label":"Rubro","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"rubro","isAssociation":false},"tipologia":{"name":"tipologia","label":"Tipologia","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipologia","isAssociation":false},"sub_empresa":{"name":"sub_empresa","label":"Filial o Subsidiario","type":"select","enum":[{"id":0,"attributes":{"name":"NO"}},{"id":1,"attributes":{"name":"SI"}}],"source":undefined,"textField":"name","value":"sub_empresa","isAssociation":false},"es_principal":{"name":"es_principal","label":"Empresa Corporativa","type":"select","enum":[{"id":false,"attributes":{"name":"NO"}},{"id":true,"attributes":{"name":"SI"}}],"source":undefined,"textField":"name","value":"es_principal","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_empresa"},{"title":"Empresa","data":"attributes.nombre_empresa"},{"title":"Caracter","data":"attributes.caracter"},{"title":"Rubro","data":"attributes.rubro"}];
+        return [{"title":"Código Presupuestario","data":"attributes.cod_empresa"},{"title":"Razon Social de la Empresa","data":"attributes.nombre_empresa"},{"title":"Caracter","data":"attributes.caracter"},{"title":"Rubro","data":"attributes.rubro"}];
     };
     this.$methods = {
 eeff:function(gestion, eeff,methodCallback,childrenAssociation){self.$call("eeff",{"gestion":gestion,"eeff":eeff}, childrenAssociation, methodCallback)},
@@ -100,12 +100,12 @@ UserAdministration.EstadoFinanciero = function (url, id) {
     this.$pluralName = "EstadoFinancieros";
     this.$title = "Estado financiero";
     this.$pluralTitle = "Estados financieros";
-    this.$ = {"tipo_estado_financiero":{"name":"tipo_estado_financiero","label":"Tipo estado financiero","type":"select","enum":["Balance General","Estado de Recursos y Gastos Corrientes","Hoja de Trabajo","Estado de Cambios en el Patrimonio Neto","Partidas y Rubros Financieros","Estado de Ejecución Presupuestaria de Gastos","Estado de Ejecución Presupuestaria de Recursos"],"source":undefined,"textField":undefined,"value":"tipo_estado_financiero","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":function (data){return data?(data.cod_empresa?data.cod_empresa:'   ')+' '+data.nombre_empresa:''},"value":"empresa","isAssociation":true,"isMultiple":false}};
+    this.$ = {"tipo_estado_financiero":{"name":"tipo_estado_financiero","label":"Tipo estado financiero","type":"select","enum":["Balance General","Estado de Recursos y Gastos Corrientes","Hoja de Trabajo","Estado de Cambios en el Patrimonio Neto","Partidas y Rubros Financieros","Estado de Ejecución Presupuestaria de Gastos","Estado de Ejecución Presupuestaria de Recursos"],"source":undefined,"textField":undefined,"value":"tipo_estado_financiero","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function(data){return data?data.name:''},"value":"archivo","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":function(data){return data?(data.cod_empresa?data.cod_empresa:'   ')+' '+data.nombre_empresa:''},"value":"empresa","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}},{"title":"Empresa","visible":true,"render":function (data){return data?(data.cod_empresa?data.cod_empresa:'   ')+' '+data.nombre_empresa:''},"data":"relationships.empresa.attributes"}];
+        return [{"title":"Tipo estado financiero","data":"attributes.tipo_estado_financiero"},{"title":"Gestión","data":"attributes.gestion"},{"title":"Archivo","data":"attributes.archivo","render":function(data){return data?data.name:''}},{"title":"Empresa","visible":true,"render":function(data){return data?(data.cod_empresa?data.cod_empresa:'   ')+' '+data.nombre_empresa:''},"data":"relationships.empresa.attributes"}];
     };
     this.$methods = {
     };
@@ -214,7 +214,7 @@ UserAdministration.CargaEstado = function (url, id) {
     this.$pluralName = "CargaEstados";
     this.$title = "Carga de estados financieros";
     this.$pluralTitle = "Cargas de estados financieros";
-    this.$ = {"files":{"name":"files","label":"Archivos","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"files":{"name":"files","label":"Archivos","type":"multiplefile","enum":[],"source":undefined,"textField":function(data,type,row){
                             var res = [];
                             data.forEach(function (item) {res.push(item.name)});
                             return res.join(", ");
@@ -223,7 +223,7 @@ UserAdministration.CargaEstado = function (url, id) {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Archivos","data":"attributes.files","render":function (data,type,row){
+        return [{"title":"Archivos","data":"attributes.files","render":function(data,type,row){
                             var res = [];
                             data.forEach(function (item) {res.push(item.name)});
                             return res.join(", ");
@@ -278,7 +278,7 @@ UserAdministration.Firma = function (url, id) {
     this.$pluralName = "Firmas";
     this.$title = "Firma";
     this.$pluralTitle = "Consistencias";
-    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"documento_firma":{"name":"documento_firma","label":"Resumen Ejecutivo","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"cod_firma":{"name":"cod_firma","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"documento_firma":{"name":"documento_firma","label":"Resumen Ejecutivo","type":"file","enum":[],"source":undefined,"textField":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -296,7 +296,7 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"documento_firma","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa auditada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"select","enum":[],"source":new UserAdministration.Lafirma(),"textField":"nombre_empresa","value":"representante_legal","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informes SCEP","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"documento_firma","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa auditada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"representante_legal":{"name":"representante_legal","label":"Firma de auditoria","type":"select","enum":[],"source":new UserAdministration.Lafirma(),"textField":"nombre_empresa","value":"representante_legal","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informes SCEP","type":"multiplefile","enum":[],"source":undefined,"textField":function(data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -304,7 +304,7 @@ UserAdministration.Firma = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        },"value":"informes","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Dictamen o Informe","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"informes","isAssociation":false},"informe_dictamen":{"name":"informe_dictamen","label":"Dictamen o Informe","type":"file","enum":[],"source":undefined,"textField":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -322,12 +322,12 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"informe_dictamen","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
+                        },"value":"informe_dictamen","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Resumen Ejecutivo","data":"attributes.documento_firma","render":function (data,type,row){
+        return [{"title":"Código","data":"attributes.cod_firma"},{"title":"Resumen Ejecutivo","data":"attributes.documento_firma","render":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -349,7 +349,7 @@ UserAdministration.Firma = function (url, id) {
                             return data ? data : '';
                         },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Firma de auditoria","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.representante_legal.attributes.nombre_empresa"},{"title":"Informes SCEP","data":"attributes.informes","render":function (data,type,row){
+                        },"data":"relationships.representante_legal.attributes.nombre_empresa"},{"title":"Informes SCEP","data":"attributes.informes","render":function(data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -357,7 +357,7 @@ UserAdministration.Firma = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        }},{"title":"Dictamen o Informe","data":"attributes.informe_dictamen","render":function (data,type,row){
+                        }},{"title":"Dictamen o Informe","data":"attributes.informe_dictamen","render":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -375,10 +375,10 @@ UserAdministration.Firma = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Supervisor","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
+                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function(data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Supervisor","visible":true,"render":function(data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
     };
     this.$methods = {
-listEditButton: function (data, type, row, meta){
+listEditButton: function(data, type, row, meta){
                         var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
                         var canEdit = owner_id == localStorage.user_id  || window.app.user.role_id == 1;
                         return canEdit ? true : '';
@@ -403,7 +403,7 @@ UserAdministration.Supervision = function (url, id) {
     this.$pluralName = "Supervisions";
     this.$title = "Supervision";
     this.$pluralTitle = "Supervisiones";
-    this.$ = {"cod_supervision":{"name":"cod_supervision","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_supervision","isAssociation":false},"documento":{"name":"documento","label":"Resumen Ejecutivo","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"cod_supervision":{"name":"cod_supervision","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_supervision","isAssociation":false},"documento":{"name":"documento","label":"Resumen Ejecutivo","type":"file","enum":[],"source":undefined,"textField":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -421,7 +421,7 @@ UserAdministration.Supervision = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"documento","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa supervisada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informe de supervisión","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"documento","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa supervisada","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"informes":{"name":"informes","label":"Informe de supervisión","type":"multiplefile","enum":[],"source":undefined,"textField":function(data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -429,7 +429,7 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        },"value":"informes","isAssociation":false},"anexos":{"name":"anexos","label":"Anexos","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"informes","isAssociation":false},"anexos":{"name":"anexos","label":"Anexos","type":"multiplefile","enum":[],"source":undefined,"textField":function(data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -437,7 +437,7 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        },"value":"anexos","isAssociation":false},"nota_emitida":{"name":"nota_emitida","label":"Nota emitida a la Empresa","type":"multiplefile","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"anexos","isAssociation":false},"nota_emitida":{"name":"nota_emitida","label":"Nota emitida a la Empresa","type":"multiplefile","enum":[],"source":undefined,"textField":function(data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -445,12 +445,12 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        },"value":"nota_emitida","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"owner2":{"name":"owner2","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner2","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor Evaluador","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
+                        },"value":"nota_emitida","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"detalle":{"name":"detalle","label":"Detalle","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"detalle","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false},"owner2":{"name":"owner2","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner2","isAssociation":true,"isMultiple":false},"supervisor":{"name":"supervisor","label":"Supervisor Evaluador","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){return data?data.nombres + ' ' +data.apellidos:''},"value":"supervisor","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_supervision"},{"title":"Resumen Ejecutivo","data":"attributes.documento","render":function (data,type,row){
+        return [{"title":"Código","data":"attributes.cod_supervision"},{"title":"Resumen Ejecutivo","data":"attributes.documento","render":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -470,7 +470,7 @@ UserAdministration.Supervision = function (url, id) {
                               + time;
                         }},{"title":"Empresa supervisada","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Informe de supervisión","data":"attributes.informes","render":function (data,type,row){
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Informe de supervisión","data":"attributes.informes","render":function(data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -478,7 +478,7 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        }},{"title":"Anexos","data":"attributes.anexos","render":function (data,type,row){
+                        }},{"title":"Anexos","data":"attributes.anexos","render":function(data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -486,7 +486,7 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        }},{"title":"Nota emitida a la Empresa","data":"attributes.nota_emitida","render":function (data,type,row){
+                        }},{"title":"Nota emitida a la Empresa","data":"attributes.nota_emitida","render":function(data,type,row){
                             var res = [];
                             if (data && typeof data.forEach==='function') {
                                 data.forEach(function (item) {
@@ -494,10 +494,10 @@ UserAdministration.Supervision = function (url, id) {
                                 });
                             }
                             return res.join("<br> ");
-                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner2.attributes"},{"title":"Supervisor Evaluador","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
+                        }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Elaborado por","visible":true,"render":function(data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"},{"title":"Elaborado por","visible":true,"render":function(data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner2.attributes"},{"title":"Supervisor Evaluador","visible":true,"render":function(data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.supervisor.attributes"}];
     };
     this.$methods = {
-listEditButton: function (data, type, row, meta){
+listEditButton: function(data, type, row, meta){
                         var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
                         var canEdit = owner_id == localStorage.user_id || window.app.user.role_id == 1;
                         return canEdit ? true : '';
@@ -522,7 +522,7 @@ UserAdministration.Contratacion = function (url, id) {
     this.$pluralName = "Contratacions";
     this.$title = "Contratación";
     this.$pluralTitle = "Contrataciones directas";
-    this.$ = {"cod_firma":{"name":"cod_firma","label":"Número de Informe","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"informe_scep":{"name":"informe_scep","label":"Documento adjunto informe","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"cod_firma":{"name":"cod_firma","label":"Número de Informe","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_firma","isAssociation":false},"informe_scep":{"name":"informe_scep","label":"Documento adjunto informe","type":"file","enum":[],"source":undefined,"textField":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -540,7 +540,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"informe_scep","isAssociation":false},"nota":{"name":"nota","label":"Documento adjunto nota emitida","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+                        },"value":"informe_scep","isAssociation":false},"nota":{"name":"nota","label":"Documento adjunto nota emitida","type":"file","enum":[],"source":undefined,"textField":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -558,12 +558,12 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        },"value":"nota","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"observaciones":{"name":"observaciones","label":"Observaciones","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"observaciones","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
+                        },"value":"nota","isAssociation":false},"gestion":{"name":"gestion","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"observaciones":{"name":"observaciones","label":"Observaciones","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"observaciones","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Número de Informe","data":"attributes.cod_firma"},{"title":"Documento adjunto informe","data":"attributes.informe_scep","render":function (data,type,row){
+        return [{"title":"Número de Informe","data":"attributes.cod_firma"},{"title":"Documento adjunto informe","data":"attributes.informe_scep","render":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -581,7 +581,7 @@ UserAdministration.Contratacion = function (url, id) {
                             return $("<div />").append($a).html()
                               + '<br><i class="fa fa-clock-o"></i> '
                               + time;
-                        }},{"title":"Documento adjunto nota emitida","data":"attributes.nota","render":function (data,type,row){
+                        }},{"title":"Documento adjunto nota emitida","data":"attributes.nota","render":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -601,10 +601,10 @@ UserAdministration.Contratacion = function (url, id) {
                               + time;
                         }},{"title":"Gestión","data":"attributes.gestion"},{"title":"Observaciones","data":"attributes.observaciones"},{"title":"Empresa","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Elaborado por","visible":true,"render":function(data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
     };
     this.$methods = {
-listEditButton: function (data, type, row, meta){
+listEditButton: function(data, type, row, meta){
                         var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
                         var canEdit = owner_id == localStorage.user_id || localStorage.user_id == 1 || window.app.user.role_id == 1;
                         return canEdit ? true : '';
@@ -628,7 +628,7 @@ UserAdministration.Uai = function (url, id) {
     this.$pluralName = "Uais";
     this.$title = "UAI";
     this.$pluralTitle = "UAIs";
-    this.$ = {"cod_uai":{"name":"cod_uai","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_uai","isAssociation":false},"gestion_uai":{"name":"gestion_uai","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion_uai","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"tipo_de_informes":{"name":"tipo_de_informes","label":"Tipo de Informes","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_de_informes","isAssociation":false},"informes_emitidos_scep":{"name":"informes_emitidos_scep","label":"Informes emitidos SCEP","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"cod_uai":{"name":"cod_uai","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_uai","isAssociation":false},"gestion_uai":{"name":"gestion_uai","label":"Gestión","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion_uai","isAssociation":false},"empresa":{"name":"empresa","label":"Empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"tipo_de_informes":{"name":"tipo_de_informes","label":"Tipo de Informes","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo_de_informes","isAssociation":false},"informes_emitidos_scep":{"name":"informes_emitidos_scep","label":"Informes emitidos SCEP","type":"file","enum":[],"source":undefined,"textField":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -652,14 +652,14 @@ UserAdministration.Uai = function (url, id) {
                               + time
                               + '<br><i class="fa fa-user-o"></i> '
                               + owner;
-                        },"value":"informes_emitidos_scep","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
+                        },"value":"informes_emitidos_scep","isAssociation":false},"owner":{"name":"owner","label":"Elaborado por","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){return data?data.nombres + ' ' +data.apellidos:''},"value":"owner","isAssociation":true,"isMultiple":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
         return [{"title":"Código","data":"attributes.cod_uai"},{"title":"Gestión","data":"attributes.gestion_uai"},{"title":"Empresa","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Tipo de Informes","data":"attributes.tipo_de_informes"},{"title":"Informes emitidos SCEP","data":"attributes.informes_emitidos_scep","render":function (data,type,row){
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Tipo de Informes","data":"attributes.tipo_de_informes"},{"title":"Informes emitidos SCEP","data":"attributes.informes_emitidos_scep","render":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -683,10 +683,10 @@ UserAdministration.Uai = function (url, id) {
                               + time
                               + '<br><i class="fa fa-user-o"></i> '
                               + owner;
-                        }},{"title":"Elaborado por","visible":true,"render":function (data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
+                        }},{"title":"Elaborado por","visible":true,"render":function(data){return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.owner.attributes"}];
     };
     this.$methods = {
-listEditButton: function (data, type, row, meta){
+listEditButton: function(data, type, row, meta){
                         var owner_id = row.relationships.owner ? row.relationships.owner.id : false;
                         var canEdit = owner_id == localStorage.user_id  || window.app.user.role_id == 1;
                         return canEdit ? true : '';
@@ -710,12 +710,12 @@ UserAdministration.Tarea = function (url, id) {
     this.$pluralName = "Tareas";
     this.$title = "Tarea";
     this.$pluralTitle = "Tareas";
-    this.$ = {"cod_tarea":{"name":"cod_tarea","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_tarea","isAssociation":false},"creador":{"name":"creador","label":"Creador","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"value":"creador","isAssociation":true,"isMultiple":false},"usuarios":{"name":"usuarios","label":"Usuarios","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"value":"usuarios","isAssociation":true,"isMultiple":true},"nombre_tarea":{"name":"nombre_tarea","label":"Tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombre_tarea","isAssociation":false},"descripcion":{"name":"descripcion","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"descripcion","isAssociation":false},"fecha_ini":{"name":"fecha_ini","label":"Fecha inicio","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_ini","isAssociation":false},"fecha_fin":{"name":"fecha_fin","label":"Fecha finalización","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_fin","isAssociation":false},"estado":{"name":"estado","label":"Estado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"estado","isAssociation":false},"avance":{"name":"avance","label":"Avance","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"avance","isAssociation":false},"prioridad":{"name":"prioridad","label":"Prioridad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"prioridad","isAssociation":false},"dias_otorgados":{"name":"dias_otorgados","label":"días otorgados","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"dias_otorgados","isAssociation":false},"nro_de_control":{"name":"nro_de_control","label":"Nro de control","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nro_de_control","isAssociation":false},"gestion":{"name":"gestion","label":"Gestion de la hoja de ruta","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"tipo":{"name":"tipo","label":"Tipo de tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo","isAssociation":false},"datos":{"name":"datos","label":"Datos de la tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"datos","isAssociation":false},"revisor1":{"name":"revisor1","label":"Revisor 1","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"revisor1","isAssociation":true,"isMultiple":false},"aprobacion1":{"name":"aprobacion1","label":"Aprovación 1","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"aprobacion1","isAssociation":true,"isMultiple":false},"revisor2":{"name":"revisor2","label":"Revisor 2","type":"select","enum":[],"source":new UserAdministration.User(),"textField":"username","value":"revisor2","isAssociation":true,"isMultiple":false},"aprobacion2":{"name":"aprobacion2","label":"Aprovación 2","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function (data){return data?data.nombres + ' ' +data.apellidos:''},"value":"aprobacion2","isAssociation":true,"isMultiple":false},"adjuntos":{"name":"adjuntos","label":"adjuntos","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"adjuntos","isAssociation":true,"isMultiple":true},"avances":{"name":"avances","label":"avances","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"avances","isAssociation":true,"isMultiple":true},"enlaces":{"name":"enlaces","label":"enlaces","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"enlaces","isAssociation":true,"isMultiple":true}};
+    this.$ = {"cod_tarea":{"name":"cod_tarea","label":"Código","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"cod_tarea","isAssociation":false},"creador":{"name":"creador","label":"Creador","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"value":"creador","isAssociation":true,"isMultiple":false},"usuarios":{"name":"usuarios","label":"Usuarios","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"value":"usuarios","isAssociation":true,"isMultiple":true},"nombre_tarea":{"name":"nombre_tarea","label":"Tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nombre_tarea","isAssociation":false},"descripcion":{"name":"descripcion","label":"Descripción","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"descripcion","isAssociation":false},"fecha_ini":{"name":"fecha_ini","label":"Fecha inicio","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_ini","isAssociation":false},"fecha_fin":{"name":"fecha_fin","label":"Fecha finalización","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"fecha_fin","isAssociation":false},"estado":{"name":"estado","label":"Estado","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"estado","isAssociation":false},"avance":{"name":"avance","label":"Avance","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"avance","isAssociation":false},"prioridad":{"name":"prioridad","label":"Prioridad","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"prioridad","isAssociation":false},"dias_otorgados":{"name":"dias_otorgados","label":"días otorgados","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"dias_otorgados","isAssociation":false},"nro_de_control":{"name":"nro_de_control","label":"Nro de control","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"nro_de_control","isAssociation":false},"gestion":{"name":"gestion","label":"Gestion de la hoja de ruta","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"gestion","isAssociation":false},"tipo":{"name":"tipo","label":"Tipo de tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"tipo","isAssociation":false},"datos":{"name":"datos","label":"Datos de la tarea","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"datos","isAssociation":false},"revisor1":{"name":"revisor1","label":"Revisor 1","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){return data?data.nombres + ' ' +data.apellidos:''},"value":"revisor1","isAssociation":true,"isMultiple":false},"aprobacion1":{"name":"aprobacion1","label":"Aprovación 1","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){return data?data.nombres + ' ' +data.apellidos:''},"value":"aprobacion1","isAssociation":true,"isMultiple":false},"revisor2":{"name":"revisor2","label":"Revisor 2","type":"select","enum":[],"source":new UserAdministration.User(),"textField":"username","value":"revisor2","isAssociation":true,"isMultiple":false},"aprobacion2":{"name":"aprobacion2","label":"Aprovación 2","type":"select","enum":[],"source":new UserAdministration.User(),"textField":function(data){return data?data.nombres + ' ' +data.apellidos:''},"value":"aprobacion2","isAssociation":true,"isMultiple":false},"adjuntos":{"name":"adjuntos","label":"adjuntos","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"adjuntos","isAssociation":true,"isMultiple":true},"avances":{"name":"avances","label":"avances","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"avances","isAssociation":true,"isMultiple":true},"enlaces":{"name":"enlaces","label":"enlaces","type":"text","enum":[],"source":undefined,"textField":undefined,"value":"enlaces","isAssociation":true,"isMultiple":true}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Código","data":"attributes.cod_tarea"},{"title":"Creador","visible":true,"render":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.creador.attributes"},{"title":"Usuarios","visible":true,"render":function (data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.usuarios.attributes"},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"},{"title":"Estado","data":"attributes.estado"},{"title":"Avance","data":"attributes.avance"},{"title":"Prioridad","data":"attributes.prioridad"},{"title":"días otorgados","data":"attributes.dias_otorgados"},{"title":"Nro de control","data":"attributes.nro_de_control"},{"title":"Gestion de la hoja de ruta","data":"attributes.gestion"},{"title":"Tipo de tarea","data":"attributes.tipo"},{"title":"Datos de la tarea","data":"attributes.datos"}];
+        return [{"title":"Código","data":"attributes.cod_tarea"},{"title":"Creador","visible":true,"render":function(data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.creador.attributes"},{"title":"Usuarios","visible":true,"render":function(data){console.log(arguments); return data?data.nombres + ' ' +data.apellidos:''},"data":"relationships.usuarios.attributes"},{"title":"Tarea","data":"attributes.nombre_tarea"},{"title":"Descripción","data":"attributes.descripcion"},{"title":"Fecha inicio","data":"attributes.fecha_ini"},{"title":"Fecha finalización","data":"attributes.fecha_fin"},{"title":"Estado","data":"attributes.estado"},{"title":"Avance","data":"attributes.avance"},{"title":"Prioridad","data":"attributes.prioridad"},{"title":"días otorgados","data":"attributes.dias_otorgados"},{"title":"Nro de control","data":"attributes.nro_de_control"},{"title":"Gestion de la hoja de ruta","data":"attributes.gestion"},{"title":"Tipo de tarea","data":"attributes.tipo"},{"title":"Datos de la tarea","data":"attributes.datos"}];
     };
     this.$methods = {
     };
@@ -766,12 +766,12 @@ UserAdministration.Adjunto = function (url, id) {
     this.$pluralName = "Adjuntos";
     this.$title = "adjunto";
     this.$pluralTitle = "adjuntos";
-    this.$ = {"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function (data){return data?data.name:''},"value":"archivo","isAssociation":false}};
+    this.$ = {"archivo":{"name":"archivo","label":"Archivo","type":"file","enum":[],"source":undefined,"textField":function(data){return data?data.name:''},"value":"archivo","isAssociation":false}};
     this.$fields = function () {
         return this.object2array(this.$, "item");
     };
     this.$columns = function () {
-        return [{"title":"Archivo","data":"attributes.archivo","render":function (data){return data?data.name:''}}];
+        return [{"title":"Archivo","data":"attributes.archivo","render":function(data){return data?data.name:''}}];
     };
     this.$methods = {
     };
@@ -934,7 +934,7 @@ UserAdministration.Fideicomiso = function (url, id) {
     this.$pluralName = "Fideicomisos";
     this.$title = "FIDEICOMISOS";
     this.$pluralTitle = "Empresas con asignación de Recursos Económicos";
-    this.$ = {"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"decreto":{"name":"decreto","label":"Decreto","type":"file","enum":[],"source":undefined,"textField":function (data,type,row){
+    this.$ = {"empresa":{"name":"empresa","label":"empresa","type":"select","enum":[],"source":new UserAdministration.Empresa(),"textField":"nombre_empresa","value":"empresa","isAssociation":true,"isMultiple":false},"decreto":{"name":"decreto","label":"Decreto","type":"file","enum":[],"source":undefined,"textField":function(data,type,row){
                             if (!data) {
                                 return '';
                             }
@@ -959,7 +959,7 @@ UserAdministration.Fideicomiso = function (url, id) {
     this.$columns = function () {
         return [{"title":"empresa","visible":true,"render":function (data, type, full, meta) {
                             return data ? data : '';
-                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Decreto","data":"attributes.decreto","render":function (data,type,row){
+                        },"data":"relationships.empresa.attributes.nombre_empresa"},{"title":"Decreto","data":"attributes.decreto","render":function(data,type,row){
                             if (!data) {
                                 return '';
                             }

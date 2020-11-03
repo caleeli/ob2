@@ -16,6 +16,7 @@ class CreateAdmLoginsTable extends Migration
             $table->string('token');
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

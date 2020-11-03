@@ -96,6 +96,7 @@ class NanoBuildCommand extends Command
         };
         $v8->createClass = function ($options) {
             $filename = $options->filename;
+            if (!$filename) return;
             $code = implode(
                 "\n",
                 [
@@ -119,9 +120,11 @@ class NanoBuildCommand extends Command
                 mkdir(dirname($filename), 0777, true);
             }
             file_put_contents($filename, $code);
-            exec('vendor/bin/php-cs-fixer fix ' . $filename . ' > /dev/null 2>&1 & echo $!');
+            exec('php-cs-fixer fix ' . $filename . ' --rules=@PSR2 > /dev/null 2>&1 & echo $!');
         };
         $v8->createMigration = function ($name) {
+            // disable creation of migrations
+            return null;
             try {
                 if (isset(glob(base_path() . '/database/migrations/*' . snake_case($name) . '.php')[0])) {
                     return glob(base_path() . '/database/migrations/*' . snake_case($name) . '.php')[0];

@@ -9,16 +9,17 @@ class CreateAdmEmpresaGraficosTable extends Migration
 {
     public function up()
     {
-        Schema::create('adm_empresa_graficos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('titulo')->nullable();
-            $table->string('tipo')->nullable();
-            $table->string('informes_auditoria')->nullable();
-            $table->text('datos')->nullable();
-            $table->integer('empresa_id')->unsigned()->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        //Schema::create('adm_empresa_graficos', function (Blueprint $table) {
+        //    $table->increments('id');
+        //    $table->string('titulo')->nullable();
+        //    $table->string('tipo')->nullable();
+        //    $table->string('informes_auditoria')->nullable();
+        //    $table->text('datos')->nullable();
+        //    $table->integer('empresa_id')->unsigned()->nullable();
+        //    $table->timestamps();
+        //    $table->softDeletes();
+        //    $table->integer('usuario_abm_id')->nullable();
+        //});
     }
 
 

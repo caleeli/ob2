@@ -16,6 +16,7 @@ class CreateAdmFideicomisosTable extends Migration
             $table->integer('empresa_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

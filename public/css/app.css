@@ -398,7 +398,6 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   background: none;
   border-color: #DDDDDD #DDDDDD rgba(0, 0, 0, 0);
   border-bottom: #f3f3f4;
-  -o-border-image: none;
   border-image: none;
   border-style: solid;
   border-width: 1px;
@@ -1823,7 +1822,6 @@ div.dt-button-info {
   -webkit-pointer-events: none;
   pointer-events: none;
   -webkit-user-select: none;
-  -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
@@ -4332,7 +4330,6 @@ code {
   -moz-border-top-colors: none;
   background-color: #ffffff;
   border-color: #e7eaec;
-  -o-border-image: none;
   border-image: none;
   border-style: solid solid none;
   border-width: 2px 0 0;
@@ -4347,7 +4344,6 @@ code {
   color: inherit;
   padding: 15px 20px 20px 20px;
   border-color: #e7eaec;
-  -o-border-image: none;
   border-image: none;
   border-style: solid solid none;
   border-width: 1px 0;

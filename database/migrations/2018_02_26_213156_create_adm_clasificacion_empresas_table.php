@@ -15,6 +15,7 @@ class CreateAdmClasificacionEmpresasTable extends Migration
             $table->string('conteo')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

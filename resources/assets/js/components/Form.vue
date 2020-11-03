@@ -82,19 +82,23 @@
                 var self = this;
                 this.model.$save(this.childrenurl, function(){
                     self.$emit('save');
+                    if (self.$root.notify) self.$root.notify('Los datos fueron guardados correctamente');
                 });
             },
             update: function() {
                 var self = this;
                 this.model.$save(this.childrenurl, function(){
                     self.$emit('update');
+                    if (self.$root.notify) self.$root.notify('Los datos fueron guardados correctamente');
                 });
             },
             remove: function() {
-                var self = this;
-                this.model.$delete(this.childrenurl, function(){
-                    self.$emit('delete');
-                });
+                if (confirm('¿Esta seguro de eliminar el registro?')) {
+                    var self = this;
+                    this.model.$delete(this.childrenurl, function(){
+                        self.$emit('delete');
+                    });
+                }
             },
             custom: function(button) {
                 var self = this;

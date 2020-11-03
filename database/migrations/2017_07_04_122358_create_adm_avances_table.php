@@ -14,10 +14,10 @@ class CreateAdmAvancesTable extends Migration
             $table->integer('avance')->nullable();
             $table->string('descripcion')->nullable();
             $table->integer('tarea_id')->unsigned()->nullable();
-            $table->integer('usuario_id')->unsigned();
-            $table->integer('asignacion_id')->unsigned();
+            $table->integer('asignacion_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 

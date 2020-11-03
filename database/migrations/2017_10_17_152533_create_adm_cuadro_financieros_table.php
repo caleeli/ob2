@@ -12,10 +12,11 @@ class CreateAdmCuadroFinancierosTable extends Migration
         Schema::create('adm_cuadro_financieros', function (Blueprint $table) {
             $table->increments('id');
             $table->string('titulo')->nullable();
-            $table->string('contenido')->nullable();
-            $table->string('grafico')->nullable();
+            $table->text('contenido')->nullable();
+            $table->text('grafico')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->integer('usuario_abm_id')->nullable();
         });
     }
 
