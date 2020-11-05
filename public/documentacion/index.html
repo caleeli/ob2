@@ -197,14 +197,14 @@
                                                             <a v-show="!editingEmpresa" v-on:click="editEmpresa" title='Editar contenido'>
                                                                 <i class="fa fa-pencil-square-o"></i>
                                                             </a>
-                                                            <a v-show="editingEmpresa" title='Subir Archivo' style="position: relative;overflow: hidden;display: inline-block;line-height: 0.9em;">
-                                                                <i class="fa fa-upload"></i>
-                                                                <upload v-model="uploadAdjEmpresa" target="empresas" v-bind:multiplefile="false" v-on:change="mostrarUploadLink"/>
-                                                            </a>
-                                                            <a v-show="editingEmpresa" v-on:click="cancelEmpresa(empresa)" title='Salir'>
+                                                            <a v-show="editingEmpresa" class="btn btn-secondary" v-on:click="cancelEmpresa(empresa)" title='Salir'>
                                                                 <i class="fa fa-arrow-left"></i>
                                                             </a>
-                                                            <a v-show="editingEmpresa" v-on:click="saveDetalleEmpresa(empresa)" title='Guardar'>
+                                                            <a v-show="editingEmpresa" class="btn btn-primary" title='Subir Archivo' style="position: relative;overflow: hidden;display: inline-block;line-height: 0.9em; cursor:pointer;" href="javascript:void(0)">
+                                                                <i class="fa fa-upload"></i> Subir documento
+                                                                <upload v-model="uploadAdjEmpresa" target="empresas" v-bind:multiplefile="false" v-on:change="mostrarUploadLink"/>
+                                                            </a>
+                                                            <a v-show="editingEmpresa" class="btn btn-success text-white" v-on:click="saveDetalleEmpresa(empresa)" title='Guardar' style="padding: 4px 1em;">
                                                                 <i class="fa fa-save"></i>
                                                             </a>
                                                         </div>
@@ -1183,12 +1183,6 @@
                         </div>
                     </carouselitem>
                 </carousel>
-              
-              <div class="footer">
-                <div>
-                  <strong>Copyright</strong> subcep.com © 2017-2019. Site designed by <a href="mailto:angelitacc27@gmail.com">Angela Choque</a> <a href="https://wa.me/59173241591?text=Estoy%20interesado%20en%20el%20sistema%20subcep.com" target="_blank">(+591 73241591)</a>
-                </div>
-              </div>
             </div>
         </div>
       
@@ -2414,7 +2408,9 @@
                         });
                     },
                     mostrarUploadLink: function (file) {
-                        prompt('Archivo cargado', file.url);
+                        this.$refs.detalle_empresa.editorPromise.then(editor => {
+                            editor[0].editorCommands.execCommand("insertHTML",false, "<a href='"+file.url+"'>" + file.name + "</a>");
+                        })
                     }
                 },
                 watch: {
