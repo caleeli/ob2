@@ -1021,6 +1021,27 @@ if (!isset($_SESSION['hr_user'])) {
                             </tr>
                         </tbody>
                     </table>
+                    <nav aria-label="..." class="text-right">
+                        <ul class="pagination">
+                            <li class="page-item" :class="{disabled: page==1}">
+                                <a v-if="page>1" class="page-link" href="javascript:void(0)" @click="filtrar(page-1)">Anterior</a>
+                                <span v-else class="page-link">Anterior</span>
+                            </li>
+                            <li v-if="page > 1" class="page-item">
+                                <a class="page-link" href="#">{{page - 1}}</a>
+                            </li>
+                            <li aria-current="page" class="page-item active">
+                                <span class="page-link">{{page}}</span>
+                            </li>
+                            <li v-if="hojasDeRutaBusqueda.length == 10" class="page-item">
+                                <a class="page-link" href="#">{{ page + 1}}</a>
+                            </li>
+                            <li class="page-item" :class="{disabled: hojasDeRutaBusqueda.length < 10}">
+                                <a v-if="hojasDeRutaBusqueda.length == 10" class="page-link" href="javascript:void(0)" @click="filtrar(page+1)">Siguiente</a>
+                                <span v-else class="page-link">Siguiente</span>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
                 <div class="col-md-10" v-if="menu=='nota_busqueda'">
                     <div class="row justify-content-md-center" v-if="window.isManager">
@@ -1804,6 +1825,8 @@ if (!isset($_SESSION['hr_user'])) {
                 data: function () {
                     var self = this;
                     return {
+                        per_page: 10,
+                        page: 1,
                         lastPassword: '',
                         newPassword: '',
                         newPassword2: '',
@@ -2610,14 +2633,17 @@ if (!isset($_SESSION['hr_user'])) {
                     imprimir: function () {
                         window.print();
                     },
-                    filtrar: function () {
+                    filtrar: function (page) {
                         var self = this;
+                        this.page = page || 1;
                         $.ajax({
                             method:'GET',
                             url: 'select.php',
                             data: {
                                 filter: self.filtro,
                                 tipo: self.filtroTipo,
+                                per_page: self.per_page,
+                                page: self.page,
                                 t: Math.floor(new Date().getTime()/1000)
                             },
                             dataType: 'json',
