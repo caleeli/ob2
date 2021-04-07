@@ -985,7 +985,7 @@ if (!isset($_SESSION['hr_user'])) {
                             <i class="glyphicon glyphicon-send"></i> Derivar {{hojasSeleccionadas.length}} Seleccionadas
                         </a>
                         <input class="form-control" v-model='filtro' placeholder="busqueda">
-                        <a href="javascript:void(0)" class="btn input-group-addon" v-on:click='filtrar'>Buscar</a>
+                        <a href="javascript:void(0)" class="btn input-group-addon" v-on:click='filtrar()'>Buscar</a>
                     </div>
                     <table class="table table-striped table-hover ">
                         <thead>
