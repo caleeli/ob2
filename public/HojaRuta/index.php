@@ -1825,7 +1825,7 @@ if (!isset($_SESSION['hr_user'])) {
                 data: function () {
                     var self = this;
                     return {
-                        per_page: 10,
+                        per_page: 20,
                         page: 1,
                         lastPassword: '',
                         newPassword: '',
