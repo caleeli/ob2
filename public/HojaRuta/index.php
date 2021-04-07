@@ -1028,13 +1028,13 @@ if (!isset($_SESSION['hr_user'])) {
                                 <span v-else class="page-link">Anterior</span>
                             </li>
                             <li v-if="page > 1" class="page-item">
-                                <a class="page-link" href="#">{{page - 1}}</a>
+                                <a class="page-link" href="javascript:void(0)" @click="filtrar(page-1)">{{page - 1}}</a>
                             </li>
                             <li aria-current="page" class="page-item active">
                                 <span class="page-link">{{page}}</span>
                             </li>
                             <li v-if="hojasDeRutaBusqueda.length == 10" class="page-item">
-                                <a class="page-link" href="#">{{ page + 1}}</a>
+                                <a class="page-link" href="javascript:void(0)" @click="filtrar(page+1)">{{ page + 1}}</a>
                             </li>
                             <li class="page-item" :class="{disabled: hojasDeRutaBusqueda.length < 10}">
                                 <a v-if="hojasDeRutaBusqueda.length == 10" class="page-link" href="javascript:void(0)" @click="filtrar(page+1)">Siguiente</a>
