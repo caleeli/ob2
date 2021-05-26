@@ -21,7 +21,7 @@ use App\Http\Controllers\Api\CallOperation;
 
 class ApiController extends Controller
 {
-    const PER_PAGE = 1500;
+    const PER_PAGE = 0;
 
     /**
      * /api/users?page=2&filter[]=where,username,=,"david"&fields=username,firstname&include=roles,phone&sort=username
