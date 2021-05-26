@@ -20,6 +20,7 @@ class IndexOperation extends BaseOperation
     protected $sort;
     protected $filter;
     protected $perPage;
+    protected $count = false;
 
     public function index($sort, $filter, $perPage)
     {
@@ -36,14 +37,12 @@ class IndexOperation extends BaseOperation
 
     protected function isBelongsToMany(BelongsToMany $model, array $targets=null, $data)
     {
-        return $this->addSorting($this->addFilter($model))
-                ->paginate($this->perPage)->getCollection();
+        return $this->getPaginated($this->addSorting($this->addFilter($model)));
     }
 
     protected function isHasMany(HasMany $model, array $targets=null, $data)
     {
-        return $this->addSorting($this->addFilter($model))
-                ->paginate($this->perPage)->getCollection();
+        return $this->getPaginated($this->addSorting($this->addFilter($model)));
     }
 
     protected function isHasOne(HasOne $model, Model $target=null, $data)
@@ -64,8 +63,7 @@ class IndexOperation extends BaseOperation
     protected function isString($model, Model $target=null, $data)
     {
         $result = $model::select();
-        return $this->addSorting($this->addFilter($result))
-                ->paginate($this->perPage)->getCollection();
+        return $this->getPaginated($this->addSorting($this->addFilter($result)));
     }
 
     protected function isArray($model, $target=null, $data)
@@ -128,5 +126,22 @@ class IndexOperation extends BaseOperation
             $select->orderBy($sort, $dir);
         }
         return $select;
+    }
+
+    /**
+     * Get a paginated result
+     * If $this->perPage is less than 1 it will return all results
+     *
+     * @param mixed $select
+     *
+     * @return Collection
+     */
+    private function getPaginated($select)
+    {
+        if ($this->count) {
+            return $select->count();
+        } else {
+            return $this->perPage > 0 ? $select->paginate($this->perPage)->getCollection() : $select->get();
+        }
     }
 }
