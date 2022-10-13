@@ -42,7 +42,7 @@ class Tarea extends Model
       'prioridad' => 'Media',
       'dias_otorgados' => '0',
       'nro_de_control' => NULL,
-      'gestion' => NULL,
+      'gestion' => 2022,
       'tipo' => NULL,
       'datos' => NULL,
     );
@@ -144,6 +144,9 @@ class Tarea extends Model
                         }
 
     function getDiasPasadosAttribute () {
+            if (empty($this->created_at)) {
+                return 0;
+            }
                             return $this->created_at->diff(\Carbon\Carbon::now())->days;
                         }
 
