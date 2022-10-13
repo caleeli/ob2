@@ -18,7 +18,7 @@
                             <tr v-if="mode==='list'" v-for="file in listOfFiles">
                                 <td>
                                     <i v-bind:class="icon(file).icon" v-bind:style="{color:icon(file).color}"></i>
-                                    <a v-bind:href="file.attributes.url" target='_blank'>{{file.attributes.name}}</a>
+                                    <a v-bind:href="file.attributes.url" target='_blank' rel='opener'>{{file.attributes.name}}</a>
                                 </td>
                                 <td>
                                     {{formatDate(file.attributes.updated_at)}}
@@ -39,7 +39,7 @@
                                     <i v-bind:class="icon(file).icon" v-bind:style="{color:icon(file).color}"></i>
                                 </div>
                                 <div class="file-name">
-                                    <a v-bind:href="file.attributes.url" target='_blank'>{{file.attributes.name}}</a>
+                                    <a v-bind:href="file.attributes.url" target='_blank' rel='opener'>{{file.attributes.name}}</a>
                                     <br/>
                                     <small>{{formatDate(file.attributes.updated_at)}}</small>
                                 </div>

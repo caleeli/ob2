@@ -87,6 +87,8 @@ class IndexOperation extends BaseOperation
     protected function addFilter($select)
     {
         if (empty($this->filter)) {
+            // backward compatibility: add where 1=1
+            $select = $select->whereRaw('1=1');
             return $select;
         }
         foreach ($this->filter as $filter) {

@@ -119,6 +119,9 @@
                 var keys = self.groupByFields;
                 var values = [];
                 keys.forEach(function (key) {
+                    if (!row.attributes[key]) {
+                        return;
+                    }
                     var keyCode = row.attributes[key].split(".");
                     values.push(keyCode.length==1 || keyCode[1]=='0' ? 0 : keyCode[0]);
                 });

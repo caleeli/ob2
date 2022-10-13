@@ -30,6 +30,9 @@ class GDrive {
     public function __construct()
     {
         $config = base_path('client_secret_899025509338-2t5gv4i4o3hdo0uragvihtl3ipp8fnqd.apps.googleusercontent.com.json');
+        if (!file_exists($config)) {
+            return;
+        }
         $this->client = new Google_Client();
         $this->client->setAuthConfig($config);
         $this->client->setAccessType("offline");
@@ -92,8 +95,6 @@ class GDrive {
         return $file;
     }
     public function findIn($name, $id=null, $recursive=true) {
-\Log::debug($name);
-\Log::debug($id);
 	$index = json_decode(file_get_contents(public_path('plantillas/index.json')));
         foreach ($index as $item) {
             if ($item->name === $name) {
@@ -120,7 +121,6 @@ class GDrive {
     }
     public function getContent($fileId)
     {
-\Log::debug("Get Content: $fileId");
         $index = json_decode(file_get_contents(public_path('plantillas/index.json')));
         foreach ($index as $item) {
             if ($item->id === $fileId) {

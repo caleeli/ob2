@@ -291,21 +291,6 @@ require('../../vendor/autoload.php');
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <div v-if="empresaSeleccionada==3 && empresaSeleccionadaGestion==2015" class="col-md-12">
-                                                                            <img src="img/boa_cuentas.png" style="width:90%">
-                                                                        </div>
-                                                                        <div v-if="empresaSeleccionada==3 && empresaSeleccionadaGestion==2016" class="col-md-12">
-                                                                            <img src="img/boa_cuentas_2016.png" style="width:90%">
-                                                                        </div>
-                                                                        <div v-if="empresaSeleccionada==15 && empresaSeleccionadaGestion==2016" class="col-md-12">
-                                                                            <img src="img/easba_cuentas.png" style="width:90%">
-                                                                        </div>
-                                                                        <div v-if="empresaSeleccionada==21 && empresaSeleccionadaGestion==2016" class="col-md-12">
-                                                                            <img src="img/miteleferico_cuentas.png" style="width:90%">
-                                                                        </div>
-                                                                        <div v-if="empresaSeleccionada==22 && empresaSeleccionadaGestion==2016" class="col-md-12">
-                                                                            <img src="img/quipus_cuentas.png" style="width:90%">
-                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>

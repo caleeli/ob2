@@ -133,6 +133,8 @@ class Tarea extends Model
                                 $query->select('tarea_id')
                                 ->from('tarea_user')
                                 ->where(function ($query) use($userId, $ownerId) {
+                                    // backward compatibility: add where 1=1
+                                    $query->whereRaw('1=1');
                                     if ($ownerId!='1') {
                                         $query->where('user_id', $userId)
                                             ->orWhere('creador_id', $ownerId);
