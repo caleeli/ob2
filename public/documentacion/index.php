@@ -1118,7 +1118,7 @@ require('../../vendor/autoload.php');
       
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.173"></script>
+        <script src="../js/server.js?v0.174"></script>
         <script>
         $(document).ready(function () {
             var app;
