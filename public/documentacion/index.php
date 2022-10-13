@@ -666,6 +666,23 @@ require('../../vendor/autoload.php');
                                                             <dt>Tarea:</dt> <dd><input type="text" class="form-control" placeholder="tarea" v-model="tarea.nombre_tarea"></dd>
                                                         </dl>
                                                         <dl class="dl-horizontal">
+                                                            <dt>Clasificación:</dt>
+                                                            <dd>
+                                                                <select class="form-control" placeholder="prioridad" v-model="tarea.tipo">
+                                                                    <option></option>
+                                                                    <option value="EDC">Crédito Individual</option>
+                                                                    <option value="AUD">Crédito Veloz</option>
+                                                                    <option value="SUP">Crédito Temporada</option>
+                                                                    <option value="RDI">Crédito Verde</option>
+                                                                    <option value="COD">Crediestudio</option>
+                                                                    <option value="EIU">Crédito Agropecuario</option>
+                                                                    <option value="EIP">Crédito Solidario</option>
+                                                                    <option value="SYD">Bancos de Emprendimiento</option>
+                                                                    <option value="TAD">Crédito Socia Adicional</option>
+                                                                </select>
+                                                            </dd>
+                                                        </dl>
+                                                        <dl class="dl-horizontal">
                                                             <dt>Estado:</dt> <dd><span class="label label-primary">Pendiente</span></dd>
                                                         </dl>
                                                         <dl class="dl-horizontal">
@@ -677,6 +694,9 @@ require('../../vendor/autoload.php');
                                                                     <option value="Alta">Alta</option>
                                                                 </select>
                                                             </dd>
+                                                        </dl>
+                                                        <dl class="dl-horizontal">
+                                                            <dt>Tiempo asignado:</dt> <dd><input type="text" class="form-control" placeholder="dias" v-model="tarea.dias_otorgados"></dd>
                                                         </dl>
                                                     </div>
                                                 </div>
@@ -1810,7 +1830,11 @@ require('../../vendor/autoload.php');
                                         if (!html[2]) {
                                             row.calculatedChart=[];
                                         } else {
-                                            row.calculatedChart = JSON.parse(html[2]);
+                                            try {
+                                                row.calculatedChart = JSON.parse(html[2]);
+                                            } catch (e) {
+                                                row.calculatedChart=[];
+                                            }
                                         }
                                         if (typeof row.calculatedChart.forEach!=='function') {
                                             row.calculatedChart=[];
