@@ -2456,3 +2456,20 @@ INSERT INTO "tarea_user" ("tarea_id", "user_id", "nro_asignacion", "id", "create
 (234,	41,	1,	307,	NULL,	NULL,	NULL,	NULL);
 
 -- 2022-10-13 11:36:15.319449+00
+
+SELECT setval('adm_adjuntos_id_seq', (SELECT MAX(id) FROM adm_adjuntos)+1);
+SELECT setval('adm_avances_id_seq', (SELECT MAX(id) FROM adm_avances)+1);
+SELECT setval('adm_carga_estados_id_seq', (SELECT MAX(id) FROM adm_carga_estados)+1);
+SELECT setval('adm_clasificacion_empresas_id_seq', (SELECT MAX(id) FROM adm_clasificacion_empresas)+1);
+SELECT setval('adm_cuadro_financieros_id_seq', (SELECT MAX(id) FROM adm_cuadro_financieros)+1);
+SELECT setval('adm_empresas_id_seq', (SELECT MAX(id) FROM adm_empresas)+1);
+SELECT setval('adm_estado_financieros_id_seq', (SELECT MAX(id) FROM adm_estado_financieros)+1);
+SELECT setval('adm_firmas_id_seq', (SELECT MAX(id) FROM adm_evaluacion_consistencias)+1);
+SELECT setval('adm_firmas_id_seq1', (SELECT MAX(id) FROM adm_firmas)+1);
+SELECT setval('adm_hoja_trabajos_id_seq', (SELECT MAX(id) FROM adm_hoja_trabajos)+1);
+SELECT setval('adm_logins_id_seq', (SELECT MAX(id) FROM adm_logins)+1);
+SELECT setval('adm_recovers_id_seq', (SELECT MAX(id) FROM adm_recovers)+1);
+SELECT setval('adm_roles_id_seq', (SELECT MAX(id) FROM adm_roles)+1);
+SELECT setval('adm_tareas_id_seq', (SELECT MAX(id) FROM adm_tareas)+1);
+SELECT setval('adm_uais_id_seq', (SELECT MAX(id) FROM adm_uais)+1);
+SELECT setval('adm_users_id_seq', (SELECT MAX(id) FROM adm_users)+1);
