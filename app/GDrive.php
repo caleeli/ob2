@@ -61,6 +61,13 @@ class GDrive {
         return $token;
     }
     public function listIn($id=null, $recursive=true) {
+        $index = json_decode(file_get_contents(public_path('plantillas/index.json')));
+        foreach ($index as $item) {
+            if ($item->id === $id) {
+                return $item->files ?? [];
+            }
+        }
+        return [];
         $id = $this->escape($id);
         $op = $recursive ? 'in' : '=';
         $params = [];
@@ -85,6 +92,15 @@ class GDrive {
         return $file;
     }
     public function findIn($name, $id=null, $recursive=true) {
+\Log::debug($name);
+\Log::debug($id);
+	$index = json_decode(file_get_contents(public_path('plantillas/index.json')));
+        foreach ($index as $item) {
+            if ($item->name === $name) {
+                return $item;
+            }
+        }
+	return null;
         $id = $this->escape($id);
         $name = $this->escape($name);
         $op = $recursive ? 'in' : '=';
@@ -104,6 +120,15 @@ class GDrive {
     }
     public function getContent($fileId)
     {
+\Log::debug("Get Content: $fileId");
+        $index = json_decode(file_get_contents(public_path('plantillas/index.json')));
+        foreach ($index as $item) {
+            if ($item->id === $fileId) {
+                $content = file_get_contents(public_path('plantillas/' . $item->file));
+                return $content;
+            }
+        }
+        return "";
         /* @var $response \GuzzleHttp\Psr7\Response */
         $response = $this->service->files->export($fileId, 'text/html');
         return ($response->getBody()->__toString());

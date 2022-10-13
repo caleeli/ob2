@@ -125,7 +125,7 @@ require('../../vendor/autoload.php');
                                 <a href="javascript:void(0)" class="navbar-minimalize"><img src="/images/logo-white.png" style="height: 44px;"></a>
                             </div>
                         </li>
-                        <li class="active"><a href="#estadosFinancieros"><img class="fa fa-th-large menu-icon" src="img/eeff.png"> <span class="nav-label">Reportes y estadisticas</span></a></li>
+                        <!-- li class="active"><a href="#estadosFinancieros"><img class="fa fa-th-large menu-icon" src="img/eeff.png"> <span class="nav-label">Reportes y estadisticas</span></a></li -->
                         <li class="active"><a href="#seguimientoDeTareas"><img class="fa fa-th-large menu-icon" src="img/tasks.png"> <span class="nav-label">Revisión de carpetas</span></a></li>
                         <li class="active"><a href="#cambio_password"><img class="fa fa-th-large menu-icon" src="img/candado.png"> <span class="nav-label">Cambio de contraseña</span></a></li>
                         <li class="active"><a href="#bibliotecaScep"><img class="fa fa-th-large menu-icon" src="img/fideicomiso.png"> <span class="nav-label">Documentos</span></a></li>
