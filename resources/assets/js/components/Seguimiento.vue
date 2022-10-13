@@ -159,7 +159,12 @@
     export default {
         props: {
             tarea: Object,
-            definicion: Array,
+            definicion: {
+                type: Array,
+                default: function () {
+                    return [];
+                }
+            },
             readonly: Boolean,
         },
         computed: {
