@@ -1156,7 +1156,7 @@ $registerJs = [];
       
 
         <!-- Mainly scripts -->
-        <script src="../js/server.js?v0.174"></script>
+        <script src="../js/server.js?v0.175"></script>
         <?php echo implode('', $registerJs); ?>
         <script>
         $(document).ready(function () {
