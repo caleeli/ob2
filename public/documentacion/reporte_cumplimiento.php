@@ -22,7 +22,8 @@
 </table>
 
 <div v-if="reporte_cumplimiento" style="width:60rem;">
-    <basic-chart title="Por Estado" refreshWith="reporte_cumplimiento" type="pie" v-bind:mdata='reporte_cumplimiento.chart' />
+    <basic-chart title="Por Estado" refreshWith="reporte_cumplimiento" type="pie"
+        v-bind:mdata='reporte_cumplimiento.chart' />
 </div>
 
 <p><br></p>
@@ -44,17 +45,19 @@
                 ];
                 const chart = {
                     x: Object.values(tipos),
-                    series: [{
-                        Conteo: Object.values(res.reduce((obj, row) => ({
-                            cumple: obj.cumple + row.cumple,
-                            no_cumple: obj.no_cumple + row.no_cumple,
-                            no_aplica: obj.no_aplica + row.no_aplica,
-                        }), {
-                            cumple: 0,
-                            no_cumple: 0,
-                            no_aplica: 0
-                        })),
-                    }]
+                    series: {
+                        Total: {
+                            Conteo: Object.values(res.reduce((obj, row) => ({
+                                cumple: obj.cumple + row.cumple,
+                                no_cumple: obj.no_cumple + row.no_cumple,
+                                no_aplica: obj.no_aplica + row.no_aplica,
+                            }), {
+                                cumple: 0,
+                                no_cumple: 0,
+                                no_aplica: 0
+                            })),
+                        }
+                    }
                 };
                 console.log(chart);
                 this.reporte_cumplimiento = {
