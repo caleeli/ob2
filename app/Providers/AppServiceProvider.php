@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\UserAdministration\Tarea;
+use App\Observers\TareaObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Tarea::observe(TareaObserver::class);
     }
 
     /**

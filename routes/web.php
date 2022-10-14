@@ -123,3 +123,4 @@ Route::get('/entidad/{entidad}', function ($entidad) {
     return view('subir_entidades', compact('path', 'folder'));
 });
 
+Route::get('/reportes/{name}', array('as' => 'api', 'uses' => 'ReportesController@index'));

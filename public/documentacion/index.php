@@ -1,5 +1,6 @@
 <?php
 require('../../vendor/autoload.php');
+$registerJs = [];
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,6 +36,7 @@ require('../../vendor/autoload.php');
                 || localStorage.user_id === "null"
                 || !localStorage.user_id
             ) location.href = 'login.html';
+            var reportes = {};
         </script>
         <style>
             .document-preview {
@@ -98,6 +100,29 @@ require('../../vendor/autoload.php');
             .tarea-paso6 {background-color: #FEF149!important;}
             .tarea-paso7 {background-color: #D2FD3B!important;}
             .tarea-paso8 {background-color: #70D52D!important;}*/
+            table.report {
+                border-collapse: collapse;
+                border: 1px solid black;
+                background-color: #fff;
+            }
+            table.report th {
+                border: 1px solid black;
+                padding: 0.5rem 1rem;
+            }
+            table.report thead th {
+                text-align: center;
+            }
+            table.report tbody th {
+                text-align: right;
+            }
+            table.report tfoot th {
+                text-align: right;
+            }
+            table.report td {
+                border: 1px solid black;
+                padding: 0.5rem 1rem;
+                text-align: right;
+            }
         </style>
     </head>
 
@@ -129,6 +154,13 @@ require('../../vendor/autoload.php');
                         <li class="active"><a href="#seguimientoDeTareas"><img class="fa fa-th-large menu-icon" src="img/tasks.png"> <span class="nav-label">Revisión de carpetas</span></a></li>
                         <li class="active"><a href="#cambio_password"><img class="fa fa-th-large menu-icon" src="img/candado.png"> <span class="nav-label">Cambio de contraseña</span></a></li>
                         <li class="active"><a href="#bibliotecaScep"><img class="fa fa-th-large menu-icon" src="img/fideicomiso.png"> <span class="nav-label">Documentos</span></a></li>
+                        <li class="active">
+                            <a href="#"><img class="fa fa-th-large menu-icon" src="img/eeff.png"> <span class="nav-label">Reportes</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li class="active"><a href="#reporte_estado_prioridad">Reporte por Estado y Prioridad</a></li>
+                                <li class="active"><a href="#reporte_cumplimiento">Reporte de cumplimiento</a></li>
+                            </ul>
+                        </li>
                         <li class="active" v-if="esUsuarioAuxiliar()">
                             <a href="index.html"><i class="fa fa-th-large menu-icon"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -408,6 +440,12 @@ require('../../vendor/autoload.php');
                                 </div>
                             </div>
                         </div>
+                    </carouselitem>
+                    <carouselitem id="reporte_estado_prioridad">
+                        <?php include 'reporte_estado_prioridad.php'; ?>
+                    </carouselitem>
+                    <carouselitem id="reporte_cumplimiento">
+                    reporte/cumplimiento
                     </carouselitem>
                     <carouselitem id="usuariosAdmin">
                         <div class="row wrapper border-bottom page-heading">
@@ -1119,6 +1157,7 @@ require('../../vendor/autoload.php');
 
         <!-- Mainly scripts -->
         <script src="../js/server.js?v0.174"></script>
+        <?php echo implode('', $registerJs); ?>
         <script>
         $(document).ready(function () {
             var app;
@@ -1141,6 +1180,7 @@ require('../../vendor/autoload.php');
                     });
                     //userInstance.role_id=2;
                     return {
+                        ...(Object.keys(reportes).reduce((obj, name) => { obj[name.substring(0, name.length - 4)] = null; return obj; }, {})),
                         documento : {
                             pagina:1, numPages:0,
                             onload: function (numPages) {
@@ -1256,6 +1296,7 @@ require('../../vendor/autoload.php');
                     },
                 },
                 methods: {
+                    ...reportes,
                     noEsDoctorMari: function () {
                         return this.user_id!=2 && this.user_id!=12;
                     },
@@ -2114,6 +2155,10 @@ require('../../vendor/autoload.php');
                     this.loadListTo(this.usertarea, this.users);
                     //this.hoja_trabajo.$load(0);
                     this.loadList('/vue-editor/list/Hojas%20de%20Trabajo', this.tiposAuditoria);
+                    // cargar reportes
+                    Object.keys(reportes).forEach(function (key) {
+                        self[key]();
+                    });
                 }
             });
             window.app = app;

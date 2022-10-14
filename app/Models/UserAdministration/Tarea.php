@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\UserAdministration;
 
+use App\Http\Controllers\VueEditorController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -182,4 +183,38 @@ class Tarea extends Model
                             }
                             return $ultimos;
                         }
+
+    public function calcEstado()
+    {
+        \Log::debug('calcEstado' . $this->id);
+        if (empty($this->datos)) {
+            return 0;
+        }
+        $pendiente = 100;
+        $pendientes = 0;
+        $avance = 0;
+        $definiciones = VueEditorController::pasos;
+        $definicion = $definiciones[$this->tipo];
+        foreach($definicion as $def) {
+            if (!empty($def['porcentaje'])) {
+                $pendiente -= $def['porcentaje'];
+                $pendientes++;
+            }
+        }
+        foreach($definicion as $i => $def) {
+            if (empty($def['porcentaje'])) {
+                $definicion[$i]['porcentaje'] = $pendiente / $pendientes;
+            }
+        }
+        \Log::debug('maximo = ' . $this->datos['maximo']);
+        foreach($definicion as $i => $def) {
+            //maximo o actual
+            if ($i < $this->datos['maximo']) {
+                $avance += $def['porcentaje'];
+                \Log::debug($avance . ' <- ' .$def['porcentaje']);
+            }
+        }
+        \Log::debug('avance = ' . $avance);
+        return $avance;
+    }
 }
