@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\GDrive;
+use App\GTemplate;
 use App\Models\UserAdministration\Tarea;
 
 class ReportesController extends Controller
@@ -164,5 +166,58 @@ class ReportesController extends Controller
                 $tareas = Tarea::where('tipo', $tipo)->where('prioridad', $prioridad_estado);
         }
         return $tareas->count();
+    }
+
+    public function reporte_cumplimiento()
+    {
+        $plantillaId = "1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI";
+        $labels = $this->getPreguntas($plantillaId);
+        // Buscar tareas que contiene plantillaId en data
+        $tareas = Tarea::where('datos', 'like', '%' . $plantillaId . '%')->get();
+        // contar checks
+        $reporte = [];
+        foreach ($labels as $key => $label) {
+            $reporte[$key] = [
+                'label' => $label,
+                'cumple' => 0,
+                'no_cumple' => 0,
+                'no_aplica' => 0,
+            ];
+        }
+        foreach ($tareas as $tarea) {
+            if (empty($tarea->datos['data'])) {
+                continue;
+            }
+            foreach($tarea->datos['data'] as $paso) {
+                if (empty($paso['revision']) || empty($paso['revision']['valores'])) {
+                    continue;
+                }
+                $valores = $paso['revision']['valores'];
+                foreach($valores as $key => $value) {
+                    if (substr($key,0, 5) === 'check') {
+                        $cumple = $value === "✔";
+                        $no_cumple = $value === "✕";
+                        $no_aplica = $value === "N/A";
+                        // $parcial = $value === "P/C";
+                        if ($cumple) {
+                            $reporte[$key]['cumple']++;
+                        } elseif ($no_cumple) {
+                            $reporte[$key]['no_cumple']++;
+                        } elseif ($no_aplica) {
+                            $reporte[$key]['no_aplica']++;
+                        }
+                    }
+                }
+            }
+        }
+        return array_values($reporte);
+    }
+
+    private function getPreguntas($plantillaId)
+    {
+        $drive = new GDrive;
+        $gTemplate = new GTemplate($drive, $plantillaId);
+        list($html, $variables, $multiples, $labels) = $gTemplate->parseVariablesMeta([], true);
+        return $labels;
     }
 }

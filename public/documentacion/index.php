@@ -445,7 +445,7 @@ $registerJs = [];
                         <?php include 'reporte_estado_prioridad.php'; ?>
                     </carouselitem>
                     <carouselitem id="reporte_cumplimiento">
-                    reporte/cumplimiento
+                    <?php include 'reporte_cumplimiento.php'; ?>
                     </carouselitem>
                     <carouselitem id="usuariosAdmin">
                         <div class="row wrapper border-bottom page-heading">
@@ -1146,7 +1146,7 @@ $registerJs = [];
                     </carouselitem>
                 </carousel>
               
-              <div class="footer">
+              <div class="footer" style="display:none;">
                 <div>
                     <strong>Copyright</strong> coredump.com.bo © 2017-2019. Site designed by <a href="coredump.com.bo">coredump.com.bo</a>
                 </div>

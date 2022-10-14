@@ -5,6 +5,7 @@ namespace App;
 use App\Models\UserAdministration\HojaTrabajo;
 use App\Models\UserAdministration\Tarea;
 use DB;
+use DOMDocument;
 
 /**
  * Convierte un documento google docs en una pagina dinamica con vuejs
@@ -31,6 +32,12 @@ class GTemplate
     }
 
     public function parseVariables(array $valores = [])
+    {
+        list($html) = $this->parseVariablesMeta($valores);
+        return $html;
+    }
+
+    public function parseVariablesMeta(array $valores = [], $matchLabels = false)
     {
         $multiples = [];
         $variables = [];
@@ -87,7 +94,25 @@ class GTemplate
         }, $html);
         $html = $this->addMultipleButtons($html);
         $html .= '<script>var variables = ' . json_encode($variables) . ';parent && parent.app && parent.app.variablesCargadas ? parent.app.variablesCargadas(variables):null;</script>';
-        return $html;
+        if ($matchLabels) {
+            $dom = new DOMDocument();
+            @$dom->loadHTML($html);
+            $xpath = new \DOMXPath($dom);
+            $checks = $xpath->query('//check');
+            // find tr owner
+            $labels = [];
+            foreach($checks as $check) {
+                $tr = $check;
+                while ($tr && $tr->tagName !== 'tr') {
+                    $tr = $tr->parentNode;
+                }
+                if ($tr) {
+                    $labels[$check->getAttribute('v-model')] = preg_replace('/\s+/', ' ', trim($tr->textContent));
+                }
+            }
+            return [$html, $variables, $multiples, $labels];
+        }
+        return [$html, $variables, $multiples];
     }
 
     private function addMultipleButtons($html)

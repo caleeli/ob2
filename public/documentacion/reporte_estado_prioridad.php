@@ -144,6 +144,7 @@
                         Completado: Object.keys(tipos).map((key) => res[key].completado),
                     }]
                 };
+                console.log(res.chart1);
                 res.chart2 = {
                     x: Object.values(tipos),
                     series: [{
