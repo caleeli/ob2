@@ -1,5 +1,6 @@
 <template>
         <div class="chart-box">
+            <h3 style="text-align:center;">{{ title }}</h3>
             <div class="canvasOwner" style="min-height: 300px;"></div>
             <i class="base-chart-aux"></i>
             <div class="pv-data-table" style="display:none">
