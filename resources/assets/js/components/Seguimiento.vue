@@ -88,7 +88,7 @@
                                         <i class="fa fa-check-square-o"></i>
                                     </button>
                                     <template v-else>
-                                        <button class="btn btn-warning dim" type="button" @click="volverPaso(index)">
+                                        <button v-if="index>0" class="btn btn-warning dim" type="button" @click="volverPaso(index)">
                                             Volver
                                             <i class="fa fa-arrow-circle-left"></i>
                                         </button>
