@@ -650,8 +650,8 @@ $registerJs = [];
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-md-3 col-xs-12 project-actions" style="padding-top: 0.5em">
-                                                                    <span v-if="tareaI.attributes.dias_otorgados>=0" style="display: inline-block; float: left;">
-                                                                        <div><peity v-bind:value="tareaI.attributes.dias_pasados" v-bind:total="tareaI.attributes.dias_otorgados"/></div>
+                                                                    <span v-if="tareaI.attributes.dias_otorgados>=0" style="display: inline-block; float: left; ">
+                                                                        <span><peity v-bind:value="tareaI.attributes.dias_pasados" v-bind:total="tareaI.attributes.dias_otorgados"/></span>
                                                                         <small>{{tareaI.attributes.dias_otorgados ? Math.max(0, tareaI.attributes.dias_otorgados - tareaI.attributes.dias_pasados)+'d' : ''}}</small>
                                                                     </span>
                                                                     <a v-if="tareaI.relationships.creador.id==user.id" v-if="esUsuarioGerente()" href="javascript:void(0)" class="btn btn-white btn-sm" v-on:click='cancelarTarea(tareaI)'><i class="fa fa-times"></i> Cancelar </a>
