@@ -151,10 +151,10 @@ class Tarea extends Model
                             return $this->created_at->diff(\Carbon\Carbon::now())->days;
                         }
 
-    function getDiasOtorgadosAttribute () {
+    /*function getDiasOtorgadosAttribute () {
                             $asignacion = $this->asignaciones()->orderBy('created_at', 'desc')->first();
                             return $asignacion ? $asignacion->dias_plazo * 1 : 0;
-                        }
+                        }*/
 
     function getAvanceAttribute () {
                             $avancesPorPersona = [];
