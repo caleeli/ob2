@@ -12,6 +12,8 @@ class GoogleDocsController extends Controller
         $directory = implode('/', $path);
         $res = [];
 
+        return []; // disabled
+
         $drive = new GDrive;
         $files = $drive->files('SUPERVISIONES', true);
         foreach ($files as $file) {
