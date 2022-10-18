@@ -12,9 +12,9 @@
 <div id='app'>
     @if($mode==='edit')
     <div class='popup'>
-        <div class="header" style='width: 815px;'>
+        <div class="header" style='width: 715px;'>
             <input placeholder="Ingrese el texto del enlace" size="30" v-model="selectedLinkName"/>
-            <span class="modeContainer">
+            <span class="modeContainer" style="display:none;">
                 <button v-if="mode==='PDF'" type="button" v-on:click="modoPDF" class="modeButton" style="color: red;" :class="{disabledMode:mode!=='PDF'}">PDF</button>
                 <button type="button" v-on:click="modoGoogleDocs" class="modeButton" style="color: blue;" :class="{disabledMode:mode!=='GOOGLE'}">Goggle</button>
                 <button v-if="mode!=='PDF'" type="button" v-on:click="modoPDF" class="modeButton" style="color: red;" :class="{disabledMode:mode!=='PDF'}">PDF</button>
