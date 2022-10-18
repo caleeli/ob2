@@ -78,8 +78,6 @@ class UpdateOperation extends BaseOperation
     private function updateModel(Model $target, $data)
     {
         if (isset($data['attributes'])) {
-            \Log::debug('updated');
-            \Log::debug(\get_class($target));
             $target->update($data['attributes']);
         }
         return $target;

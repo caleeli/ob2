@@ -10,180 +10,234 @@ use Illuminate\Http\Request;
 
 class VueEditorController extends Controller
 {
-    const pasos = [
-        'EDC'=> [
-            [
-                'titulo'=>'1. Plantilla de revisión',
-                'porcentaje' => 30,
-                'buttons'=>[
-                    'revision'=> [
-                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
-                        'buttonTitle' => 'Plantilla de Revisión',
-                        'name'=>'revision',
-                    ]
+    public static function getPasos()
+    {
+        $defaultPasos = [
+            'EDC'=> [
+                [
+                    'titulo'=>'1. Plantilla de revisión',
+                    'porcentaje' => 30,
+                    'buttons'=>[
+                        'revision'=> [
+                            'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                            'buttonTitle' => 'Plantilla de Revisión',
+                            'name'=>'revision',
+                        ]
+                    ],
+                ],
+                [
+                    'titulo'=>'2. Respuesta de la Agencia',
+                    'porcentaje' => 30,
+                    'buttons'=>[
+                        'revision'=> [
+                            'template'=>'1UfSniy8r9-T4umisvhd9z7cLTdeG6Q8bQyEvstRF5jE',
+                            'buttonTitle' => 'Responder Revisión',
+                            'name'=>'revision',
+                        ]
+                    ],
+                ],
+                ['titulo'=>'3. Informe Final'],
+                [
+                    'titulo'=>'4. Conclusión',
                 ],
             ],
-            [
-                'titulo'=>'2. Respuesta de la Agencia',
-                'porcentaje' => 30,
-                'buttons'=>[
-                    'revision'=> [
-                        'template'=>'1UfSniy8r9-T4umisvhd9z7cLTdeG6Q8bQyEvstRF5jE',
-                        'buttonTitle' => 'Responder Revisión',
-                        'name'=>'revision',
-                    ]
+            'AUD' => [
+                [
+                    'titulo'=>'1. Plantilla de revisión',
+                    'porcentaje' => 30,
+                    'buttons'=>[
+                        'revision'=> [
+                            'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                            'buttonTitle' => 'Plantilla de Revisión',
+                            'name'=>'revision',
+                        ]
+                    ],
+                ],
+                ['titulo'=>'2. Respuesta de la Agencia'],
+                ['titulo'=>'3. Informe Final'],
+                [
+                    'titulo'=>'4. Conclusión',
                 ],
             ],
-            ['titulo'=>'3. Informe Final'],
-            [
-                'titulo'=>'4. Conclusión',
-            ],
-        ],
-        'AUD' => [
-            [
-                'titulo'=>'1. Plantilla de revisión',
-                'porcentaje' => 30,
-                'buttons'=>[
-                    'revision'=> [
-                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
-                        'buttonTitle' => 'Plantilla de Revisión',
-                        'name'=>'revision',
-                    ]
+            'SUP' => [
+                [
+                    'titulo'=>'1. Plantilla de revisión',
+                    'porcentaje' => 30,
+                    'buttons'=>[
+                        'revision'=> [
+                            'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                            'buttonTitle' => 'Plantilla de Revisión',
+                            'name'=>'revision',
+                        ]
+                    ],
+                ],
+                ['titulo'=>'2. Respuesta de la Agencia'],
+                ['titulo'=>'3. Informe Final'],
+                [
+                    'titulo'=>'4. Conclusión',
                 ],
             ],
-            ['titulo'=>'2. Respuesta de la Agencia'],
-            ['titulo'=>'3. Informe Final'],
-            [
-                'titulo'=>'4. Conclusión',
-            ],
-        ],
-        'SUP' => [
-            [
-                'titulo'=>'1. Plantilla de revisión',
-                'porcentaje' => 30,
-                'buttons'=>[
-                    'revision'=> [
-                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
-                        'buttonTitle' => 'Plantilla de Revisión',
-                        'name'=>'revision',
-                    ]
+            'RDI' => [
+                [
+                    'titulo'=>'1. Plantilla de revisión',
+                    'porcentaje' => 30,
+                    'buttons'=>[
+                        'revision'=> [
+                            'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                            'buttonTitle' => 'Plantilla de Revisión',
+                            'name'=>'revision',
+                        ]
+                    ],
+                ],
+                ['titulo'=>'2. Respuesta de la Agencia'],
+                ['titulo'=>'3. Informe Final'],
+                [
+                    'titulo'=>'4. Conclusión',
                 ],
             ],
-            ['titulo'=>'2. Respuesta de la Agencia'],
-            ['titulo'=>'3. Informe Final'],
-            [
-                'titulo'=>'4. Conclusión',
-            ],
-        ],
-        'RDI' => [
-            [
-                'titulo'=>'1. Plantilla de revisión',
-                'porcentaje' => 30,
-                'buttons'=>[
-                    'revision'=> [
-                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
-                        'buttonTitle' => 'Plantilla de Revisión',
-                        'name'=>'revision',
-                    ]
+            'COD' => [
+                [
+                    'titulo'=>'1. Plantilla de revisión',
+                    'porcentaje' => 30,
+                    'buttons'=>[
+                        'revision'=> [
+                            'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                            'buttonTitle' => 'Plantilla de Revisión',
+                            'name'=>'revision',
+                        ]
+                    ],
+                ],
+                ['titulo'=>'2. Respuesta de la Agencia'],
+                ['titulo'=>'3. Informe Final'],
+                [
+                    'titulo'=>'4. Conclusión',
                 ],
             ],
-            ['titulo'=>'2. Respuesta de la Agencia'],
-            ['titulo'=>'3. Informe Final'],
-            [
-                'titulo'=>'4. Conclusión',
-            ],
-        ],
-        'COD' => [
-            [
-                'titulo'=>'1. Plantilla de revisión',
-                'porcentaje' => 30,
-                'buttons'=>[
-                    'revision'=> [
-                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
-                        'buttonTitle' => 'Plantilla de Revisión',
-                        'name'=>'revision',
-                    ]
+            'EIU' => [
+                [
+                    'titulo'=>'1. Plantilla de revisión',
+                    'porcentaje' => 30,
+                    'buttons'=>[
+                        'revision'=> [
+                            'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                            'buttonTitle' => 'Plantilla de Revisión',
+                            'name'=>'revision',
+                        ]
+                    ],
+                ],
+                ['titulo'=>'2. Respuesta de la Agencia'],
+                ['titulo'=>'3. Informe Final'],
+                [
+                    'titulo'=>'4. Conclusión',
                 ],
             ],
-            ['titulo'=>'2. Respuesta de la Agencia'],
-            ['titulo'=>'3. Informe Final'],
-            [
-                'titulo'=>'4. Conclusión',
-            ],
-        ],
-        'EIU' => [
-            [
-                'titulo'=>'1. Plantilla de revisión',
-                'porcentaje' => 30,
-                'buttons'=>[
-                    'revision'=> [
-                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
-                        'buttonTitle' => 'Plantilla de Revisión',
-                        'name'=>'revision',
-                    ]
+            'EIP' => [
+                [
+                    'titulo'=>'1. Plantilla de revisión',
+                    'porcentaje' => 30,
+                    'buttons'=>[
+                        'revision'=> [
+                            'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                            'buttonTitle' => 'Plantilla de Revisión',
+                            'name'=>'revision',
+                        ]
+                    ],
+                ],
+                ['titulo'=>'2. Respuesta de la Agencia'],
+                ['titulo'=>'3. Informe Final'],
+                [
+                    'titulo'=>'4. Conclusión',
                 ],
             ],
-            ['titulo'=>'2. Respuesta de la Agencia'],
-            ['titulo'=>'3. Informe Final'],
-            [
-                'titulo'=>'4. Conclusión',
-            ],
-        ],
-        'EIP' => [
-            [
-                'titulo'=>'1. Plantilla de revisión',
-                'porcentaje' => 30,
-                'buttons'=>[
-                    'revision'=> [
-                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
-                        'buttonTitle' => 'Plantilla de Revisión',
-                        'name'=>'revision',
-                    ]
+            'SYD' => [
+                [
+                    'titulo'=>'1. Plantilla de revisión',
+                    'porcentaje' => 30,
+                    'buttons'=>[
+                        'revision'=> [
+                            'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                            'buttonTitle' => 'Plantilla de Revisión',
+                            'name'=>'revision',
+                        ]
+                    ],
+                ],
+                ['titulo'=>'2. Respuesta de la Agencia'],
+                ['titulo'=>'3. Informe Final'],
+                [
+                    'titulo'=>'4. Conclusión',
                 ],
             ],
-            ['titulo'=>'2. Respuesta de la Agencia'],
-            ['titulo'=>'3. Informe Final'],
-            [
-                'titulo'=>'4. Conclusión',
-            ],
-        ],
-        'SYD' => [
-            [
-                'titulo'=>'1. Plantilla de revisión',
-                'porcentaje' => 30,
-                'buttons'=>[
-                    'revision'=> [
-                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
-                        'buttonTitle' => 'Plantilla de Revisión',
-                        'name'=>'revision',
-                    ]
+            'TAD' => [
+                [
+                    'titulo'=>'1. Plantilla de revisión',
+                    'porcentaje' => 30,
+                    'buttons'=>[
+                        'revision'=> [
+                            'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
+                            'buttonTitle' => 'Plantilla de Revisión',
+                            'name'=>'revision',
+                        ]
+                    ],
+                ],
+                ['titulo'=>'2. Respuesta de la Agencia'],
+                ['titulo'=>'3. Informe Final'],
+                [
+                    'titulo'=>'4. Conclusión',
                 ],
             ],
-            ['titulo'=>'2. Respuesta de la Agencia'],
-            ['titulo'=>'3. Informe Final'],
-            [
-                'titulo'=>'4. Conclusión',
-            ],
-        ],
-        'TAD' => [
-            [
-                'titulo'=>'1. Plantilla de revisión',
-                'porcentaje' => 30,
-                'buttons'=>[
-                    'revision'=> [
-                        'template'=>'1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI',
-                        'buttonTitle' => 'Plantilla de Revisión',
-                        'name'=>'revision',
-                    ]
-                ],
-            ],
-            ['titulo'=>'2. Respuesta de la Agencia'],
-            ['titulo'=>'3. Informe Final'],
-            [
-                'titulo'=>'4. Conclusión',
-            ],
-        ],
-    ];
+        ];
+        // Get from local storage
+        $path = '/home/david/projects/diaconia_demo/storage/app/pasos.json';// storage_path('app/pasos.json');
+        if (\file_exists($path)) {
+            $pasos = \file_get_contents($path);
+            $pasos = json_decode($pasos, true);
+        } else {
+            $pasos = $defaultPasos;
+        }
+        return $pasos;
+    }
+
+    public static function postPasos($nuevosPasos, $tipo)
+    {
+        $pasosDef = self::getPasos();
+        $pasos = $pasosDef[$tipo];
+        foreach ($nuevosPasos as $i => $paso) {
+            $pasos[$i]['titulo'] = $paso['name'];
+            if (isset($paso['extra']['porcentaje'])) {
+                $pasos[$i]['porcentaje'] = $paso['extra']['porcentaje'];
+            }
+            if ($paso['implementation']) {
+                $template = self::findTemplate($paso['implementation']);
+                if ($template) {
+                    $pasos[$i]['buttons'] = [
+                        'revision'=> [
+                            'template' => $template->id,
+                            'buttonTitle' => 'Llenar plantilla',
+                            'name' => 'revision',
+                        ],
+                    ];
+                }
+            } else {
+                $pasos[$i]['buttons'] = [];
+            }
+        }
+        $pasosDef[$tipo] = $pasos;
+        // Store to local storage
+        Storage::disk('local')->put('pasos.json', json_encode(
+            $pasosDef,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+        ));
+    }
+
+    private static function findTemplate($templateName)
+    {
+        $index = json_decode(file_get_contents(public_path('plantillas/index.json')));
+        foreach ($index as $template) {
+            if (isset($template->file) && $template->file == $templateName) {
+                return $template;
+            }
+        }
+    }
 
     public function edit($templeta, HojaTrabajo $hojaTrabajo = null)
     {
@@ -194,7 +248,7 @@ class VueEditorController extends Controller
 
     public function editTarea($templeta, Tarea $tarea, $paso, $nombre)
     {
-        $hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
+        $hoja = self::getPasos()[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
         if (!isset($tarea->datos['data'][$paso][$hoja])) {
             $valores = $this->valorPrevio($tarea, $paso, $hoja);
             $templetaActual = $templeta;
@@ -233,7 +287,7 @@ class VueEditorController extends Controller
             'fileName'=>$nombre,
             'templetaActual' => $templetaActual,
         ]);*/
-        $hoja = self::pasos[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
+        $hoja = self::getPasos()[$tarea->tipo][$paso]['buttons'][$nombre]['name'];
         if (!isset($tarea->datos['data'][$paso][$hoja])) {
             $valores = $this->valorPrevio($tarea, $paso, $hoja);
             $templetaActual = $templeta;

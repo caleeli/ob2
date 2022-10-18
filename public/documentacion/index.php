@@ -1274,7 +1274,7 @@ $registerJs = [];
                         },
                         //pasosAuditoriaAbierta: false,
                         hojaTrabajoLocalSave: false,
-                        definicionPasos: <?= json_encode(\App\Http\Controllers\VueEditorController::pasos ) ?>
+                        definicionPasos: <?= json_encode(\App\Http\Controllers\VueEditorController::getPasos() ) ?>
                     };
                 },
                 computed: {

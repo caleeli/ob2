@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><!--This file was converted to xhtml by LibreOffice - see https://cgit.freedesktop.org/libreoffice/core/tree/filter/source/xslt for the code.--><head profile="http://dublincore.org/documents/dcmi-terms/"><meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/><title xml:lang="en-US">- no title specified</title><meta name="DCTERMS.title" content="" xml:lang="en-US"/><meta name="DCTERMS.language" content="en-US" scheme="DCTERMS.RFC4646"/><meta name="DCTERMS.source" content="http://xml.openoffice.org/odf2xhtml"/><meta name="DCTERMS.issued" content="2022-10-17T22:03:05.148848026" scheme="DCTERMS.W3CDTF"/><meta name="DCTERMS.modified" content="2022-10-17T22:04:48.203787166" scheme="DCTERMS.W3CDTF"/><meta name="DCTERMS.provenance" content="" xml:lang="en-US"/><meta name="DCTERMS.subject" content="," xml:lang="en-US"/><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" hreflang="en"/><link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" hreflang="en"/><link rel="schema.DCTYPE" href="http://purl.org/dc/dcmitype/" hreflang="en"/><link rel="schema.DCAM" href="http://purl.org/dc/dcam/" hreflang="en"/><style type="text/css">
+    @page {  }
+    table { border-collapse:collapse; border-spacing:0; empty-cells:show }
+    td, th { vertical-align:top; font-size:12pt;}
+    h1, h2, h3, h4, h5, h6 { clear:both;}
+    ol, ul { margin:0; padding:0;}
+    li { list-style: none; margin:0; padding:0;}
+    /* "li span.odfLiEnd" - IE 7 issue*/
+    li span. { clear: both; line-height:0; width:0; height:0; margin:0; padding:0; }
+    span.footnodeNumber { padding-right:1em; }
+    span.annotation_style_by_filter { font-size:95%; font-family:Arial; background-color:#fff000;  margin:0; border:0; padding:0;  }
+    span.heading_numbering { margin-right: 0.8rem; }* { margin:0;}
+    .P1 { font-size:12pt; font-family:Liberation Serif; writing-mode:horizontal-tb; direction:ltr;}
+    .P2 { font-size:12pt; font-family:Liberation Serif; writing-mode:horizontal-tb; direction:ltr;}
+    .Table1 { width:6.925in; float:none; }
+    .Table1_A1 { padding:0.0382in; border-left-width:thin; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-width:thin; border-top-style:solid; border-top-color:#000000; border-bottom-width:thin; border-bottom-style:solid; border-bottom-color:#000000; }
+    .Table1_A2 { padding:0.0382in; border-left-width:thin; border-left-style:solid; border-left-color:#000000; border-right-style:none; border-top-style:none; border-bottom-width:thin; border-bottom-style:solid; border-bottom-color:#000000; }
+    .Table1_C1 { padding:0.0382in; border-width:thin; border-style:solid; border-color:#000000; }
+    .Table1_C2 { padding:0.0382in; border-left-width:thin; border-left-style:solid; border-left-color:#000000; border-right-width:thin; border-right-style:solid; border-right-color:#000000; border-top-style:none; border-bottom-width:thin; border-bottom-style:solid; border-bottom-color:#000000; }
+    .Table1_A { width:2.3083in; }
+    /* ODF styles with no properties representable as CSS */
+     { }
+    </style></head><body dir="ltr" style="max-width:8.5in;margin-top:0.7874in; margin-bottom:0.7874in; margin-left:0.7874in; margin-right:0.7874in; "><p class="P1">PLANTILLA DE REVISION 2022 – PRODUCTO X</p><p class="P1"> </p><p class="P1"> </p><table border="0" cellspacing="0" cellpadding="0" class="Table1"><colgroup><col width="256"/><col width="256"/><col width="256"/></colgroup><tr class="TableLine93876896365376"><td style="text-align:left;width:2.3083in; " class="Table1_A1"><p class="P2">Descripcion</p></td><td style="text-align:left;width:2.3083in; " class="Table1_A1"><p class="P2">Cumple?</p></td><td style="text-align:left;width:2.3083in; " class="Table1_C1"><p class="P2">Obervaciones</p></td></tr><tr class="TableLine93876896365376"><td style="text-align:left;width:2.3083in; " class="Table1_A2"><p class="P2">Aaaaa</p></td><td style="text-align:left;width:2.3083in; " class="Table1_A2"><p class="P2">[x]</p></td><td style="text-align:left;width:2.3083in; " class="Table1_C2"><p class="P2">[texto()]</p></td></tr><tr class="TableLine93876896365376"><td style="text-align:left;width:2.3083in; " class="Table1_A2"><p class="P2">Bdddd</p></td><td style="text-align:left;width:2.3083in; " class="Table1_A2"><p class="P2">[x]</p></td><td style="text-align:left;width:2.3083in; " class="Table1_C2"><p class="P2">[texto()]</p></td></tr></table><p class="P1"> </p></body></html>

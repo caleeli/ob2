@@ -63,6 +63,42 @@ class GDrive {
         $token = $this->client->fetchAccessTokenWithAuthCode($code);
         return $token;
     }
+
+    public static function getIndex()
+    {
+        $index = json_decode(file_get_contents(public_path('plantillas/index.json')));
+        return $index;
+    }
+
+    public static function uploadToIndex($name, $filepath)
+    {
+        $index = json_decode(file_get_contents(public_path('plantillas/index.json')));
+        // check if exists
+        $exists = false;
+        foreach ($index as $i => $item) {
+            if ($item->name == $name) {
+                $exists = true;
+                break;
+            }
+        }
+        if (!$exists) {
+            // add file
+            $file = [
+                "id" => uniqid('p'),
+                "name" => $name,
+                "mimeType" => "application/vnd.google-apps.document",
+                "file" => basename($filepath)
+            ];
+            $index[] = $file;
+        } else {
+            // update file
+            $item->file = basename($filepath);
+            $index[$i] = $item;
+        }
+        copy($filepath, public_path('plantillas/' . basename($filepath)));
+        file_put_contents(public_path('plantillas/index.json'), json_encode($index, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    }
+
     public function listIn($id=null, $recursive=true) {
         $index = json_decode(file_get_contents(public_path('plantillas/index.json')));
         foreach ($index as $item) {

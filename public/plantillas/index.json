@@ -2,24 +2,24 @@
     {
         "id": "1dsbXReem-hQS5-VGodK6L-pCbRWJTnNr",
         "name": "Hojas de Trabajo",
-        "mimeType": "application/vnd.google-apps.folder",
+        "mimeType": "application\/vnd.google-apps.folder",
         "files": [
             {
                 "id": "1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI",
                 "name": "1. Evaluación de consistencia",
-                "mimeType": "application/vnd.google-apps.document",
+                "mimeType": "application\/vnd.google-apps.document",
                 "file": "1.Evaluacindeconsistencia.html"
             },
             {
                 "id": "19Ts5TwOMmi7DRaNsiTz8TeQBbN4enyV-Wd36qPFJtLI",
                 "name": "2. Auditorias",
-                "mimeType": "application/vnd.google-apps.document",
+                "mimeType": "application\/vnd.google-apps.document",
                 "file": "2.Auditorias.html"
             },
             {
                 "id": "1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI",
                 "name": "Revisión de Carpeta",
-                "mimeType": "application/vnd.google-apps.document",
+                "mimeType": "application\/vnd.google-apps.document",
                 "file": "RevisindeCarpeta.html"
             }
         ]
@@ -27,19 +27,31 @@
     {
         "id": "1YQAdo90GE_5QxR6S5zos8oATeLFworldf8jXnbIHySI",
         "name": "1. Evaluación de consistencia",
-        "mimeType": "application/vnd.google-apps.document",
+        "mimeType": "application\/vnd.google-apps.document",
         "file": "1.Evaluacindeconsistencia.html"
     },
     {
         "id": "19Ts5TwOMmi7DRaNsiTz8TeQBbN4enyV-Wd36qPFJtLI",
         "name": "2. Auditorias",
-        "mimeType": "application/vnd.google-apps.document",
+        "mimeType": "application\/vnd.google-apps.document",
         "file": "2.Auditorias.html"
     },
     {
         "id": "1snOSeUYDeuKIWcCHHiqR9ZTFe2NDrfFZyaPnA4GWjfI",
         "name": "Revisión de Carpeta",
-        "mimeType": "application/vnd.google-apps.document",
+        "mimeType": "application\/vnd.google-apps.document",
         "file": "RevisindeCarpeta.html"
+    },
+    {
+        "id": "p6349b1dcb2eda",
+        "name": "PlantillaExcel",
+        "mimeType": "application\/vnd.google-apps.document",
+        "file": "PlantillaExcel.html"
+    },
+    {
+        "id": "p634e0a006760f",
+        "name": "Plantilla2",
+        "mimeType": "application\/vnd.google-apps.document",
+        "file": "Plantilla2"
     }
 ]

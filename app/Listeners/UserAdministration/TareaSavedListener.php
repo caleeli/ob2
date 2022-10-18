@@ -16,7 +16,7 @@ public function handle ($event) {
                             $event->tarea->cod_tarea = "SCEP-" . $event->tarea->id;
                             $event->tarea->save();
                         }
-                        $defs = \App\Http\Controllers\VueEditorController::pasos;
+                        $defs = \App\Http\Controllers\VueEditorController::getPasos();
                         if (isset($defs[$event->tarea->tipo])) {
                             $def = $defs[$event->tarea->tipo];
                             for($paso = 0, $l = count($def); $paso<$l; $paso++) {

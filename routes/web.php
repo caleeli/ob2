@@ -124,3 +124,4 @@ Route::get('/entidad/{entidad}', function ($entidad) {
 });
 
 Route::get('/reportes/{name}', array('as' => 'api', 'uses' => 'ReportesController@index'));
+Route::post('/bpm/{tipo_revision}', array('uses' => 'BpmController@postBpm'));

@@ -186,14 +186,13 @@ class Tarea extends Model
 
     public function calcEstado()
     {
-        \Log::debug('calcEstado' . $this->id);
         if (empty($this->datos)) {
             return 0;
         }
         $pendiente = 100;
         $pendientes = 0;
         $avance = 0;
-        $definiciones = VueEditorController::pasos;
+        $definiciones = VueEditorController::getPasos();
         $definicion = $definiciones[$this->tipo];
         foreach($definicion as $def) {
             if (!empty($def['porcentaje'])) {
@@ -206,15 +205,12 @@ class Tarea extends Model
                 $definicion[$i]['porcentaje'] = $pendiente / $pendientes;
             }
         }
-        \Log::debug('maximo = ' . $this->datos['maximo']);
         foreach($definicion as $i => $def) {
             //maximo o actual
             if ($i < $this->datos['maximo']) {
                 $avance += $def['porcentaje'];
-                \Log::debug($avance . ' <- ' .$def['porcentaje']);
             }
         }
-        \Log::debug('avance = ' . $avance);
         return $avance;
     }
 }

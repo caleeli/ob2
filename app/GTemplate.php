@@ -15,6 +15,7 @@ use DOMDocument;
 class GTemplate
 {
     const SHORT_CUTS = [
+        '[x]' => 'check(✔|✕|N/A)',
         'ch()' => 'check(✔|✕|N/A)',
         '✔/✕' => '[check*=check(✔|✕|N/A)]',
         '&#10004;/&#10005;' => '[check*=check(✔|✕|N/A)]',
