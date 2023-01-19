@@ -894,6 +894,7 @@ $registerJs = [];
 
                                                         <dt>Creación:</dt> <dd>{{tarea.created_at}}</dd>
                                                         <dt>Última actualización:</dt> <dd>{{tarea.updated_at}}</dd>
+                                                        <dt>Actualizado por:</dt> <dd>{{tarea.updated_at}}</dd>
                                                         <dt>Tiempo asignado:</dt> <dd>{{tarea.dias_otorgados}} días</dd>
                                                         <dt>Tiempo restante:</dt> <dd>{{Math.max(0, tarea.dias_otorgados - tarea.dias_pasados)}} días</dd>
                                                     </dl>

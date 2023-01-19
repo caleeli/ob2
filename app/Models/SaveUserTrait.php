@@ -39,4 +39,9 @@ trait SaveUserTrait
             }
         });
     }
+
+    public function usuarioAbm()
+    {
+        return $this->belongsTo('App\Models\UserAdministration\User');
+    }
 }

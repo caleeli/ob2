@@ -42,7 +42,8 @@
                     <dl class="dl-horizontal">
 
                         <dt>Creación:</dt> <dd>{{tarea.created_at}}</dd>
-                        <dt>Última actualización:</dt> <dd>{{tarea.updated_at}}</dd>
+                        <dt>Última modificación:</dt> <dd>{{tarea.updated_at}}</dd>
+                        <dt></dt> <dd><avatar class="avatar1em" :user="tarea.usuarioAbm"/> {{tarea.usuarioAbm ? tarea.usuarioAbm.attributes.nombres + ' ' + tarea.usuarioAbm.attributes.apellidos : ''}}</dd>
                         <dt>Tiempo asignado:</dt> <dd>{{tarea.dias_otorgados}} días</dd>
                         <dt>Tiempo restante:</dt> <dd>{{Math.max(0, tarea.dias_otorgados - tarea.dias_pasados)}} días</dd>
                     </dl>
@@ -83,7 +84,8 @@
                             <h3>
                                 {{tab.titulo}}
                                 <span style="float: right;">
-                                    <button class="btn btn-primary dim" :disabled="readonly" type="button" v-if="index < tarea.datos.maximo" @click="descompletarPaso(index)">
+                                    <!--  @click="descompletarPaso(index)" -->
+                                    <button class="btn btn-primary dim" :disabled="readonly" type="button" v-if="index < tarea.datos.maximo">
                                         Completado
                                         <i class="fa fa-check-square-o"></i>
                                     </button>

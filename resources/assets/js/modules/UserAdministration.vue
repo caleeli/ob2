@@ -1446,7 +1446,7 @@ UserAdministration.Tarea = function (url, id) {
   this.$defaultUrl = "/api/UserAdministration/tareas";
   Model.call(this, url, id, "UserAdministration.Tarea");
   this.$list = function () {
-    return "fields=cod_tarea,creador,usuarios,nombre_tarea,descripcion,fecha_ini,fecha_fin,estado,avance,prioridad,dias_otorgados,nro_de_control,gestion,tipo,datos";
+    return "fields=cod_tarea,creador,usuarios,nombre_tarea,descripcion,fecha_ini,fecha_fin,estado,avance,prioridad,dias_otorgados,nro_de_control,gestion,tipo,datos,usuarioAbm";
   };
   this.$name = "Tarea";
   this.$pluralName = "Tareas";
@@ -1693,6 +1693,19 @@ UserAdministration.Tarea = function (url, id) {
       value: "enlaces",
       isAssociation: true,
       isMultiple: true,
+    },
+    usuarioAbm: {
+      name: "usuarioAbm",
+      label: "usuarioAbm",
+      type: "select",
+      enum: [],
+      source: new UserAdministration.User(),
+      textField: function (data) {
+        return data ? data.nombres + " " + data.apellidos : "";
+      },
+      value: "usuarioAbm",
+      isAssociation: true,
+      isMultiple: false,
     },
   };
   this.$fields = function () {
