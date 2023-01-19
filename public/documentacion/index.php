@@ -29,6 +29,7 @@ $registerJs = [];
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/css/jquery.steps.css">
+        <meta name="csrf-token" content="<?= md5(uniqid(random_int(100000, 1000000), true)) ?>">
         <!-- link rel="stylesheet" type="text/css" href="/css/viewer.css" -->
         <script>
             if (typeof localStorage.user_id === 'undefined'

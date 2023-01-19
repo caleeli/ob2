@@ -62,6 +62,8 @@ export default function(uri0, id, type) {
     }
     this.$load = function (id1, loadCallback) {
         try {
+            var XCSRF = '7FL11u35Buc55xnBfcthl8TFPUiAOSYplwSkyatI';
+            var token = $('meta[name="csrf-token"]');
             if (typeof id1 === 'undefined') {
                 id1 = id;
             }
@@ -75,6 +77,10 @@ export default function(uri0, id, type) {
                 method: "GET",
                 url: this.$url() + '/' + (!id1 ? 'create' : id1)+ (include.length>0 ? '?include='+include.join(',') : ''),
                 dataType: 'json',
+                // add CSRF token to request header
+                headers: {
+                    'X-CSRF-TOKEN': (token ? token.attr('content') : XCSRF)|| XCSRF,
+                },
                 success: function (data) {
                     loadFromData(data);
                     callback(self);
