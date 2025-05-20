@@ -14,8 +14,9 @@
         <link rel="stylesheet" type="text/css" href="bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/datatables-fixedcolumns/css/fixedColumns.bootstrap.scss">
         <link rel="stylesheet" type="text/css" href="css/test.css?t=<?=filemtime(public_path('css/test.css'))?>">
+        <link rel="stylesheet" type="text/css" href="css/footer.css?t=<?=filemtime(public_path('css/footer.css'))?>">
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ elixir('css/app.css') }}?t=<?=filemtime(public_path().'/css/app.css')?>">
+        <link rel="stylesheet" href="{{ elixir('css/app.css') }}?t=<?=filemtime(public_path().'/css/app.css')?>"
         <script>
             !function(){
                 var skin = localStorage.skin ? localStorage.skin : 'simplex';
@@ -26,6 +27,18 @@
     </head>
     <body>
 @yield('content')
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p><strong>Contraloría General del Estado</strong></p>
+                        <p>Dirección: Calle Colón E4-38 y Av. 9 de Octubre</p>
+                        <p>Contacto: Departamento de Atención Ciudadana</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
         <script type="text/javascript" charset="utf8" src="bower_components/jq-ajax-progress/src/jq-ajax-progress.min.js"></script>
 
         <script type="text/javascript" charset="utf8" src="bower_components/datatables.net/js/jquery.dataTables.js"></script>
